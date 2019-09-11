@@ -33,6 +33,14 @@ public ReturnResult(CodeMsg codeMsg){
     public static<T> ReturnResult success(T data){
     return new ReturnResult(data);
 }
+
+    /**
+     * 成功调用不需要传值
+     * @return
+     */
+    public  static ReturnResult success(){
+        return success("");
+}
 /**
  * 失败调用
  */

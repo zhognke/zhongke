@@ -39,7 +39,6 @@ public interface UserDao {
      * 修改用户信息
      * @return
      */
-    @Update("UPDATE `user` SET `username`=#{userName}, `password`=#{password}, `phonenumber`=#{phoneNumber} WHERE (`id`=#{id})")
-    public Boolean updateUser();
+    public Boolean updateUser(User user);
 
 }

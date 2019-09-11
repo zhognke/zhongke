@@ -9,13 +9,11 @@ import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
 
-public class MyShiroRealm extends AuthorizingRealm {
-    @Resource(name = "userServiceImplements")
+public class MyShiroRealm extends  AuthorizingRealm {
+    @Resource(name= "userServiceImplements")
     UserService userServiceImplements;
-
     /**
      * 授权的方法
-     *
      * @param principalCollection
      * @return
      */
@@ -26,7 +24,6 @@ public class MyShiroRealm extends AuthorizingRealm {
 
     /**
      * 认证的方法
-     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
@@ -34,16 +31,17 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
-        String userName = upToken.getUsername();//获取用户名
-        User user = userServiceImplements.findUserByName(userName);//根据名字获取用户对象
-        if (user == null) {
+        String userName=upToken.getUsername();//获取用户名
+User user=userServiceImplements.findUserByName(userName);//根据名字获取用户对象
+        if(user==null){
             throw new UnknownAccountException("用户不存在");
         }
 
-        String password = user.getPassword();//数据库密码
+      String password=user.getPassword();//数据库密码
         ByteSource credentialsSalt = ByteSource.Util.bytes(userName);//盐用户名唯一
+
         SimpleAuthenticationInfo info = null;
-        info = new SimpleAuthenticationInfo(user, password, credentialsSalt, getName());
+        info=new SimpleAuthenticationInfo(user,password,credentialsSalt,getName());
 
         return info;
     }

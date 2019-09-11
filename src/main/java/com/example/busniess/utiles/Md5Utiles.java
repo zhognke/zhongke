@@ -13,7 +13,7 @@ public class Md5Utiles {
      * @param hashIterations//加密次数
      * @return
      */
-    public static  String reeturnMd5(String hashAlgorithnName,Object credentials,String saltName , Integer hashIterations){
+    public static  String returnMd5(String hashAlgorithnName,Object credentials,String saltName , Integer hashIterations){
         Object salt = ByteSource.Util.bytes(saltName);
         String result=  new SimpleHash(hashAlgorithnName,credentials,salt,hashIterations).toString();
 
