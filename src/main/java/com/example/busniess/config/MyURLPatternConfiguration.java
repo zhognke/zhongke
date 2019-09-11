@@ -16,11 +16,11 @@ public class MyURLPatternConfiguration implements WebMvcConfigurer {
 //        super.addResourceHandlers(registry);
 //    }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**").addResourceLocations("file:F:/myFile/");
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/img/**").addResourceLocations("file:F:/myFile/");
 
-    }
+//    }
 
 
 

@@ -2,6 +2,8 @@ package com.example.busniess;
 
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.User;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,15 @@ public class BusniessApplicationTests {
 	 */
 	@Test
 	public void contextLoads() {
-		User user=new User();
+		String hashAlgorithnName="md5";
+		Object credentials = "123456";
+		Object salt = ByteSource.Util.bytes("admin");
+		int hashIterations = 1024;
 
-user.setPassword("123444");
-user.setPhoneNumber("1356222193");
-		userDao.insertUser(user);
+		Object result = new SimpleHash(hashAlgorithnName,credentials,salt,hashIterations);
+		System.out.println(result);
 	}
+
+
 
 }
