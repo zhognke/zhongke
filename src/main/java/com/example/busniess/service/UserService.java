@@ -5,6 +5,7 @@ import com.example.busniess.exception.MyException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface UserService {
     User findUserByName(String userName);
@@ -15,4 +16,6 @@ public interface UserService {
 
     Boolean addUser(User user) throws MyException;
     Boolean modifiUser(User user);
+    Set<String> findMyRole(Integer id);
+    Set<String> findAllRole();
 }

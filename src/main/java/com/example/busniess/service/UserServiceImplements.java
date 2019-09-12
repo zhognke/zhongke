@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class UserServiceImplements implements UserService {
@@ -85,13 +86,26 @@ public class UserServiceImplements implements UserService {
     public Boolean modifiUser(User user) {
         String password=user.getPassword();
         if(password!=null&&password!=""){
-            System.out.println("1231231");
+
          password = Md5Utiles.returnMd5("md5", user.getPassword(), user.getUserName(), 1024);
         user.setPassword(password);
         }
         return userDao.updateUser(user);
     }
 
-
+    /**
+     * 找到自己的角色
+      * @param id
+     * @return
+     */
+    public Set<String>  findMyRole(Integer id){
+        return userDao.findRole(id);
+    }
+/**
+ * 找到所有的角色
+ */
+public Set<String> findAllRole(){
+    return userDao.findAllRole();
+}
 
 }
