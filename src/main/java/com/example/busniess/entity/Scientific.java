@@ -2,9 +2,11 @@ package com.example.busniess.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 //科技成果表
 @Data
-public class Scientific {
+public class Scientific implements Serializable {
     private String companyName;//企业名字
     private String technology;//技术成果
     private String descript;//详情描述

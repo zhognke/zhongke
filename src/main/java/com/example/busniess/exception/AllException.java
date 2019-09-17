@@ -12,10 +12,17 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @RestControllerAdvice
 public class AllException {
+
+    /**
+     * 登录拦截
+     * @param e
+     * @return
+     */
     @ExceptionHandler(ShiroException.class)
     public ReturnResult loginError(ShiroException e) {
         if (e instanceof UnknownAccountException) {
@@ -28,18 +35,38 @@ public class AllException {
         return new ReturnResult(CodeMsg.SERVER_ERROR);
     }
 
+    /**
+     * 自定义异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(MyException.class)
     public ReturnResult myError(MyException e) {
         return ReturnResult.erro(e.getCodeMsg());
 
     }
 
-
+    /**
+     * 参数校验异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(BindException.class)
     public ReturnResult parameterValidator(BindException e) {
         List<ObjectError> errors = e.getAllErrors();
         ObjectError error = errors.get(0);
         String msg = error.getDefaultMessage();
         return ReturnResult.erro(CodeMsg.BIND_ERROR.fillArgs(msg));
+    }
+
+    /**
+     * 邮件异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MessagingException.class)
+    public ReturnResult emailValidator(MessagingException e){
+        return ReturnResult.erro(CodeMsg.EMAIL_ERROR);
+
     }
 }

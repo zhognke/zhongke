@@ -108,10 +108,17 @@
 			<optional>true</optional>
 			<scope>true</scope>
 		</dependency>
+		<!--邮件的依赖00-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+
 		<!--&lt;!&ndash;参数校验&ndash;&gt;-->
 		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-starter-validation</artifactId>-->
+		<!--<groupId>org.springframework.boot</groupId>-->
+		<!--<artifactId>spring-boot-starter-validation</artifactId>-->
 		<!--</dependency>-->
 	</dependencies>
 

@@ -5,9 +5,11 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
+import java.io.Serializable;
+
 //用户表
 @Data
-public class User {
+public class User implements Serializable {
     @NotNull(message = "id参数不能为空", groups = UserValidator.UpDate.class)
     private Integer id;
     @NotNull(message = "账号不能为空", groups = {UserValidator.InSet.class})

@@ -65,6 +65,7 @@ public class ShiroConfig {
      */
     @Bean(name = "hashedCredentialsMatcher")
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
+
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         //使用md5加密算法进行加密
         hashedCredentialsMatcher.setHashAlgorithmName("md5");

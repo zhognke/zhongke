@@ -2,11 +2,12 @@ package com.example.busniess.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 //企业中心
 @Data
-public class BusinessCenter {
+public class BusinessCenter implements Serializable {
     private Integer id;//主键 1
     private String uName;//关联的用户名
     private Integer identification;//身份识别  1.法人2.代理人 2

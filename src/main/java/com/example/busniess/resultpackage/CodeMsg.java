@@ -14,6 +14,8 @@ public class CodeMsg {
     public static CodeMsg NOT_HAVE_LIMITS = new CodeMsg(500103, "对不起您还没有该权限");
     public static CodeMsg BIND_ERROR=new CodeMsg(500104,"参数校验异常:%s");
     public static CodeMsg SERVER_ERROR=new CodeMsg(500105,"服务端未知异常!");
+    public static CodeMsg EMAIL_ERROR=new CodeMsg(500106,"邮件发送异常!");
+    public static CodeMsg CODE_ERROR=new CodeMsg(500107,"验证码错误!");
     private Integer code;
     private String msg;
 
