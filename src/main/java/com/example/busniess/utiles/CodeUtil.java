@@ -21,8 +21,7 @@ public class CodeUtil {
          * @throws ServletException
          * @throws IOException
          */
-        public static void getImage(OutputStream out, String number)
-                throws ServletException, IOException {
+        public static void getImage(OutputStream out, String number) throws IOException {
             //0.创建空白图片
             BufferedImage image=new BufferedImage(100,30,BufferedImage.TYPE_INT_RGB);
             //1.获取图片画笔

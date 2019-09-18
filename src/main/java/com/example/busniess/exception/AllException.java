@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -26,13 +27,13 @@ public class AllException {
     @ExceptionHandler(ShiroException.class)
     public ReturnResult loginError(ShiroException e) {
         if (e instanceof UnknownAccountException) {
-            return new ReturnResult(CodeMsg.USER_NOT_EXSIS);
+            return new ReturnResult(CodeMsg.USER_NOT_EXSIS);//用户不存在
         } else if (e instanceof IncorrectCredentialsException) {
-            return new ReturnResult(CodeMsg.WRONG_PASSWORD);
+            return new ReturnResult(CodeMsg.WRONG_PASSWORD);//密码错误
         }else if(e instanceof UnauthorizedException){
-            return new ReturnResult(CodeMsg.NOT_HAVE_LIMITS);
+            return new ReturnResult(CodeMsg.NOT_HAVE_LIMITS);//没有权限
         }
-        return new ReturnResult(CodeMsg.SERVER_ERROR);
+        return new ReturnResult(CodeMsg.SERVER_ERROR);//默认异常
     }
 
     /**
@@ -64,9 +65,19 @@ public class AllException {
      * @param e
      * @return
      */
-    @ExceptionHandler(MessagingException.class)
+    @ExceptionHandler({MessagingException.class})
     public ReturnResult emailValidator(MessagingException e){
         return ReturnResult.erro(CodeMsg.EMAIL_ERROR);
 
+    }
+
+    /**
+     * 验证码异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(IOException.class)
+    public ReturnResult codeException(IOException e){
+        return ReturnResult.erro(CodeMsg.CODE_ERROR);
     }
 }
