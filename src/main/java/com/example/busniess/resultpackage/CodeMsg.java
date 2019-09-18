@@ -18,6 +18,10 @@ public class CodeMsg {
     public static CodeMsg CODE_ERROR=new CodeMsg(500107,"验证码错误!");
     public static CodeMsg FIND_PASSWORD_ERROR=new CodeMsg(500108,"密码找回错误请稍后再试!");
     public static CodeMsg UPDATE_PASSWORD_ERROR=new CodeMsg(500109,"密码修改失败!");
+    public static CodeMsg CODE_SEND_ERROR  = new CodeMsg(500110, "邮件验证码发送失败");
+    public static CodeMsg CODE_TIMEOUT_ERROR  = new CodeMsg(500111, "邮件验证码已失效");
+    public static CodeMsg CODE_NOTBLANK_ERROR  = new CodeMsg(500112, "邮件验证码不能为空");
+    public static CodeMsg CODE_CHECK_ERROR  = new CodeMsg(500112, "邮件验证码验证失败");
     private Integer code;
     private String msg;
 

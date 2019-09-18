@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<a>中小企业</a>
+<a>工业项目投资</a>
+<a>企业科技需求</a>
+
+<a href="/loginout">退出</a>
+<a href="/hell.html">hello</a>
+<!--
+<form action="/user/registerUser" method="post">
+    账号 <input name="userName"><br/>
+    密码<input name="password"><br/>
+    电话号码<input name="phoneNumber"><br/>
+    <input value="注册" type="submit">
+</form>
+-->
+<form action="/user/userLogin" method="post">
+    账号： <input name="userName"><br/>
+    密码：<input name="password"><br/>
+    验证码:<img src="getCode">
+    记住我：<input type="checkbox" name="remb" value="true"><br/>
+    <input value="提交" type="submit">
+</form>
+
+</body>
+</html>

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Date;
 
 //用户表
 @Data
@@ -22,4 +23,6 @@ public class User implements Serializable {
     @Email(message = "请填写正确的邮箱格式")
     private String email;//邮箱
     private String statu;//用户状态备用
+    private Date lastdate;
+    private String ip;
 }
