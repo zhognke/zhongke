@@ -32,4 +32,5 @@ public class MsendMailServiceImplements implements MsendMailService {
     public Boolean updateMail(MsendMail msendMail) {
         return msendMailDao.updateMail(msendMail);
     }
+
 }
