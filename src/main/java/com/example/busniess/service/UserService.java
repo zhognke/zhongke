@@ -15,8 +15,12 @@ public interface UserService {
     Map findAllUser(Integer startPage);
 
     Boolean addUser(User user) throws MyException;
+
     Boolean modifiUser(User user);
+
     Set<String> findMyRole(Integer id);
+
     Set<String> findAllRole();
- Boolean  retSetPassword(String userName, String password,String newPassword) throws MyException;
+
+    Boolean retSetPassword(String userName, String password, String newPassword) throws MyException;
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.busniess.dao.MsendMailDao">
+    <sql id="msendMail_sql">
+        <if test="server!=null and server!=''">
+            `server`=#{server},
+        </if>
+        <if test="port!=null and port!=''">
+            `port`=#{port},
+        </if>
+        <if test="mail!=null and mail!=''">
+            `mail`=#{mail}
+        </if>
+        <if test="name!=null and name!=''">
+            `name`=#{name}
+        </if>
+        <if test="password!=null and password!=''">
+            `password`=#{password}
+        </if>
+    </sql>
+
+<!--更新用户信息-->
+    <update id="updateUser" parameterType="msendMail">
+        UPDATE `msend_mail`
+        <set>
+            <include refid="msendMail_sql"></include>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+
+</mapper>

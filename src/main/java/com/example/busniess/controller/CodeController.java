@@ -54,4 +54,15 @@ public class CodeController {
 
     }
 
+    public boolean verificationRandCode(HttpSession session, String code) {
+        String number = (String) session.getAttribute("code");
+        if (number.equalsIgnoreCase(code)) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
 }
