@@ -53,7 +53,8 @@ public class UserController {
         subject.login(up);
         up.setRememberMe(remb);//记住我
         //登录成功
-        return ReturnResult.success(userName);
+        User user = userServiceImplements.findUserByName(userName);
+        return ReturnResult.success(user.getUserName());
     }
 
     /**

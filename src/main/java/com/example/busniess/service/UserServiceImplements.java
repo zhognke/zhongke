@@ -66,6 +66,7 @@ public class UserServiceImplements implements UserService {
     public Boolean addUser(User user) throws MyException {
         //1.查一下一下数据库账号是否已经注册了
         String name = user.getUserName();
+        String email=user.getEmail();
         User user1 = findUserByName(name);
         if (user1 != null) {
             throw new MyException(CodeMsg.USER_ALREADY_EXSIS);

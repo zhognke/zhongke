@@ -47,5 +47,9 @@ public ReturnResult(CodeMsg codeMsg){
 public  static <T> ReturnResult erro(CodeMsg codeMsg){
     return new ReturnResult(codeMsg);
 }
+/**
+ * 失败调用
+ */
+
 
 }

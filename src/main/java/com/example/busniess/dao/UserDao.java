@@ -20,9 +20,9 @@ public interface UserDao {
     public Boolean insertUser(User user);
 
     /**
-     * 获取用户信息
+     * 获取根据用户信息
      */
-    @Select("SELECT * FROM `user` WHERE username=#{userName}")
+    @Select("SELECT * FROM `user` WHERE username=#{userName} OR email=#{userName}")
     public User selectUser(String userName);
 
     /**

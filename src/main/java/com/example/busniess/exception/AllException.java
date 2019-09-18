@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.mail.MessagingException;
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @RestControllerAdvice
 public class AllException {
@@ -60,8 +62,15 @@ public class AllException {
         String msg = error.getDefaultMessage();
         return ReturnResult.erro(CodeMsg.BIND_ERROR.fillArgs(msg));
     }
-// e
 
+@ExceptionHandler({ConstraintViolationException.class})
+public ReturnResult parameterValidator(ConstraintViolationException e) {
+    Set<ConstraintViolation<?>> errors = e.getConstraintViolations();
+
+String message=errors.iterator().next().getMessage();
+  CodeMsg codeMsg=new CodeMsg(500104,message);
+    return ReturnResult.erro(codeMsg);
+}
     /**
      * 邮件异常
      * @param e
