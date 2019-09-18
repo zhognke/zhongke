@@ -84,28 +84,47 @@ public class UserServiceImplements implements UserService {
      * @return
      */
     public Boolean modifiUser(User user) {
-        String password=user.getPassword();
-        if(password!=null&&password!=""){
+        String password = user.getPassword();
+        if (password != null && password != "") {
 
-         password = Md5Utiles.returnMd5("md5", user.getPassword(), user.getUserName(), 1024);
-        user.setPassword(password);
+            password = Md5Utiles.returnMd5("md5", user.getPassword(), user.getUserName(), 1024);
+            user.setPassword(password);
         }
         return userDao.updateUser(user);
     }
 
     /**
+     * 修改密码
+     */
+    public Boolean retSetPassword(String userName, String password,String newPassword) throws MyException {
+        User user = userDao.selectUser(userName);//根据用户名查询用户
+
+        String ps = Md5Utiles.returnMd5("md5", password, userName, 1024);
+        if (!user.getPassword().equals(ps)) {
+           throw new MyException(CodeMsg.WRONG_PASSWORD);//密码和原密码不一致
+        }
+        String newPs = Md5Utiles.returnMd5("md5",newPassword, userName, 1024);
+        user.setPassword( newPs);
+        userDao.updatPassword(user);//更改密码
+
+        return true;
+    }
+
+    /**
      * 找到自己的角色
-      * @param id
+     *
+     * @param id
      * @return
      */
-    public Set<String>  findMyRole(Integer id){
+    public Set<String> findMyRole(Integer id) {
         return userDao.findRole(id);
     }
-/**
- * 找到所有的角色
- */
-public Set<String> findAllRole(){
-    return userDao.findAllRole();
-}
+
+    /**
+     * 找到所有的角色
+     */
+    public Set<String> findAllRole() {
+        return userDao.findAllRole();
+    }
 
 }

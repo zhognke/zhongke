@@ -2,7 +2,9 @@ package com.example.busniess.controller;
 
 import com.example.busniess.entity.User;
 import com.example.busniess.exception.MyException;
+import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
+import com.example.busniess.service.ForgetPassword;
 import com.example.busniess.service.UserService;
 import com.example.busniess.validator.UserValidator;
 import org.apache.shiro.SecurityUtils;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.validation.constraints.NotBlank;
 
 @RestController
@@ -26,6 +29,8 @@ import javax.validation.constraints.NotBlank;
 public class UserController {
     @Resource(name="userServiceImplements")
     UserService userServiceImplements;
+    @Resource
+    ForgetPassword ForgetPasswordImplement;
 
     /**
      * 登录验证
@@ -66,11 +71,30 @@ public class UserController {
     }
 
 
+/**
+ * 忘记密码找回
+ */
+@RequestMapping("/retrievePassword")
+public ReturnResult retrievePassword(String userName) throws MessagingException, MyException {
+   if(ForgetPasswordImplement.modifyPassword(userName)){
+       return ReturnResult.success();
+   }else {
+       return ReturnResult.erro(CodeMsg.FIND_PASSWORD_ERROR);
+   }
 
-public  ReturnResult modifiUser(){
-        return ReturnResult.success();
 }
 
+/**
+ * 修改密码
+ */
+@RequestMapping("/updataPassword")
+public ReturnResult updataPassword(@NotBlank(message = "用户名不能为空") String userName,@NotBlank(message = "原密码不能为空")String password,@NotBlank(message = "新密码不能为空")String newPassword) throws MyException {
 
+if(userServiceImplements.retSetPassword(userName,password,newPassword)) {
+    return ReturnResult.success();
+}else {
+    return ReturnResult.erro(CodeMsg.UPDATE_PASSWORD_ERROR);
+}
+}
 
 }

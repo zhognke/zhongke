@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.mail.MessagingException;
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.List;
 
@@ -49,16 +50,17 @@ public class AllException {
 
     /**
      * 参数校验异常
-     * @param e
+     * @param ConstraintViolationException
      * @return
      */
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler({BindException.class})
     public ReturnResult parameterValidator(BindException e) {
         List<ObjectError> errors = e.getAllErrors();
         ObjectError error = errors.get(0);
         String msg = error.getDefaultMessage();
         return ReturnResult.erro(CodeMsg.BIND_ERROR.fillArgs(msg));
     }
+// e
 
     /**
      * 邮件异常

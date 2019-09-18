@@ -18,4 +18,5 @@ public interface UserService {
     Boolean modifiUser(User user);
     Set<String> findMyRole(Integer id);
     Set<String> findAllRole();
+ Boolean  retSetPassword(String userName, String password,String newPassword) throws MyException;
 }

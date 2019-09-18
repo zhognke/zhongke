@@ -47,6 +47,15 @@ public interface UserDao {
     public Boolean updateUser(User user);
 
     /**
+     * 根据电话和用户名修改密码
+     */
+    @Update("UPDATE `user` SET  `password`=#{password} WHERE `username`=#{userName}")
+    public Boolean updatPassword(User user);
+
+
+
+
+    /**
      * 查询当前用户所有的角色
      *
      * @param id

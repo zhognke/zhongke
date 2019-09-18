@@ -20,5 +20,8 @@ public class Occupancy implements Serializable{
     private  String country;//省
     private  String city;//市
     private  String district;//区
+    private  Data creatTime;//创建时间
+    private  Data upTiem;//修改时间
+    private  Integer statue;//入住状态
 
 }

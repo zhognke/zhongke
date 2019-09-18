@@ -23,6 +23,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,13 +53,16 @@ public class BusniessApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo("396802762@qq.com");
-		message.setSubject("hello");
-		message.setText("我发的邮件");
-		message.setFrom("396802762@qq.com");
 
-		mailSender.send(message);
+		System.out.println(Md5Utiles.getNum(8));
+//
+//		SimpleMailMessage message = new SimpleMailMessage();
+//		message.setTo("396802762@qq.com");
+//		message.setSubject("hello");
+//		message.setText("我发的邮件");
+//		message.setFrom("396802762@qq.com");
+//
+//		mailSender.send(message);
 	}
 
 	@Test

@@ -16,6 +16,8 @@ public class CodeMsg {
     public static CodeMsg SERVER_ERROR=new CodeMsg(500105,"服务端未知异常!");
     public static CodeMsg EMAIL_ERROR=new CodeMsg(500106,"邮件发送异常!");
     public static CodeMsg CODE_ERROR=new CodeMsg(500107,"验证码错误!");
+    public static CodeMsg FIND_PASSWORD_ERROR=new CodeMsg(500108,"密码找回错误请稍后再试!");
+    public static CodeMsg UPDATE_PASSWORD_ERROR=new CodeMsg(500109,"密码修改失败!");
     private Integer code;
     private String msg;
 
