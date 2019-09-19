@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
-//用户表
+
 @Data
 public class MsendMail implements Serializable {
     @NotNull(message = "id参数不能为空", groups = UserValidator.UpDate.class)
