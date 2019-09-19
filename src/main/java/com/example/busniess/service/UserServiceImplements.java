@@ -64,15 +64,19 @@ public class UserServiceImplements implements UserService {
      * @return
      */
     public Boolean addUser(User user) throws MyException {
-        //1.查一下一下数据库账号是否已经注册了
-        String name = user.getUserName();
-        String email=user.getEmail();
-        User user1 = findUserByName(name);
+        //1.查一下一下数据库账号是否已经注册了确保唯一性
+        String name = user.getUserName();//账户号
+        String email=user.getEmail();//邮箱
+        User user1 = userDao.selectUserByName(name);
         if (user1 != null) {
             throw new MyException(CodeMsg.USER_ALREADY_EXSIS);
         }
-        String password = user.getPassword();//密码
+        User user2 = userDao.selectUserByEmail(email);
 
+        String password = user.getPassword();//密码
+        if (user2 != null) {
+            throw new MyException(CodeMsg.EMAIL_Have_EXIST);
+        }
         user.setPassword(Md5Utiles.returnMd5("md5", password, name, 1024));
 
         return userDao.insertUser(user);

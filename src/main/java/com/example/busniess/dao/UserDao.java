@@ -26,6 +26,18 @@ public interface UserDao {
     public User selectUser(String userName);
 
     /**
+     * 根据名字查询用户
+     */
+    @Select("SELECT * FROM `user` WHERE username=#{userName}")
+    public User selectUserByName(String userName);
+
+    /**
+     * 根据邮箱查询用户
+     */
+    @Select("SELECT * FROM `user` WHERE email=#{email}")
+    public User selectUserByEmail(String email);
+
+    /**
      * 删除用户
      *
      * @return
@@ -51,8 +63,6 @@ public interface UserDao {
      */
     @Update("UPDATE `user` SET  `password`=#{password} WHERE `username`=#{userName}")
     public Boolean updatPassword(User user);
-
-
 
 
     /**
