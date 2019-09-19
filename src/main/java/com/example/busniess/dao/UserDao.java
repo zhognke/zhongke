@@ -59,9 +59,9 @@ public interface UserDao {
     public Boolean updateUser(User user);
 
     /**
-     * 根据电话和用户名修改密码
+     * 根据邮箱和用户名修改密码
      */
-    @Update("UPDATE `user` SET  `password`=#{password} WHERE `username`=#{userName}")
+    @Update("UPDATE `user` SET  `password`=#{password} WHERE `username`=#{userName} OR `email`=#{userName}")
     public Boolean updatPassword(User user);
 
 

@@ -103,6 +103,9 @@ public class UserServiceImplements implements UserService {
      */
     public Boolean retSetPassword(String userName, String password,String newPassword) throws MyException {
         User user = userDao.selectUser(userName);//根据用户名查询用户
+        if(user==null){
+            throw new MyException(CodeMsg.USER_NOT_EXSIS);
+        }
 
         String ps = Md5Utiles.returnMd5("md5", password, userName, 1024);
         if (!user.getPassword().equals(ps)) {
@@ -110,7 +113,7 @@ public class UserServiceImplements implements UserService {
         }
         String newPs = Md5Utiles.returnMd5("md5",newPassword, userName, 1024);
         user.setPassword( newPs);
-        userDao.updatPassword(user);//更改密码
+       // userDao.updatPassword(user);//更改密码
 
         return true;
     }

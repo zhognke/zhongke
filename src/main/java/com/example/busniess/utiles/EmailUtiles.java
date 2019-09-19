@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -15,21 +17,39 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 
+@Component
 public class EmailUtiles {
 
-    @Value("${${spring.mail.username}")
+
     private static String from;
+
+    public static String getFrom() {
+        return from;
+    }
+
+    @Value("${spring.mail.username}")
+    public void setFrom(String from) {
+        EmailUtiles.from = from;
+    }
+
     @Autowired
+    private JavaMailSender mailSender0;
     private static JavaMailSender mailSender;
 
+    @PostConstruct
+    public void init() {
+        EmailUtiles.mailSender = mailSender0;
+    }
+
     public static Boolean sendEmail(String subject, String email, String text) throws MessagingException {
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
         mimeMessageHelper.setSubject(subject);
         mimeMessageHelper.setTo(email);
         mimeMessageHelper.setText(text);
         mimeMessageHelper.setFrom(from);
-
+        mailSender.send(mimeMessage);
         return true;
     }
 

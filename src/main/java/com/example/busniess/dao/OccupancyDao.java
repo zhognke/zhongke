@@ -33,6 +33,21 @@ public Boolean delectOccupancy(Integer id);
      * @param occupancy
      * @return
      */
+ //INSERT INTO `occupancy` (`username`, `namefirm`,
+    // `resulttechnolo`, `describe`, `
+    // patennumber`, `serialnumber`,
+    // `imgaddress`, `industry`,
+    // `spindustries`, `country`,
+    // `city`, `district`,
+    // `creattime`, `uptime`,
+    // `statue`) VALUES
+    // ('1', '12',
+    // '2', '2',
+    // '2', '2',
+    // '2', '2',
+    // '2', '2',
+    // '2', '2',
+    // '2019-09-19 15:17:22', '2019-09-19 15:17:28', '1')
     @Insert("")
 public Boolean insertOccupancy(Occupancy occupancy);
 }

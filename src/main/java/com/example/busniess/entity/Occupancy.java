@@ -1,14 +1,19 @@
 package com.example.busniess.entity;
 
+import com.example.busniess.validator.UserValidator;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 //科技成果入住信息
 @Data
 public class Occupancy implements Serializable{
+    @NotNull(message = "id参数不能为空", groups = UserValidator.UpDate.class)
     private  Integer id;//id
+    @NotNull(message = "用户不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private  String userName;//关联的用户
+
     private  String  nameFirm;//企业名称
     private String resultTechnolo;//科技成果
     private String describe;//详情描述

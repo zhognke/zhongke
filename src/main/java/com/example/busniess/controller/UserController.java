@@ -134,17 +134,26 @@ public class UserController {
         return ReturnResult.success(user.getUserName());
     }
 
-
     /**
-     * 忘记密码找回
+     * 忘记密码
+     * @param session
+     * @param mmCode  邮箱验证吗
+     * @param userName 用户名
+     * @param newPassword 新密码
+     * @return
+     * @throws MessagingException
+     * @throws MyException
      */
     @RequestMapping("/retrievePassword")
-    public ReturnResult retrievePassword(String userName) throws MessagingException, MyException {
-        if (ForgetPasswordImplement.modifyPassword(userName)) {
-            return ReturnResult.success();
-        } else {
-            return ReturnResult.erro(CodeMsg.FIND_PASSWORD_ERROR);
-        }
+    public ReturnResult retrievePassword(HttpSession session,@NotBlank(message = "验证码不能为空")String mmCode, @NotBlank(message = "用户名不能为空")String userName, @NotBlank(message = "密码不能为空")String newPassword) throws MessagingException, MyException {
+
+     User user =new User();
+     user.setUserName(userName);
+     user.setPassword(newPassword);
+       if (ForgetPasswordImplement.upPassword(session,mmCode,user)){
+           return ReturnResult.success();
+       }
+       return ReturnResult.erro(CodeMsg.SERVER_ERROR);
 
     }
 
