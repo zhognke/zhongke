@@ -38,6 +38,7 @@ public class UserController {
     UserService userServiceImplements;
     @Resource
     ForgetPassword ForgetPasswordImplement;
+
     @Resource(name="msendMailServiceImplements")
     MsendMailServiceImplements msendMailServiceImplements;
 
@@ -71,31 +72,31 @@ public class UserController {
     /**
      * 发送邮箱验证码
      * @param session
-     * @param code 图形验证码
      * @param email 收件箱
      * @return
      */
     @PostMapping("/sendCode")
-    public ReturnResult sendCode(HttpSession session, String code,String email){
-        boolean flag = new CodeController().verificationRandCode(session,code);
-        if(true){
-            String peopleCode = Md5Utiles.getNum(6);
-            User user = new User();
-            user.setEmail(email);
-            user.setUserName(peopleCode);
-            user.setLastdate(new Date());
-            session.setAttribute("REGISTER_CODE_SESSION",user);
-            sendMail(peopleCode,email);
+    public ReturnResult sendCode(HttpSession session,String email){
+        String peopleCode = Md5Utiles.getNum(6);
+        User user = new User();
+        user.setEmail(email);
+        user.setUserName(peopleCode);
+        user.setLastdate(new Date());
+        session.setAttribute("REGISTER_CODE_SESSION",user);         //存入session
+        List<MsendMail> list = msendMailServiceImplements.selectAll();  //获取邮箱服务器
+        if(list.get(0)!=null){
+            MsendMail mail = list.get(0);
+            EmailUtiles.sendMailCode(mail,peopleCode,email);
             return ReturnResult.success("发送成功");
         }else{
-            return ReturnResult.erro(CodeMsg.CODE_SEND_ERROR);
+            return ReturnResult.erro(CodeMsg.EMAIL_ERROR);
         }
     }
 
     /**
      * 验证邮箱验证码
      * @param session
-     * @param code
+     * @param code  邮箱验证码
      * @return
      */
     @PostMapping("/checkCode")
@@ -106,9 +107,9 @@ public class UserController {
             String peopleCode = user.getUserName();
             Date sendDate = user.getLastdate();
             Date now = new Date();
-            if((now.getTime()-sendDate.getTime())/(1000)>600){
+            if((now.getTime()-sendDate.getTime())/(1000)>600){  //超时
                 return ReturnResult.erro(CodeMsg.CODE_TIMEOUT_ERROR);
-            }else if(!StringUtils.isNotBlank(peopleCode)){
+            }else if(!StringUtils.isNotBlank(peopleCode)){      //验证码为空
                 return ReturnResult.erro(CodeMsg.CODE_NOTBLANK_ERROR);
             }
             if(code.equalsIgnoreCase(peopleCode)){
@@ -160,22 +161,5 @@ public class UserController {
         }
     }
 
-
-    //发送验证码邮件
-    public void sendMail(String peopleCode,String email){
-        List<MsendMail> list = msendMailServiceImplements.selectAll();
-        if(list.get(0)!=null){
-            MsendMail mail = list.get(0);
-            String host = mail.getServer();
-            int port = mail.getPort();
-            String mailName = mail.getMail();
-            String mailPassword = mail.getPassword();
-            String mailFormName = mail.getName();
-            String title ="注册验证";
-            String context = "您的验证码为:"+peopleCode;
-            String[] toUser = email.split(",");
-            EmailUtiles.sendHtml(host,port,mailName,mailPassword,mailFormName,title,context,toUser);
-        }
-    }
 
 }

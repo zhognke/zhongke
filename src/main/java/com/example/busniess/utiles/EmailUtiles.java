@@ -1,14 +1,18 @@
 package com.example.busniess.utiles;
 
+import com.example.busniess.entity.MsendMail;
+import com.example.busniess.service.MsendMailServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 
 public class EmailUtiles {
@@ -29,20 +33,34 @@ public class EmailUtiles {
         return true;
     }
 
+
+    //发送验证码邮件
+    public static void sendMailCode(MsendMail mail, String peopleCode, String email) {
+        String host = mail.getServer();
+        int port = mail.getPort();
+        String mailName = mail.getMail();
+        String mailPassword = mail.getPassword();
+        String mailFormName = mail.getName();
+        String title = "注册验证";
+        String context = "您的验证码为:" + peopleCode;
+        String[] toUser = email.split(",");
+        EmailUtiles.sendHtml(host, port, mailName, mailPassword, mailFormName, title, context, toUser);
+    }
+
     /**
      * 发送简html内容的邮件
      *
-     * @param host 主机
-     * @param port　端口
-     * @param userName　账号
-     * @param password　密码
-     * @param formName　发送人姓名
-     * @param title　标题
-     * @param content　html内容
-     * @param toUser　接收人
+     * @param host     主机
+     * @param port     　端口
+     * @param userName 　账号
+     * @param password 　密码
+     * @param formName 　发送人姓名
+     * @param title    　标题
+     * @param content  　html内容
+     * @param toUser   　接收人
      * @throws javax.mail.MessagingException
      */
-    public static void sendHtml(String host, int port, String userName, String password,  String formName, String title, String content, String[] toUser){
+    public static void sendHtml(String host, int port, String userName, String password, String formName, String title, String content, String[] toUser) {
         JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();
         // 设定mail server
         senderImpl.setHost(host);
@@ -51,20 +69,20 @@ public class EmailUtiles {
         MimeMessage mailMessage = senderImpl.createMimeMessage();
 
         try {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage,true,"UTF-8");
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true, "UTF-8");
 
             try {
                 // 设置收件人，寄件人
                 messageHelper.setTo(toUser);
                 try {
-                    messageHelper.setFrom(userName,formName);
+                    messageHelper.setFrom(userName, formName);
                 } catch (UnsupportedEncodingException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 messageHelper.setSubject(title);
                 // true 表示启动HTML格式的邮件
-                messageHelper.setText(content,true);
+                messageHelper.setText(content, true);
             } catch (javax.mail.MessagingException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
