@@ -55,7 +55,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
 
         String password = user.getPassword();//数据库密码
-        ByteSource credentialsSalt = ByteSource.Util.bytes(userName);//盐用户名唯一
+        ByteSource credentialsSalt = ByteSource.Util.bytes(user.getUserName());//盐用户名唯一
 
         SimpleAuthenticationInfo info = null;
         info = new SimpleAuthenticationInfo(user, password, credentialsSalt, getName());
