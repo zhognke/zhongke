@@ -2,15 +2,14 @@ package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.util.Date;
 
-
+/**
+ * 邮箱服务器表
+ */
 @Data
 public class MsendMail implements Serializable {
     @NotNull(message = "id参数不能为空", groups = UserValidator.UpDate.class)

@@ -1,7 +1,6 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.MsendMail;
-import com.example.busniess.entity.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public interface MsendMailDao {
     /**
-     * 名字：新增用户
+     * 名字：新增邮箱服务器
      *
      * @param msendMail
      * @return
@@ -19,7 +18,7 @@ public interface MsendMailDao {
     public Boolean insertUser(MsendMail msendMail);
 
     /**
-     * 删除用户
+     * 删除邮箱服务器
      *
      * @return
      */
@@ -33,7 +32,7 @@ public interface MsendMailDao {
     public List<MsendMail> selectAll();
 
     /**
-     * 修改用户信息
+     * 修改邮箱服务器
      *
      * @return
      */

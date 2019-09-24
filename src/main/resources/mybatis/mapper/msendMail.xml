@@ -19,8 +19,8 @@
         </if>
     </sql>
 
-<!--更新用户信息-->
-    <update id="updateUser" parameterType="msendMail">
+    <!--更新邮箱服务器信息-->
+    <update id="updateMail" parameterType="msendMail">
         UPDATE `msend_mail`
         <set>
             <include refid="msendMail_sql"></include>
