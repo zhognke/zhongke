@@ -24,23 +24,40 @@ public class AllException {
 
     /**
      * 登录拦截
+     *
      * @param e
-     * @return
+     * @return UnauthorizedException
      */
     @ExceptionHandler(ShiroException.class)
     public ReturnResult loginError(ShiroException e) {
+
         if (e instanceof UnknownAccountException) {
             return new ReturnResult(CodeMsg.USER_NOT_EXSIS);//用户不存在
         } else if (e instanceof IncorrectCredentialsException) {
             return new ReturnResult(CodeMsg.WRONG_PASSWORD);//密码错误
-        }else if(e instanceof UnauthorizedException){
+        } else if (e instanceof UnauthorizedException) {
             return new ReturnResult(CodeMsg.NOT_HAVE_LIMITS);//没有权限
         }
         return new ReturnResult(CodeMsg.SERVER_ERROR);//默认异常
     }
 
+//
+//    @ExceptionHandler(UnknownAccountException.class)
+//    public ReturnResult shiroAccountError(UnknownAccountException e) {
+//        return new ReturnResult(CodeMsg.USER_NOT_EXSIS);//用户不存在
+//    }
+//
+
+//
+//    @ExceptionHandler( UnauthorizedException.class)
+//    public ReturnResult shiroUnauthorizedError(UnauthorizedException e) {
+//        return new ReturnResult(CodeMsg.NOT_HAVE_LIMITS);//没有权限
+//    }
+
+
     /**
      * 自定义异常
+     *
      * @param e
      * @return
      */
@@ -52,7 +69,8 @@ public class AllException {
 
     /**
      * 参数校验异常
-     * @param ConstraintViolationException
+     *
+     * @param
      * @return
      */
     @ExceptionHandler({BindException.class})
@@ -63,32 +81,35 @@ public class AllException {
         return ReturnResult.erro(CodeMsg.BIND_ERROR.fillArgs(msg));
     }
 
-@ExceptionHandler({ConstraintViolationException.class})
-public ReturnResult parameterValidator(ConstraintViolationException e) {
-    Set<ConstraintViolation<?>> errors = e.getConstraintViolations();
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ReturnResult parameterValidator(ConstraintViolationException e) {
+        Set<ConstraintViolation<?>> errors = e.getConstraintViolations();
 
-String message=errors.iterator().next().getMessage();
-  CodeMsg codeMsg=new CodeMsg(500104,message);
-    return ReturnResult.erro(codeMsg);
-}
+        String message = errors.iterator().next().getMessage();
+        CodeMsg codeMsg = new CodeMsg(500104, message);
+        return ReturnResult.erro(codeMsg);
+    }
+
     /**
      * 邮件异常
+     *
      * @param e
      * @return
      */
     @ExceptionHandler({MessagingException.class})
-    public ReturnResult emailValidator(MessagingException e){
+    public ReturnResult emailValidator(MessagingException e) {
         return ReturnResult.erro(CodeMsg.EMAIL_ERROR);
 
     }
 
     /**
      * 验证码异常
+     *
      * @param e
      * @return IOException
      */
     @ExceptionHandler(IOException.class)
-    public ReturnResult codeException(IOException e){
+    public ReturnResult codeException(IOException e) {
 
         return ReturnResult.erro(CodeMsg.File_ERROR);
     }

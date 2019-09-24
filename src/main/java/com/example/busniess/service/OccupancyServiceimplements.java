@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,11 +26,18 @@ public class OccupancyServiceimplements implements OccupancyService {
      * @param occupancy
      * @return
      */
+    @Transactional
     public Boolean addOccupancy(Occupancy occupancy) {
-//1.先插入主表
+        //1.先插入主表
         //2.插入附表
         if (occupancyDao.insertOccupancy(occupancy)) {
-            return imageAddressDao.insertImageAddress(occupancy.getId(), occupancy.getImgAddress());
+          List<ImageAddress> i=  occupancy.getImgAddress();
+          for (ImageAddress img :i){
+              img.setOId(occupancy.getId());
+
+          }
+
+            return imageAddressDao.insertImageAddress(i);
         } else {
             return false;
         }
@@ -58,6 +66,7 @@ public class OccupancyServiceimplements implements OccupancyService {
      * @return
      */
     public Boolean upDateStatue(Integer statue, Integer id) {
+
         return occupancyDao.updateStatue(statue, id);
     }
 
@@ -65,6 +74,7 @@ public class OccupancyServiceimplements implements OccupancyService {
      * 跟新发布状态
      */
     public Boolean upDateKstatue(Integer kStatue, Integer id) {
+
         return occupancyDao.updateKstatue(kStatue, id);
     }
 
@@ -77,5 +87,20 @@ public class OccupancyServiceimplements implements OccupancyService {
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
     }
+
+
+    /**
+     * 查看自己发布的
+     */
+
+    public  PageInfo selectMyOccupancy(String userName,Integer pageNum, Integer pagesize){
+        PageHelper.startPage(pageNum, pagesize);
+        List<Occupancy> o = occupancyDao.selectMyOccupancy(userName);
+        PageInfo pageInfo = new PageInfo(o);
+        return pageInfo;
+    }
+
+
+
 
 }

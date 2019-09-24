@@ -2,6 +2,7 @@ package com.example.busniess.dao;
 
 import com.example.busniess.entity.ImageAddress;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -15,7 +16,7 @@ public interface ImageAddressDao {
      * @return
      * INSERT INTO `imageaddress` (`oid`, `imgaddress`) VALUES ('1', '22121')
      */
-    public  boolean insertImageAddress(Integer oId,List<String> imageAddress);
+    public  boolean insertImageAddress( List<ImageAddress> imageAddress);
 
 
     /**

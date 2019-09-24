@@ -12,7 +12,7 @@ public interface OccupancyDao {
      *
      * @return
      */
-    @Select("SELECT * FROM occupancy ORDER BY creattime DESC")
+    @Select("SELECT * FROM occupancy o INNER JOIN imageaddress i ON o.id=i.oid  ORDER BY creattime DESC")
     public List<Occupancy> selectAllOccupancy();
 
     /**
@@ -45,12 +45,12 @@ public interface OccupancyDao {
      * @param id
      * @return
      */
-    @Select("SELECT * FROM occupancy WHERE id=#{id}")
+    @Select("SELECT * FROM occupancy o INNER JOIN imageaddress i ON o.id =i.oid AND o.id=#{id}")
     public Occupancy selectOneOccupancy(Integer id);
 
     /**
-     * 根据条件搜索
-     *
+     * 根据条件搜索id
+     *id
      * @param occupancy
      * @return
      */

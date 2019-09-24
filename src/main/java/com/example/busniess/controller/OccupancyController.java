@@ -24,11 +24,6 @@ import java.util.List;
 public class OccupancyController {
     @Resource
     OccupancyService occupancyServiceimplements;
-    @RequestMapping("/encro")
-    public String encro(@RequestParam("files")  List files){
-        System.out.println("hello"+files);
-        return "ok";
-    }
 
     /**
      * 新建入住成果
@@ -39,10 +34,10 @@ public class OccupancyController {
     public ReturnResult addOccupancy(@Validated({UserValidator.InSet.class}) Occupancy occupancy){
 
         if(occupancyServiceimplements.addOccupancy(occupancy)) {
-          return  ReturnResult.success();
-      }else {
-          return ReturnResult.erro(CodeMsg.SERVER_ERROR);
-      }
+            return  ReturnResult.success();
+        }else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
 
     }
     /**
@@ -50,20 +45,26 @@ public class OccupancyController {
      */
     @RequestMapping("/delectOccupancy")
     public  ReturnResult delectOccupancy(Integer id){
-    if(occupancyServiceimplements.delectOccupancy(id)) {
-        return ReturnResult.success();
-    }   else {
-        return ReturnResult.erro(CodeMsg.SERVER_ERROR);
-    }
+        if(occupancyServiceimplements.delectOccupancy(id)) {
+            return ReturnResult.success();
+        }   else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
     }
 
     /**
-     * 查看自己发布的
+     * 查看自己发布的科技成果
+     * @param userName//用户姓名
+     * @param pageNumber//第几页
+     * @param pageSize//显示多少
+     * @return
      */
-//    public ReturnResult examineMyOccupancy(String userName){
-//
-//
-//    }
+    @RequestMapping("/examineMyOccupancy")
+    public ReturnResult examineMyOccupancy(String userName,Integer pageNumber,Integer pageSize){
+        PageInfo o=occupancyServiceimplements.selectMyOccupancy(userName,pageNumber,pageSize);
+        return ReturnResult.success(o);
+
+    }
 
     /**
      *显示所有能显示的内容
@@ -73,8 +74,8 @@ public class OccupancyController {
      */
     @RequestMapping("/selectOnShowOccupancy")
     public  ReturnResult selectOnShowOccupancy(Integer pageNum, Integer pagesize ){
-   PageInfo pageInfo=occupancyServiceimplements.selectOnShowOccupancy(pageNum,pagesize);
-   return ReturnResult.success(pageInfo);
-}
+        PageInfo pageInfo=occupancyServiceimplements.selectOnShowOccupancy(pageNum,pagesize);
+        return ReturnResult.success(pageInfo);
+    }
 
 }

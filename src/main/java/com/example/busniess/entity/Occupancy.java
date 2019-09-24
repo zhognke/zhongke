@@ -43,7 +43,7 @@ public class Occupancy implements Serializable {
     private Integer statue;//入住状态
 
     @Valid
-    private List<String> imgAddress;//图片地址
+    private List<ImageAddress> imgAddress;//图片地址
 
 
 }

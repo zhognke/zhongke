@@ -1,6 +1,7 @@
 package com.example.busniess.service;
 
 import com.example.busniess.entity.User;
+import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -23,12 +24,15 @@ public class MyShiroRealm extends AuthorizingRealm {
      * @return
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection)throws ShiroException {
         User user = (User) principalCollection.getPrimaryPrincipal();//获取对象
+        if(user==null){
+            throw  new UnknownAccountException();
+        }
 
         Set<String> set=userServiceImplements.findMyRole(user.getId());//查询当前用户的角色
         if(user.getUserName().contains("admin")){
-         set=userServiceImplements.findAllRole();//vip赋予全部角色
+            set=userServiceImplements.findAllRole();//vip赋予全部角色
 
         }
 
@@ -46,7 +50,7 @@ public class MyShiroRealm extends AuthorizingRealm {
      * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws ShiroException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String userName = upToken.getUsername();//获取用户名
         User user = userServiceImplements.findUserByName(userName);//根据名字获取用户对象

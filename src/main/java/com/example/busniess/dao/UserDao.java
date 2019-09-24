@@ -72,7 +72,7 @@ public interface UserDao {
      * @return
      */
 
-    @Select("SELECT r.rolename FROM `user` u LEFT JOIN `user_role` ur ON u.id=ur.uid LEFT JOIN `roler`  r ON ur.rid=r.id AND  r.state=1  AND u.id=#{id}")
+    @Select("SELECT r.rolename FROM `user` u INNER JOIN `user_role` ur ON u.id=ur.uid INNER JOIN `roler`  r ON ur.rid=r.id AND  r.state=1  AND u.id=#{id}")
     public Set<String> findRole(Integer id);
 
 

@@ -28,6 +28,22 @@ public interface OccupancyService {
      * @return
      */
     Boolean upDateKstatue(Integer kStatue,Integer id);
+
+    /**
+     * 查看可发布的科技成果入住
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
     PageInfo selectOnShowOccupancy(Integer pageNum, Integer pagesize);
+
+    /**
+     * 查看自己发布的
+     * @param userName
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
+    PageInfo selectMyOccupancy(String userName,Integer pageNum, Integer pagesize);
 
 }
