@@ -23,6 +23,7 @@ public class CodeMsg {
     public static CodeMsg CODE_NOTBLANK_ERROR  = new CodeMsg(500112, "邮件验证码不能为空");
     public static CodeMsg CODE_CHECK_ERROR  = new CodeMsg(500113, "邮件验证码验证失败");
     public static CodeMsg EMAIL_Have_EXIST  = new CodeMsg(500114, "该邮箱已注册");
+    public static CodeMsg File_ERROR=new CodeMsg(500115,"文件上传错误!");
     private Integer code;
     private String msg;
 

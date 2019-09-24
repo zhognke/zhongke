@@ -85,10 +85,11 @@ String message=errors.iterator().next().getMessage();
     /**
      * 验证码异常
      * @param e
-     * @return
+     * @return IOException
      */
     @ExceptionHandler(IOException.class)
     public ReturnResult codeException(IOException e){
-        return ReturnResult.erro(CodeMsg.CODE_ERROR);
+
+        return ReturnResult.erro(CodeMsg.File_ERROR);
     }
 }

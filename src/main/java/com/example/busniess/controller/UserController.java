@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
@@ -57,8 +58,9 @@ public class UserController {
                                           required = false) Boolean remb) throws ShiroException {
         Subject subject = SecurityUtils.getSubject();//获取subject对象
         if (subject.isAuthenticated()) {
-            return ReturnResult.success();
-        }
+              User user = userServiceImplements.findUserByName(userName);
+        return ReturnResult.success(user.getUserName());
+       }
         UsernamePasswordToken up = new UsernamePasswordToken(userName, password);
 
         subject.login(up);
@@ -76,7 +78,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/sendCode")
-    public ReturnResult sendCode(HttpSession session,String email){
+    public ReturnResult sendCode(HttpSession session,@NotBlank(message = "邮箱buneng为空")@Email(message = "邮箱格式不能为空") String email){
         String peopleCode = Md5Utiles.getNum(6);
         User user = new User();
         user.setEmail(email);
@@ -100,7 +102,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/checkCode")
-    public ReturnResult checkCode(HttpSession session, String code){
+    public ReturnResult checkCode(HttpSession session, @NotBlank(message = "验证码不能为空") String code){
         Object obj = session.getAttribute("REGISTER_CODE_SESSION");
         User user = (User)obj;
         if(user!=null){
