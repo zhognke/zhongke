@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.DemandsDao">
+
+    <resultMap type="com.example.busniess.entity.DemandsEntity" id="demandsMap">
+        <result property="id" column="id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="demandType" column="demand_type"/>
+        <result property="cooperationType" column="cooperation_type"/>
+        <result property="demandIndustry" column="demand_industry"/>
+        <result property="demandIndustryDetail" column="demand_industry_detail"/>
+        <result property="demandOutline" column="demand_outline"/>
+        <result property="demandContent" column="demand_content"/>
+        <result property="expectedResult" column="expected_result"/>
+        <result property="city" column="city"/>
+        <result property="district" column="district"/>
+        <result property="contact" column="contact"/>
+        <result property="phoneNum" column="phone_num"/>
+        <result property="email" column="email"/>
+        <result property="preInvestmentAmount" column="pre_investment_amount"/>
+        <result property="endDate" column="end_date"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
+        <result property="approvalStatus" column="approval_status"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="demands_sql">
+        <if test="companyName!=null and companyName!=''">
+            `company_name`=#{companyName},
+        </if>
+        <if test="demandType!=null and demandType!=''">
+            `demand_type`=#{demandType},
+        </if>
+        <if test="cooperationType!=null and cooperationType!=''">
+            `cooperation_type`=#{cooperationType},
+        </if>
+        <if test="demandIndustry!=null and demandIndustry!=''">
+            `demand_industry`=#{demandIndustry},
+        </if>
+        <if test="demandIndustryDetail!=null and demandIndustryDetail!=''">
+            `demand_industry_detail`=#{demandIndustryDetail},
+        </if>
+        <if test="demandOutline!=null and demandOutline!=''">
+            `demand_outline`=#{demandOutline},
+        </if>
+        <if test="demandContent!=null and demandContent!=''">
+            `demand_content`=#{demandContent},
+        </if>
+        <if test="expectedResult!=null and expectedResult!=''">
+            `expected_result`=#{expectedResult},
+        </if>
+        <if test="city!=null and city!=''">
+            `city`=#{city},
+        </if>
+        <if test="district!=null and district!=''">
+            `district`=#{district},
+        </if>
+        <if test="contact!=null and contact!=''">
+            `contact`=#{contact},
+        </if>
+        <if test="phoneNum!=null and phoneNum!=''">
+            `phone_num`=#{phoneNum},
+        </if>
+        <if test="email!=null and email!=''">
+            `email`=#{email},
+        </if>
+        <if test="preInvestmentAmount!=null and preInvestmentAmount!=''">
+            `preInvestmentAmount`=#{preInvestmentAmount},
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            `end_date`=#{endDate},
+        </if>
+        <if test="createTime!=null and createTime!=''">
+            `create_time`=#{createTime},
+        </if>
+        <if test="updateTime!=null and updateTime!=''">
+            `update_time`=#{updateTime},
+        </if>
+        <if test="status!=null and status!=''">
+            `status`=#{status},
+        </if>
+        <if test="approvalStatus!=null and approvalStatus!=''">
+            `approval_status`=#{approvalStatus},
+        </if>
+        <if test="remark!=null and remark!=''">
+            `remark`=#{remark}
+        </if>
+    </sql>
+
+    <select id="search" parameterType="demandsEntity" resultMap="demandsMap">
+        SELECT `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status` FROM `demands`
+        where status = 0 and approval_status = 1
+        <if test="demandIndustry!=null and demandIndustry!=''">
+            and `demand_industry`=#{demandIndustry}
+        </if>
+        <if test="cooperationType!=null and cooperationType!=''">
+            and `cooperation_type`=#{cooperationType}
+        </if>
+        <if test="demandType!=null and demandType!=''">
+            and `demand_type`=#{demandType}
+        </if>
+    </select>
+
+    <select id="getCount" parameterType="demandsEntity">
+        SELECT count(id) FROM `demands`
+        where status = 0 and approval_status = 1
+        <if test="demandIndustry!=null and demandIndustry!=''">
+            and `demand_industry`=#{demandIndustry}
+        </if>
+        <if test="cooperationType!=null and cooperationType!=''">
+            and `cooperation_type`=#{cooperationType}
+        </if>
+        <if test="demandType!=null and demandType!=''">
+            and `demand_type`=#{demandType}
+        </if>
+    </select>
+
+    <update id="updateDemands" parameterType="demandsEntity">
+        UPDATE `demands`
+        <set>
+            <include refid="demands_sql"></include>
+        </set>
+        WHERE id=#{id}
+    </update>
+</mapper>
