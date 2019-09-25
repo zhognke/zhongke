@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
 @RequestMapping("/occupancy")
+@Validated
 public class OccupancyController {
     @Resource
     OccupancyService occupancyServiceimplements;
@@ -32,7 +35,6 @@ public class OccupancyController {
      */
     @RequestMapping("/addOccupancy")
     public ReturnResult addOccupancy(@Validated({UserValidator.InSet.class}) Occupancy occupancy){
-
         if(occupancyServiceimplements.addOccupancy(occupancy)) {
             return  ReturnResult.success();
         }else {
@@ -60,7 +62,7 @@ public class OccupancyController {
      * @return
      */
     @RequestMapping("/examineMyOccupancy")
-    public ReturnResult examineMyOccupancy(String userName,Integer pageNumber,Integer pageSize){
+    public ReturnResult examineMyOccupancy(@NotBlank(message = "传入值不能为空") String userName,@Min(value = 1,message = "传入值必须是数字且不能小于1") Integer pageNumber,@Min(value = 1,message = "传入值必须是数字且不能小于1") Integer pageSize){
         PageInfo o=occupancyServiceimplements.selectMyOccupancy(userName,pageNumber,pageSize);
         return ReturnResult.success(o);
 
@@ -73,7 +75,7 @@ public class OccupancyController {
      * @return
      */
     @RequestMapping("/selectOnShowOccupancy")
-    public  ReturnResult selectOnShowOccupancy(Integer pageNum, Integer pagesize ){
+    public  ReturnResult selectOnShowOccupancy(@Min(value = 1,message = "传入值必须是数字且不能小于1") Integer pageNum, @Min(value = 1,message = "传入值必须是数字且不能小于1")Integer pagesize ){
         PageInfo pageInfo=occupancyServiceimplements.selectOnShowOccupancy(pageNum,pagesize);
         return ReturnResult.success(pageInfo);
     }
