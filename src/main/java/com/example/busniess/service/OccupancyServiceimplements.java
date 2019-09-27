@@ -72,11 +72,11 @@ public class OccupancyServiceimplements implements OccupancyService {
      */
     @Transactional
     public Boolean upDateStatue(Integer statue, Integer id, String userName, Integer roleId) {
-        //1.更新审核状态
+
         if (occupancyDao.updateStatue(statue, id)) {
          return    userDao.authorization(roleId,userName);
         }
-        //2.给用户添加角色
+
         return false;
     }
 
