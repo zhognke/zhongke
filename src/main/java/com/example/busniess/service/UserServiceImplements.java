@@ -119,13 +119,13 @@ public class UserServiceImplements implements UserService {
     }
 
     /**
-     * 找到自己的角色
+     * 根据用户名查询自己的角色
      *
-     * @param id
+     * @param userName
      * @return
      */
-    public Set<String> findMyRole(Integer id) {
-        return userDao.findRole(id);
+    public Set<String> findMyRole(String  userName) {
+        return userDao.findRole(userName);
     }
 
     /**

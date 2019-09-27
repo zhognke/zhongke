@@ -2,11 +2,13 @@ package com.example.busniess.service;
 
 import com.example.busniess.dao.ImageAddressDao;
 import com.example.busniess.dao.OccupancyDao;
+import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.mail.imap.protocol.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ public class OccupancyServiceimplements implements OccupancyService {
     OccupancyDao occupancyDao;
     @Autowired
     ImageAddressDao imageAddressDao;
+    @Autowired
+    UserDao userDao;
 
     /**
      * 新建科技成果入住
@@ -60,14 +64,20 @@ public class OccupancyServiceimplements implements OccupancyService {
 
     /**
      * 更新审核状态
-     *
-     * @param statue //审核的状态
-     * @param id     //id号
+     * @param statue
+     * @param id
+     * @param userName
+     * @param roleId
      * @return
      */
-    public Boolean upDateStatue(Integer statue, Integer id) {
-
-        return occupancyDao.updateStatue(statue, id);
+    @Transactional
+    public Boolean upDateStatue(Integer statue, Integer id, String userName, Integer roleId) {
+        //1.更新审核状态
+        if (occupancyDao.updateStatue(statue, id)) {
+         return    userDao.authorization(roleId,userName);
+        }
+        //2.给用户添加角色
+        return false;
     }
 
     /**

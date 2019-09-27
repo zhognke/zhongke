@@ -30,7 +30,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw  new UnknownAccountException();
         }
 
-        Set<String> set=userServiceImplements.findMyRole(user.getId());//查询当前用户的角色
+        Set<String> set=userServiceImplements.findMyRole(user.getUserName());//查询当前用户的角色
         if(user.getUserName().contains("admin")){
             set=userServiceImplements.findAllRole();//vip赋予全部角色
 

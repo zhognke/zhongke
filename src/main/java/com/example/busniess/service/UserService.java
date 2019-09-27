@@ -18,7 +18,7 @@ public interface UserService {
 
     Boolean modifiUser(User user);
 
-    Set<String> findMyRole(Integer id);
+    Set<String> findMyRole(String userName);
 
     Set<String> findAllRole();
 

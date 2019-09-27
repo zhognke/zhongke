@@ -1,10 +1,7 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Set;
@@ -68,12 +65,12 @@ public interface UserDao {
     /**
      * 查询当前用户所有的角色
      *
-     * @param id
+     * @param userName  用户名
      * @return
      */
 
-    @Select("SELECT r.rolename FROM `user` u INNER JOIN `user_role` ur ON u.id=ur.uid INNER JOIN `roler`  r ON ur.rid=r.id AND  r.state=1  AND u.id=#{id}")
-    public Set<String> findRole(Integer id);
+    @Select("SELECT r.rolename FROM `user` u INNER JOIN `user_role` ur ON u.id=ur.uid INNER JOIN `roler`  r ON ur.rid=r.id AND  r.state=1  AND u.username=#{}")
+    public Set<String> findRole(String userName);
 
 
     /**
@@ -81,4 +78,16 @@ public interface UserDao {
      */
     @Select("SELECT `rolename` FROM `roler` WHERE state=1")
     public Set<String> findAllRole();
+
+    //INSERT INTO `user_role` (`rid`, `username`) VALUES ('3', '6')
+
+    /**
+     * 给用户授权
+     *  @param rid
+     * @param userName
+     * @return
+     */
+    @Select("INSERT INTO `user_role` (`rid`, `username`) VALUES (#{rid}, #{userName})")
+    public Boolean   authorization(@Param("rid") Integer rid ,@Param("userName")String userName);
+
 }

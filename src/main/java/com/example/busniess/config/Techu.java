@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Techu {
+    /**
+     * 设置浏览器url中包含特出字符
+     * @return
+     */
     @Bean
     public ConfigurableServletWebServerFactory webServerFactory() {
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
