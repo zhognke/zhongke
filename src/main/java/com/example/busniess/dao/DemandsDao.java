@@ -81,8 +81,8 @@ public interface DemandsDao {
      * @param id
      * @return
      */
-    @Update("update `demands` set `approval_status`=#{approvalStatus},`update_time`=now() where `id` =#{id}")
-    public boolean updateDemandsApprovalStatus(@Param("approvalStatus") int approvalStatus,@Param("id") int id);
+    @Update("update `demands` set `approval_status`=#{approvalStatus},`approval_opinion`=#{approvalOpinion},`update_time`=now() where `id` =#{id}")
+    public boolean updateDemandsApprovalStatus(@Param("approvalStatus") int approvalStatus,@Param("approvalOpinion") String approvalOpinion,@Param("id") int id);
 
 
     /**
@@ -114,5 +114,17 @@ public interface DemandsDao {
             "#{preInvestmentAmount},#{endDate},#{createTime},#{updateTime},#{remark},#{status},#{approvalStatus})")
 	public boolean insert(DemandsEntity demandsEntity);
 
+    /**
+     * 企业需求行业占比统计
+     * @return
+     */
+    @Select("SELECT count(demand_industry) counts,demand_industry as demandIndustry FROM `demands` where status =0 and approval_status = 1 group by demand_industry")
+    public List<DemandsEntity> demandsIndustryProp();
 
+    /**
+     * 企业需求增长趋势
+     * @return
+     */
+    @Select("SELECT count(create_time) as counts,DATE_FORMAT(create_time,'%Y/%m') as companyName FROM `demands` where status =0 and approval_status = 1 group by DATE_FORMAT(create_time,'%y/%m')")
+    public List<DemandsEntity> demandsRiseTrend();
 }

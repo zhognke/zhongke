@@ -37,12 +37,20 @@ public interface DemandsService {
     public List<DemandsEntity> selectByStatus(int status);
 
     /**
-     * 筛选查询(sql在mapper文件)
+     * 筛选查询(用户端)
      *
      * @param demandsEntity
      * @return
      */
     public List<DemandsEntity> search(DemandsEntity demandsEntity);
+
+    /**
+     * 筛选查询(管理端)
+     *
+     * @param demandsEntity
+     * @return
+     */
+    public List<DemandsEntity> searchForManager(DemandsEntity demandsEntity);
 
     /**
      * 获取总条数(sql在mapper文件)
@@ -53,13 +61,22 @@ public interface DemandsService {
     public int getCount(DemandsEntity demandsEntity);
 
     /**
-     * 分页查询(前端页面)
+     * 分页查询(用户端)
      * @param demandsEntity
      * @param pageNum   当前页
      * @param pagesize  每页显示条数
      * @return
      */
     public PageInfo showByPage(DemandsEntity demandsEntity, int pageNum, int pagesize);
+
+    /**
+     * 分页查询(用户端)
+     * @param demandsEntity
+     * @param pageNum   当前页
+     * @param pagesize  每页显示条数
+     * @return
+     */
+    public PageInfo showByPageForManager(DemandsEntity demandsEntity, int pageNum, int pagesize);
 
     /**
      * 修改需求(sql在mapper文件)
@@ -84,7 +101,7 @@ public interface DemandsService {
      * @param id
      * @return
      */
-    public boolean updateDemandsApprovalStatus(int approvalStatus,int id);
+    public boolean updateDemandsApprovalStatus(int approvalStatus,String approvalOpinion,int id);
 
     /**
      * 根据id查找需求(详情)
@@ -109,7 +126,15 @@ public interface DemandsService {
      * @return
      */
     public boolean insert(DemandsEntity demandsEntity);
-
-
+    /**
+     * 企业需求行业占比统计
+     * @return
+     */
+    public List<DemandsEntity> demandsIndustryProp();
+    /**
+     * 企业需求增长趋势
+     * @return
+     */
+    public List<DemandsEntity> demandsRiseTrend();
 }
 

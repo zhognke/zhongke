@@ -4,6 +4,8 @@ import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.DemandsService;
+import com.example.busniess.utiles.EchartsEntity;
+import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import java.util.*;
 
 
 /**
@@ -37,8 +39,27 @@ public class DemandsController {
      * @return
      */
     @RequestMapping("/showByPage")
-    public ReturnResult showByPage(DemandsEntity demandsEntity,int pageNum,int pageSize){
+    public ReturnResult showByPage(DemandsEntity demandsEntity,Integer pageNum,Integer pageSize){
+        if(pageNum==null||pageSize==null){
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
         PageInfo pageInfo = demandsService.showByPage(demandsEntity,pageNum,pageSize);
+        return ReturnResult.success(pageInfo);
+    }
+
+    /**
+     * 分页展示,可根据条件筛选(管理端)
+     * @param demandsEntity
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/showByPageForManager")
+    public ReturnResult showByPageForManager(DemandsEntity demandsEntity,Integer pageNum,Integer pageSize){
+        if(pageNum==null||pageSize==null){
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
+        PageInfo pageInfo = demandsService.showByPageForManager(demandsEntity,pageNum,pageSize);
         return ReturnResult.success(pageInfo);
     }
 
@@ -48,21 +69,16 @@ public class DemandsController {
      * @return
      */
     @RequestMapping("/getDemandsByID")
-    public ReturnResult getDemandsByID(int id){
+    public ReturnResult getDemandsByID(Integer id){
+        if(id==null){
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
         DemandsEntity demandsEntity = demandsService.getByID(id);
-        return ReturnResult.success(demandsEntity);
-    }
-    /**
-     * 分页展示,可根据条件筛选(管理端端)
-     * @param demandsEntity
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    @RequestMapping("/showByPageForManager")
-    public ReturnResult showByPageForManager(DemandsEntity demandsEntity,int pageNum,int pageSize){
-        PageInfo pageInfo = demandsService.showByPage(demandsEntity,pageNum,pageSize);
-        return ReturnResult.success(pageInfo);
+        if(demandsEntity!=null){
+            return ReturnResult.success(demandsEntity);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }
     }
 
     /**
@@ -71,7 +87,7 @@ public class DemandsController {
      * @return
      */
     @PostMapping("/addDemands")
-    public ReturnResult addDemands(DemandsEntity demandsEntity){
+    public ReturnResult addDemands(@Validated({UserValidator.InSet.class}) DemandsEntity demandsEntity){
         if(demandsEntity.getCreateTime()==null){
             demandsEntity.setCreateTime(new Date());
         }
@@ -96,8 +112,11 @@ public class DemandsController {
      * @param id
      * @return
      */
-    @RequestMapping(value="delDemands",method = {RequestMethod.DELETE,RequestMethod.GET})
-    public ReturnResult delDemands(int id){
+    @RequestMapping(value="/delDemands",method = {RequestMethod.DELETE,RequestMethod.GET})
+    public ReturnResult delDemands(Integer id){
+        if(id==null){
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
         if(demandsService.deleteDemandsByID(id)){
             return ReturnResult.success();
         }else{
@@ -110,7 +129,7 @@ public class DemandsController {
      * @param demandsEntity
      * @return
      */
-    @RequestMapping(value="updateDemands",method = {RequestMethod.POST})
+    @RequestMapping(value="/updateDemands",method = {RequestMethod.POST})
     public ReturnResult updateDemands(DemandsEntity demandsEntity){
         if(demandsService.updateDemands(demandsEntity)){
             return ReturnResult.success();
@@ -125,8 +144,11 @@ public class DemandsController {
      * @param id
      * @return
      */
-    @PostMapping("updateDemandsStatus")
-    public ReturnResult updateDemandsStatus(int status,int id){
+    @PostMapping("/updateDemandsStatus")
+    public ReturnResult updateDemandsStatus(Integer status,Integer id){
+        if(id==null||status==null){
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
         if(demandsService.updateDemandsStatus(status,id)){
             return ReturnResult.success();
         }else{
@@ -140,12 +162,68 @@ public class DemandsController {
      * @param id
      * @return
      */
-    @PostMapping("updateDemandsApprovalStatus")
-    public ReturnResult updateDemandsApprovalStatus(int approvalStatus,int id){
-        if(demandsService.updateDemandsApprovalStatus(approvalStatus,id)){
+    @PostMapping("/updateDemandsApprovalStatus")
+    public ReturnResult updateDemandsApprovalStatus(Integer approvalStatus,String approvalOpinion,Integer id){
+        if(id==null||approvalStatus==null){
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
+        if(approvalStatus==1){  //审批通过后清空审批意见
+            approvalOpinion="";
+        }
+        if(demandsService.updateDemandsApprovalStatus(approvalStatus,approvalOpinion,id)){
             return ReturnResult.success();
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
     }
+
+    /**
+     * 企业需求行业占比统计(饼图)
+     * @return data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
+     */
+    @RequestMapping(value="/demandsIndustryProp",method = {RequestMethod.POST,RequestMethod.GET})
+    public ReturnResult demandsIndustryProp(){
+        List<DemandsEntity> list = demandsService.demandsIndustryProp();
+        if(list.isEmpty()||"[]".equals(list.toString())){
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }else{
+            Map<String, Object> map=new HashMap<String, Object>();
+            List<EchartsEntity> sdata = new ArrayList<>();
+            String[] ldata = new String[list.size()];
+            for(int i =0;i<list.size();i++){
+                EchartsEntity echartsEntity = new EchartsEntity();
+                ldata[i]=list.get(i).getDemandIndustry();
+                echartsEntity.setName(list.get(i).getDemandIndustry());
+                echartsEntity.setValue(Double.valueOf(String.valueOf(list.get(i).getCounts())));
+                sdata.add(echartsEntity);
+            }
+            map.put("sdata",sdata);
+            map.put("ldata",ldata);
+            return ReturnResult.success(map);
+        }
+    }
+
+    /**
+     * 企业需求增长趋势
+     * @return  data.xdata x轴坐标数据,即xAxis.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
+     */
+    @RequestMapping(value="/demandsRiseTrend",method = {RequestMethod.POST,RequestMethod.GET})
+    public ReturnResult demandsRiseTrend(){
+        List<DemandsEntity> list = demandsService.demandsRiseTrend();
+        if(list.isEmpty()||"[]".equals(list.toString())){
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }else{
+            Map<String, Object> map=new HashMap<String, Object>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for(int i =0;i<list.size();i++){
+                xdata[i]=list.get(i).getCompanyName();
+                sdata[i]=list.get(i).getCounts();
+            }
+            map.put("sdata",sdata);
+            map.put("xdata",xdata);
+            return ReturnResult.success(map);
+        }
+    }
+
 }
