@@ -69,7 +69,7 @@ public interface UserDao {
      * @return
      */
 
-    @Select("SELECT r.rolename FROM `user` u INNER JOIN `user_role` ur ON u.id=ur.uid INNER JOIN `roler`  r ON ur.rid=r.id AND  r.state=1  AND u.username=#{}")
+    @Select("SELECT r.rolename FROM `user` u INNER JOIN `user_role` ur ON u.id=ur.uid INNER JOIN `roler`  r ON ur.rid=r.id AND  r.state=1  AND u.username=#{userName}")
     public Set<String> findRole(String userName);
 
 
@@ -79,12 +79,12 @@ public interface UserDao {
     @Select("SELECT `rolename` FROM `roler` WHERE state=1")
     public Set<String> findAllRole();
 
-    //INSERT INTO `user_role` (`rid`, `username`) VALUES ('3', '6')
+
 
     /**
      * 给用户授权
-     *  @param rid
-     * @param userName
+     *  @param rid//角色id
+     * @param userName//用户名
      * @return
      */
     @Select("INSERT INTO `user_role` (`rid`, `username`) VALUES (#{rid}, #{userName})")

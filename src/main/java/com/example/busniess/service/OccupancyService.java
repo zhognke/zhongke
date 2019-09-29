@@ -30,6 +30,16 @@ public interface OccupancyService {
     Boolean upDateKstatue(Integer kStatue,Integer id);
 
     /**
+     * 更新发布状态
+
+     * @param userName
+     * @param roleId
+     * @return
+     */
+
+    Boolean upDateStatue(String userName, Integer roleId);
+
+    /**
      * 查看可发布的科技成果入住
      * @param pageNum
      * @param pagesize

@@ -24,6 +24,8 @@ public class CodeMsg {
     public static CodeMsg CODE_CHECK_ERROR  = new CodeMsg(500113, "邮件验证码验证失败");
     public static CodeMsg EMAIL_Have_EXIST  = new CodeMsg(500114, "该邮箱已注册");
     public static CodeMsg File_ERROR=new CodeMsg(500115,"文件上传错误!");
+    public static CodeMsg AUDITOR_ERROR=new CodeMsg(500116,"授权失败!");
+    public static CodeMsg ISSUE_ERROR=new CodeMsg(500117,"更新状态失败!");
     private Integer code;
     private String msg;
 

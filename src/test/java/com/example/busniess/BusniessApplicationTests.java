@@ -1,9 +1,6 @@
 package com.example.busniess;
 
-import com.example.busniess.dao.BusinessCenterDao;
-import com.example.busniess.dao.ImageAddressDao;
-import com.example.busniess.dao.OccupancyDao;
-import com.example.busniess.dao.UserDao;
+import com.example.busniess.dao.*;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
@@ -44,8 +41,8 @@ public class BusniessApplicationTests {
     OccupancyServiceimplements occupancyServiceimplements;
     @Autowired
     ImageAddressDao imageAddressDao;
-
-
+    @Autowired
+    RejectDao rejectDao;
     @Autowired
     private JavaMailSender mailSender;
 
@@ -59,16 +56,10 @@ public class BusniessApplicationTests {
      */
     @Test
     public void contextLoads() throws MessagingException {
-        List a=new ArrayList();
-        ImageAddress i1=new ImageAddress();
-        ImageAddress i2=new ImageAddress();
-        ImageAddress i3=new ImageAddress();
-        a.add(i1);
-        a.add(i2);
-        a.add(i3);
+        System.out.println( rejectDao.selectBussinessAndReject("我"));
 
 
-        System.out.println(imageAddressDao.insertImageAddress(a));
+
 
     }
 

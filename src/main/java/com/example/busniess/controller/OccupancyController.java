@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -79,5 +80,42 @@ public class OccupancyController {
         PageInfo pageInfo=occupancyServiceimplements.selectOnShowOccupancy(pageNum,pagesize);
         return ReturnResult.success(pageInfo);
     }
+
+//    /**
+//     *审核
+//     * @param id    //企业的id号
+//     * @param userName //用户名
+//     * @param roleId //角色id
+//     * @return
+//     */
+//    @RequestMapping("/auditor")
+//    public  ReturnResult auditor(@NotNull(message = "企业认证id不能为空") Integer id, @NotBlank(message = "用户名不能为空") String userName,@NotNull(message = "角色id不能为空") Integer roleId){
+//
+//
+//       if(occupancyServiceimplements.upDateStatue(1,id,userName,roleId)) {
+//           return ReturnResult.success();
+//       }else {
+//           return ReturnResult.erro(CodeMsg.AUDITOR_ERROR);
+//       }
+//
+//
+//    }
+
+    /**
+     * 更新发布状态
+     * @param kStatue
+     * @param id
+     * @return
+     */
+@RequestMapping("/upKstatue")
+    public ReturnResult upKstatue(@NotNull(message = "跟新状态不能为空") Integer kStatue,@NotNull(message = "发布成果的id不能为空") Integer id){
+       if(occupancyServiceimplements.upDateKstatue(kStatue,id)){
+         return ReturnResult.success();
+       } else {
+           return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
+       }
+    }
+
+
 
 }

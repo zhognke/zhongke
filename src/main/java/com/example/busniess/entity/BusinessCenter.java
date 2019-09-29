@@ -25,9 +25,10 @@ public class BusinessCenter implements Serializable {
     private String address;//附件地址 14
     private String agentPerson;//代理人姓名 15
     private String apPersionCode;//代理人身份证号  16
-    private String state;//审核状态 17
+    private Integer statue;//审核状态 17 0审核中 1审核通过 2审核驳回
     private Date subTime;//提交时间
-    private Date upTime;//审核时间
+    private Date upTime;//更新时间
+    private Reject reject;//驳回理由
 
 
 }

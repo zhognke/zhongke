@@ -64,20 +64,19 @@ public class OccupancyServiceimplements implements OccupancyService {
 
     /**
      * 更新审核状态
-     * @param statue
-     * @param id
+
      * @param userName
      * @param roleId
      * @return
      */
-    @Transactional
-    public Boolean upDateStatue(Integer statue, Integer id, String userName, Integer roleId) {
 
-        if (occupancyDao.updateStatue(statue, id)) {
+    public Boolean upDateStatue( String userName, Integer roleId) {
+
+
          return    userDao.authorization(roleId,userName);
-        }
 
-        return false;
+
+
     }
 
     /**

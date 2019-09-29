@@ -1,10 +1,7 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.BusinessCenter;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,13 +18,13 @@ public interface BusinessCenterDao {
             "`scale`, `country`, `city`, " +
             "`district`, `legalperson`, `persioncode`, " +
             "`accessorydesc`, `address`, `agentperson`," +
-            " `appersioncode`, `subtime`) VALUES (" +
+            " `appersioncode`,`statue` `subtime`) VALUES (" +
             "#{uName}, #{identification}, #{societyCode}," +
             " #{codeStatue}, #{firmName}, #{industry}, " +
             "#{scale},#{country}, #{city}, " +
             "#{district}, #{legalPerson}, #{persionCode}, " +
             "#{accessoryDesc},#{address}, #{agentPerson}," +
-            "#{apPersionCode},Now())")
+            "#{apPersionCode},0,Now())")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
 
     /**
@@ -41,11 +38,12 @@ public interface BusinessCenterDao {
 
     /**
      * 修改审核状态
-     *
+     * @param statue//修改审核状态 0审核中 1 审核通过 2审核驳回
+     * @param id   //企业信息id
      * @return
      */
-    @Update("UPDATE `businesscenter` SET `state`=#{state}, `uptime`=NOW() WHERE (`id`=#{id}) ")
-    public Boolean upStatue(Map map);
+    @Update("UPDATE `businesscenter` SET `statue`=#{statue}, `uptime`=NOW() WHERE (`id`=#{id}) ")
+    public Boolean upStatue(@Param("statue") Integer statue, @Param("id") Integer id);
 
 
     /**
@@ -59,6 +57,14 @@ public interface BusinessCenterDao {
      */
     @Select("SELECT * FROM businesscenter  ORDER BY subtime DESC")
     public List<BusinessCenter> selectAllBusinessCenter();
+
+    /**
+     * 根据状态查询
+     * @param statue
+     * @return
+     */
+    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} ORDER BY subtime DESC")
+    public List<BusinessCenter> selectBusinessCenterByStatue(Integer statue);
 
     /**
      * 查看单个
