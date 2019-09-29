@@ -21,5 +21,10 @@ public interface BusinessCenterService {
      */
     Boolean updateAuditStatue( Integer id, Integer rid, String userName,Integer statue,Integer reId);
 
-
+    /**
+     * 驳回
+     * @param reject
+     * @return
+     */
+    Boolean rejectAudit(Reject reject);
 }

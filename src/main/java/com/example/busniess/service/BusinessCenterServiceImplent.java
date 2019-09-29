@@ -69,7 +69,17 @@ public class BusinessCenterServiceImplent implements BusinessCenterService {
        }
     }
 
+    /**
+     * 根据状态查看
+     * @param userName
+     * @param statue
+     * @return
+     */
+    public  BusinessCenter selectMyBusinessCenter(String userName, Integer statue){
 
+    BusinessCenter businessCenter=   rejectDao.selectBussinessAndReject(userName,statue);
+    return businessCenter;
+}
 
 
 }

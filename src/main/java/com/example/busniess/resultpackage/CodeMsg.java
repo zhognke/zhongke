@@ -28,6 +28,7 @@ public class CodeMsg {
     public static CodeMsg DATA_EMPTY = new CodeMsg(500117, "暂无数据");
     public static CodeMsg AUDITOR_ERROR = new CodeMsg(500118, "授权失败!");
     public static CodeMsg ISSUE_ERROR = new CodeMsg(500119, "更新状态失败!");
+    public static CodeMsg SUMIT_ERROR = new CodeMsg(500120, "提交失败!");
     private Integer code;
     private String msg;
 

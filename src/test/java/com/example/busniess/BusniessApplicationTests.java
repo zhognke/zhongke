@@ -45,7 +45,8 @@ public class BusniessApplicationTests {
     RejectDao rejectDao;
     @Autowired
     private JavaMailSender mailSender;
-
+    @Autowired
+    NewsInformationDao newsInformationDao;
 
     @Value("${spring.mail.username}")
     private String from;
@@ -56,9 +57,9 @@ public class BusniessApplicationTests {
      */
     @Test
     public void contextLoads() throws MessagingException {
-        System.out.println( rejectDao.selectBussinessAndReject("我"));
 
 
+        System.out.println(newsInformationDao.selectNewsInformationByCategory("33"));
 
 
     }
