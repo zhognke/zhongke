@@ -33,6 +33,13 @@ public class DemandsServiceImplements implements DemandsService {
 
     @Override
     public List<DemandsEntity> search(DemandsEntity demandsEntity) {
+        demandsEntity.setStatus(0);
+        demandsEntity.setApprovalStatus(1);
+        return demandsDao.search(demandsEntity);
+    }
+
+    @Override
+    public List<DemandsEntity> searchForManager(DemandsEntity demandsEntity) {
         return demandsDao.search(demandsEntity);
     }
 
@@ -50,6 +57,16 @@ public class DemandsServiceImplements implements DemandsService {
      */
     @Override
     public PageInfo showByPage(DemandsEntity demandsEntity, int pageNum, int pagesize) {
+        demandsEntity.setStatus(0);
+        demandsEntity.setApprovalStatus(1);
+        PageHelper.startPage(pageNum, pagesize);
+        List<DemandsEntity> list = demandsDao.search(demandsEntity);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo showByPageForManager(DemandsEntity demandsEntity, int pageNum, int pagesize) {
         PageHelper.startPage(pageNum, pagesize);
         List<DemandsEntity> list = demandsDao.search(demandsEntity);
         PageInfo pageInfo = new PageInfo(list);
@@ -69,8 +86,8 @@ public class DemandsServiceImplements implements DemandsService {
 
 
     @Override
-    public boolean updateDemandsApprovalStatus(int approvalStatus,int id) {
-        return demandsDao.updateDemandsApprovalStatus(approvalStatus,id);
+    public boolean updateDemandsApprovalStatus(int approvalStatus,String approvalOpinion,int id) {
+        return demandsDao.updateDemandsApprovalStatus(approvalStatus,approvalOpinion,id);
     }
 
     @Override
@@ -86,5 +103,15 @@ public class DemandsServiceImplements implements DemandsService {
     @Override
     public boolean insert(DemandsEntity demandsEntity) {
         return demandsDao.insert(demandsEntity);
+    }
+
+    @Override
+    public List<DemandsEntity> demandsIndustryProp(){
+        return demandsDao.demandsIndustryProp();
+    }
+
+    @Override
+    public List<DemandsEntity> demandsRiseTrend(){
+        return demandsDao.demandsRiseTrend();
     }
 }
