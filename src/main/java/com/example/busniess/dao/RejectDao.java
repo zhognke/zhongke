@@ -30,11 +30,11 @@ public interface RejectDao {
     /**
      *查询企业认证信息以及驳回原因
      */
-    @Select("SELECT * from businesscenter WHERE uname=#{userName}")
+    @Select("SELECT * from businesscenter WHERE uname=#{userName} AND statue=#{statue}")
     @Results({
             @Result(property = "reject", column = "id", one = @One(select = "com.example.busniess.dao.RejectDao.selectReject"))
     })
-    public BusinessCenter selectBussinessAndReject(String userName);
+    public BusinessCenter selectBussinessAndReject(@Param("userName") String userName,@Param("statue") Integer statue);
 
 
 }

@@ -31,14 +31,21 @@ public class BusinessCenterServiceImplent implements BusinessCenterService {
 
     /**
      * 审核通过给用户授权
-     *  1审核通过0 审核中2 审核未通过
-     * @param id 企业信息的id
-     * @param rid 角色id
+     * @param id  //企业认证id
+     * @param rid  角色id
      * @param userName 用户名
+     * @param statue 审核状态
+     * @param reId 驳回理由id
      * @return
      */
 
-    public Boolean updateAuditStatue( Integer id, Integer rid, String userName) {
+    public Boolean updateAuditStatue( Integer id, Integer rid, String userName,Integer statue,Integer reId) {
+
+       if(statue==2){
+
+           rejectDao.removeReject(reId);
+       }
+
         if (businessCenterDao.upStatue(1 ,id)) {
    return userDao.authorization(rid,userName);
         }else {
@@ -61,5 +68,8 @@ public class BusinessCenterServiceImplent implements BusinessCenterService {
            return false;
        }
     }
+
+
+
 
 }
