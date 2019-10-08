@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 @RestController
 @RequestMapping("/bussinessCenter")
@@ -19,6 +24,8 @@ public class BusinessCenterController {
 
     @Resource
     BusinessCenterService businessCenterServiceImplent;
+
+
     /**
      * 提交认证
      */
