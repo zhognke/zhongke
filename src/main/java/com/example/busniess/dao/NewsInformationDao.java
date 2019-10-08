@@ -1,16 +1,14 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.NewsInformation;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 public interface NewsInformationDao {
     /**
      * 增加新闻资讯
+     * @param newsInformation
      */
     @Insert("INSERT INTO `newsinformation` (`uname`, `" +
             "category`, `title`, `cover`, `detail`, `submittime`) VALUES " +
@@ -35,6 +33,7 @@ public interface NewsInformationDao {
      * 查看新闻资讯
      */
     @Select("SELECT * FROM newsinformation ORDER BY submittime DESC")
+
     public List<NewsInformation> selectNewsInformation();
 
     /**
@@ -44,5 +43,8 @@ public interface NewsInformationDao {
      * @return
      */
     @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY submittime DESC")
+//    @Results({
+//            @Result(property = "newsImageAddress",column = "id",one = @One(select = "com.example.busniess.dao.NewsImageAddressDao.selectNewsImageAddress"))
+//    })
     public List<NewsInformation> selectNewsInformationByCategory(String category);
 }
