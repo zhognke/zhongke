@@ -20,4 +20,6 @@ public class NewsInformation implements Serializable {
     private Date submittime;//提交时间
     private Date upTime;// 更改时间
 
+
+
 }
