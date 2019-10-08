@@ -39,7 +39,7 @@ public interface ImageAddressDao {
      * @param id
      * @return
      */
-    @Update("UPDATE `imageaddress` SET `imgaddress`=#{imgAddress} WHERE (`id`=#{id})")
+    @Update("UPDATE `imageaddress` SET `img`=#{img} WHERE (`id`=#{id})")
    public Boolean upDateImageAddress(String imgAddress,Integer id);
 
     /**
