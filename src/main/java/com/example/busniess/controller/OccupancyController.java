@@ -26,6 +26,7 @@ import java.util.List;
 @RequestMapping("/occupancy")
 @Validated
 public class OccupancyController {
+
     @Resource
     OccupancyService occupancyServiceimplements;
 
@@ -76,7 +77,7 @@ public class OccupancyController {
      * @return
      */
     @RequestMapping("/selectOnShowOccupancy")
-    public  ReturnResult selectOnShowOccupancy(@Min(value = 1,message = "传入值必须是数字且不能小于1") Integer pageNum, @Min(value = 1,message = "传入值必须是数字且不能小于1")Integer pagesize ){
+    public  ReturnResult selectOnShowOccupancy(@NotNull(message = "参数不能为空")@Min(value = 1,message = "传入值必须是数字且不能小于1") Integer pageNum, @NotNull(message = "参数不能为空")@Min(value = 1,message = "传入值必须是数字且不能小于1")Integer pagesize ){
         PageInfo pageInfo=occupancyServiceimplements.selectOnShowOccupancy(pageNum,pagesize);
         return ReturnResult.success(pageInfo);
     }
@@ -115,7 +116,14 @@ public class OccupancyController {
            return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
        }
     }
+/**
+ * 根据行业显示科技成果
+ */
+@RequestMapping("/selectByIndustry")
+public ReturnResult selectByIndustry(Occupancy occupancy,Integer pageNum, @NotNull(message = "参数不能为空")@Min(value = 1,message = "传入值必须是数字且不能小于1")Integer pagesize){
 
+    return ReturnResult.success(occupancyServiceimplements.selectOccupancyByIndustry(occupancy,pageNum,pagesize));
+}
 
 
 }

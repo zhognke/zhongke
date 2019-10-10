@@ -80,7 +80,7 @@ public interface OccupancyDao {
      * id
      * 增加科技成果
      * 增加一个科技发布
-     *
+     *0 1 2
      * @param occupancy
      * @return
      */
@@ -117,5 +117,12 @@ public interface OccupancyDao {
      */
     @Update("UPDATE `occupancy` SET `statue`=#{staue},audittime=NOW() WHERE =#{id}")
     public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id);
+
+    /**
+     * 根据行业寻
+     * @param occupancy
+     * @return
+     */
+    public List<Occupancy> selectOccupancyByIndustry(Occupancy occupancy);
 
 }

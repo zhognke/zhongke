@@ -109,7 +109,13 @@ public class OccupancyServiceimplements implements OccupancyService {
         return pageInfo;
     }
 
-
+    @Override
+    public PageInfo selectOccupancyByIndustry(Occupancy occupancy,Integer pageNum, Integer pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<Occupancy> o = occupancyDao.selectOccupancyByIndustry(occupancy);
+        PageInfo pageInfo = new PageInfo(o);
+        return pageInfo;
+    }
 
 
 }

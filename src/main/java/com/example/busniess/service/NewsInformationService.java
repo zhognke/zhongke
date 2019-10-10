@@ -1,6 +1,7 @@
 package com.example.busniess.service;
 
 import com.example.busniess.entity.NewsInformation;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -30,13 +31,20 @@ public interface NewsInformationService {
      * 产看所有新闻资讯
      * @return
      */
-    public List<NewsInformation> selectAllNewsInformation();
+    public PageInfo selectAllNewsInformation(Integer pageNum,Integer pagesize);
 
     /**
      * 按照类别查看新闻资讯
      * @param category
      * @return
      */
-    public List<NewsInformation> selectNewsInformationByCategory(String category);
+    public PageInfo selectNewsInformationByCategory(String category, Integer pageNum, Integer pagesize);
+
+    /**
+     * 查看单个新闻资讯
+     * @param id
+     * @return
+     */
+    public NewsInformation selectOneNewsInformation(Integer id);
 
 }

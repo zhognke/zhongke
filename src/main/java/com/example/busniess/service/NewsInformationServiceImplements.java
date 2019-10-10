@@ -2,6 +2,9 @@ package com.example.busniess.service;
 
 import com.example.busniess.dao.NewsInformationDao;
 import com.example.busniess.entity.NewsInformation;
+import com.example.busniess.entity.Occupancy;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +32,26 @@ public class NewsInformationServiceImplements implements NewsInformationService 
     }
 
     @Override
-    public List<NewsInformation> selectAllNewsInformation() {
-        return newsInformationDao.selectNewsInformation();
+    public PageInfo selectAllNewsInformation(Integer pageNum,Integer pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<NewsInformation> o = newsInformationDao.selectNewsInformation();
+        PageInfo pageInfo = new PageInfo(o);
+        return pageInfo;
+//        return newsInformationDao.selectNewsInformation();
     }
 
     @Override
-    public List<NewsInformation> selectNewsInformationByCategory(String category) {
-        return newsInformationDao.selectNewsInformationByCategory(category);
+    public PageInfo selectNewsInformationByCategory(String category,Integer pageNum,Integer pagesize) {
+
+        PageHelper.startPage(pageNum, pagesize);
+        List<NewsInformation> o = newsInformationDao.selectNewsInformationByCategory(category);
+        PageInfo pageInfo = new PageInfo(o);
+        return pageInfo;
+//        return newsInformationDao.selectNewsInformationByCategory(category);
+    }
+
+    @Override
+    public NewsInformation selectOneNewsInformation(Integer id) {
+        return newsInformationDao.selectOneNewsInformation(id);
     }
 }

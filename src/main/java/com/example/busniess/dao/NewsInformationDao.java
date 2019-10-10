@@ -30,7 +30,7 @@ public interface NewsInformationDao {
     public Boolean udateNewsInformation(NewsInformation newsInformation);
 
     /**
-     * 查看新闻资讯
+     * 查看所有新闻资讯
      */
     @Select("SELECT * FROM newsinformation ORDER BY submittime DESC")
 
@@ -43,8 +43,15 @@ public interface NewsInformationDao {
      * @return
      */
     @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY submittime DESC")
-//    @Results({
-//            @Result(property = "newsImageAddress",column = "id",one = @One(select = "com.example.busniess.dao.NewsImageAddressDao.selectNewsImageAddress"))
-//    })
+
     public List<NewsInformation> selectNewsInformationByCategory(String category);
+
+    /**
+     * 查看单个新闻资讯
+     * @param id
+     * @return
+     */
+    @Select("SELECT * FROM newsinformation WHERE id=#{id}")
+    public NewsInformation selectOneNewsInformation(Integer id);
+
 }
