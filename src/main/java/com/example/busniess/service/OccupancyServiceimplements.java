@@ -3,6 +3,7 @@ package com.example.busniess.service;
 import com.example.busniess.dao.ImageAddressDao;
 import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.UserDao;
+import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.resultpackage.ReturnResult;
@@ -13,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class OccupancyServiceimplements implements OccupancyService {
@@ -35,11 +39,11 @@ public class OccupancyServiceimplements implements OccupancyService {
         //1.先插入主表
         //2.插入附表
         if (occupancyDao.insertOccupancy(occupancy)) {
-          List<ImageAddress> i=  occupancy.getImgAddress();
-          for (ImageAddress img :i){
-              img.setOId(occupancy.getId());
+            List<ImageAddress> i = occupancy.getImgAddress();
+            for (ImageAddress img : i) {
+                img.setOId(occupancy.getId());
 
-          }
+            }
 
             return imageAddressDao.insertImageAddress(i);
         } else {
@@ -64,17 +68,16 @@ public class OccupancyServiceimplements implements OccupancyService {
 
     /**
      * 更新审核状态
-
+     *
      * @param userName
      * @param roleId
      * @return
      */
 
-    public Boolean upDateStatue( String userName, Integer roleId) {
+    public Boolean upDateStatue(String userName, Integer roleId) {
 
 
-         return    userDao.authorization(roleId,userName);
-
+        return userDao.authorization(roleId, userName);
 
 
     }
@@ -102,7 +105,7 @@ public class OccupancyServiceimplements implements OccupancyService {
      * 查看自己发布的
      */
 
-    public  PageInfo selectMyOccupancy(String userName,Integer pageNum, Integer pagesize){
+    public PageInfo selectMyOccupancy(String userName, Integer pageNum, Integer pagesize) {
         PageHelper.startPage(pageNum, pagesize);
         List<Occupancy> o = occupancyDao.selectMyOccupancy(userName);
         PageInfo pageInfo = new PageInfo(o);
@@ -110,12 +113,63 @@ public class OccupancyServiceimplements implements OccupancyService {
     }
 
     @Override
-    public PageInfo selectOccupancyByIndustry(Occupancy occupancy,Integer pageNum, Integer pagesize) {
+    public PageInfo selectOccupancyByIndustry(Occupancy occupancy, Integer pageNum, Integer pagesize) {
         PageHelper.startPage(pageNum, pagesize);
         List<Occupancy> o = occupancyDao.selectOccupancyByIndustry(occupancy);
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
     }
+
+    /**
+     * 返回折线图
+     *
+     * @return
+     */
+
+    /**
+     * 折线图
+     * @return
+     */
+    public Echarts returnBrokenImg() {
+        Echarts echart = new Echarts();
+//        int cout = occupancyDao.countIndustry();//总数
+//        echart.setTotal(cout);
+        List<Map> list = occupancyDao.selectBrokenImg();//折线图
+        List a = new ArrayList();
+        List b = new ArrayList();
+        for (Map c : list) {
+            a.add(c.get("COUNT(industry)"));//行业的数量
+            b.add(c.get("DATE_FORMAT(creattime,'%Y年%m月')"));//时间
+
+        }
+        echart.setXdata(a);
+        echart.setYdata(b);
+
+        return echart;
+    }
+
+    /**
+     * 饼状图
+     * @return
+     */
+    public Echarts returnPieImg() {
+        Echarts echart = new Echarts();
+        int cout = occupancyDao.countIndustry();//总数
+        echart.setTotal(cout);
+        List<Map> list = occupancyDao.selectPieImg();//饼状图
+        List a = new ArrayList();
+        List b = new ArrayList();
+        for (Map c : list) {
+            a.add(c.get("COUNT(industry)"));//行业的数量
+            b.add(c.get("industry"));//行业名
+
+        }
+        echart.setXdata(a);
+        echart.setYdata(b);
+
+        return echart;
+    }
+
 
 
 }

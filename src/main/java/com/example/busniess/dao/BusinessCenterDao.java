@@ -38,8 +38,9 @@ public interface BusinessCenterDao {
 
     /**
      * 修改审核状态
+     *
      * @param statue//修改审核状态 0审核中 1 审核通过 2审核驳回
-     * @param id   //企业信息id
+     * @param id             //企业信息id
      * @return
      */
     @Update("UPDATE `businesscenter` SET `statue`=#{statue}, `uptime`=NOW() WHERE (`id`=#{id}) ")
@@ -60,6 +61,7 @@ public interface BusinessCenterDao {
 
     /**
      * 根据状态查询
+     *
      * @param statue
      * @return
      */
@@ -72,6 +74,12 @@ public interface BusinessCenterDao {
     @Select("SELECT * FROM businesscenter WHERE uname=#{uName} ORDER BY subtime DESC")
     public BusinessCenter selectOneBusinessCenter(String uName);
 
-
+    /**
+     * 根据名字查找企业名
+     * @param firmName
+     * @return
+     */
+    @Select("SELECT firmName FROM businesscenter WHERE firmName LIKE '%${value}%'")
+    public List<String> selectFirmName(String firmName);
 }
 

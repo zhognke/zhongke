@@ -4,6 +4,7 @@ import com.example.busniess.entity.Occupancy;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OccupancyDao {
 
@@ -43,14 +44,18 @@ public interface OccupancyDao {
      * 根据id 查询单个
      *
      * @param id
-     * @return
+     * @return imgAddress
      */
-    @Select("SELECT * FROM occupancy o INNER JOIN imageaddress i ON o.id =i.oid AND o.id=#{id}")
+    @Select("SELECT * FROM occupancy WHERE id=#{id}")
+    @Results({
+            @Result(property = "imgAddress", column = "id", one = @One(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress"))
+    })
     public Occupancy selectOneOccupancy(Integer id);
 
     /**
      * 根据条件搜索id
-     *id
+     * id
+     *
      * @param occupancy
      * @return
      */
@@ -80,7 +85,8 @@ public interface OccupancyDao {
      * id
      * 增加科技成果
      * 增加一个科技发布
-     *0 1 2
+     * 0 1 2
+     *
      * @param occupancy
      * @return
      */
@@ -119,10 +125,38 @@ public interface OccupancyDao {
     public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id);
 
     /**
-     * 根据行业寻
+     * 根据行业查询
+     *
      * @param occupancy
      * @return
      */
     public List<Occupancy> selectOccupancyByIndustry(Occupancy occupancy);
+
+    /**
+     * 查询饼状图
+     *
+     * @returnAND kstatue=1
+     */
+
+    @Select("SELECT COUNT(industry) , industry FROM occupancy WHERE " +
+            "statue=1 GROUP BY industry ")
+    public List<Map> selectPieImg();
+
+    /**
+     * 查询折线图
+     *
+     * @return
+     */
+    @Select("SELECT  COUNT(industry),DATE_FORMAT(creattime,'%Y年%m月') FROM occupancy WHERE  statue=1 GROUP BY DATE_FORMAT(creattime,'%Y年%m月')")
+    public List<Map> selectBrokenImg();
+
+    /**
+     * 统计总数
+     * @param
+     * @return
+     */
+    @Select("SELECT COUNT(industry) FROM occupancy WHERE statue=1")
+    public Integer countIndustry();
+
 
 }

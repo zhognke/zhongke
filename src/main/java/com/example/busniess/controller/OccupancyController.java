@@ -1,5 +1,7 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.dao.OccupancyDao;
+import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
@@ -29,6 +31,19 @@ public class OccupancyController {
 
     @Resource
     OccupancyService occupancyServiceimplements;
+    @Autowired
+    OccupancyDao occupancyDao;
+
+    /**
+     * 查询具体的科技成果
+     * @param id
+     * @return
+     */
+    @RequestMapping("/selectOneOccupancy")
+    public  ReturnResult selectOneOccupancy(@NotNull(message = "id不能为空") Integer id){
+        return ReturnResult.success(occupancyDao.selectOneOccupancy(id));
+    }
+
 
     /**
      * 新建入住成果
@@ -125,5 +140,26 @@ public ReturnResult selectByIndustry(Occupancy occupancy,Integer pageNum, @NotNu
     return ReturnResult.success(occupancyServiceimplements.selectOccupancyByIndustry(occupancy,pageNum,pagesize));
 }
 
+    /**
+     * 折线图
+     * @return
+     */
+    @RequestMapping("/selectBrokenImg")
+public ReturnResult selectBrokenImg(){
+    Echarts echarts=occupancyServiceimplements.returnBrokenImg();
+
+    return  ReturnResult.success(echarts);
+}
+
+    /**
+     * 饼状
+     * @return
+     */
+    @RequestMapping("/selectPieImg")
+    public ReturnResult selectPieImg(){
+        Echarts echarts=occupancyServiceimplements.returnPieImg();
+
+        return  ReturnResult.success(echarts);
+    }
 
 }

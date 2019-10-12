@@ -1,10 +1,12 @@
 package com.example.busniess.entity;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
 import com.example.busniess.validator.UserValidator;
 import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,13 +37,17 @@ public class Occupancy implements Serializable {
     private String city;//市
     @NotNull(message = "所属区不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String district;//区
+    @NotNull(message = "联系人姓名不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private  String linkMan;//联系人
+    @NotNull(message = "联系电话不能为空")
+    @Pattern(regexp = "((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}",message = "输入手机号码有误")
+    private Integer phoneNumber;//联系人电话
     private Data creatTime;//创建时间
     private Data stopTime;//停止发布时间（过期）
     private Data upTiem;//修改时间
     private Data auditTime;//审核时间
     private Integer kstatue;//用户的修改状态
     private Integer statue;//入住状态
-
     @Valid
     private List<ImageAddress> imgAddress;//图片地址
 

@@ -1,10 +1,12 @@
 package com.example.busniess.service;
 
+import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.Occupancy;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OccupancyService {
     /**
@@ -62,5 +64,9 @@ public interface OccupancyService {
      * @return
      */
     PageInfo selectOccupancyByIndustry(Occupancy occupancy,Integer pageNum, Integer pagesize);
+
+    Echarts returnBrokenImg();
+    Echarts returnPieImg();
+
 
 }

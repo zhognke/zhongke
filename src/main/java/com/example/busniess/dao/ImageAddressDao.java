@@ -44,11 +44,11 @@ public interface ImageAddressDao {
 
     /**
      *查看图片
-     * @param oId
+     * @param id
      * @return
      */
-    @Select("SELECT * FROM imageaddress WHERE oid=#{oId}")
-    public List<ImageAddress> selectimgAddress(Integer oId);
+    @Select("SELECT * FROM imageaddress WHERE oid=#{id}")
+    public List<ImageAddress> selectimgAddress(Integer id);
 
 
 
