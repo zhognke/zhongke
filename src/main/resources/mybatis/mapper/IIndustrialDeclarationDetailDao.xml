@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.IndustrialDeclarationDetailDao">
+
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.example.busniess.entity.IndustrialDeclarationDetailEntity" id="baseMap">
+        <result property="aid" column="aid"/>
+        <result property="declarationId" column="declaration_id"/>
+        <result property="projectType" column="project_type"/>
+        <result property="constructionNature" column="construction_nature"/>
+        <result property="minerals" column="minerals"/>
+        <result property="investmentSelfPrepare" column="investment_self_prepare"/>
+        <result property="investmentLoans" column="investment_loans"/>
+        <result property="investmentUsingForex" column="investment_using_forex"/>
+        <result property="totalInvestment" column="total_investment"/>
+        <result property="totalInvestmentSelfPrepare" column="total_investment_self_prepare"/>
+        <result property="totalInvestmentLoans" column="total_investment_loans"/>
+        <result property="projectedInvestment" column="projected_investment"/>
+        <result property="projectedSelfPrepare" column="projected_self_prepare"/>
+        <result property="projectedLoans" column="projected_loans"/>
+        <result property="newSalesRevenue" column="new_sales_revenue"/>
+        <result property="newProfits" column="new_profits"/>
+        <result property="newTax" column="new_tax"/>
+        <result property="newForex" column="new_forex"/>
+        <result property="energySaving" column="energy_saving"/>
+        <result property="co2EmissionReduction" column="CO2_emission_reduction"/>
+        <result property="waterConservation" column="water_conservation"/>
+        <result property="wasteUtilization" column="waste_utilization"/>
+        <result property="codEmissionReduction" column="COD_emission_reduction"/>
+        <result property="ammoniaNitrogenEmissionReduction" column="ammonia_nitrogen_emission_reduction"/>
+        <result property="noxEmissionReduction" column="NOx_emission_reduction"/>
+        <result property="vocsEmissionReduction" column="VOCs_emission_reduction"/>
+        <result property="so2EmissionReduction" column="SO2_emission_reduction"/>
+        <result property="otherEmissionReduction" column="other_emission_reduction"/>
+        <result property="socialBenefitsAnalysis" column="social_benefits_analysis"/>
+        <result property="remark" column="remark"/>
+        <result property="implementationInvestment" column="implementation_investment"/>
+        <result property="implementationLoans" column="implementation_loans"/>
+        <result property="fundraisingIntention" column="fundraising_intention"/>
+        <result property="privateEnterprise" column="private_enterprise"/>
+        <result property="totalEquipmentInvestment" column="total_equipment_investment"/>
+        <result property="equipmentNameNum" column="equipment_name_num"/>
+        <result property="projectedEquipment" column="projected_equipment"/>
+        <result property="currentYearInvestment" column="current_year_investment"/>
+        <result property="patentsDeclaration" column="patents_declaration"/>
+        <result property="patentsObtain" column="patents_obtain"/>
+        <result property="partner" column="partner"/>
+        <result property="productLaunchDate" column="product_launch_date"/>
+        <result property="provincialTechnologyCenter" column="provincial_technology_center"/>
+    </resultMap>
+
+    <sql id="columnNames">
+		aid,declaration_id,project_type,construction_nature,minerals,investment_self_prepare,investment_loans,investment_using_forex,total_investment,total_investment_self_prepare,total_investment_loans,projected_investment,projected_self_prepare,projected_loans,new_sales_revenue,new_profits,new_tax,new_forex,energy_saving,CO2_emission_reduction,water_conservation,waste_utilization,COD_emission_reduction,ammonia_nitrogen_emission_reduction,NOx_emission_reduction,VOCs_emission_reduction,SO2_emission_reduction,other_emission_reduction,social_benefits_analysis,remark,implementation_investment,implementation_loans,fundraising_intention,private_enterprise,total_equipment_investment,equipment_name_num,projected_equipment,current_year_investment,patents_declaration,patents_obtain,partner,product_launch_date,provincial_technology_center
+	</sql>
+
+    <sql id="addColumnNames">
+		declaration_id,project_type,construction_nature,minerals,investment_self_prepare,investment_loans,investment_using_forex,total_investment,total_investment_self_prepare,total_investment_loans,projected_investment,projected_self_prepare,projected_loans,new_sales_revenue,new_profits,new_tax,new_forex,energy_saving,CO2_emission_reduction,water_conservation,waste_utilization,COD_emission_reduction,ammonia_nitrogen_emission_reduction,NOx_emission_reduction,VOCs_emission_reduction,SO2_emission_reduction,other_emission_reduction,social_benefits_analysis,remark,implementation_investment,implementation_loans,fundraising_intention,private_enterprise,total_equipment_investment,equipment_name_num,projected_equipment,current_year_investment,patents_declaration,patents_obtain,partner,product_launch_date,provincial_technology_center
+	</sql>
+
+    <sql id="attrnames">
+		#{declarationId},#{projectType},#{constructionNature},#{minerals},#{investmentSelfPrepare},#{investmentLoans},#{investmentUsingForex},#{totalInvestment},#{totalInvestmentSelfPrepare},#{totalInvestmentLoans},#{projectedInvestment},#{projectedSelfPrepare},#{projectedLoans},#{newSalesRevenue},#{newProfits},#{newTax},#{newForex},#{energySaving},#{co2EmissionReduction},#{waterConservation},#{wasteUtilization},#{codEmissionReduction},#{ammoniaNitrogenEmissionReduction},#{noxEmissionReduction},#{vocsEmissionReduction},#{so2EmissionReduction},#{otherEmissionReduction},#{socialBenefitsAnalysis},#{remark},#{implementationInvestment},#{implementationLoans},#{fundraisingIntention},#{privateEnterprise},#{totalEquipmentInvestment},#{equipmentNameNum},#{projectedEquipment},#{currentYearInvestment},#{patentsDeclaration},#{patentsObtain},#{partner},#{productLaunchDate},#{provincialTechnologyCenter}
+    </sql>
+
+    <insert id="add" parameterType="com.example.busniess.entity.IndustrialDeclarationDetailEntity">
+        insert into industrial_declaration_detail (<include refid="addColumnNames"></include>)
+        values (<include refid="attrnames"></include>);
+    </insert>
+
+    <select id="getByDeclarationId" parameterType="Integer" resultMap="baseMap">
+        select <include refid="columnNames"></include> from industrial_declaration_detail where declaration_id =
+        #{declarationId}
+    </select>
+
+    <update id="update" parameterType="com.example.busniess.entity.IndustrialDeclarationDetailEntity">
+        update industrial_declaration_detail
+        <set>
+            <if test="projectType!=null and projectType!=''">
+                project_type=#{projectType},
+            </if>
+            <if test="constructionNature!=null and constructionNature!=''">
+                construction_nature=#{constructionNature},
+            </if>
+            <if test="minerals!=null and minerals!=''">
+                minerals=#{minerals},
+            </if>
+            <if test="investmentSelfPrepare!=null and investmentSelfPrepare!=''">
+                investment_self_prepare=#{investmentSelfPrepare},
+            </if>
+            <if test="investmentLoans!=null and investmentLoans!=''">
+                investment_loans=#{investmentLoans},
+            </if>
+            <if test="investmentUsingForex!=null and investmentUsingForex!=''">
+                investment_using_forex=#{investmentUsingForex},
+            </if>
+            <if test="totalInvestment!=null and totalInvestment!=''">
+                total_investment=#{totalInvestment},
+            </if>
+            <if test="totalInvestmentSelfPrepare!=null and totalInvestmentSelfPrepare!=''">
+                total_investment_self_prepare=#{totalInvestmentSelfPrepare},
+            </if>
+            <if test="totalInvestmentLoans!=null and totalInvestmentLoans!=''">
+                total_investment_loans=#{totalInvestmentLoans},
+            </if>
+            <if test="projectedInvestment!=null and projectedInvestment!=''">
+                projected_investment=#{projectedInvestment},
+            </if>
+            <if test="projectedSelfPrepare!=null and projectedSelfPrepare!=''">
+                projected_self_prepare=#{projectedSelfPrepare},
+            </if>
+            <if test="projectedLoans!=null and projectedLoans!=''">
+                projected_loans=#{projectedLoans},
+            </if>
+            <if test="newSalesRevenue!=null and newSalesRevenue!=''">
+                new_sales_revenue=#{newSalesRevenue},
+            </if>
+            <if test="newProfits!=null and newProfits!=''">
+                new_profits=#{newProfits},
+            </if>
+            <if test="newTax!=null and newTax!=''">
+                new_tax=#{newTax},
+            </if>
+            <if test="newForex!=null and newForex!=''">
+                new_forex=#{newForex},
+            </if>
+            <if test="energySaving!=null and energySaving!=''">
+                energy_saving=#{energySaving},
+            </if>
+            <if test="co2EmissionReduction!=null and co2EmissionReduction!=''">
+                CO2_emission_reduction=#{co2EmissionReduction},
+            </if>
+            <if test="waterConservation!=null and waterConservation!=''">
+                water_conservation=#{waterConservation},
+            </if>
+            <if test="wasteUtilization!=null and wasteUtilization!=''">
+                waste_utilization=#{wasteUtilization},
+            </if>
+            <if test="codEmissionReduction!=null and codEmissionReduction!=''">
+                COD_emission_reduction=#{codEmissionReduction},
+            </if>
+            <if test="ammoniaNitrogenEmissionReduction!=null and ammoniaNitrogenEmissionReduction!=''">
+                ammonia_nitrogen_emission_reduction=#{ammoniaNitrogenEmissionReduction},
+            </if>
+            <if test="noxEmissionReduction!=null and noxEmissionReduction!=''">
+                NOx_emission_reduction=#{noxEmissionReduction},
+            </if>
+            <if test="vocsEmissionReduction!=null and vocsEmissionReduction!=''">
+                VOCs_emission_reduction=#{vocsEmissionReduction},
+            </if>
+            <if test="so2EmissionReduction!=null and so2EmissionReduction!=''">
+                SO2_emission_reduction=#{so2EmissionReduction},
+            </if>
+            <if test="otherEmissionReduction!=null and otherEmissionReduction!=''">
+                other_emission_reduction=#{otherEmissionReduction},
+            </if>
+            <if test="socialBenefitsAnalysis!=null and socialBenefitsAnalysis!=''">
+                social_benefits_analysis=#{socialBenefitsAnalysis},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+            <if test="implementationInvestment!=null and implementationInvestment!=''">
+                implementation_investment=#{implementationInvestment},
+            </if>
+            <if test="implementationLoans!=null and implementationLoans!=''">
+                implementation_loans=#{implementationLoans},
+            </if>
+            <if test="fundraisingIntention!=null and fundraisingIntention!=''">
+                fundraising_intention=#{fundraisingIntention},
+            </if>
+            <if test="privateEnterprise!=null and privateEnterprise!=''">
+                private_enterprise=#{privateEnterprise},
+            </if>
+            <if test="totalEquipmentInvestment!=null and totalEquipmentInvestment!=''">
+                total_equipment_investment=#{totalEquipmentInvestment},
+            </if>
+            <if test="equipmentNameNum!=null and equipmentNameNum!=''">
+                equipment_name_num=#{equipmentNameNum},
+            </if>
+            <if test="projectedEquipment!=null and projectedEquipment!=''">
+                projected_equipment=#{projectedEquipment},
+            </if>
+            <if test="currentYearInvestment!=null and currentYearInvestment!=''">
+                current_year_investment=#{currentYearInvestment},
+            </if>
+            <if test="patentsDeclaration!=null and patentsDeclaration!=''">
+                patents_declaration=#{patentsDeclaration},
+            </if>
+            <if test="patentsObtain!=null and patentsObtain!=''">
+                patents_obtain=#{patentsObtain},
+            </if>
+            <if test="partner!=null and partner!=''">
+                partner=#{partner},
+            </if>
+            <if test="productLaunchDate!=null and productLaunchDate!=''">
+                product_launch_date=#{productLaunchDate},
+            </if>
+            <if test="provincialTechnologyCenter!=null and provincialTechnologyCenter!=''">
+                provincial_technology_center=#{provincialTechnologyCenter}
+            </if>
+        </set>
+        where aid = #{aid} or declaration_id = #{declarationId}
+    </update>
+
+    <delete id="realDeleteByDeclarationId" parameterType="Integer">
+        delete from industrial_declaration_detail where declaration_id = #{declarationId};
+    </delete>
+</mapper>
