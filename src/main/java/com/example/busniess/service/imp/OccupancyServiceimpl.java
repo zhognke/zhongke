@@ -1,4 +1,4 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.ImageAddressDao;
 import com.example.busniess.dao.OccupancyDao;
@@ -7,6 +7,7 @@ import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.resultpackage.ReturnResult;
+import com.example.busniess.service.OccupancyService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.mail.imap.protocol.ID;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class OccupancyServiceimplements implements OccupancyService {
+public class OccupancyServiceimpl implements OccupancyService {
     @Autowired
     OccupancyDao occupancyDao;
     @Autowired

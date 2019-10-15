@@ -14,8 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MyShiroRealm extends AuthorizingRealm {
-    @Resource(name = "userServiceImplements")
-    UserService userServiceImplements;
+    @Resource(name = "UserServiceImpl")
+    UserService UserServiceImpl;
 
     /**
      * 授权的方法
@@ -30,9 +30,9 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw  new UnknownAccountException();
         }
 
-        Set<String> set=userServiceImplements.findMyRole(user.getUserName());//查询当前用户的角色
+        Set<String> set=UserServiceImpl.findMyRole(user.getUserName());//查询当前用户的角色
         if(user.getUserName().contains("admin")){
-            set=userServiceImplements.findAllRole();//vip赋予全部角色
+            set=UserServiceImpl.findAllRole();//vip赋予全部角色
 
         }
 
@@ -53,7 +53,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws ShiroException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String userName = upToken.getUsername();//获取用户名
-        User user = userServiceImplements.findUserByName(userName);//根据名字获取用户对象
+        User user = UserServiceImpl.findUserByName(userName);//根据名字获取用户对象
         if (user == null) {
             throw new UnknownAccountException("用户不存在");
         }

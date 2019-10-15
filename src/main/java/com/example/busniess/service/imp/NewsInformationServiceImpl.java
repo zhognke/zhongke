@@ -1,8 +1,9 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.NewsInformationDao;
 import com.example.busniess.entity.NewsInformation;
 import com.example.busniess.entity.Occupancy;
+import com.example.busniess.service.NewsInformationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class NewsInformationServiceImplements implements NewsInformationService {
+public class NewsInformationServiceImpl implements NewsInformationService {
     @Autowired
     NewsInformationDao newsInformationDao;
 

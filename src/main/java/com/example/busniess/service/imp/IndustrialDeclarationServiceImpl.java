@@ -1,9 +1,10 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.IndustrialDeclarationDao;
 import com.example.busniess.dao.IndustrialDeclarationDetailDao;
 import com.example.busniess.entity.IndustrialDeclarationDetailEntity;
 import com.example.busniess.entity.IndustrialDeclarationEntity;
+import com.example.busniess.service.IndustrialDeclarationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;

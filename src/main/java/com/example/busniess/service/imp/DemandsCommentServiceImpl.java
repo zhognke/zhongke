@@ -1,7 +1,8 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.DemandsCommentDao;
 import com.example.busniess.entity.DemandsCommentEntity;
+import com.example.busniess.service.DemandsCommentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 @Service("demandsCommentService")
-public class DemandsCommentServiceImplements implements DemandsCommentService {
+public class DemandsCommentServiceImpl implements DemandsCommentService {
 
     @Autowired
     DemandsCommentDao demandsCommentDao;

@@ -1,14 +1,15 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.MsendMailDao;
 import com.example.busniess.entity.MsendMail;
+import com.example.busniess.service.MsendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MsendMailServiceImplements implements MsendMailService {
+public class MsendMailServiceImpl implements MsendMailService {
 
     @Autowired
     MsendMailDao msendMailDao;

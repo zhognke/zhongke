@@ -1,9 +1,10 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.User;
 import com.example.busniess.exception.MyException;
 import com.example.busniess.resultpackage.CodeMsg;
+import com.example.busniess.service.ForgetPassword;
 import com.example.busniess.utiles.EmailUtiles;
 import com.example.busniess.utiles.Md5Utiles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 @Service
-public class ForgetPasswordImplement implements ForgetPassword {
+public class ForgetPasswordImpl implements ForgetPassword {
 
     @Autowired
     UserDao userDao;

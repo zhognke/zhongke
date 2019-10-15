@@ -1,17 +1,18 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.dao.RejectDao;
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.Reject;
+import com.example.busniess.service.BusinessCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 @Service
-public class BusinessCenterServiceImplent implements BusinessCenterService {
+public class BusinessCenterServiceImpl implements BusinessCenterService {
     @Autowired
     UserDao userDao;
     @Autowired
@@ -42,7 +43,6 @@ public class BusinessCenterServiceImplent implements BusinessCenterService {
     public Boolean updateAuditStatue( Integer id, Integer rid, String userName,Integer statue,Integer reId) {
 
        if(statue==2){
-
            rejectDao.removeReject(reId);
        }
 

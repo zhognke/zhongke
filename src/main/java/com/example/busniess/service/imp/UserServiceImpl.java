@@ -1,9 +1,10 @@
-package com.example.busniess.service;
+package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.User;
 import com.example.busniess.exception.MyException;
 import com.example.busniess.resultpackage.CodeMsg;
+import com.example.busniess.service.UserService;
 import com.example.busniess.utiles.Md5Utiles;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class UserServiceImplements implements UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
 
