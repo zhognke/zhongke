@@ -1,7 +1,6 @@
 package com.example.busniess.utiles;
 
 import com.example.busniess.entity.MsendMail;
-import com.example.busniess.service.MsendMailServiceImplements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,11 +9,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Properties;
 
 @Component

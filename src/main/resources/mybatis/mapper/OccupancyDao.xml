@@ -7,8 +7,10 @@
             AND `industry`=#{industry}
         </if>
         <if test="spIndustries!=null and spIndustries!=''">
-            AND `spIndustries`=#{spIndustries}
+            AND `spindustries`=#{spIndustries}
+
         </if>
+
 
     </sql>
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultType="occupancy">
@@ -17,6 +19,7 @@
             statue=1 AND kstatue=1
             <include refid="OccupancyByIndustry_sql"></include>
         </where>
+        ORDER BY creattime DESC
 
     </select>
 </mapper>

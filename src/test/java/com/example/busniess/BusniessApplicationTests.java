@@ -1,30 +1,17 @@
 package com.example.busniess;
 
 import com.example.busniess.dao.*;
-import com.example.busniess.entity.BusinessCenter;
-import com.example.busniess.entity.ImageAddress;
-import com.example.busniess.entity.Occupancy;
-import com.example.busniess.entity.User;
-import com.example.busniess.service.OccupancyServiceimplements;
-import com.example.busniess.service.UserService;
-import com.example.busniess.service.UserServiceImplements;
-import com.example.busniess.utiles.EmailUtiles;
-import com.example.busniess.utiles.Md5Utiles;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
+import com.example.busniess.service.imp.OccupancyServiceimpl;
+import com.example.busniess.service.imp.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,11 +21,11 @@ public class BusniessApplicationTests {
 //	@Autowired
 //	UserDao userDao;
     @Autowired
-    UserServiceImplements userServiceImplements;
+    UserServiceImpl UserServiceImpl;
     @Autowired
     OccupancyDao occupancyDao;
     @Autowired
-    OccupancyServiceimplements occupancyServiceimplements;
+    OccupancyServiceimpl occupancyServiceimpl;
     @Autowired
     ImageAddressDao imageAddressDao;
     @Autowired
@@ -47,6 +34,8 @@ public class BusniessApplicationTests {
     private JavaMailSender mailSender;
     @Autowired
     NewsInformationDao newsInformationDao;
+    @Autowired
+   BusinessCenterDao businessCenterDao;
 
     @Value("${spring.mail.username}")
     private String from;
@@ -57,9 +46,7 @@ public class BusniessApplicationTests {
      */
     @Test
     public void contextLoads() throws MessagingException {
-
-
-        System.out.println(newsInformationDao.selectNewsInformationByCategory("33"));
+        System.out.println(occupancyDao.selectOneOccupancy(6));
 
 
     }
