@@ -92,14 +92,14 @@ public interface OccupancyDao {
      */
 
     @Insert("INSERT INTO `occupancy` (`username`, `namefirm`," +
-            "`resulttechnolo`, `describe`, " +
-            "`patennumber`, `serialnumber`," +
+            "`resulttechnolo`, `describe`,`patentname` ," +
+            "`patentnumber`, `serialnumber`," +
             " `industry`," +
             "`spindustries`, `country`," +
             "`city`, `district`," +
             "`creattime`,`kstatue`," +
             "`statue`) VALUES(#{userName},#{nameFirm},#{resultTechnolo}," +
-            "#{describe},#{patentNumber},#{serialNumber}," +
+            "#{describe},#{patentName},#{patentNumber},#{serialNumber}," +
             "#{industry},#{spIndustries}," +
             "#{country},#{city},#{district},NOW(),1" +
             ",0)")

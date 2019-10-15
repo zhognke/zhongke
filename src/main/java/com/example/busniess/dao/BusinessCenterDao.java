@@ -13,18 +13,23 @@ public interface BusinessCenterDao {
      * @param businessCenter
      * @return
      */
-    @Insert("INSERT INTO `businesscenter` ( `uname`, `identification`, `societycode`, " +
-            "`codeStatue`, `firmName`, `industry`, " +
-            "`scale`, `country`, `city`, " +
-            "`district`, `legalperson`, `persioncode`, " +
-            "`accessorydesc`, `address`, `agentperson`," +
-            " `appersioncode`,`statue` `subtime`) VALUES (" +
-            "#{uName}, #{identification}, #{societyCode}," +
-            " #{codeStatue}, #{firmName}, #{industry}, " +
-            "#{scale},#{country}, #{city}, " +
-            "#{district}, #{legalPerson}, #{persionCode}, " +
-            "#{accessoryDesc},#{address}, #{agentPerson}," +
-            "#{apPersionCode},0,Now())")
+    @Insert("INSERT INTO `businesscenter`" +
+            " (`uname`, `firmname`, `industry`, " +
+            "`typeEnterprise`, `scale`, `recorddate`, " +
+            "`registeredcapital`, `country`, `city`, " +
+            "`district`, `enterpriseprofile`," +
+            " `logo`, `identification`, `societycode`, " +
+            "`legalperson`, `persioncode`, `address`," +
+            " `phonenumber`, `agentperson`, `appersioncode`," +
+            " `statue`, `subtime`" +
+            ") VALUES (#{uName}, #{firmName}, #{industry}," +
+            " #{typeEnterprise}, #{scale},#{recordDate}," +
+            " #{registeredCapital}, #{country}, #{city}, " +
+            "#{district}, #{enterpriseProfile}, #{logo}, " +
+            "#{identification}, #{societyCode}, #{legalPerson}, #{persionCode}," +
+            " #{address}, #{phnoeNumber}, #{agentPerson}, #{apPersionCode}," +
+            " 0, NOW()" +
+            ")")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
 
     /**
@@ -43,21 +48,29 @@ public interface BusinessCenterDao {
      * @param id             //企业信息id
      * @return
      */
-    @Update("UPDATE `businesscenter` SET `statue`=#{statue}, `uptime`=NOW() WHERE (`id`=#{id}) ")
+    @Update("UPDATE `businesscenter` SET `statue`=#{statue}, `audittime`=NOW() WHERE (`id`=#{id}) ")
     public Boolean upStatue(@Param("statue") Integer statue, @Param("id") Integer id);
 
 
     /**
      * 修改审核信息
      */
-
+    @Update("UPDATE `businesscenter` SET `firmname`=#{firmName}, `industry`=#{industry}, " +
+            "`typeEnterprise`=#{typeEnterprise}, `scale`=#{scale}, " +
+            "`recorddate`=#{recordDate}, `registeredcapital`=#{registeredCapital}, " +
+            "`country`=#{country}, `city`=#{city}, `district`=#{district}, " +
+            "`enterpriseprofile`=#{enterpriseProfile}, `logo`=#{logo}, " +
+            "`identification`=#{identification}, `societycode`=#{societyCode}, " +
+            "`legalperson`=#{legalPerson}, `persioncode`=#{persionCode}, " +
+            "`address`=#{address}, `phonenumber`=#{phoneNumber}, `agentperson`=#{agentPerson}, " +
+            "`appersioncode`=#{apPersionCode},`uptime`=NOW() WHERE (`id`=#{id})")
     public Boolean updateBusinessCenter(BusinessCenter businessCenter);
 
     /**
      * 查看所有信息
      */
     @Select("SELECT * FROM businesscenter  ORDER BY subtime DESC")
-    public List<BusinessCenter> selectAllBusinessCenter();
+    public BusinessCenter selectAllBusinessCenter();
 
     /**
      * 根据状态查询
@@ -69,13 +82,14 @@ public interface BusinessCenterDao {
     public List<BusinessCenter> selectBusinessCenterByStatue(Integer statue);
 
     /**
-     * 查看单个
+     * 查看自己的
      */
     @Select("SELECT * FROM businesscenter WHERE uname=#{uName} ORDER BY subtime DESC")
-    public BusinessCenter selectOneBusinessCenter(String uName);
+    public List<BusinessCenter> selectOneBusinessCenter(String uName);
 
     /**
      * 根据名字查找企业名
+     *
      * @param firmName
      * @return
      */
