@@ -26,7 +26,7 @@ import java.net.URLConnection;
 public class BusinessCenterController {
 
     @Resource
-    BusinessCenterService businessCenterServiceImplent;
+    BusinessCenterService businessCenterServiceImpl;
     @Autowired
     BusinessCenterDao businessCenterDao;
 
@@ -46,7 +46,7 @@ public class BusinessCenterController {
      */
     @RequestMapping("/addAuthentication")
     public ReturnResult addAuthentication(@Validated() BusinessCenter businessCenter){
-     if( businessCenterServiceImplent.addBusinessCenter(businessCenter) ) {
+     if( businessCenterServiceImpl.addBusinessCenter(businessCenter) ) {
          return  ReturnResult.success();
      }
      return  ReturnResult.erro(CodeMsg.SUMIT_ERROR);
@@ -57,7 +57,7 @@ public class BusinessCenterController {
  */
 @RequestMapping("/dismissTheCertification")
 public ReturnResult dismissTheCertification(Reject reject){
-   if(businessCenterServiceImplent.rejectAudit(reject)){
+   if(businessCenterServiceImpl.rejectAudit(reject)){
        return ReturnResult.success();
    }
    return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
@@ -74,7 +74,7 @@ public ReturnResult dismissTheCertification(Reject reject){
      */
     @RequestMapping("/passTheAudit")
     public ReturnResult passTheAudit(Integer id, Integer rid, String userName,Integer statue,Integer reId){
-  if(businessCenterServiceImplent.updateAuditStatue(id,rid,userName,statue,reId )) {
+  if(businessCenterServiceImpl.updateAuditStatue(id,rid,userName,statue,reId )) {
       return ReturnResult.success();
   }
   return ReturnResult.erro(CodeMsg.SUMIT_ERROR);

@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @Validated
 public class NewsInformationController {
     @Autowired
-    NewsInformationService newsInformationServiceImplements;
+    NewsInformationService newsInformationServiceImpl;
 
     /**
      * 添加新闻资讯
@@ -28,7 +28,7 @@ public class NewsInformationController {
      */
     @RequestMapping("/addNewsInformation")
     public ReturnResult addNewsInformation(@Validated({UserValidator.InSet.class})NewsInformation newsInformation) {
-        if (newsInformationServiceImplements.insertNewsInformation(newsInformation)) {
+        if (newsInformationServiceImpl.insertNewsInformation(newsInformation)) {
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
@@ -42,7 +42,7 @@ public class NewsInformationController {
      */
     @RequestMapping("/removeNewsInformation")
     public ReturnResult removeNewsInformation(@NotNull(message = "id号不能为空") Integer id) {
-        if (newsInformationServiceImplements.delectNewsInformation(id)) {
+        if (newsInformationServiceImpl.delectNewsInformation(id)) {
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.DELECT_ERROR);
@@ -56,7 +56,7 @@ public class NewsInformationController {
      */
     @RequestMapping("/modifierNewsInformation")
     public ReturnResult modifierNewsInformation(@Validated({UserValidator.UpDate.class})NewsInformation newsInformation) {
-        if (newsInformationServiceImplements.updateNewsInformation(newsInformation)) {
+        if (newsInformationServiceImpl.updateNewsInformation(newsInformation)) {
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.UPDATE_ERROR);
@@ -69,7 +69,7 @@ public class NewsInformationController {
      */
     @RequestMapping("/searchAllNewsInformation")
     public ReturnResult searchAllNewsInformation(@NotNull(message = "第几页不能为空") Integer pageNum,@NotNull(message = "每页显示多少数据不能为空") Integer pagesize) {
-        return ReturnResult.success(newsInformationServiceImplements.selectAllNewsInformation(pageNum,pagesize));
+        return ReturnResult.success(newsInformationServiceImpl.selectAllNewsInformation(pageNum,pagesize));
     }
 
     /**
@@ -80,7 +80,7 @@ public class NewsInformationController {
      */
     @RequestMapping("/searchNewsByCategory")
     public ReturnResult searchNewsByCategory(@NotBlank(message = "行业不能为空") String category,@NotNull(message = "第几页不能为空")Integer pageNum,@NotNull(message = "每页显示多少数据不能为空")Integer pagesize) {
-        return ReturnResult.success(newsInformationServiceImplements.selectNewsInformationByCategory(category,pageNum,pagesize));
+        return ReturnResult.success(newsInformationServiceImpl.selectNewsInformationByCategory(category,pageNum,pagesize));
     }
 
     /**
@@ -90,7 +90,7 @@ public class NewsInformationController {
      */
     @RequestMapping("/serarchOneNewsInformation")
     public ReturnResult serarchOneNewsInformation(@NotNull(message = "id号不能为空") Integer id){
-        return ReturnResult.success(newsInformationServiceImplements.selectOneNewsInformation(id));
+        return ReturnResult.success(newsInformationServiceImpl.selectOneNewsInformation(id));
     }
 
 }

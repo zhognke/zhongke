@@ -6,23 +6,17 @@ import com.example.busniess.entity.Occupancy;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.OccupancyService;
-import com.example.busniess.service.OccupancyServiceimplements;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @RestController
 @RequestMapping("/occupancy")
@@ -30,7 +24,7 @@ import java.util.List;
 public class OccupancyController {
 
     @Resource
-    OccupancyService occupancyServiceimplements;
+    OccupancyService occupancyServiceimpl;
     @Autowired
     OccupancyDao occupancyDao;
 
@@ -54,7 +48,7 @@ public class OccupancyController {
      */
     @RequestMapping("/addOccupancy")
     public ReturnResult addOccupancy(@Validated({UserValidator.InSet.class}) Occupancy occupancy) {
-        if (occupancyServiceimplements.addOccupancy(occupancy)) {
+        if (occupancyServiceimpl.addOccupancy(occupancy)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -67,7 +61,7 @@ public class OccupancyController {
      */
     @RequestMapping("/delectOccupancy")
     public ReturnResult delectOccupancy(Integer id) {
-        if (occupancyServiceimplements.delectOccupancy(id)) {
+        if (occupancyServiceimpl.delectOccupancy(id)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -84,7 +78,7 @@ public class OccupancyController {
      */
     @RequestMapping("/examineMyOccupancy")
     public ReturnResult examineMyOccupancy(@NotBlank(message = "传入值不能为空") String userName, @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNumber, @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageSize) {
-        PageInfo o = occupancyServiceimplements.selectMyOccupancy(userName, pageNumber, pageSize);
+        PageInfo o = occupancyServiceimpl.selectMyOccupancy(userName, pageNumber, pageSize);
         return ReturnResult.success(o);
 
     }
@@ -98,7 +92,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectOnShowOccupancy")
     public ReturnResult selectOnShowOccupancy(@NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
-        PageInfo pageInfo = occupancyServiceimplements.selectOnShowOccupancy(pageNum, pagesize);
+        PageInfo pageInfo = occupancyServiceimpl.selectOnShowOccupancy(pageNum, pagesize);
         return ReturnResult.success(pageInfo);
     }
 
@@ -112,7 +106,7 @@ public class OccupancyController {
      */
     @RequestMapping("/upKstatue")
     public ReturnResult upKstatue(@NotNull(message = "跟新状态不能为空") Integer kStatue, @NotNull(message = "发布成果的id不能为空") Integer id) {
-        if (occupancyServiceimplements.upDateKstatue(kStatue, id)) {
+        if (occupancyServiceimpl.upDateKstatue(kStatue, id)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
@@ -125,7 +119,7 @@ public class OccupancyController {
     @RequestMapping("/selectByIndustry")
     public ReturnResult selectByIndustry(Occupancy occupancy, Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
 
-        return ReturnResult.success(occupancyServiceimplements.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
+        return ReturnResult.success(occupancyServiceimpl.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
     }
 
     /**
@@ -135,7 +129,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectBrokenImg")
     public ReturnResult selectBrokenImg() {
-        Echarts echarts = occupancyServiceimplements.returnBrokenImg();
+        Echarts echarts = occupancyServiceimpl.returnBrokenImg();
 
         return ReturnResult.success(echarts);
     }
@@ -147,7 +141,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectPieImg")
     public ReturnResult selectPieImg() {
-        Echarts echarts = occupancyServiceimplements.returnPieImg();
+        Echarts echarts = occupancyServiceimpl.returnPieImg();
 
         return ReturnResult.success(echarts);
     }

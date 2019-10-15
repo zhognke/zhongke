@@ -6,7 +6,7 @@ import com.example.busniess.exception.MyException;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.ForgetPassword;
-import com.example.busniess.service.MsendMailServiceImplements;
+import com.example.busniess.service.imp.MsendMailServiceImpl;
 import com.example.busniess.service.UserService;
 import com.example.busniess.utiles.EmailUtiles;
 import com.example.busniess.utiles.Md5Utiles;
@@ -35,13 +35,13 @@ import java.util.List;
 @RequestMapping("/user")
 @Validated
 public class UserController {
-    @Resource(name = "userServiceImplements")
-    UserService userServiceImplements;
     @Resource
-    ForgetPassword ForgetPasswordImplement;
+    UserService UserServiceImpl;
+    @Resource
+    ForgetPassword ForgetPasswordImpl;
 
-    @Resource(name="msendMailServiceImplements")
-    MsendMailServiceImplements msendMailServiceImplements;
+    @Resource
+    MsendMailServiceImpl msendMailServiceImpl;
 
     /**
      * 登录验证
@@ -58,7 +58,7 @@ public class UserController {
                                           required = false) Boolean remb) throws ShiroException {
         Subject subject = SecurityUtils.getSubject();//获取subject对象
         if (subject.isAuthenticated()) {
-              User user = userServiceImplements.findUserByName(userName);
+              User user = UserServiceImpl.findUserByName(userName);
         return ReturnResult.success(user.getUserName());
        }
         UsernamePasswordToken up = new UsernamePasswordToken(userName, password);
@@ -66,7 +66,7 @@ public class UserController {
         subject.login(up);
         up.setRememberMe(remb);//记住我
         //登录成功
-        User user = userServiceImplements.findUserByName(userName);
+        User user = UserServiceImpl.findUserByName(userName);
         return ReturnResult.success(user.getUserName());
     }
 
@@ -85,7 +85,7 @@ public class UserController {
         user.setUserName(peopleCode);
         user.setLastdate(new Date());
         session.setAttribute("REGISTER_CODE_SESSION",user);         //存入session
-        List<MsendMail> list = msendMailServiceImplements.selectAll();  //获取邮箱服务器
+        List<MsendMail> list = msendMailServiceImpl.selectAll();  //获取邮箱服务器
         if(list.get(0)!=null){
             MsendMail mail = list.get(0);
             EmailUtiles.sendMailCode(mail,peopleCode,email);
@@ -131,7 +131,7 @@ public class UserController {
     @RequestMapping("/registerUser")
     public ReturnResult registerUser(@Validated({UserValidator.InSet.class}) User user) throws MyException {
 
-        userServiceImplements.addUser(user);
+        UserServiceImpl.addUser(user);
         //注册成功
         return ReturnResult.success(user.getUserName());
     }
@@ -152,7 +152,7 @@ public class UserController {
      User user =new User();
      user.setUserName(userName);
      user.setPassword(newPassword);
-       if (ForgetPasswordImplement.upPassword(session,mmCode,user)){
+       if (ForgetPasswordImpl.upPassword(session,mmCode,user)){
            return ReturnResult.success();
        }
        return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -165,7 +165,7 @@ public class UserController {
     @RequestMapping("/updataPassword")
     public ReturnResult updataPassword(@NotBlank(message = "用户名不能为空") String userName, @NotBlank(message = "原密码不能为空") String password, @NotBlank(message = "新密码不能为空") String newPassword) throws MyException {
 
-        if (userServiceImplements.retSetPassword(userName, password, newPassword)) {
+        if (UserServiceImpl.retSetPassword(userName, password, newPassword)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.UPDATE_PASSWORD_ERROR);

@@ -3,7 +3,7 @@ package com.example.busniess.controller;
 import com.example.busniess.exception.MyException;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
-import com.example.busniess.service.ForgetPasswordImplement;
+import com.example.busniess.service.imp.ForgetPasswordImpl;
 import com.example.busniess.utiles.CodeUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
-import java.util.Map;
 
 @RestController
 @Validated
 public class CodeController {
 
     @Autowired
-    ForgetPasswordImplement forgetPasswordImplement;
+    ForgetPasswordImpl ForgetPasswordImpl;
 
     /**
      * 获取前端验证那个码
@@ -76,7 +75,7 @@ public class CodeController {
      */
     @RequestMapping("getEmailCode")
     public ReturnResult getEmailCode(HttpSession session,@NotBlank(message = "用户名不能为空")String userName) throws MessagingException, MyException {
-      if(forgetPasswordImplement.checkEmail(userName,session)) {
+      if(ForgetPasswordImpl.checkEmail(userName,session)) {
           return  ReturnResult.success();
       } else {
           return ReturnResult.erro(CodeMsg.SERVER_ERROR);
