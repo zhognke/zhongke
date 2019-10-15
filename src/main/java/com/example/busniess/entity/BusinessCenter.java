@@ -28,7 +28,7 @@ public class BusinessCenter implements Serializable {
     private Integer scale;//规模 5
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "注册日期必须必须小于当前日期",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private Data recordDate;//注册日期6（增加）
+    private Date recordDate;//注册日期6（增加）
     @NotBlank(message = "注册资金不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     @DecimalMin(value ="1",message = "注册资金不能小于1",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigDecimal registeredCapital;//注册资金7（增加）

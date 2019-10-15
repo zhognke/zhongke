@@ -57,7 +57,7 @@ public interface BusinessCenterDao {
      */
     @Update("UPDATE `businesscenter` SET `firmname`=#{firmName}, `industry`=#{industry}, " +
             "`typeEnterprise`=#{typeEnterprise}, `scale`=#{scale}, " +
-            "`recorddate`=#{recordDate}, `registeredcapital`=#{registeredCapital}, " +
+            "`recordate`=#{recordDate}, `registeredcapital`=#{registeredCapital}, " +
             "`country`=#{country}, `city`=#{city}, `district`=#{district}, " +
             "`enterpriseprofile`=#{enterpriseProfile}, `logo`=#{logo}, " +
             "`identification`=#{identification}, `societycode`=#{societyCode}, " +

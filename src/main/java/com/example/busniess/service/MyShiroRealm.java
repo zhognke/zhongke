@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MyShiroRealm extends AuthorizingRealm {
-    @Resource(name = "UserServiceImpl")
+    @Resource
     UserService UserServiceImpl;
 
     /**
