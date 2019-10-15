@@ -23,6 +23,8 @@ public class Occupancy implements Serializable {
     private String resultTechnolo;//科技成果
     @NotNull(message = "详情描述不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String describe;//详情描述
+    @NotNull(message = "专利名字不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private  String patentName;//专利名称
     @NotNull(message = "专利号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String patentNumber;//所获专利号和名称
     @NotNull(message = "知识产权编号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
@@ -40,7 +42,7 @@ public class Occupancy implements Serializable {
     @NotNull(message = "联系人姓名不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private  String linkMan;//联系人
     @NotNull(message = "联系电话不能为空")
-    @Pattern(regexp = "((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}",message = "输入手机号码有误")
+//    @Pattern(regexp = "((13[0-9])|(15[0-9])|(18[0,5-9]))\\d{8}",message = "输入手机号码有误")
     private Integer phoneNumber;//联系人电话
     private Data creatTime;//创建时间
     private Data stopTime;//停止发布时间（过期）
