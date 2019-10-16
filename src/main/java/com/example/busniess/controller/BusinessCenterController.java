@@ -32,11 +32,12 @@ public class BusinessCenterController {
 
     /**
      * 根据关键啊字返回企业名
+     *
      * @param firmName
      * @return
      */
     @RequestMapping("/returnfirmName")
-    public ReturnResult returnfirmName(@NotNull(message = "名字不能为空") String firmName){
+    public ReturnResult returnfirmName(@NotNull(message = "名字不能为空") String firmName) {
         return ReturnResult.success(businessCenterDao.selectFirmName(firmName));
     }
 
@@ -45,39 +46,80 @@ public class BusinessCenterController {
      * 提交认证
      */
     @RequestMapping("/addAuthentication")
-    public ReturnResult addAuthentication(@Validated() BusinessCenter businessCenter){
-     if( businessCenterServiceImpl.addBusinessCenter(businessCenter) ) {
-         return  ReturnResult.success();
-     }
-     return  ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+    public ReturnResult addAuthentication(@Validated() BusinessCenter businessCenter) {
+        if (businessCenterServiceImpl.addBusinessCenter(businessCenter)) {
+            return ReturnResult.success();
+        }
+        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
     }
 
-/**
- * 驳回认证
- */
-@RequestMapping("/dismissTheCertification")
-public ReturnResult dismissTheCertification(Reject reject){
-   if(businessCenterServiceImpl.rejectAudit(reject)){
-       return ReturnResult.success();
-   }
-   return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
-}
+    /**
+     * 驳回认证
+     */
+    @RequestMapping("/dismissTheCertification")
+    public ReturnResult dismissTheCertification(Reject reject) {
+        if (businessCenterServiceImpl.rejectAudit(reject)) {
+            return ReturnResult.success();
+        }
+        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+    }
 
     /**
      * 审核通过
-     * @param id 企业信息id
-     * @param rid 角色
+     *
+     * @param id       企业信息id
+     * @param rid      角色
      * @param userName 用户名
-     * @param statue  审核状态
-     * @param reId  驳回原因id
+     * @param statue   审核状态
+     * @param reId     驳回原因id
      * @return
      */
     @RequestMapping("/passTheAudit")
-    public ReturnResult passTheAudit(Integer id, Integer rid, String userName,Integer statue,Integer reId){
-  if(businessCenterServiceImpl.updateAuditStatue(id,rid,userName,statue,reId )) {
-      return ReturnResult.success();
-  }
-  return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
-}
+    public ReturnResult passTheAudit(Integer id, Integer rid, String userName, Integer statue, Integer reId) {
+        if (businessCenterServiceImpl.updateAuditStatue(id, rid, userName, statue, reId)) {
+            return ReturnResult.success();
+        }
+        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+    }
+
+    /**
+     * 查询所有企业认证信息
+     * 按条件查询
+     * 行业 industry
+     * 人数 scale
+     * 名称 firmName
+     * 审核状态 statue
+     *
+     * @param businessCenter
+     * @return
+     */
+    @RequestMapping("/findAllBusinessCenter")
+    public ReturnResult findAllBusinessCenter(BusinessCenter businessCenter) {
+        System.out.println(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter));
+        return ReturnResult.success(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter));
+    }
+
+    /**
+     * 查询自己的企业认证状态
+     *
+     * @param userName
+     * @return
+     */
+    @RequestMapping("/findMyBusinessCenter")
+    public ReturnResult findMyBusinessCenter(String userName) {
+
+
+        return ReturnResult.success(businessCenterServiceImpl.selectMyBusinessCenter(userName));
+    }
+
+    /**
+     * 查看具体认证信息
+     */
+
+    @RequestMapping("/findBussinessCenter")
+    public ReturnResult findBussinessCenter(Integer id) {
+        return ReturnResult.success(businessCenterServiceImpl.selectBusinessCenterById(id));
+    }
+
 
 }

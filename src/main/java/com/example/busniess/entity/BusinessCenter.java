@@ -71,7 +71,7 @@ public class BusinessCenter implements Serializable {
     private Integer statue;//审核状态 17 0审核中 1审核通过 2审核驳回21
     private Date subTime;//提交时间22
     private Date upTime;//更新时间23
-    private Data auditTime;//审核时间//24
+    private Date auditTime;//审核时间//24
     private Reject reject;//关联驳回
 
 

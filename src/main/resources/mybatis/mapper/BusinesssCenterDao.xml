@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.BusinessCenterDao">
+    <sql id="business_sql">
+        <if test="industry!=null and industry!=''">
+            `industry`=#{industry}
+        </if>
+        <if test="firmName!=null and firmName!=''">
+            AND  `firmname`=#{firmName}
+        </if>
+        <if test="scale!=null and scale!=''">
+            AND `scale`=#{scale}
+        </if>
+        <if test="statue!=null and statue!=''">
+            AND`statue`=#{statue}
+        </if>
+
+    </sql>
+    <select id="selectAllBusinessCenter" parameterType="businessCenter" resultType="businessCenter">
+        SELECT id,legalperson,phonenumber,firmname, industry,societycode
+        ,scale,statue,subtime FROM businesscenter
+        <where>
+            <include refid="business_sql"></include>
+        </where>
+        ORDER BY subtime DESC
+    </select>
+
+
+
+
+</mapper>

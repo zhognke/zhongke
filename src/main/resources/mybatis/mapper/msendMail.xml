@@ -9,10 +9,10 @@
             `port`=#{port},
         </if>
         <if test="mail!=null and mail!=''">
-            `mail`=#{mail}
+            `mail`=#{mail},
         </if>
         <if test="name!=null and name!=''">
-            `name`=#{name}
+            `name`=#{name},
         </if>
         <if test="password!=null and password!=''">
             `password`=#{password}

@@ -9,6 +9,7 @@ import com.example.busniess.service.BusinessCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -67,6 +68,43 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
        }else {
            return false;
        }
+    }
+
+    /**
+     * 产看企业认证中心具体信息
+     * @param userName
+     * @return
+     */
+    @Override
+    public BusinessCenter selectMyBusinessCenter(String userName) {
+
+        return  businessCenterDao.selectOneBusinessCenter(userName);
+    }
+
+    /**
+     * 查看所有企业认证信息
+     * 按条件查询
+     * 企业名称
+     * 人数
+     * 行业
+     * 审核状态
+     * @param businessCenter
+     * @return
+     */
+    @Override
+    public List<BusinessCenter> selectAllBusinessCenter(BusinessCenter businessCenter) {
+
+        return  businessCenterDao.selectAllBusinessCenter(businessCenter);
+    }
+
+    /**
+     * 查看具体的企业认证
+     * @param id
+     * @return
+     */
+    @Override
+    public BusinessCenter selectBusinessCenterById(Integer id) {
+        return businessCenterDao.selectBussinessByid(id);
     }
 
     /**

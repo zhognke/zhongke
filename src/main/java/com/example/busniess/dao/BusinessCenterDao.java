@@ -1,6 +1,7 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.service.BusinessCenterService;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -68,9 +69,11 @@ public interface BusinessCenterDao {
 
     /**
      * 查看所有信息
+     * 按条件查询所有信息
+     * 行业，人数，企业名，审核状态
      */
-    @Select("SELECT * FROM businesscenter  ORDER BY subtime DESC")
-    public BusinessCenter selectAllBusinessCenter();
+
+    public List<BusinessCenter> selectAllBusinessCenter(BusinessCenter businessCenter);
 
     /**
      * 根据状态查询
@@ -84,8 +87,14 @@ public interface BusinessCenterDao {
     /**
      * 查看自己的
      */
-    @Select("SELECT * FROM businesscenter WHERE uname=#{uName} ORDER BY subtime DESC")
-    public List<BusinessCenter> selectOneBusinessCenter(String uName);
+    @Select("SELECT id,statue FROM businesscenter WHERE uname=#{uName}")
+    public BusinessCenter selectOneBusinessCenter(String uName);
+
+    /**
+     * 根据id查询企业中心的具体情况
+     */
+    @Select("SELECT * FROM businesscenter WHERE id=#{id}")
+    public BusinessCenter selectBussinessByid(Integer id);
 
     /**
      * 根据名字查找企业名
@@ -95,5 +104,9 @@ public interface BusinessCenterDao {
      */
     @Select("SELECT firmName FROM businesscenter WHERE firmName LIKE '%${value}%'")
     public List<String> selectFirmName(String firmName);
+
+
+
+
 }
 

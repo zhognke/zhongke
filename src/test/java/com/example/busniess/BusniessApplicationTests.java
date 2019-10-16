@@ -46,7 +46,10 @@ public class BusniessApplicationTests {
      */
     @Test
     public void contextLoads() throws MessagingException {
-        System.out.println(occupancyDao.selectOneOccupancy(6));
+       Integer A=1,B=1;
+
+
+ System.out.println(A+B);
 
 
     }
@@ -64,6 +67,7 @@ public class BusniessApplicationTests {
 //      mimeMessageHelper.setTo("396802762@qq.com");
 //      mailSender.send(mimeMessage);
     }
+
 
 
 }

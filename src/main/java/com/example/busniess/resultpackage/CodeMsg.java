@@ -31,6 +31,7 @@ public class CodeMsg {
     public static CodeMsg SUMIT_ERROR = new CodeMsg(500120, "提交失败!");
     public static CodeMsg DELECT_ERROR = new CodeMsg(500121, "删除失败!");
     public static CodeMsg UPDATE_ERROR = new CodeMsg(500122, "更新失败!");
+
     private Integer code;
     private String msg;
 

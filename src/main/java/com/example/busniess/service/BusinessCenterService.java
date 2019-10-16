@@ -4,6 +4,8 @@ package com.example.busniess.service;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.Reject;
 
+import java.util.List;
+
 public interface BusinessCenterService {
     /**
      * 提交认证
@@ -27,4 +29,22 @@ public interface BusinessCenterService {
      * @return
      */
     Boolean rejectAudit(Reject reject);
+
+    /**
+     * 查看所有的
+     */
+    List<BusinessCenter> selectAllBusinessCenter(BusinessCenter businessCenter);
+
+    /**
+     * 查看自己的企业认证
+     */
+    BusinessCenter selectMyBusinessCenter(String userName);
+
+    /**
+     * 查看具体的企业认证
+     * @param id
+     * @return
+     */
+    BusinessCenter selectBusinessCenterById(Integer id);
+
 }
