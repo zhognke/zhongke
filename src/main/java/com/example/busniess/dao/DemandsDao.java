@@ -107,9 +107,9 @@ public interface DemandsDao {
      * @return
      */
     @Insert("insert into `demands` " +
-            "(`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
+            "(`company_name`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
             "`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`," +
-            "`create_time`,`update_time`,`remark`,`status`,`approval_status`) values(#{companyName},#{demandType},#{cooperationType},#{demandIndustry}," +
+            "`create_time`,`update_time`,`remark`,`status`,`approval_status`) values(#{companyName},#{demandType},#{cooperationType},#{cooperationIntention},#{demandIndustry}," +
             "#{demandIndustryDetail},#{demandOutline},#{demandContent},#{expectedResult},#{city},#{district},#{contact},#{phoneNum},#{email}," +
             "#{preInvestmentAmount},#{endDate},#{createTime},#{updateTime},#{remark},#{status},#{approvalStatus})")
 	public boolean insert(DemandsEntity demandsEntity);

@@ -16,9 +16,9 @@ public class IndustrialDeclarationDetailEntity {
      */
     private Integer declarationId;
     /**
-     * 项目类型:生产制造信息;互联网协同制造;经营管理信息;研发设计信息化;物流信息化综合信息平台;信息化综合集成创新等
+     * 项目所属行业:生产制造信息;互联网协同制造;经营管理信息;研发设计信息化;物流信息化综合信息平台;信息化综合集成创新等
      */
-    private String projectType;
+    private String projectIndustry;
     /**
      * 总投资-自筹(万)
      */
@@ -44,9 +44,17 @@ public class IndustrialDeclarationDetailEntity {
      */
     private String fundraisingIntention;
     /**
-     * 截止去年底累计投资
+     * 累计完成投资
      */
-    private BigDecimal totalInvestment;
+    private BigDecimal completedInvestment;
+    /**
+     * 去年累计投资
+     */
+    private BigDecimal lastYearInvestment;
+    /**
+     * 当年投资
+     */
+    private BigDecimal currentYearInvestment;
     /**
      * 本年度预计投资总额
      */
@@ -168,10 +176,6 @@ public class IndustrialDeclarationDetailEntity {
      */
     private String minerals;
     /**
-     * 当年投资
-     */
-    private BigDecimal currentYearInvestment;
-    /**
      * 实施后社会效益
      */
     private String socialBenefitsAnalysis;
@@ -179,4 +183,8 @@ public class IndustrialDeclarationDetailEntity {
      * 备注(预留字段)
      */
     private String remark;
+    /**
+     * 高端制造业所属类别
+     */
+    private String advancedManufacturingType;
 }
