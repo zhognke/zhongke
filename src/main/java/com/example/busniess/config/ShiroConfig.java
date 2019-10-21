@@ -39,7 +39,7 @@ public class ShiroConfig {
         map.put("/user/checkCode", "anon");
         map.put("/login.html", "anon");
         map.put("/register.html", "anon");
-        map.put("/hell.html","roles[vip]");
+        map.put("/hell.html", "roles[vip]");
         map.put("/", "authc");
 //这些是我写的测试代码具体的需求需要改动，你们要写可以用注解
         map.put("/hello.html", "authc");

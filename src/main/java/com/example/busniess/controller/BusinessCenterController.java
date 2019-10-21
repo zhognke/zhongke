@@ -7,12 +7,14 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 
 import com.example.busniess.service.BusinessCenterService;
+import com.example.busniess.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.swing.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
@@ -46,7 +48,7 @@ public class BusinessCenterController {
      * 提交认证
      */
     @RequestMapping("/addAuthentication")
-    public ReturnResult addAuthentication(@Validated() BusinessCenter businessCenter) {
+    public ReturnResult addAuthentication(@Validated({UserValidator.InSet.class}) BusinessCenter businessCenter) {
         if (businessCenterServiceImpl.addBusinessCenter(businessCenter)) {
             return ReturnResult.success();
         }
@@ -57,7 +59,7 @@ public class BusinessCenterController {
      * 驳回认证
      */
     @RequestMapping("/dismissTheCertification")
-    public ReturnResult dismissTheCertification(Reject reject) {
+    public ReturnResult dismissTheCertification(@Validated({UserValidator.InSet.class})Reject reject) {
         if (businessCenterServiceImpl.rejectAudit(reject)) {
             return ReturnResult.success();
         }
@@ -75,7 +77,7 @@ public class BusinessCenterController {
      * @return
      */
     @RequestMapping("/passTheAudit")
-    public ReturnResult passTheAudit(Integer id, Integer rid, String userName, Integer statue, Integer reId) {
+    public ReturnResult passTheAudit(@NotNull(message = "企业id不能为空") Integer id, @NotNull(message = "角色名不能为空") Integer rid, @NotNull(message = "用户名不能为空") String userName, @NotNull(message = "状态不能为空") Integer statue, @NotNull(message = "驳回原因id不能为空") Integer reId) {
         if (businessCenterServiceImpl.updateAuditStatue(id, rid, userName, statue, reId)) {
             return ReturnResult.success();
         }
