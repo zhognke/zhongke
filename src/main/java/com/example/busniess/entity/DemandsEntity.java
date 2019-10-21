@@ -41,6 +41,10 @@ public class DemandsEntity implements Serializable {
 	@NotNull(message = "合作方式不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
 	private String cooperationType;
 	/**
+	 * 合作倾向:不限;高新技术企业;技术先进型服务企业;新产品备案企业;其他
+	 */
+	private String cooperationIntention;
+	/**
 	 * 需求行业
 	 */
 	@NotNull(message = "需求行业不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})

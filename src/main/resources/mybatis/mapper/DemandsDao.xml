@@ -8,6 +8,7 @@
         <result property="companyName" column="company_name"/>
         <result property="demandType" column="demand_type"/>
         <result property="cooperationType" column="cooperation_type"/>
+        <result property="cooperationIntention" column="cooperation_intention"/>
         <result property="demandIndustry" column="demand_industry"/>
         <result property="demandIndustryDetail" column="demand_industry_detail"/>
         <result property="demandOutline" column="demand_outline"/>
@@ -37,6 +38,9 @@
         </if>
         <if test="cooperationType!=null and cooperationType!=''">
             `cooperation_type`=#{cooperationType},
+        </if>
+        <if test="cooperationIntention!=null and cooperationIntention!=''">
+            `cooperation_intention`=#{cooperationIntention},
         </if>
         <if test="demandIndustry!=null and demandIndustry!=''">
             `demand_industry`=#{demandIndustry},
@@ -69,7 +73,7 @@
             `email`=#{email},
         </if>
         <if test="preInvestmentAmount!=null and preInvestmentAmount!=''">
-            `preInvestmentAmount`=#{preInvestmentAmount},
+            `pre_investment_amount`=#{preInvestmentAmount},
         </if>
         <if test="endDate!=null and endDate!=''">
             `end_date`=#{endDate},
@@ -111,6 +115,9 @@
             </if>
             <if test="cooperationType!=null and cooperationType!=''">
                 and `cooperation_type`=#{cooperationType}
+            </if>
+            <if test="cooperationIntention!=null and cooperationIntention!=''">
+                and `cooperation_intention`=#{cooperationIntention}
             </if>
             <if test="preInvestmentAmount!=null and preInvestmentAmount!=''">
                 and `pre_investment_amount`=#{preInvestmentAmount}
