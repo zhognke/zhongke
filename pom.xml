@@ -124,10 +124,29 @@
 		<!--<artifactId>spring-boot-starter-validation</artifactId>-->
 		<!--</dependency>-->
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+			<version>3.2.0.RELEASE</version>
+		</dependency>
 
 	</dependencies>
 
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!--fork:如果没有该项配置,整个devtools不会起作用-->
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
 
 
 

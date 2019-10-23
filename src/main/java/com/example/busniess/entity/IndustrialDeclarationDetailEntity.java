@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class IndustrialDeclarationDetailEntity {
 
     /**
-     * id
+     * 详细表id
      */
     private Integer aid;
     /**

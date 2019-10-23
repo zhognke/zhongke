@@ -9,10 +9,7 @@ import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @email wawzj512541@gmail.com
  * @date 2019-09-24 17:14:07
  */
-@Validated
 @RestController
 @RequestMapping("/demandsComment")
 public class DemandsCommentController {
@@ -38,8 +34,8 @@ public class DemandsCommentController {
     }
 
     @RequestMapping(value="/showCommentByPage",method = RequestMethod.GET)
-    public ReturnResult showCommentByPage(int demandsID, int pageNum, int pagesize){
-        PageInfo info =  demandsCommentService.showByPage(demandsID,pageNum,pagesize);
+    public ReturnResult showCommentByPage(int demandsID, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
+        PageInfo info =  demandsCommentService.showByPage(demandsID,pageNum,pageSize);
         return ReturnResult.success(info);
     }
 

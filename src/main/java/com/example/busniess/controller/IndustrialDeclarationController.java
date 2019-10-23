@@ -9,10 +9,7 @@ import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +24,6 @@ import java.util.Map;
  * @email wawzj512541@gmail.com
  * @date 2019-09-28 10:31:37
  */
-@Validated
 @RestController
 @RequestMapping("/industrialdeclaration")
 public class IndustrialDeclarationController {
@@ -130,7 +126,7 @@ public class IndustrialDeclarationController {
      * @return
      */
     @RequestMapping(value="/showByPage",method = RequestMethod.GET)
-    public ReturnResult showByPage(IndustrialDeclarationEntity industrialDeclarationEntity,Integer pageNum,Integer pageSize){
+    public ReturnResult showByPage(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
         if(pageNum==null||pageSize==null){
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
         }
