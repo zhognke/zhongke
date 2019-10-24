@@ -87,7 +87,7 @@ public interface UserDao {
      * @param userName//用户名
      * @return
      */
-    @Select("INSERT INTO `user_role` (`rid`, `username`) VALUES (#{rid}, #{userName})")
+    @Insert("INSERT INTO `user_role` (`rid`, `username`) VALUES (#{rid}, #{userName})")
     public Boolean   authorization(@Param("rid") Integer rid ,@Param("userName")String userName);
 
 }

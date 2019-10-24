@@ -4,10 +4,10 @@
 <mapper namespace="com.example.busniess.dao.OccupancyDao">
     <sql id="OccupancyByIndustry_sql">
         <if test="industry!=null and industry!=''">
-            AND `industry`=#{industry}
+            or `industry` like "%${industry}%"
         </if>
-        <if test="spIndustries!=null and spIndustries!=''">
-            AND `spindustries`=#{spIndustries}
+        <if test="industry!=null and industry!=''">
+            or `resultTechnolo` like "%${industry}%"
 
         </if>
 
@@ -16,8 +16,7 @@
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultType="occupancy">
         SELECT * FROM occupancy
         <where>
-            statue=1 AND kstatue=1
-            <include refid="OccupancyByIndustry_sql"></include>
+         statue=1 AND kstatue=1 <include refid="OccupancyByIndustry_sql"></include>
         </where>
         ORDER BY creattime DESC
 

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 //企业中心
@@ -18,18 +19,18 @@ public class BusinessCenter implements Serializable {
     @NotBlank(message = "关联用户名不能为空", groups = {UserValidator.InSet.class,UserValidator.UpDate.class})
     private String uName;//关联的用户名2
     @NotBlank(message = "企业名称不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String firmName;//企业名字 3
+    private String firmName;//企业名字 3firmName
     @NotBlank(message = "所属行业不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String industry;//所属行业 4(增加)
     @NotBlank(message = "企业类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String typeEnterprise;
-    @NotBlank(message = "从业人数")
-    @NotBlank(message = "规模不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+
+    @NotNull(message = "规模不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private Integer scale;//规模 5
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "注册日期必须必须小于当前日期",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private Date recordDate;//注册日期6（增加）
-    @NotBlank(message = "注册资金不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    @NotBlank(message = "注册资金不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     @DecimalMin(value ="1",message = "注册资金不能小于1",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigDecimal registeredCapital;//注册资金7（增加）
 
@@ -61,11 +62,11 @@ public class BusinessCenter implements Serializable {
     @NotBlank(message = "附件地址不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String address;//附件地址 17
     @NotNull(message = "联系电话不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    @Pattern(regexp = "((13[0-9])|(15[0-9])|(18[0,5-9]))\\d{8}",message = "输入手机号码有误")
-    private  Integer phnoeNumber;//手机号码（增加）18
-    @NotBlank(message = "代理人姓名不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    @Pattern(regexp = "((13[0-9])|(15[0-9])|(18[0,5-9]))\\d{8}",message = "输入手机号码有误")
+    private BigInteger phoneNumber;//手机号码（增加）18
+//    @NotBlank(message = "代理人姓名不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String agentPerson;//代理人姓名 19
-    @NotBlank(message = "代理人身份证号不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    @NotBlank(message = "代理人身份证号不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String apPersionCode;//代理人身份证号  20
 
     private Integer statue;//审核状态 17 0审核中 1审核通过 2审核驳回21

@@ -59,7 +59,7 @@ public class BusinessCenterController {
      * 驳回认证
      */
     @RequestMapping("/dismissTheCertification")
-    public ReturnResult dismissTheCertification(@Validated({UserValidator.InSet.class})Reject reject) {
+    public ReturnResult dismissTheCertification(@Validated({UserValidator.InSet.class}) Reject reject) {
         if (businessCenterServiceImpl.rejectAudit(reject)) {
             return ReturnResult.success();
         }
@@ -123,5 +123,14 @@ public class BusinessCenterController {
         return ReturnResult.success(businessCenterServiceImpl.selectBusinessCenterById(id));
     }
 
-
+    /**
+     * 修改认证
+     */
+    @RequestMapping("/updateBusinessCenter")
+    public ReturnResult updateBusinessCenter(BusinessCenter businessCenter) {
+        if(businessCenterServiceImpl.updateBusinessCenter(businessCenter)){
+            return ReturnResult.success();
+        }
+       return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
+    }
 }

@@ -47,4 +47,9 @@ public interface BusinessCenterService {
      */
     BusinessCenter selectBusinessCenterById(Integer id);
 
+    /**
+     * 修改认证
+     */
+    Boolean updateBusinessCenter(BusinessCenter businessCenter);
+
 }

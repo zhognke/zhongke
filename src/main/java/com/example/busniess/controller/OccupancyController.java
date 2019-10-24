@@ -10,6 +10,7 @@ import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,8 +26,8 @@ public class OccupancyController {
 
     @Resource
     OccupancyService occupancyServiceimpl;
-    @Autowired
-    OccupancyDao occupancyDao;
+//    @Autowired
+//    OccupancyDao occupancyDao;
 
     /**
      * 查询具体的科技成果
@@ -34,10 +35,10 @@ public class OccupancyController {
      * @param id
      * @return
      */
-    @RequestMapping("/selectOneOccupancy")
-    public ReturnResult selectOneOccupancy(@NotNull(message = "id不能为空") Integer id) {
-        return ReturnResult.success(occupancyDao.selectOneOccupancy(id));
-    }
+//    @RequestMapping("/selectOneOccupancy")
+//    public ReturnResult selectOneOccupancy(@NotNull(message = "id不能为空") Integer id) {
+//        return ReturnResult.success(occupancyDao.selectOneOccupancy(id));
+//    }
 
 
     /**
@@ -84,6 +85,15 @@ public class OccupancyController {
     }
 
     /**
+     * 查看具体的科技成果
+     */
+    @RequestMapping("/selectOneOccupancyById")
+    public ReturnResult selectOneOccupancyById(Integer id) {
+        Occupancy occupancy = occupancyServiceimpl.seleOccupancyById(id);
+        return ReturnResult.success(occupancy);
+    }
+
+    /**
      * 显示所有能显示的内容
      *
      * @param pageNum//页数
@@ -115,12 +125,55 @@ public class OccupancyController {
 
     /**
      * 根据行业显示科技成果
+     * industry
      */
     @RequestMapping("/selectByIndustry")
-    public ReturnResult selectByIndustry(Occupancy occupancy, Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
+    public ReturnResult selectByIndustry(Occupancy occupancy, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
 
         return ReturnResult.success(occupancyServiceimpl.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
     }
+
+    /**
+     * 根据状态查看
+     *
+     * @param statue
+     * @return
+     */
+    @RequestMapping("/selectBystatue")
+    public ReturnResult selectBystatue(Integer statue) {
+        return ReturnResult.success(occupancyServiceimpl.seleOccupancyByStatue(statue));
+    }
+
+    /**
+     * 更新科技成果审核状态
+     * @param statue
+     * @param id
+     * @return
+     */
+    @RequestMapping("/updateOccupancyStatue")
+    public ReturnResult updateOccupancyStatue(Integer statue, Integer id) {
+        if (occupancyServiceimpl.updateStatue(statue, id)) {
+            return ReturnResult.success();
+        }
+        return ReturnResult.erro(CodeMsg.UPDATE_ERROR);
+    }
+
+    /**
+     * 修改科技成果入住信息
+     * @param occupancy
+     * @return
+     */
+    @RequestMapping("/updateOccupancy")
+    public  ReturnResult updateOccupancy(Occupancy occupancy){
+      if(occupancyServiceimpl.updateOccupancy(occupancy)){
+          return ReturnResult.success();
+      }
+
+
+        return ReturnResult.erro(CodeMsg.UPDATE_ERROR);
+    }
+
+
 
     /**
      * 折线图

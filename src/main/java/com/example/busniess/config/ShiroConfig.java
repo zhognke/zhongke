@@ -33,16 +33,16 @@ public class ShiroConfig {
          */
         // 拦截器
         Map<String, String> map = new LinkedHashMap<>();
-        map.put("/loginout", "logout");
-        map.put("/user/userLogin", "anon");
-
-        map.put("/user/checkCode", "anon");
-        map.put("/login.html", "anon");
-        map.put("/register.html", "anon");
-        map.put("/hell.html", "roles[vip]");
-        map.put("/", "authc");
+//        map.put("/loginout", "logout");
+//        map.put("index.html", "anon");
+//
+//        map.put("/user/checkCode", "anon");
+//        map.put("/login.html", "anon");
+//        map.put("/register.html", "anon");
+//        map.put("/hell.html", "roles[vip]");
+//        map.put("/", "authc");
 //这些是我写的测试代码具体的需求需要改动，你们要写可以用注解
-        map.put("/hello.html", "authc");
+//        map.put("/hello.html", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;

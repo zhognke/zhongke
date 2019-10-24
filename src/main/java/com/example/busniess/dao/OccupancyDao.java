@@ -13,8 +13,22 @@ public interface OccupancyDao {
      *
      * @return
      */
-    @Select("SELECT * FROM occupancy o INNER JOIN imageaddress i ON o.id=i.oid  ORDER BY creattime DESC")
+    @Select("SELECT * FROM occupancy ")
+//    @Results({
+//            @Result(property = "imgAddress", column = "oId", many = @Many(select = "com.example.busniess.dao.selectimgAddress"))
+//    })
     public List<Occupancy> selectAllOccupancy();
+
+    /**
+     * 查看具体的
+     * @param id
+     * @return
+     */
+    @Select("SELECT * FROM occupancy  WHERE id=#{id} ")
+    @Results({
+         @Result(property = "imgAddress", column = "id", many = @Many(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress"))
+    })
+    public Occupancy selectOneById(Integer id);
 
     /**
      * 查看可发布的
@@ -62,16 +76,15 @@ public interface OccupancyDao {
     public List<Occupancy> searchOccupancy(Occupancy occupancy);
 
     /**
-     * 修改入住信息
+     * 修改科技入住信息
      */
 
-    @Update("UPDATE `occupancy` SET `namefirm`=#{nameFirm}, `resulttechnolo`=#{resultTechnolo}, " +
-            "`describe`=#{describe}, " +
-            "`patennumber`=#{patentNumber}, `serialnumber`=#{serialNumber}, " +
-            "`industry`=#{industry}, " +
-            "`spindustries`=#{spIndustries}, `country`=#{country}, " +
-            "`city`=#{city}, `district`=#{district}, " +
-            "`uptime`=NOW() WHERE (`id`=#{id}) ")
+    @Update("UPDATE `occupancy` SET `resultTechnolo`=#{resultTechnolo}, `stage`=#{stage}, " +
+            "`advantages`=#{advantages}, `industry`=#{industry}, `attribute`=#{attribute}," +
+            " `patenNname`=#{patenNname}, `patenNumber`=#{patenNumber}, `price`=#{price}," +
+            "`registerNumber`=#{registerNumber}, `describe`=#{describe}, `appliedRange`=#{appliedRange}," +
+            "`linkman`=#{linkMan}, `phonenumber`=#{phoneNumber}, " +
+            "`uptime`=NOW() WHERE (`id`=#{id})")
     public Boolean upDataOccupancy(Occupancy occupancy);
 
     /**
@@ -90,19 +103,14 @@ public interface OccupancyDao {
      * @param occupancy
      * @return
      */
-
-    @Insert("INSERT INTO `occupancy` (`username`, `namefirm`," +
-            "`resulttechnolo`, `describe`,`patentname` ," +
-            "`patentnumber`, `serialnumber`," +
-            " `industry`," +
-            "`spindustries`, `country`," +
-            "`city`, `district`," +
-            "`creattime`,`kstatue`," +
-            "`statue`) VALUES(#{userName},#{nameFirm},#{resultTechnolo}," +
-            "#{describe},#{patentName},#{patentNumber},#{serialNumber}," +
-            "#{industry},#{spIndustries}," +
-            "#{country},#{city},#{district},NOW(),1" +
-            ",0)")
+    @Insert("INSERT INTO `occupancy` (`username`, `resultTechnolo`, `stage`, " +
+            "`advantages`, `industry`, `attribute`, `patenNname`, `patenNumber`," +
+            " `price`, `describe`, `appliedRange`, `linkman`, `phonenumber`," +
+            "`creattime`,`kstatue`, " +
+            "`statue`) VALUES (#{userName}, #{resultTechnolo}, #{stage}, #{advantages}, " +
+            "#{industry}, #{attribute}, #{patenNname}, #{patenNumber}, " +
+            "#{price}, #{describe}, #{appliedRange}, #{linkMan}, #{phoneNumber}," +
+            "NOW(), '1', '0')")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public Boolean insertOccupancy(Occupancy occupancy);
 
@@ -121,7 +129,7 @@ public interface OccupancyDao {
      * @param statue
      * @return
      */
-    @Update("UPDATE `occupancy` SET `statue`=#{staue},audittime=NOW() WHERE =#{id}")
+    @Update("UPDATE `occupancy` SET `statue`=#{statue},`audittime`=NOW() WHERE id=#{id}")
     public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id);
 
     /**

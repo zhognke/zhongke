@@ -28,7 +28,7 @@ public interface BusinessCenterDao {
             " #{registeredCapital}, #{country}, #{city}, " +
             "#{district}, #{enterpriseProfile}, #{logo}, " +
             "#{identification}, #{societyCode}, #{legalPerson}, #{persionCode}," +
-            " #{address}, #{phnoeNumber}, #{agentPerson}, #{apPersionCode}," +
+            " #{address}, #{phoneNumber}, #{agentPerson}, #{apPersionCode}," +
             " 0, NOW()" +
             ")")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
@@ -58,7 +58,7 @@ public interface BusinessCenterDao {
      */
     @Update("UPDATE `businesscenter` SET `firmname`=#{firmName}, `industry`=#{industry}, " +
             "`typeEnterprise`=#{typeEnterprise}, `scale`=#{scale}, " +
-            "`recordate`=#{recordDate}, `registeredcapital`=#{registeredCapital}, " +
+            "`recorddate`=#{recordDate}, `registeredcapital`=#{registeredCapital}, " +
             "`country`=#{country}, `city`=#{city}, `district`=#{district}, " +
             "`enterpriseprofile`=#{enterpriseProfile}, `logo`=#{logo}, " +
             "`identification`=#{identification}, `societycode`=#{societyCode}, " +

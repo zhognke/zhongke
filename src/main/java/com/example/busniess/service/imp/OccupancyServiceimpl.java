@@ -59,7 +59,7 @@ public class OccupancyServiceimpl implements OccupancyService {
      * @param id
      * @return
      */
-
+    @Transactional
     public Boolean delectOccupancy(Integer id) {
         if (imageAddressDao.delectImageAddress(id)) {
             return occupancyDao.delectOccupancy(id);
@@ -67,21 +67,29 @@ public class OccupancyServiceimpl implements OccupancyService {
         return false;
     }
 
+
     /**
      * 更新审核状态
      *
-     * @param userName
-     * @param roleId
+     * @param statue
+     * @param id
      * @return
      */
-
-    public Boolean upDateStatue(String userName, Integer roleId) {
-
-
-        return userDao.authorization(roleId, userName);
-
-
+    public  boolean updateStatue(Integer statue,Integer id){
+        return occupancyDao.updateStatue(statue,id);
     }
+
+
+
+
+//
+//    public Boolean upDateStatue(String userName, Integer roleId) {
+//
+//
+//        return userDao.authorization(roleId, userName);
+//
+//
+//    }
 
     /**
      * 跟新发布状态
@@ -112,7 +120,11 @@ public class OccupancyServiceimpl implements OccupancyService {
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
     }
-
+    /**
+     * 根据行业查询
+     * @param occupancy
+     * @return
+     */
     @Override
     public PageInfo selectOccupancyByIndustry(Occupancy occupancy, Integer pageNum, Integer pagesize) {
         PageHelper.startPage(pageNum, pagesize);
@@ -122,10 +134,36 @@ public class OccupancyServiceimpl implements OccupancyService {
     }
 
     /**
-     * 返回折线图
-     *
+     * 查看具体 具体的科技成果
+     * @param id
      * @return
      */
+    public  Occupancy seleOccupancyById(Integer id){
+
+
+        return occupancyDao.selectOneById(id);
+    }
+
+    /**
+     * 根据认证状态查询科技成果
+     * @param statue
+     * @return
+     */
+    public List<Occupancy> seleOccupancyByStatue(Integer statue){
+
+        return occupancyDao.selectOnStatueOccupancy(statue);
+    }
+
+    /**
+     * 更新科技成果信息
+     * @param occupancy
+     * @return
+     */
+    @Override
+    public boolean updateOccupancy(Occupancy occupancy) {
+
+        return   occupancyDao.upDataOccupancy(occupancy);
+    }
 
     /**
      * 折线图

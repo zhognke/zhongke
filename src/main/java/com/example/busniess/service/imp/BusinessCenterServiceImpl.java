@@ -43,12 +43,12 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
 
     public Boolean updateAuditStatue( Integer id, Integer rid, String userName,Integer statue,Integer reId) {
 
-       if(statue==2){
-           rejectDao.removeReject(reId);
-       }
+        if(statue==2){
+            rejectDao.removeReject(reId);
+        }
 
         if (businessCenterDao.upStatue(1 ,id)) {
-   return userDao.authorization(rid,userName);
+            return userDao.authorization(rid,userName);
         }else {
             return false;
         }
@@ -63,11 +63,11 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
 
     public  Boolean rejectAudit(Reject reject){
         //1.更新状态默认驳回
-       if(businessCenterDao.upStatue(2,reject.getBid())) {
-        return    rejectDao.addReject(reject);
-       }else {
-           return false;
-       }
+        if(businessCenterDao.upStatue(2,reject.getBId())) {
+            return    rejectDao.addReject(reject);
+        }else {
+            return false;
+        }
     }
 
     /**
@@ -115,9 +115,19 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
      */
     public  BusinessCenter selectMyBusinessCenter(String userName, Integer statue){
 
-    BusinessCenter businessCenter=   rejectDao.selectBussinessAndReject(userName,statue);
-    return businessCenter;
-}
+        BusinessCenter businessCenter=   rejectDao.selectBussinessAndReject(userName,statue);
+        return businessCenter;
+    }
 
+    /**
+     *修改认证信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean updateBusinessCenter(BusinessCenter businessCenter) {
+       boolean a= businessCenterDao.updateBusinessCenter(businessCenter);
 
+        return a;
+    }
 }
