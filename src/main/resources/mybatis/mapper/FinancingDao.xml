@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.FinancingDao">
+    <sql id="business_sql">
+
+        <if test=" statue!=null and  statue!=''">
+           `statue`=#{statue}
+        </if>
+        <if test="industry!=null and industry!=''">
+            AND  `industry`=#{industry}
+        </if>
+        <if test="income!=null and income!=''">
+            AND  `income` between #{greater} and #{less}
+        </if>
+        <if test="province!=null and province!=''">
+            AND `province`=#{province}
+        </if>
+        <if test="city!=null and city!=''">
+            AND `city`=#{city}
+        </if>
+        <if test="discribe!=null and discribe!=''">
+            AND `discribe`=#{discribe}
+        </if>
+        <if test="projecrPhase!=null and projecrPhase!=''">
+            AND `projecrPhase`=#{projecrPhase}
+        </if>
+        <if test="financing!=null and financing!=''">
+            AND `financing`=#{financing}
+        </if>
+        <if test="projectName!=null and projectName!=''">
+            AND `projectName` like "%${projectName}%"
+        </if>
+
+    </sql>
+    <select id="selectAllFinancing" parameterType="Financing" resultType="Financing">
+        SELECT id,industry,financing,income,projecrphase,period FROM financing
+        <where>
+
+            <include refid="business_sql"></include>
+
+        </where>
+        ORDER BY insertTime DESC
+    </select>
+
+
+
+
+</mapper>
