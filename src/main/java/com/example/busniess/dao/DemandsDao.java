@@ -18,14 +18,14 @@ public interface DemandsDao {
      * 查询所有需求
      * @return
      */
-    @Select("select `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status` from `demands`")
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname")
 	public List<DemandsEntity> selectAll();
 
     /**
      * 查询所有未到期的需求(包含未审核,后端页面使用)
      * @return
      */
-    @Select("select `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status` from `demands` where status 0 ")
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and d.status 0 ")
     public List<DemandsEntity> selectAllShow();
 
     /**
@@ -33,7 +33,7 @@ public interface DemandsDao {
      * @param status
      * @return
      */
-    @Select("select `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status` from `demands` where status =#{status} ")
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and  d.status =#{status} ")
     public List<DemandsEntity> selectByStatus(@Param("status") int status);
 
     /**
@@ -90,7 +90,7 @@ public interface DemandsDao {
      * @param id    需求id
      * @return
      */
-    @Select("select `id`,`company_name` as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,`city`,`district`,`contact`,`phone_num` as phoneNum,`email`,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` where id = #{id}")
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and d.id = #{id}")
 	public DemandsEntity getByID(@Param("id") int id);
 
     /**
@@ -106,11 +106,17 @@ public interface DemandsDao {
      * @param demandsEntity
      * @return
      */
-    @Insert("insert into `demands` " +
+    /*@Insert("insert into `demands` " +
             "(`company_name`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
             "`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`," +
             "`create_time`,`update_time`,`remark`,`status`,`approval_status`) values(#{companyName},#{demandType},#{cooperationType},#{cooperationIntention},#{demandIndustry}," +
             "#{demandIndustryDetail},#{demandOutline},#{demandContent},#{expectedResult},#{city},#{district},#{contact},#{phoneNum},#{email}," +
+            "#{preInvestmentAmount},#{endDate},#{createTime},#{updateTime},#{remark},#{status},#{approvalStatus})")*/
+    @Insert("insert into `demands` " +
+            "(`user_name`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
+            "`expected_result`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`," +
+            "`create_time`,`update_time`,`remark`,`status`,`approval_status`) values(#{userName},#{demandType},#{cooperationType},#{cooperationIntention},#{demandIndustry}," +
+            "#{demandIndustryDetail},#{demandOutline},#{demandContent},#{expectedResult},#{contact},#{phoneNum}," +
             "#{preInvestmentAmount},#{endDate},#{createTime},#{updateTime},#{remark},#{status},#{approvalStatus})")
 	public boolean insert(DemandsEntity demandsEntity);
 

@@ -5,6 +5,7 @@
 
     <resultMap type="com.example.busniess.entity.DemandsEntity" id="demandsMap">
         <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
         <result property="companyName" column="company_name"/>
         <result property="demandType" column="demand_type"/>
         <result property="cooperationType" column="cooperation_type"/>
@@ -30,9 +31,6 @@
     </resultMap>
 
     <sql id="demands_sql">
-        <if test="companyName!=null and companyName!=''">
-            `company_name`=#{companyName},
-        </if>
         <if test="demandType!=null and demandType!=''">
             `demand_type`=#{demandType},
         </if>
@@ -57,20 +55,11 @@
         <if test="expectedResult!=null and expectedResult!=''">
             `expected_result`=#{expectedResult},
         </if>
-        <if test="city!=null and city!=''">
-            `city`=#{city},
-        </if>
-        <if test="district!=null and district!=''">
-            `district`=#{district},
-        </if>
         <if test="contact!=null and contact!=''">
             `contact`=#{contact},
         </if>
         <if test="phoneNum!=null and phoneNum!=''">
             `phone_num`=#{phoneNum},
-        </if>
-        <if test="email!=null and email!=''">
-            `email`=#{email},
         </if>
         <if test="preInvestmentAmount!=null and preInvestmentAmount!=''">
             `pre_investment_amount`=#{preInvestmentAmount},
@@ -99,31 +88,39 @@
     </sql>
 
     <select id="search" parameterType="demandsEntity" resultMap="demandsMap">
-        SELECT `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion` FROM `demands`
+        SELECT d.`id`,d.user_name,b.firmName company_name,`demand_type`,`cooperation_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,b.`city`,b.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion`
+        FROM `demands` d,`businesscenter` b
         <where>
+            d.user_name = b.uname
             <if test="demandIndustry!=null and demandIndustry!=''">
-                `demand_industry`=#{demandIndustry}
+                and d.`demand_industry`=#{demandIndustry}
             </if>
-            <if test="companyName!=null and companyName!=''">
-                and `company_name`=#{companyName}
+            <if test="userName!=null and userName!=''">
+                and d.`user_name`=#{userName}
             </if>
             <if test="demandType!=null and demandType!=''">
-                and `demand_type`=#{demandType}
+                and d.`demand_type`=#{demandType}
             </if>
             <if test="status!=null and status!=''">
-                and `status`=#{status}
+                and d.`status`=#{status}
             </if>
             <if test="cooperationType!=null and cooperationType!=''">
-                and `cooperation_type`=#{cooperationType}
+                and d.`cooperation_type`=#{cooperationType}
             </if>
             <if test="cooperationIntention!=null and cooperationIntention!=''">
-                and `cooperation_intention`=#{cooperationIntention}
+                and d.`cooperation_intention`=#{cooperationIntention}
             </if>
             <if test="preInvestmentAmount!=null and preInvestmentAmount!=''">
-                and `pre_investment_amount`=#{preInvestmentAmount}
+                and d.`pre_investment_amount`=#{preInvestmentAmount}
             </if>
             <if test="approvalStatus!=null and approvalStatus!=''">
-                and `approval_status`=#{approvalStatus}
+                and d.`approval_status`=#{approvalStatus}
+            </if>
+            <if test="companyName!=null and companyName!=''">
+                and b.firmName=#{companyName}
+            </if>
+            <if test="keyWord!=null and keyWord!=''">
+                and (d.`demand_industry` like CONCAT('%',#{keyWord},'%') or d.`demand_industry_detail` like CONCAT('%',#{keyWord},'%') or d.`demand_outline` like CONCAT('%',#{keyWord},'%'))
             </if>
         </where>
     </select>

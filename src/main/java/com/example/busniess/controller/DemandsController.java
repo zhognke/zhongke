@@ -1,18 +1,17 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.entity.DemandsEntity;
+import com.example.busniess.entity.User;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.DemandsService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -24,7 +23,6 @@ import java.util.*;
  * @email wawzj512541@gmail.com
  * @date 2019-09-24 10:05:26
  */
-@Validated
 @RestController
 @RequestMapping("/demands")
 public class DemandsController {
@@ -39,7 +37,7 @@ public class DemandsController {
      * @return
      */
     @RequestMapping("/showByPage")
-    public ReturnResult showByPage(DemandsEntity demandsEntity,Integer pageNum,Integer pageSize){
+    public ReturnResult showByPage(DemandsEntity demandsEntity,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
         if(pageNum==null||pageSize==null){
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
         }
@@ -55,7 +53,7 @@ public class DemandsController {
      * @return
      */
     @RequestMapping("/showByPageForManager")
-    public ReturnResult showByPageForManager(DemandsEntity demandsEntity,Integer pageNum,Integer pageSize){
+    public ReturnResult showByPageForManager(DemandsEntity demandsEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
         if(pageNum==null||pageSize==null){
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
         }
@@ -68,7 +66,7 @@ public class DemandsController {
      * @param id    需求id
      * @return
      */
-    @RequestMapping("/getDemandsByID")
+    @RequestMapping(value="/getDemandsByID",method = {RequestMethod.GET})
     public ReturnResult getDemandsByID(Integer id){
         if(id==null){
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
@@ -99,6 +97,14 @@ public class DemandsController {
         }
         if(demandsEntity.getApprovalStatus()==null){
             demandsEntity.setApprovalStatus(0);
+        }
+        if(demandsEntity.getUserName()==null){
+            Object obj = SecurityUtils.getSubject().getPrincipal();
+            if(obj!=null){
+                demandsEntity.setUserName(((User)obj).getUserName());
+            }else{
+                return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+            }
         }
         if(demandsService.insert(demandsEntity)){
             return ReturnResult.success();
