@@ -27,7 +27,7 @@ public class Financing implements Serializable {
     private String phoneNumber;//电话号码
     private String extensive;//融资用途
     private String cost;//项目总投资
-    private String hascost;//以融资金额
+    private BigDecimal hascost;//以融资金额
     private String financing;//融资方式
     private String interest;//可承担利息
     private int time;//所占时间
