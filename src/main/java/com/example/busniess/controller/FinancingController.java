@@ -1,10 +1,9 @@
 package com.example.busniess.controller;
 
-import com.example.busniess.entity.Financing;
+import com.example.busniess.dao.DemandsDao;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.FinancingService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +22,7 @@ public class FinancingController {
      * @return
      */
     @RequestMapping("/addFinancing")
-    public ReturnResult addFinancing(Financing financing) {
+    public ReturnResult addFinancing(DemandsDao.Financing financing) {
         if (financingServiceImpl.insertFinacing(financing)) {
             return ReturnResult.success();
         }
@@ -45,7 +44,7 @@ public class FinancingController {
      * 修改融资
      */
     @RequestMapping("/updateFinancing")
-    public ReturnResult updateFinancing(Financing financing) {
+    public ReturnResult updateFinancing(DemandsDao.Financing financing) {
         if (financingServiceImpl.updateFinacing(financing)) {
             return ReturnResult.success();
         }
@@ -66,7 +65,7 @@ public class FinancingController {
      * 根据条件查询
      */
     @RequestMapping("/findFinancingByCondition")
-    public ReturnResult findFinancingByCondition(Financing financing, Integer pagenum, Integer pageSize) {
+    public ReturnResult findFinancingByCondition(DemandsDao.Financing financing, Integer pagenum, Integer pageSize) {
        return ReturnResult.success(financingServiceImpl.SelectAllFinacing(financing, pagenum, pageSize));
     }
     /**
