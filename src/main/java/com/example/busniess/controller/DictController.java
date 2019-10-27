@@ -72,12 +72,26 @@ public class DictController {
     }
 
     /**
-     * 获取所有字典元素
+     * 根据父id获取字典元素
      * @return
      */
-    @GetMapping("/getByParentId")
+    @GetMapping("/getDictByParentId")
     public ReturnResult getByParentId(String parentId){
         List<DictEntity> list = dictService.getByParentId(parentId);
+        if(list.size()>0){
+            return ReturnResult.success(list);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }
+    }
+
+    /**
+     * 根据type获取字典元素
+     * @return
+     */
+    @GetMapping("/getDictByType")
+    public ReturnResult getByParentType(String type){
+        List<DictEntity> list = dictService.getByType(type);
         if(list.size()>0){
             return ReturnResult.success(list);
         }else{

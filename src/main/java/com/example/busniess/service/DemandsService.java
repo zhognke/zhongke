@@ -70,6 +70,16 @@ public interface DemandsService {
     public PageInfo showByPage(DemandsEntity demandsEntity, int pageNum, int pagesize);
 
     /**
+     * 最新需求
+     * @return
+     */
+    public List<DemandsEntity> lastDemandsShow();
+    /**
+     * 最新需求
+     * @return
+     */
+    public List<String> hotDemandsIndustry();
+    /**
      * 分页查询(用户端)
      * @param demandsEntity
      * @param pageNum   当前页
@@ -112,12 +122,19 @@ public interface DemandsService {
     public DemandsEntity getByID(int id);
 
     /**
-     * 根据id删除需求
+     * 根据id删除需求(逻辑删除)
      *
      * @param id 需求id
      * @return
      */
     public boolean deleteDemandsByID(int id);
+    /**
+     * 根据id删除需求(删除数据库)
+     *
+     * @param id 需求id
+     * @return
+     */
+    boolean realDeleteDemandsByID(Integer id);
 
     /**
      * 新增需求

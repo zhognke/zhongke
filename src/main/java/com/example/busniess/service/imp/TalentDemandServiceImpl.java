@@ -77,6 +77,8 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     */
     @Override
     public boolean add(TalentDemandEntity talentDemandEntity) {
+        talentDemandEntity.setStatus(0);
+        talentDemandEntity.setApprovalStatus(0);
         return talentDemandDao.add(talentDemandEntity);
     }
 

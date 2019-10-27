@@ -1,7 +1,7 @@
 package com.example.busniess.service.imp;
 
-import com.example.busniess.dao.DemandsDao;
 import com.example.busniess.dao.FinancingDao;
+import com.example.busniess.entity.FinancingEntity;
 import com.example.busniess.service.FinancingService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,7 +21,7 @@ public class FinancingServiceImpl implements FinancingService {
      * @return
      */
     @Override
-    public Boolean insertFinacing(DemandsDao.Financing financing) {
+    public Boolean insertFinacing(FinancingEntity financing) {
 
         return  financingDao.insertFinancing(financing);
     }
@@ -43,7 +43,7 @@ public class FinancingServiceImpl implements FinancingService {
      * @return
      */
     @Override
-    public boolean updateFinacing(DemandsDao.Financing financing) {
+    public boolean updateFinacing(FinancingEntity financing) {
 
         return financingDao.updateFinancing(financing);
     }
@@ -81,7 +81,7 @@ public class FinancingServiceImpl implements FinancingService {
      * @return
      */
     @Override
-    public PageInfo SelectAllFinacing(DemandsDao.Financing financing, Integer pageNum, Integer pagesize) {
+    public PageInfo SelectAllFinacing(FinancingEntity financing, Integer pageNum, Integer pagesize) {
         PageHelper.startPage(pageNum, pagesize);
         List a=financingDao.selectAllFinancing(financing);
         PageInfo pageInfo=new PageInfo(a);

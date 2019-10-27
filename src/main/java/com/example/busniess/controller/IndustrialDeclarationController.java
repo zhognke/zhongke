@@ -1,12 +1,16 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.IndustrialDeclarationEntity;
+import com.example.busniess.entity.User;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
+import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.IndustrialDeclarationService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +35,9 @@ public class IndustrialDeclarationController {
     @Autowired
     private IndustrialDeclarationService industrialDeclarationService;
 
+    @Autowired
+    BusinessCenterService businessCenterServiceImpl;
+
     /**
      * 新增申报
      * @param industrialDeclarationEntity
@@ -50,7 +57,7 @@ public class IndustrialDeclarationController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.GET})
+    @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteById(Integer id){
         if(industrialDeclarationService.delectById(id)){
             return ReturnResult.success("删除成功");
@@ -64,7 +71,7 @@ public class IndustrialDeclarationController {
      * @param id
      * @return
      */
-    @RequestMapping(value="/realDeleteById",method = {RequestMethod.DELETE,RequestMethod.GET})
+    @RequestMapping(value="/realDeleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult realDeleteById(Integer id){
         if(industrialDeclarationService.realDeleteById(id)){
             return ReturnResult.success("删除成功");
@@ -119,6 +126,38 @@ public class IndustrialDeclarationController {
     }
 
     /**
+     * 修改申报审批状态-通过
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/updateApprovalStatusPass")
+    public ReturnResult updateApprovalStatusPass(Integer id) {
+        Integer approvalStatus = 1;
+        if (industrialDeclarationService.updateApprovalStatus(id,approvalStatus, "")) {
+            return ReturnResult.success();
+        } else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 修改申报审批状态-驳回
+     *
+     * @param approvalOpinion 审批意见
+     * @param id
+     * @return
+     */
+    @PostMapping("/updateApprovalStatusRejected")
+    public ReturnResult updateApprovalStatusRejected(Integer id, String approvalOpinion) {
+        Integer approvalStatus = 2;
+        if (industrialDeclarationService.updateApprovalStatus(id,approvalStatus, approvalOpinion)) {
+            return ReturnResult.success();
+        } else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+    /**
      * 分页展示,可根据条件筛选
      * @param industrialDeclarationEntity
      * @param pageNum
@@ -127,8 +166,38 @@ public class IndustrialDeclarationController {
      */
     @RequestMapping(value="/showByPage",method = RequestMethod.GET)
     public ReturnResult showByPage(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
+        industrialDeclarationEntity.setStatus(0);
         if(pageNum==null||pageSize==null){
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
+        PageInfo pageInfo = industrialDeclarationService.showByPage(industrialDeclarationEntity,pageNum,pageSize);
+        return ReturnResult.success(pageInfo);
+    }
+
+    /**
+     * 个人中心分页展示,可根据条件筛选
+     * @param industrialDeclarationEntity
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="/showByPageForCenter",method = RequestMethod.GET)
+    public ReturnResult showByPageForCenter(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
+        String userName = industrialDeclarationEntity.getUserName();
+        String companyName = industrialDeclarationEntity.getCompanyName();
+        if(userName!=null || companyName!=null){
+        }else{
+            Object obj = SecurityUtils.getSubject().getPrincipal();
+            if(obj!=null){
+                userName = ((User)obj).getUserName();
+                BusinessCenter businessCenter = businessCenterServiceImpl.selectMyBusinessCenter(userName);
+                if(businessCenter!=null){
+                    companyName = businessCenter.getFirmName();
+                    industrialDeclarationEntity.setCompanyName(companyName);
+                }
+            }else{
+                return ReturnResult.erro(CodeMsg.BIND_ERROR);
+            }
         }
         PageInfo pageInfo = industrialDeclarationService.showByPage(industrialDeclarationEntity,pageNum,pageSize);
         return ReturnResult.success(pageInfo);

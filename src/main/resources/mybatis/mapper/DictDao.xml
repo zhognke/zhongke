@@ -39,7 +39,7 @@
     </select>
 
     <select id="getByType" parameterType="String" resultMap="baseMap">
-        select <include refid="columnNames"></include> from dict where del_flag = 0 type = #{type} order by order_num
+        select <include refid="columnNames"></include> from dict where del_flag = 0 and type = #{type} order by order_num
     </select>
 
     <select id="getByParentId" parameterType="String" resultMap="baseMap">

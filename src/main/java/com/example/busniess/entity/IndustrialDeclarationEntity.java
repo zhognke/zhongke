@@ -58,6 +58,10 @@ public class IndustrialDeclarationEntity implements Serializable {
      */
     private String projectContent;
     /**
+     * 省
+     */
+    private String province;
+    /**
      * 市
      */
     private String city;
@@ -80,7 +84,7 @@ public class IndustrialDeclarationEntity implements Serializable {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
     /**
      * 更新时间
      */
@@ -109,4 +113,10 @@ public class IndustrialDeclarationEntity implements Serializable {
      * 统计(非数据库储存字段)
      */
     private Integer counts;
+    /**
+     * 搜索关键词(非数据库字段)
+     */
+    private String keyWord;
+
+    private String userName;
 }

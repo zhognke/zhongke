@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.ProfessionalsDao">
+
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.example.busniess.entity.ProfessionalsEntity" id="baseMap">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="realName" column="real_name"/>
+        <result property="institutions" column="institutions"/>
+        <result property="positions" column="positions"/>
+        <result property="engagedIndustry" column="engaged_industry"/>
+        <result property="engagedIndustryDetail" column="engaged_industry_detail"/>
+        <result property="industryExperience" column="industry_experience"/>
+        <result property="technologyScope" column="technology_scope"/>
+        <result property="outstandingContribution" column="outstanding_contribution"/>
+        <result property="researchDirection" column="research_direction"/>
+        <result property="introduced" column="introduced"/>
+        <result property="phoneNum" column="phone_num"/>
+        <result property="iconAddress" column="icon_address"/>
+        <result property="certificateAddress" column="certificate_address"/>
+        <result property="status" column="status"/>
+        <result property="approvalStatus" column="approval_status"/>
+        <result property="approvalOpinion" column="approval_opinion"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="columnNames">
+                id,
+                user_name,
+                real_name,
+                institutions,
+                positions,
+                engaged_industry,
+                engaged_industry_detail,
+                industry_experience,
+                technology_scope,
+                outstanding_contribution,
+                research_direction,
+                introduced,
+                phone_num,
+                icon_address,
+                certificate_address,
+                status,
+                approval_status,
+                approval_opinion,
+                create_time,
+                update_time
+            </sql>
+
+    <sql id="addColumnNames">
+                user_name,
+                real_name,
+                institutions,
+                positions,
+                engaged_industry,
+                engaged_industry_detail,
+                industry_experience,
+                technology_scope,
+                outstanding_contribution,
+                research_direction,
+                introduced,
+                phone_num,
+                icon_address,
+                certificate_address,
+                create_time
+            </sql>
+
+    <sql id="attrnames">
+                #{userName},
+                #{realName},
+                #{institutions},
+                #{positions},
+                #{engagedIndustry},
+                #{engagedIndustryDetail},
+                #{industryExperience},
+                #{technologyScope},
+                #{outstandingContribution},
+                #{researchDirection},
+                #{introduced},
+                #{phoneNum},
+                #{iconAddress},
+                #{certificateAddress},
+                #{createTime}
+            </sql>
+
+    <insert id="add" parameterType="com.example.busniess.entity.ProfessionalsEntity">
+        insert into professionals (<include refid="addColumnNames"></include>)
+        values (<include refid="attrnames"></include>);
+    </insert>
+
+    <select id="getById" parameterType="Integer" resultMap="baseMap">
+        select <include refid="columnNames"></include> from professionals where id = #{id}
+    </select>
+
+    <update id="updateById" parameterType="com.example.busniess.entity.ProfessionalsEntity">
+        update professionals
+        <set>
+            <if test="id!=null and id!=''">
+                id=#{id},
+            </if>
+            <if test="userName!=null and userName!=''">
+                user_name=#{userName},
+            </if>
+            <if test="realName!=null and realName!=''">
+                real_name=#{realName},
+            </if>
+            <if test="institutions!=null and institutions!=''">
+                institutions=#{institutions},
+            </if>
+            <if test="positions!=null and positions!=''">
+                positions=#{positions},
+            </if>
+            <if test="engagedIndustry!=null and engagedIndustry!=''">
+                engaged_industry=#{engagedIndustry},
+            </if>
+            <if test="engagedIndustryDetail!=null and engagedIndustryDetail!=''">
+                engaged_industry_detail=#{engagedIndustryDetail},
+            </if>
+            <if test="industryExperience!=null and industryExperience!=''">
+                industry_experience=#{industryExperience},
+            </if>
+            <if test="technologyScope!=null and technologyScope!=''">
+                technology_scope=#{technologyScope},
+            </if>
+            <if test="outstandingContribution!=null and outstandingContribution!=''">
+                outstanding_contribution=#{outstandingContribution},
+            </if>
+            <if test="researchDirection!=null and researchDirection!=''">
+                research_direction=#{researchDirection},
+            </if>
+            <if test="introduced!=null and introduced!=''">
+                introduced=#{introduced},
+            </if>
+            <if test="phoneNum!=null and phoneNum!=''">
+                phone_num=#{phoneNum},
+            </if>
+            <if test="iconAddress!=null and iconAddress!=''">
+                icon_address=#{iconAddress},
+            </if>
+            <if test="certificateAddress!=null and certificateAddress!=''">
+                certificate_address=#{certificateAddress},
+            </if>
+            <if test="status!=null and status!=''">
+                status=#{status},
+            </if>
+            <if test="approvalStatus!=null and approvalStatus!=''">
+                approval_status=#{approvalStatus},
+            </if>
+            <if test="approvalOpinion!=null and approvalOpinion!=''">
+                approval_opinion=#{approvalOpinion},
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                create_time=#{createTime},
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+
+    <delete id="realDeleteById" parameterType="Integer">
+        delete from professionals where id = #{id};
+    </delete>
+
+    <select id="search" resultMap="baseMap" parameterType="com.example.busniess.entity.ProfessionalsEntity">
+        select <include refid="columnNames"></include> from professionals
+        where status != '4'
+        <if test="userName!=null and userName!=''">
+            and user_name=#{userName}
+        </if>
+        <if test="realName!=null and realName!=''">
+            and real_name=#{realName}
+        </if>
+        <if test="institutions!=null and institutions!=''">
+            and institutions=#{institutions}
+        </if>
+        <if test="engagedIndustry!=null and engagedIndustry!=''">
+            and engaged_industry=#{engagedIndustry}
+        </if>
+        <if test="engagedIndustryDetail!=null and engagedIndustryDetail!=''">
+            and engaged_industry_detail=#{engagedIndustryDetail}
+        </if>
+        <if test="industryExperience!=null and industryExperience!=''">
+            and industry_experience=#{industryExperience}
+        </if>
+        <if test="technologyScope!=null and technologyScope!=''">
+            and technology_scope=#{technologyScope}
+        </if>
+        <if test="outstandingContribution!=null and outstandingContribution!=''">
+            and outstanding_contribution=#{outstandingContribution}
+        </if>
+        <if test="researchDirection!=null and researchDirection!=''">
+            and research_direction=#{researchDirection}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="approvalStatus!=null">
+            and approval_status=#{approvalStatus}
+        </if>
+    </select>
+</mapper>

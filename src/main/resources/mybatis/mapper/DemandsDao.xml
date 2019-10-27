@@ -15,6 +15,7 @@
         <result property="demandOutline" column="demand_outline"/>
         <result property="demandContent" column="demand_content"/>
         <result property="expectedResult" column="expected_result"/>
+        <result property="province" column="province"/>
         <result property="city" column="city"/>
         <result property="district" column="district"/>
         <result property="contact" column="contact"/>
@@ -73,7 +74,7 @@
         <if test="updateTime!=null and updateTime!=''">
             `update_time`=#{updateTime},
         </if>
-        <if test="status!=null and status!=''">
+        <if test="status!=null">
             `status`=#{status},
         </if>
         <if test="approvalStatus!=null and approvalStatus!=''">
@@ -88,10 +89,10 @@
     </sql>
 
     <select id="search" parameterType="demandsEntity" resultMap="demandsMap">
-        SELECT d.`id`,d.user_name,b.firmName company_name,`demand_type`,`cooperation_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,b.`city`,b.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion`
+        SELECT d.`id`,d.user_name,b.firmName company_name,`demand_type`,`cooperation_type`,cooperation_intention,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,b.country province,b.`city`,b.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion`
         FROM `demands` d,`businesscenter` b
         <where>
-            d.user_name = b.uname
+            d.user_name = b.uname and status!='44'
             <if test="demandIndustry!=null and demandIndustry!=''">
                 and d.`demand_industry`=#{demandIndustry}
             </if>
@@ -99,21 +100,36 @@
                 and d.`user_name`=#{userName}
             </if>
             <if test="demandType!=null and demandType!=''">
-                and d.`demand_type`=#{demandType}
+                and d.`demand_type` in
+                <foreach collection="demandTypes" item="demandType" index="index" open="(" close=")" separator=",">
+                    #{demandType}
+                </foreach>
             </if>
-            <if test="status!=null and status!=''">
+            <if test="status!=null">
                 and d.`status`=#{status}
             </if>
             <if test="cooperationType!=null and cooperationType!=''">
-                and d.`cooperation_type`=#{cooperationType}
+                and d.`cooperation_type` in
+                <foreach collection="cooperationTypes" item="cooperationType" index="index" open="(" close=")" separator=",">
+                    #{cooperationType}
+                </foreach>
             </if>
             <if test="cooperationIntention!=null and cooperationIntention!=''">
-                and d.`cooperation_intention`=#{cooperationIntention}
+                and d.`cooperation_intention` in
+                <foreach collection="cooperationIntentions" item="cooperationIntention" index="index" open="(" close=")" separator=",">
+                    #{cooperationIntention}
+                </foreach>
             </if>
-            <if test="preInvestmentAmount!=null and preInvestmentAmount!=''">
-                and d.`pre_investment_amount`=#{preInvestmentAmount}
+            <if test="preInvestmentAmountBegin!=null and preInvestmentAmountEnd!=null">
+                and d.`pre_investment_amount` between #{preInvestmentAmountBegin} and #{preInvestmentAmountEnd}
             </if>
-            <if test="approvalStatus!=null and approvalStatus!=''">
+            <if test="preInvestmentAmountBegin!=null and preInvestmentAmountEnd==null">
+                and d.`pre_investment_amount` &gt;= #{preInvestmentAmountBegin}
+            </if>
+            <if test="preInvestmentAmountBegin==null and preInvestmentAmountEnd!=null">
+                and d.`pre_investment_amount` &lt;= #{preInvestmentAmountEnd}
+            </if>
+            <if test="approvalStatus!=null">
                 and d.`approval_status`=#{approvalStatus}
             </if>
             <if test="companyName!=null and companyName!=''">
@@ -123,6 +139,7 @@
                 and (d.`demand_industry` like CONCAT('%',#{keyWord},'%') or d.`demand_industry_detail` like CONCAT('%',#{keyWord},'%') or d.`demand_outline` like CONCAT('%',#{keyWord},'%'))
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="getCount" parameterType="demandsEntity">

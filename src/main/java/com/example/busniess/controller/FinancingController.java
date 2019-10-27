@@ -1,6 +1,6 @@
 package com.example.busniess.controller;
 
-import com.example.busniess.dao.DemandsDao;
+import com.example.busniess.entity.FinancingEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.FinancingService;
@@ -22,7 +22,7 @@ public class FinancingController {
      * @return
      */
     @RequestMapping("/addFinancing")
-    public ReturnResult addFinancing(DemandsDao.Financing financing) {
+    public ReturnResult addFinancing(FinancingEntity financing) {
         if (financingServiceImpl.insertFinacing(financing)) {
             return ReturnResult.success();
         }
@@ -44,7 +44,7 @@ public class FinancingController {
      * 修改融资
      */
     @RequestMapping("/updateFinancing")
-    public ReturnResult updateFinancing(DemandsDao.Financing financing) {
+    public ReturnResult updateFinancing(FinancingEntity financing) {
         if (financingServiceImpl.updateFinacing(financing)) {
             return ReturnResult.success();
         }
@@ -65,7 +65,7 @@ public class FinancingController {
      * 根据条件查询
      */
     @RequestMapping("/findFinancingByCondition")
-    public ReturnResult findFinancingByCondition(DemandsDao.Financing financing, Integer pagenum, Integer pageSize) {
+    public ReturnResult findFinancingByCondition(FinancingEntity financing, Integer pagenum, Integer pageSize) {
        return ReturnResult.success(financingServiceImpl.SelectAllFinacing(financing, pagenum, pageSize));
     }
     /**

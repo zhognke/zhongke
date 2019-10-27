@@ -1,5 +1,6 @@
 package com.example.busniess.dao;
 
+import com.example.busniess.entity.FinancingEntity;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface FinancingDao {
             "#{cost}, #{hascost}, #{financing}, #{interest}, " +
             "#{time}, #{unit}, #{projectFinancing}, #{income}, " +
             "#{profit}, #{proportion}, #{ageLimit},#{lunit},0, NOW())")
-    public Boolean insertFinancing(DemandsDao.Financing financing);
+    public Boolean insertFinancing(FinancingEntity financing);
 
     /**
      * 删除
@@ -50,7 +51,7 @@ public interface FinancingDao {
             "`income`=#{income}, `profit`=#{profit}, `proportion`=#{proportion}, " +
             "`agelimit`=#{ageLimit}, `lunit`=#{lunit}, " +
             "`updateTime`=NOW() WHERE (`id`=#{id})")
-    public Boolean updateFinancing(DemandsDao.Financing financing);
+    public Boolean updateFinancing(FinancingEntity financing);
 
     /**
      * 查看具体
@@ -59,7 +60,7 @@ public interface FinancingDao {
      * @return
      */
     @Select("SELECT * FROM financing WHERE id=#{id}")
-    public DemandsDao.Financing seleOneFinancing(Integer id);
+    public FinancingEntity seleOneFinancing(Integer id);
 
     /**
      * 查看自己的
@@ -67,14 +68,14 @@ public interface FinancingDao {
      * @return
      */
     @Select("SELECT id,industry,financing,income,projecrphase,period FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
-    public List<DemandsDao.Financing> selectMyFinancing(String uName);
+    public List<FinancingEntity> selectMyFinancing(String uName);
 
     /**
      * 查看所有的
      * @return
      */
 //    @Select("SELECT id,industry,financing,income,projecrphase,period FROM financing")
-    public List<DemandsDao.Financing> selectAllFinancing(DemandsDao.Financing financing);
+    public List<FinancingEntity> selectAllFinancing(FinancingEntity financing);
 
     /**
      *修改审核状态
@@ -87,5 +88,5 @@ public interface FinancingDao {
      * @return
      */
     @Select(" SELECT id,industry,financing,income,projecrphase,period FROM financing")
-    public List<DemandsDao.Financing> selectAllFinacing();
+    public List<FinancingEntity> selectAllFinacing();
 }

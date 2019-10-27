@@ -87,73 +87,73 @@
             <if test="minerals!=null and minerals!=''">
                 minerals=#{minerals},
             </if>
-            <if test="investmentSelfPrepare!=null and investmentSelfPrepare!=''">
+            <if test="investmentSelfPrepare!=null">
                 investment_self_prepare=#{investmentSelfPrepare},
             </if>
-            <if test="investmentLoans!=null and investmentLoans!=''">
+            <if test="investmentLoans!=null">
                 investment_loans=#{investmentLoans},
             </if>
-            <if test="investmentUsingForex!=null and investmentUsingForex!=''">
+            <if test="investmentUsingForex!=null">
                 investment_using_forex=#{investmentUsingForex},
             </if>
-            <if test="completedInvestment!=null and completedInvestment!=''">
+            <if test="completedInvestment!=null">
                 completed_investment=#{completedInvestment},
             </if>
-            <if test="lastYearInvestment!=null and lastYearInvestment!=''">
+            <if test="lastYearInvestment!=null">
                 last_year_investment=#{lastYearInvestment},
             </if>
-            <if test="totalInvestmentSelfPrepare!=null and totalInvestmentSelfPrepare!=''">
+            <if test="totalInvestmentSelfPrepare!=null">
                 total_investment_self_prepare=#{totalInvestmentSelfPrepare},
             </if>
-            <if test="totalInvestmentLoans!=null and totalInvestmentLoans!=''">
+            <if test="totalInvestmentLoans!=null">
                 total_investment_loans=#{totalInvestmentLoans},
             </if>
-            <if test="projectedInvestment!=null and projectedInvestment!=''">
+            <if test="projectedInvestment!=null">
                 projected_investment=#{projectedInvestment},
             </if>
-            <if test="projectedSelfPrepare!=null and projectedSelfPrepare!=''">
+            <if test="projectedSelfPrepare!=null">
                 projected_self_prepare=#{projectedSelfPrepare},
             </if>
-            <if test="projectedLoans!=null and projectedLoans!=''">
+            <if test="projectedLoans!=null">
                 projected_loans=#{projectedLoans},
             </if>
-            <if test="newSalesRevenue!=null and newSalesRevenue!=''">
+            <if test="newSalesRevenue!=null">
                 new_sales_revenue=#{newSalesRevenue},
             </if>
-            <if test="newProfits!=null and newProfits!=''">
+            <if test="newProfits!=null">
                 new_profits=#{newProfits},
             </if>
-            <if test="newTax!=null and newTax!=''">
+            <if test="newTax!=null">
                 new_tax=#{newTax},
             </if>
-            <if test="newForex!=null and newForex!=''">
+            <if test="newForex!=null">
                 new_forex=#{newForex},
             </if>
-            <if test="energySaving!=null and energySaving!=''">
+            <if test="energySaving!=null">
                 energy_saving=#{energySaving},
             </if>
-            <if test="co2EmissionReduction!=null and co2EmissionReduction!=''">
+            <if test="co2EmissionReduction!=null">
                 CO2_emission_reduction=#{co2EmissionReduction},
             </if>
-            <if test="waterConservation!=null and waterConservation!=''">
+            <if test="waterConservation!=null">
                 water_conservation=#{waterConservation},
             </if>
-            <if test="wasteUtilization!=null and wasteUtilization!=''">
+            <if test="wasteUtilization!=null">
                 waste_utilization=#{wasteUtilization},
             </if>
-            <if test="codEmissionReduction!=null and codEmissionReduction!=''">
+            <if test="codEmissionReduction!=null">
                 COD_emission_reduction=#{codEmissionReduction},
             </if>
-            <if test="ammoniaNitrogenEmissionReduction!=null and ammoniaNitrogenEmissionReduction!=''">
+            <if test="ammoniaNitrogenEmissionReduction!=null">
                 ammonia_nitrogen_emission_reduction=#{ammoniaNitrogenEmissionReduction},
             </if>
-            <if test="noxEmissionReduction!=null and noxEmissionReduction!=''">
+            <if test="noxEmissionReduction!=null">
                 NOx_emission_reduction=#{noxEmissionReduction},
             </if>
-            <if test="vocsEmissionReduction!=null and vocsEmissionReduction!=''">
+            <if test="vocsEmissionReduction!=null">
                 VOCs_emission_reduction=#{vocsEmissionReduction},
             </if>
-            <if test="so2EmissionReduction!=null and so2EmissionReduction!=''">
+            <if test="so2EmissionReduction!=null">
                 SO2_emission_reduction=#{so2EmissionReduction},
             </if>
             <if test="otherEmissionReduction!=null and otherEmissionReduction!=''">
@@ -165,28 +165,28 @@
             <if test="remark!=null and remark!=''">
                 remark=#{remark},
             </if>
-            <if test="implementationInvestment!=null and implementationInvestment!=''">
+            <if test="implementationInvestment!=null">
                 implementation_investment=#{implementationInvestment},
             </if>
-            <if test="implementationLoans!=null and implementationLoans!=''">
+            <if test="implementationLoans!=null">
                 implementation_loans=#{implementationLoans},
             </if>
             <if test="fundraisingIntention!=null and fundraisingIntention!=''">
                 fundraising_intention=#{fundraisingIntention},
             </if>
-            <if test="privateEnterprise!=null and privateEnterprise!=''">
+            <if test="privateEnterprise!=null">
                 private_enterprise=#{privateEnterprise},
             </if>
-            <if test="totalEquipmentInvestment!=null and totalEquipmentInvestment!=''">
+            <if test="totalEquipmentInvestment!=null">
                 total_equipment_investment=#{totalEquipmentInvestment},
             </if>
             <if test="equipmentNameNum!=null and equipmentNameNum!=''">
                 equipment_name_num=#{equipmentNameNum},
             </if>
-            <if test="projectedEquipment!=null and projectedEquipment!=''">
+            <if test="projectedEquipment!=null">
                 projected_equipment=#{projectedEquipment},
             </if>
-            <if test="currentYearInvestment!=null and currentYearInvestment!=''">
+            <if test="currentYearInvestment!=null">
                 current_year_investment=#{currentYearInvestment},
             </if>
             <if test="patentsDeclaration!=null and patentsDeclaration!=''">
@@ -201,7 +201,7 @@
             <if test="productLaunchDate!=null and productLaunchDate!=''">
                 product_launch_date=#{productLaunchDate},
             </if>
-            <if test="provincialTechnologyCenter!=null and provincialTechnologyCenter!=''">
+            <if test="provincialTechnologyCenter!=null">
                 provincial_technology_center=#{provincialTechnologyCenter}
             </if>
             <if test="advancedManufacturingType!=null and advancedManufacturingType!=''">

@@ -33,7 +33,7 @@
         </if>
 
     </sql>
-    <select id="selectAllFinancing" parameterType="Financing" resultType="Financing">
+    <select id="selectAllFinancing" parameterType="com.example.busniess.entity.DemandsEntity" resultType="com.example.busniess.entity.DemandsEntity">
         SELECT id,industry,financing,income,projecrphase,period FROM financing
         <where>
 

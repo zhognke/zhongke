@@ -12,7 +12,9 @@
         <result property="projectType" column="project_type"/>
         <result property="projectTypeDetail" column="project_type_detail"/>
         <result property="companyName" column="company_name"/>
+        <result property="projectName" column="project_name"/>
         <result property="projectContent" column="project_content"/>
+        <result property="province" column="province"/>
         <result property="city" column="city"/>
         <result property="district" column="district"/>
         <result property="status" column="status"/>
@@ -26,16 +28,21 @@
     </resultMap>
 
     <select id="selectById" resultMap="industrialDeclarationMap" parameterType="Integer">
-        select id,declaration_type,project_type,company_name,project_name,status,approval_status,create_time from industrial_declaration where status != '44' and id=#{id};
+        select id,declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,
+        province,city,district,status,approval_status,approval_opinion,DATE_FORMAT(create_time,'%Y-%m-%d') create_time,start_date,end_date,total_investment
+        from industrial_declaration where status != '44' and id=#{id};
     </select>
 
     <select id="selectAll" resultMap="industrialDeclarationMap">
-        select id,declaration_type,project_type,company_name,project_name,status,approval_status,create_time from industrial_declaration where status != '44';
+        select id,declaration_type,project_type,company_name,project_name,status,approval_status,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from industrial_declaration where status != '44';
     </select>
 
     <select id="search" resultMap="industrialDeclarationMap" parameterType="com.example.busniess.entity.IndustrialDeclarationEntity">
-        select id,declaration_type,project_type,company_name,project_name,status,approval_status,create_time from industrial_declaration
-        where status != '44' and status !='3'
+        select id,declaration_type,project_type,company_name,project_name,status,approval_status,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from industrial_declaration
+        where status != '44'
+        <if test="status!=null">
+            and `status` = #{status}
+        </if>
         <if test="declarationType!=null and declarationType!=''">
             and `declaration_type` = #{declarationType}
         </if>
@@ -51,14 +58,18 @@
         <if test="declarationYear!=null and declarationYear!=''">
             and year(`create_time`) = #{declarationYear}
         </if>
-        <if test="approvalStatus!=null and approvalStatus!=''">
+        <if test="approvalStatus!=null">
             and `approval_status` = #{approvalStatus}
         </if>
+        <if test="keyWord!=null and keyWord!=''">
+            and (`declaration_type` like CONCAT('%',#{keyWord},'%') or `declaration_industry` like CONCAT('%',#{keyWord},'%') or `industry_type_detail` like CONCAT('%',#{keyWord},'%') or `project_name` like CONCAT('%',#{keyWord},'%'))
+        </if>
+        order by create_time desc
     </select>
 
     <insert id="add" parameterType="com.example.busniess.entity.IndustrialDeclarationEntity" useGeneratedKeys="true" keyProperty="id">
-        insert into industrial_declaration(declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,city,district,start_date,end_date,total_investment)
-        value (#{declarationType},#{isNew},#{declarationIndustry},#{industryTypeDetail},#{projectType},#{projectTypeDetail},#{companyName},#{projectName},#{projectContent},#{city},#{district},#{startDate},#{endDate},#{totalInvestment});
+        insert into industrial_declaration(declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,province,city,district,start_date,end_date,total_investment)
+        value (#{declarationType},#{isNew},#{declarationIndustry},#{industryTypeDetail},#{projectType},#{projectTypeDetail},#{companyName},#{projectName},#{projectContent},#{province},#{city},#{district},#{startDate},#{endDate},#{totalInvestment});
     </insert>
 
     <update id="update" parameterType="com.example.busniess.entity.IndustrialDeclarationEntity">
@@ -91,16 +102,19 @@
             <if test="projectContent!=null and projectContent!=''">
                 project_content=#{projectContent},
             </if>
+            <if test="province!=null and province!=''">
+                province=#{province},
+            </if>
             <if test="city!=null and city!=''">
                 city=#{city},
             </if>
             <if test="district!=null and district!=''">
                 district=#{district},
             </if>
-            <if test="status!=null and status!=''">
+            <if test="status!=null">
                 status=#{status},
             </if>
-            <if test="approvalStatus!=null and approvalStatus!=''">
+            <if test="approvalStatus!=null">
                 approval_status=#{approvalStatus},
             </if>
             <if test="approvalOpinion!=null and approvalOpinion!=''">
@@ -112,7 +126,7 @@
             <if test="endDate!=null and endDate!=''">
                 end_date=#{endDate},
             </if>
-            <if test="totalInvestment!=null and totalInvestment!=''">
+            <if test="totalInvestment!=null">
                 total_investment=#{totalInvestment},
             </if>
         </set>

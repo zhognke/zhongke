@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -56,6 +57,8 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     @Override
     @Transactional
     public boolean add(IndustrialDeclarationEntity industrialDeclarationEntity) {
+        industrialDeclarationEntity.setStatus(0);
+        industrialDeclarationEntity.setApprovalStatus(0);
         industrialDeclarationDao.add(industrialDeclarationEntity);
         Integer id = industrialDeclarationEntity.getId();
         if(id!=null){

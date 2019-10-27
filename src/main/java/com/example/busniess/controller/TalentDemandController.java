@@ -1,11 +1,14 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.TalentDemandEntity;
+import com.example.busniess.entity.User;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.TalentDemandService;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -121,6 +124,39 @@ public class TalentDemandController {
     }
 
     /**
+     * 修改审批状态-通过
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/updateApprovalStatusPass")
+    public ReturnResult updateApprovalStatusPass(Integer id) {
+        Integer approvalStatus = 1;
+        if (talentDemandService.updateApprovalStatus(id,approvalStatus, "")) {
+            return ReturnResult.success();
+        } else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 修改审批状态-驳回
+     *
+     * @param approvalOpinion 审批意见
+     * @param id
+     * @return
+     */
+    @PostMapping("/updateApprovalStatusRejected")
+    public ReturnResult updateApprovalStatusRejected(Integer id, String approvalOpinion) {
+        Integer approvalStatus = 2;
+        if (talentDemandService.updateApprovalStatus(id,approvalStatus, approvalOpinion)) {
+            return ReturnResult.success();
+        } else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
      * 分页展示,可根据条件筛选
      *
      * @param talentDemandEntity
@@ -132,6 +168,32 @@ public class TalentDemandController {
     public ReturnResult showByPage(TalentDemandEntity talentDemandEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
         if (pageNum == null || pageSize == null) {
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }
+        PageInfo pageInfo = talentDemandService.showByPage(talentDemandEntity, pageNum, pageSize);
+        return ReturnResult.success(pageInfo);
+    }
+
+    /**
+     * 分页展示,可根据条件筛选
+     *
+     * @param talentDemandEntity
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/showByPageForCenter", method = RequestMethod.GET)
+    public ReturnResult showByPageForCenter(TalentDemandEntity talentDemandEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+        String userName = talentDemandEntity.getUserName();
+        if(userName!=null){
+
+        }else{
+            Object obj = SecurityUtils.getSubject().getPrincipal();
+            if(obj!=null){
+                userName = ((User)obj).getUserName();
+                talentDemandEntity.setUserName(userName);
+            }else{
+                return ReturnResult.erro(CodeMsg.BIND_ERROR);
+            }
         }
         PageInfo pageInfo = talentDemandService.showByPage(talentDemandEntity, pageNum, pageSize);
         return ReturnResult.success(pageInfo);

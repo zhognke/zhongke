@@ -13,7 +13,7 @@ import java.util.Date;
 public class User implements Serializable {
     @NotNull(message = "id参数不能为空", groups = UserValidator.UpDate.class)
     private Integer id;
-    @NotNull(message = "用户角色不能为空",groups =UserValidator.InSet.class)
+    //@NotNull(message = "用户角色不能为空",groups =UserValidator.InSet.class)
     private  String userRole;//用户角色
     @NotNull(message = "账号不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String userName;//用户账号

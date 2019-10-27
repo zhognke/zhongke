@@ -174,10 +174,10 @@
             <if test="demandsType!=null and demandsType!=''">
                 and d.demands_type=#{demandsType}
             </if>
-            <if test="status>=0 or status!=null and status!=''">
+            <if test="status!=null">
                 and d.status=#{status}
             </if>
-            <if test="approvalStatus!=null and approvalStatus!=''">
+            <if test="approvalStatus!=null">
                 and d.approval_status=#{approvalStatus}
             </if>
             <if test="companyName!=null and companyName!=''">

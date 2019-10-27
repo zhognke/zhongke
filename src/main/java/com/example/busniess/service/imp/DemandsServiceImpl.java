@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -58,12 +59,29 @@ public class DemandsServiceImpl implements DemandsService {
      */
     @Override
     public PageInfo showByPage(DemandsEntity demandsEntity, int pageNum, int pagesize) {
-        demandsEntity.setStatus(0);
-        demandsEntity.setApprovalStatus(1);
+        if(demandsEntity.getDemandType()!=null){
+            demandsEntity.setDemandTypes(demandsEntity.getDemandType().split(","));
+        }
+        if(demandsEntity.getCooperationType()!=null){
+            demandsEntity.setCooperationTypes(demandsEntity.getCooperationType().split(","));
+        }
+        if(demandsEntity.getCooperationIntention()!=null){
+            demandsEntity.setCooperationIntentions(demandsEntity.getCooperationIntention().split(","));
+        }
         PageHelper.startPage(pageNum, pagesize);
         List<DemandsEntity> list = demandsDao.search(demandsEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
+    }
+
+    @Override
+    public List<DemandsEntity> lastDemandsShow() {
+        return demandsDao.lastDemandsShow();
+    }
+
+    @Override
+    public List<String> hotDemandsIndustry() {
+        return demandsDao.hotDemandsIndustry();
     }
 
     @Override
@@ -98,11 +116,19 @@ public class DemandsServiceImpl implements DemandsService {
 
     @Override
     public boolean deleteDemandsByID(int id) {
+        Integer status = 44;
+        return demandsDao.updateDemandsStatus(status,id);
+    }
+
+    @Override
+    public boolean realDeleteDemandsByID(Integer id) {
         return demandsDao.deleteDemandsByID(id);
     }
 
     @Override
     public boolean insert(DemandsEntity demandsEntity) {
+        demandsEntity.setStatus(0);
+        demandsEntity.setApprovalStatus(1);
         return demandsDao.insert(demandsEntity);
     }
 

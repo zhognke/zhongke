@@ -1,13 +1,13 @@
 package com.example.busniess.service;
 
-import com.example.busniess.dao.DemandsDao;
+import com.example.busniess.entity.FinancingEntity;
 import com.github.pagehelper.PageInfo;
 
 public interface FinancingService {
     /**
      * 新增融资
      */
-    public Boolean insertFinacing(DemandsDao.Financing financing);
+    public Boolean insertFinacing(FinancingEntity financing);
     /**
      * 删除
      */
@@ -15,7 +15,7 @@ public interface FinancingService {
     /**
      * 修改
      */
-    public  boolean updateFinacing(DemandsDao.Financing financing);
+    public  boolean updateFinacing(FinancingEntity financing);
     /**
      * 查看自己的
      */
@@ -24,7 +24,7 @@ public interface FinancingService {
      * 查看所有的
      * 根据条件查询
      */
-    public PageInfo SelectAllFinacing(DemandsDao.Financing financing, Integer pageNum, Integer pagesize);
+    public PageInfo SelectAllFinacing(FinancingEntity financing, Integer pageNum, Integer pagesize);
     /**
      * 修改审核状态
      */
