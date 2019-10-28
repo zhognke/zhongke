@@ -34,7 +34,7 @@ public interface FinancingDao {
     /**
      * 删除
      */
-    @Delete("ELETE  FROM financing WHERE id=#{id}")
+    @Delete("DELETE  FROM financing WHERE id=#{id}")
     public boolean delectFinancing(Integer id);
 
     /**

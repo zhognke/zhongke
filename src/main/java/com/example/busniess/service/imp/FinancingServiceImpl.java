@@ -49,6 +49,17 @@ public class FinancingServiceImpl implements FinancingService {
     }
 
     /**
+     * 查看具体的
+     * @param id
+     * @return
+     */
+    @Override
+    public FinancingEntity selectFinancingById(Integer id) {
+
+        return financingDao.seleOneFinancing(id);
+    }
+
+    /**
      * 查询自己的
      * @param uName
      * @return

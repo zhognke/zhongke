@@ -29,4 +29,11 @@ public interface FinancingService {
      * 修改审核状态
      */
     public Boolean updateFinacingStatue(Integer id,Integer statue);
+
+    /**
+     * 查看具体的
+     * @param id
+     * @return
+     */
+    public  FinancingEntity selectFinancingById(Integer id);
 }

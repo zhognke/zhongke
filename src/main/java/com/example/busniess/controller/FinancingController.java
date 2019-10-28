@@ -79,4 +79,15 @@ public class FinancingController {
      return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
     }
 
+    /**
+     * 查看具体
+     * @param id
+     * @return
+     */
+    @RequestMapping("/selectOneById")
+    public  ReturnResult selectOneById(Integer id){
+        return  ReturnResult.success(financingServiceImpl.selectFinancingById(id));
+
+    }
+
 }

@@ -33,14 +33,14 @@
         </if>
 
     </sql>
-    <select id="selectAllFinancing" parameterType="com.example.busniess.entity.DemandsEntity" resultType="com.example.busniess.entity.DemandsEntity">
-        SELECT id,industry,financing,income,projecrphase,period FROM financing
+    <select id="selectAllFinancing" parameterType="financingEntity" resultType="financingEntity">
+        SELECT id,projectName,industry,financing,income,projecrphase,period FROM financing
         <where>
 
             <include refid="business_sql"></include>
 
         </where>
-        ORDER BY insertTime DESC
+        ORDER BY `insertTime` DESC
     </select>
 
 
