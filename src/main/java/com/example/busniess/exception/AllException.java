@@ -110,7 +110,6 @@ public class AllException {
      */
     @ExceptionHandler(IOException.class)
     public ReturnResult codeException(IOException e) {
-
         return ReturnResult.erro(CodeMsg.File_ERROR);
     }
 }

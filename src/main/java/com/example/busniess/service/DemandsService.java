@@ -73,12 +73,12 @@ public interface DemandsService {
      * 最新需求
      * @return
      */
-    public List<DemandsEntity> lastDemandsShow();
+    public List<DemandsEntity> lastDemandsShow(Integer size);
     /**
      * 最新需求
      * @return
      */
-    public List<String> hotDemandsIndustry();
+    public List<String> hotDemandsIndustry(Integer size);
     /**
      * 分页查询(用户端)
      * @param demandsEntity
@@ -103,7 +103,7 @@ public interface DemandsService {
      * @param id
      * @return
      */
-    public boolean updateDemandsStatus(int status, int id);
+    public boolean updateDemandsStatus(Integer id,Integer status,String reason);
 
     /**
      * 修改需求审批状态

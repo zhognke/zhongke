@@ -52,7 +52,7 @@ public interface ProfessionalsService {
      * @param id
      * @return
      */
-    public boolean delectById(Integer id);
+    public boolean deleteById(Integer id);
 
     /**
      * 根据id彻底删除
@@ -86,5 +86,8 @@ public interface ProfessionalsService {
      */
     public boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion);
 
+    boolean closeById(Integer id, String closeReason);
+
+    boolean closeByIdForManager(Integer id, String closeReason);
 }
 

@@ -22,14 +22,14 @@ public interface DemandsDao {
      * 查询所有需求
      * @return
      */
-    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname")
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and d.del_flag=0")
 	public List<DemandsEntity> selectAll();
 
     /**
      * 查询所有未到期的需求(包含未审核,后端页面使用)
      * @return
      */
-    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and d.status 0 ")
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and d.status = 0 and d.del_flag=0")
     public List<DemandsEntity> selectAllShow();
 
     /**
@@ -37,7 +37,7 @@ public interface DemandsDao {
      * @param status
      * @return
      */
-    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and  d.status =#{status} ")
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and  d.status =#{status} and d.del_flag=0")
     public List<DemandsEntity> selectByStatus(@Param("status") int status);
 
     /**
@@ -76,8 +76,16 @@ public interface DemandsDao {
      * @param id
      * @return
      */
-	@Update("update `demands` set `status`=#{status},`update_time`=now() where `id` =#{id}")
-	public boolean updateDemandsStatus(@Param("status") int status,@Param("id") int id);
+	@Update("update `demands` set `status`=#{status},close_reason=#{reason},`update_time`=now() where `id` =#{id}")
+	public boolean updateDemandsStatus(@Param("id") Integer id,@Param("status") Integer status,@Param("reason")String reason);
+
+    /**
+     * 修改记录状态为删除
+     * @param id
+     * @return
+     */
+    @Update("update `demands` set `del_flag`=1,`update_time`=now() where `id` =#{id}")
+	public boolean deleteById(@Param("id") Integer id);
 
     /**
      * 修改需求审批状态
@@ -85,8 +93,8 @@ public interface DemandsDao {
      * @param id
      * @return
      */
-    @Update("update `demands` set `approval_status`=#{approvalStatus},`approval_opinion`=#{approvalOpinion},`update_time`=now() where `id` =#{id}")
-    public boolean updateDemandsApprovalStatus(@Param("approvalStatus") int approvalStatus,@Param("approvalOpinion") String approvalOpinion,@Param("id") int id);
+    @Update("update `demands` set `approval_status`=#{approvalStatus},`approval_opinion`=#{approvalOpinion},`approval_time`=now() where `id` =#{id}")
+    public boolean updateDemandsApprovalStatus(@Param("approvalStatus") Integer approvalStatus,@Param("approvalOpinion") String approvalOpinion,@Param("id") Integer id);
 
 
     /**
@@ -94,39 +102,35 @@ public interface DemandsDao {
      * @param id    需求id
      * @return
      */
-    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type` as demandType,`cooperation_type` as cooperationType,`cooperation_intention` cooperationIntention,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,`demand_content` as demandContent,`expected_result` as expectedResult,b.country province,b.`city`,b.`district`,`contact`,`phone_num` as phoneNum,`pre_investment_amount` as preInvestmentAmount,`end_date` as endDate,`create_time` as createTime,`update_time` as updateTime,`remark`,`approval_status` as approvalStatus,`status` from `demands` d,businesscenter b where d.user_name = b.uname and d.id = #{id}")
-	public DemandsEntity getByID(@Param("id") int id);
+    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`," +
+            "`demand_outline`,`demand_content`,`expected_result`,b.country province,b.`city`,b.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`," +
+            "`remark`,`approval_status`,d.`status`,b.logo,b.typeEnterprise from `demands` d,businesscenter b where d.user_name = b.uname and d.id = #{id} and b.statue=1 ")
+	public DemandsEntity getByID(@Param("id") Integer id);
 
     /**
      * 最新需求
      * @return
      */
-    @Select("select d.`id`,d.user_name userName,`demand_type` as demandType,`demand_industry` as demandIndustry,`demand_industry_detail` as demandIndustryDetail,`demand_outline` as demandOutline,b.`city`,b.`district`,`create_time` as createTime from `demands` d,businesscenter b where d.user_name = b.uname and d.status=0 and d.approval_status=1 order by create_time desc limit 14")
-    public List<DemandsEntity> lastDemandsShow();
+    @Select("select d.`id`,d.user_name,`demand_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,b.country province,b.`city`,b.`district`,`create_time` from `demands` d,businesscenter b where d.user_name = b.uname and d.status=0 and d.approval_status=1 and b.statue=1 and d.del_flag=0 order by create_time desc limit #{size}")
+    public List<DemandsEntity> lastDemandsShow(@Param("size")Integer size);
     /**
      * 热门需求
      */
-    @Select("SELECT demand_industry demandIndustry from `demands` where status = 0 and approval_status=1 group by demand_industry order by count(demand_industry) desc limit 8")
-    public List<String> hotDemandsIndustry();
+    @Select("SELECT demand_industry from `demands` where status = 0 and approval_status=1 and del_flag=0 group by demand_industry order by count(demand_industry) desc limit #{size}")
+    public List<String> hotDemandsIndustry(@Param("size") Integer size);
     /**
      * 根据id删除需求
      * @param id    需求id
      * @return
      */
     @Delete("delete from demands where id=#{id}")
-	public boolean deleteDemandsByID(@Param("id") int id);
+	public boolean deleteDemandsByID(@Param("id") Integer id);
 
     /**
      * 新增需求
      * @param demandsEntity
      * @return
      */
-    /*@Insert("insert into `demands` " +
-            "(`company_name`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
-            "`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`," +
-            "`create_time`,`update_time`,`remark`,`status`,`approval_status`) values(#{companyName},#{demandType},#{cooperationType},#{cooperationIntention},#{demandIndustry}," +
-            "#{demandIndustryDetail},#{demandOutline},#{demandContent},#{expectedResult},#{city},#{district},#{contact},#{phoneNum},#{email}," +
-            "#{preInvestmentAmount},#{endDate},#{createTime},#{updateTime},#{remark},#{status},#{approvalStatus})")*/
     @Insert("insert into `demands` " +
             "(`user_name`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
             "`expected_result`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`," +
@@ -139,14 +143,14 @@ public interface DemandsDao {
      * 企业需求行业占比统计
      * @return
      */
-    @Select("SELECT count(demand_industry) counts,demand_industry as demandIndustry FROM `demands` where status =0 and approval_status = 1 group by demand_industry")
+    @Select("SELECT count(demand_industry) counts,demand_industry FROM `demands` where status =0 and approval_status = 1 and del_flag=0 group by demand_industry")
     public List<DemandsEntity> demandsIndustryProp();
 
     /**
      * 企业需求增长趋势
      * @return
      */
-    @Select("SELECT count(create_time) as counts,DATE_FORMAT(create_time,'%Y/%m') as companyName FROM `demands` where status =0 and approval_status = 1 group by DATE_FORMAT(create_time,'%y/%m')")
+    @Select("SELECT count(create_time) counts,DATE_FORMAT(create_time,'%Y/%m') as companyName FROM `demands` where status =0 and approval_status = 1 and del_flag=0 group by DATE_FORMAT(create_time,'%y/%m')")
     public List<DemandsEntity> demandsRiseTrend();
 
 }

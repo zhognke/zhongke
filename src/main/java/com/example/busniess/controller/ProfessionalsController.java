@@ -1,5 +1,6 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.annotation.SysLog;
 import com.example.busniess.entity.ProfessionalsEntity;
 import com.example.busniess.entity.User;
 import com.example.busniess.resultpackage.CodeMsg;
@@ -34,6 +35,7 @@ public class ProfessionalsController {
      * @param professionalsEntity
      * @return
      */
+    @SysLog(value="新增专家入驻",type="专家入驻")
     @PostMapping("/add")
     public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) ProfessionalsEntity professionalsEntity){
         String userName = professionalsEntity.getUserName();
@@ -59,9 +61,10 @@ public class ProfessionalsController {
      * @param id
      * @return
      */
+    @SysLog(value="逻辑删除专家入驻信息",type="专家入驻")
     @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.GET})
     public ReturnResult deleteById(Integer id){
-        if(professionalsService.delectById(id)){
+        if(professionalsService.deleteById(id)){
             return ReturnResult.success("删除成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -73,6 +76,7 @@ public class ProfessionalsController {
      * @param id
      * @return
      */
+    @SysLog(value="彻底删除专家入驻信息",type="专家入驻")
     @RequestMapping(value="/realDeleteById",method = {RequestMethod.DELETE,RequestMethod.GET})
     public ReturnResult realDeleteById(Integer id){
         if(professionalsService.realDeleteById(id)){
@@ -87,6 +91,7 @@ public class ProfessionalsController {
      * @param professionalsEntity
      * @return
      */
+    @SysLog(value="修改专家入驻信息",type="专家入驻")
     @PostMapping("/update")
     public ReturnResult updateDeclaration(@Validated({UserValidator.UpDate.class}) ProfessionalsEntity professionalsEntity){
         if(professionalsService.update(professionalsEntity)){
@@ -102,9 +107,26 @@ public class ProfessionalsController {
      * @param status
      * @return
      */
+    @SysLog(value="修改专家入驻状态",type="专家入驻")
     @PostMapping("/updateStatus")
     public ReturnResult updateStatus(Integer id,Integer status){
         if(professionalsService.updateStatus(id,status)){
+            return ReturnResult.success("修改成功");
+        }else{
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 关闭专家入驻状态
+     * @param id
+     * @param closeReason
+     * @return
+     */
+    @SysLog(value="关闭专家入驻状态",type="专家入驻")
+    @PostMapping("/closeById")
+    public ReturnResult closeById(Integer id,String closeReason){
+        if(professionalsService.closeById(id,closeReason)){
             return ReturnResult.success("修改成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -132,6 +154,7 @@ public class ProfessionalsController {
      * @param id
      * @return
      */
+    @SysLog(value="修改专家入驻信息",type="专家入驻")
     @PostMapping("/updateApprovalStatusPass")
     public ReturnResult updateApprovalStatusPass(Integer id) {
         Integer approvalStatus = 1;

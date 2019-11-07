@@ -1,5 +1,6 @@
 package com.example.busniess.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -70,9 +71,13 @@ public class IndustrialDeclarationEntity implements Serializable {
      */
     private String district;
     /**
-     * 需求态状:0有效;1已到期;2用户关闭;3管理员关闭
+     * 需求态状:0有效;1已到期;2管理员关闭;3用户关闭;
      */
     private Integer status;
+    /**
+     * 关闭原因
+     */
+    private String closeReason;
     /**
      * 审核态状:0待审核;1已审核;2驳回
      */
@@ -82,12 +87,19 @@ public class IndustrialDeclarationEntity implements Serializable {
      */
     private String approvalOpinion;
     /**
+     * 审批时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date approvalTime;
+    /**
      * 创建时间
      */
-    private String createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date createTime;
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
     /**
      * 项目开始时间
@@ -102,13 +114,18 @@ public class IndustrialDeclarationEntity implements Serializable {
      */
     private BigDecimal totalInvestment;
     /**
+     * 删除标记
+     */
+    private Integer delFlag;
+    /**
      * 明细信息
      */
     private IndustrialDeclarationDetailEntity detailEntity;
     /**
      * 根据申报年份筛选(非数据库储存字段)
      */
-    private Integer declarationYear;
+    private Integer declarationYearBegin;
+    private Integer declarationYearEnd;
     /**
      * 统计(非数据库储存字段)
      */

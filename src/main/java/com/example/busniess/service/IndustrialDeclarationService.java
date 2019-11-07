@@ -75,7 +75,7 @@ public interface IndustrialDeclarationService {
      * @param status
      * @return
      */
-    public boolean updateStatus(Integer id,Integer status);
+    public boolean updateStatus(Integer id,Integer status,String closeReason);
 
 
     /**
@@ -103,5 +103,7 @@ public interface IndustrialDeclarationService {
      * @return
      */
     List<IndustrialDeclarationEntity> getCompanyList();
+
+    List<IndustrialDeclarationEntity> lastDeclarations(Integer size);
 }
 

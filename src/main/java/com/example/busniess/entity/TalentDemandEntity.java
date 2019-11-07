@@ -1,6 +1,7 @@
 package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,6 @@ public class TalentDemandEntity implements Serializable {
     /**
      * 关联的用户名
      */
-    @NotNull(message = "用户名不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String userName;
     /**
      * 标题
@@ -94,9 +94,13 @@ public class TalentDemandEntity implements Serializable {
     @Pattern(regexp = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$", message = "手机号码格式错误", groups = {UserValidator.InSet.class})
     private String phoneNum;
     /**
-     * 状态: 0 正常;1用户关闭;2管理员关闭;4逻辑删除
+     * 状态: 0 正常;1用户关闭;2管理员关闭;
      */
     private Integer status;
+    /**
+     * 关闭原因
+     */
+    private String closeReason;
     /**
      * 审核状态:0待审核,1审核通过,2审核驳回
      */
@@ -106,13 +110,23 @@ public class TalentDemandEntity implements Serializable {
      */
     private String approvalOpinion;
     /**
+     * 审批时间
+     */
+    private Date approvalTime;
+    /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     /**
      * 修改时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
+    /**
+     * 是否删除;0未删除,1已删除
+     */
+    private Integer delFlag;
     /**
      * 关键字搜索(非数据库字段)
      */
@@ -125,4 +139,5 @@ public class TalentDemandEntity implements Serializable {
     private String province;//省
     private String city;//城市
     private String district;//区县
+    private String logo;//公司logo
 }

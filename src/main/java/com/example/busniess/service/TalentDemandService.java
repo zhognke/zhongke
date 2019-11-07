@@ -86,5 +86,8 @@ public interface TalentDemandService {
      */
     public boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion);
 
+    boolean closeDemands(Integer id,String closeReason);
+
+    boolean closeDemandsForManager(Integer id,String closeReason);
 }
 

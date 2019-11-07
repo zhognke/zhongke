@@ -31,6 +31,8 @@ public class CodeMsg {
     public static CodeMsg SUMIT_ERROR = new CodeMsg(500120, "提交失败!");
     public static CodeMsg DELECT_ERROR = new CodeMsg(500121, "删除失败!");
     public static CodeMsg UPDATE_ERROR = new CodeMsg(500122, "更新失败!");
+    public static CodeMsg DATA_DUPLICATION = new CodeMsg(500201, "当前用户已提交企业认证，请勿重复提交!");
+    public static CodeMsg ACCESS_DENIED = new CodeMsg(500202, "请提交企业认证，或等待企业认证通过!");
 
     private Integer code;
     private String msg;

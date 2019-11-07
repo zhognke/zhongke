@@ -3,12 +3,14 @@ package com.example.busniess.service;
 
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.Reject;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
 public interface BusinessCenterService {
     /**
      * 提交认证
+     *
      * @param businessCenter
      * @return
      */
@@ -21,10 +23,11 @@ public interface BusinessCenterService {
      * @param userName
      * @return
      */
-    Boolean updateAuditStatue( Integer id, Integer rid, String userName,Integer statue,Integer reId);
+    Boolean updateAuditStatue(Integer id, Integer rid, String userName, Integer statue, Integer reId);
 
     /**
      * 驳回
+     *
      * @param reject
      * @return
      */
@@ -52,4 +55,5 @@ public interface BusinessCenterService {
      */
     Boolean updateBusinessCenter(BusinessCenter businessCenter);
 
+    PageInfo showByPage(BusinessCenter businessCenter, Integer pageNum, Integer pageSize);
 }

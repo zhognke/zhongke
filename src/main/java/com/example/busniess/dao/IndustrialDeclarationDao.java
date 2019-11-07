@@ -1,9 +1,7 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.IndustrialDeclarationEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -16,12 +14,11 @@ import java.util.List;
  */
 public interface IndustrialDeclarationDao {
 
-    public List<IndustrialDeclarationEntity> select(@Param("table") String table);
-
     /**
      * 查询所有
      * @return
      */
+    @Select("select id,declaration_type,project_type,company_name,project_name,status,approval_status,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from industrial_declaration where del_flag = 0")
     public List<IndustrialDeclarationEntity> selectAll();
 
     /**
@@ -29,6 +26,9 @@ public interface IndustrialDeclarationDao {
      * @param id
      * @return
      */
+    @Select("select id,declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content," +
+            "province,city,district,status,approval_status,approval_opinion,DATE_FORMAT(create_time,'%Y-%m-%d') create_time,start_date,end_date,total_investment " +
+            "from industrial_declaration where del_flag = 0 and id=#{id};")
     public IndustrialDeclarationEntity selectById(Integer id);
 
     /**
@@ -36,6 +36,9 @@ public interface IndustrialDeclarationDao {
      * @param industrialDeclarationEntity
      * @return
      */
+    @Insert("insert into industrial_declaration(declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,province,city,district,start_date,end_date,total_investment) " +
+            "value (#{declarationType},#{isNew},#{declarationIndustry},#{industryTypeDetail},#{projectType},#{projectTypeDetail},#{companyName},#{projectName},#{projectContent},#{province},#{city},#{district},#{startDate},#{endDate},#{totalInvestment})")
+    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     public Integer add(IndustrialDeclarationEntity industrialDeclarationEntity);
 
     /**
@@ -47,12 +50,18 @@ public interface IndustrialDeclarationDao {
     public Integer realDelectById(@Param("id")Integer id);
 
     /**
+     * 根据id删除
+     */
+    @Update("update industrial_declaration set del_flag = 1 where id = #{id}")
+    public boolean deleteById(@Param("id")Integer id);
+    /**
      * 更新
      * @param industrialDeclarationEntity
      * @return
      */
     public boolean update(IndustrialDeclarationEntity industrialDeclarationEntity);
-
+    @Update("update industrial_declaration set status = #{status},close_reason = #{closeReason} where id = #{id}")
+    public boolean updateStatus(@Param("id")Integer id,@Param("id")Integer status,@Param("id")String closeReason);
     /**
      * 查找
      * @param industrialDeclarationEntity
@@ -80,4 +89,7 @@ public interface IndustrialDeclarationDao {
      */
     @Select("SELECT distinct company_name companyName FROM `industrial_declaration`")
     List<IndustrialDeclarationEntity> getCompanyList();
+
+    @Select("select project_name,approval_status,project_type,create_time from industrial_declaration where status=0 and approval_status =1 order by create_time desc limit #{size}")
+    List<IndustrialDeclarationEntity> lastDeclarations(@Param("size")Integer size);
 }

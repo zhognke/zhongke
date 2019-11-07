@@ -1,5 +1,6 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.annotation.SysLog;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.IndustrialDeclarationEntity;
 import com.example.busniess.entity.User;
@@ -8,6 +9,7 @@ import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.IndustrialDeclarationService;
 import com.example.busniess.utiles.EchartsEntity;
+import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
@@ -36,17 +38,28 @@ public class IndustrialDeclarationController {
     private IndustrialDeclarationService industrialDeclarationService;
 
     @Autowired
-    BusinessCenterService businessCenterServiceImpl;
+    BusinessCenterService businessCenterService;
 
     /**
      * 新增申报
      * @param industrialDeclarationEntity
      * @return
      */
+    @SysLog(value="新增工业申报",type="工业申报")
     @PostMapping("/addDeclaration")
     public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) IndustrialDeclarationEntity industrialDeclarationEntity){
+        String userName = ShiroUtils.getUserName();
+        if (userName == null) {
+            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
+        }else{
+            BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
+            if(businessCenter.getStatue()!=1){    //判断当前用户是否通过企业认证
+                return ReturnResult.erro(CodeMsg.ACCESS_DENIED);  //判断当前用户填写的企业名称是否与数据库一致
+            }else{
+            }
+        }
         if(industrialDeclarationService.add(industrialDeclarationEntity)){
-            return ReturnResult.success("添加成功");
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -57,10 +70,11 @@ public class IndustrialDeclarationController {
      * @param id
      * @return
      */
+    @SysLog(value="删除工业申报",type="工业申报")
     @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteById(Integer id){
         if(industrialDeclarationService.delectById(id)){
-            return ReturnResult.success("删除成功");
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -71,10 +85,11 @@ public class IndustrialDeclarationController {
      * @param id
      * @return
      */
+    @SysLog(value="彻底删除工业申报",type="工业申报")
     @RequestMapping(value="/realDeleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult realDeleteById(Integer id){
         if(industrialDeclarationService.realDeleteById(id)){
-            return ReturnResult.success("删除成功");
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -85,10 +100,11 @@ public class IndustrialDeclarationController {
      * @param industrialDeclarationEntity
      * @return
      */
+    @SysLog(value="修改工业申报",type="工业申报")
     @PostMapping("/updateDeclaration")
     public ReturnResult updateDeclaration(@Validated({UserValidator.UpDate.class}) IndustrialDeclarationEntity industrialDeclarationEntity){
         if(industrialDeclarationService.update(industrialDeclarationEntity)){
-            return ReturnResult.success("修改成功");
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -101,9 +117,39 @@ public class IndustrialDeclarationController {
      * @return
      */
     @PostMapping("/updateStatus")
-    public ReturnResult updateStatus(Integer id,Integer status){
-        if(industrialDeclarationService.updateStatus(id,status)){
-            return ReturnResult.success("修改成功");
+    public ReturnResult updateStatus(Integer id,Integer status,String closeReason){
+        if(industrialDeclarationService.updateStatus(id,status,closeReason)){
+            return ReturnResult.success("操作成功");
+        }else{
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+    /**
+     * 根据id关闭申报信息
+     * @param id
+     * @return
+     */
+    @SysLog(value="关闭工业申报",type="工业申报")
+    @PostMapping("/closeById")
+    public ReturnResult closeById(Integer id,String closeReason){
+        Integer status =3;
+        if(industrialDeclarationService.updateStatus(id,status,closeReason)){
+            return ReturnResult.success("操作成功");
+        }else{
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+    /**
+     * 根据id关闭申报信息-管理端
+     * @param id
+     * @return
+     */
+    @SysLog(value="关闭工业申报-管理端",type="工业申报")
+    @PostMapping("/closeByIdForManager")
+    public ReturnResult closeByIdForManager(Integer id,String closeReason){
+        Integer status = 2;
+        if(industrialDeclarationService.updateStatus(id,status,closeReason)){
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -119,7 +165,7 @@ public class IndustrialDeclarationController {
     @PostMapping("/updateApprovalStatus")
     public ReturnResult updateApprovalStatus(Integer id,Integer approvalStatus,String approvalOpinion){
         if(industrialDeclarationService.updateApprovalStatus(id,approvalStatus,approvalOpinion)){
-            return ReturnResult.success("修改成功");
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -131,6 +177,7 @@ public class IndustrialDeclarationController {
      * @param id
      * @return
      */
+    @SysLog(value="审批工业申报-通过",type="工业申报")
     @PostMapping("/updateApprovalStatusPass")
     public ReturnResult updateApprovalStatusPass(Integer id) {
         Integer approvalStatus = 1;
@@ -148,6 +195,7 @@ public class IndustrialDeclarationController {
      * @param id
      * @return
      */
+    @SysLog(value="审批工业申报-驳回",type="工业申报")
     @PostMapping("/updateApprovalStatusRejected")
     public ReturnResult updateApprovalStatusRejected(Integer id, String approvalOpinion) {
         Integer approvalStatus = 2;
@@ -165,11 +213,9 @@ public class IndustrialDeclarationController {
      * @return
      */
     @RequestMapping(value="/showByPage",method = RequestMethod.GET)
-    public ReturnResult showByPage(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
+    public ReturnResult showByPage(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "9")Integer pageSize){
         industrialDeclarationEntity.setStatus(0);
-        if(pageNum==null||pageSize==null){
-            return ReturnResult.erro(CodeMsg.BIND_ERROR);
-        }
+        industrialDeclarationEntity.setApprovalStatus(1);
         PageInfo pageInfo = industrialDeclarationService.showByPage(industrialDeclarationEntity,pageNum,pageSize);
         return ReturnResult.success(pageInfo);
     }
@@ -182,25 +228,27 @@ public class IndustrialDeclarationController {
      * @return
      */
     @RequestMapping(value="/showByPageForCenter",method = RequestMethod.GET)
-    public ReturnResult showByPageForCenter(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
-        String userName = industrialDeclarationEntity.getUserName();
-        String companyName = industrialDeclarationEntity.getCompanyName();
-        if(userName!=null || companyName!=null){
+    public ReturnResult showByPageForCenter(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10")Integer pageSize){
+        String userName = ShiroUtils.getUserName();
+        if (ShiroUtils.isLogin()) {
+            BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
+            String companyName = businessCenter.getFirmName();
+            industrialDeclarationEntity.setCompanyName(companyName);
         }else{
-            Object obj = SecurityUtils.getSubject().getPrincipal();
-            if(obj!=null){
-                userName = ((User)obj).getUserName();
-                BusinessCenter businessCenter = businessCenterServiceImpl.selectMyBusinessCenter(userName);
-                if(businessCenter!=null){
-                    companyName = businessCenter.getFirmName();
-                    industrialDeclarationEntity.setCompanyName(companyName);
-                }
-            }else{
-                return ReturnResult.erro(CodeMsg.BIND_ERROR);
-            }
+            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
         }
         PageInfo pageInfo = industrialDeclarationService.showByPage(industrialDeclarationEntity,pageNum,pageSize);
         return ReturnResult.success(pageInfo);
+    }
+
+    /**
+     * 显示最近的工业申报(16条)
+     * @return
+     */
+    @RequestMapping(value="/lastDeclarations",method = RequestMethod.GET)
+    public ReturnResult lastDeclarations( @RequestParam(defaultValue = "16")Integer size){
+        List<IndustrialDeclarationEntity> list = industrialDeclarationService.lastDeclarations(size);
+        return ReturnResult.success(list);
     }
 
     /**
@@ -211,7 +259,7 @@ public class IndustrialDeclarationController {
     @RequestMapping(value="getById",method = RequestMethod.GET)
     public ReturnResult getById(Integer id){
         if(id==null){
-            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+            return ReturnResult.erro(CodeMsg.DATA_FAIL);
         }else{
             IndustrialDeclarationEntity obj = industrialDeclarationService.selectById(id);
             if(obj!=null){

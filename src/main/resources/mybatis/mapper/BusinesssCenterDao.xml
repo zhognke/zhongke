@@ -7,13 +7,13 @@
             `industry`=#{industry}
         </if>
         <if test="firmName!=null and firmName!=''">
-            AND  `firmname`=#{firmName}
+            AND `firmname`=#{firmName}
         </if>
         <if test="scale!=null and scale!=''">
             AND `scale`=#{scale}
         </if>
         <if test="statue!=null and statue!=''">
-            AND`statue`=#{statue}
+            AND `statue`=#{statue}
         </if>
 
     </sql>
@@ -26,7 +26,68 @@
         ORDER BY subtime DESC
     </select>
 
+    <select id="search" parameterType="businessCenter" resultType="businessCenter">
+        select id,firmname,industry,typeEnterprise,registeredcapital,recorddate,scale,country,city,district,logo
+        from businesscenter
+        <where>
+            <if test="industry!=null and industry!=''">
+                `industry`=#{industry}
+            </if>
+            <if test="typeEnterprise!=null and typeEnterprise!=''">
+                AND `typeEnterprise`=#{typeEnterprise}
+            </if>
+            <if test="country!=null and country!=''">
+                AND `country`=#{country}
+            </if>
+            <if test="city!=null and city!=''">
+                AND `city`=#{city}
+            </if>
+            <if test="district!=null and district!=''">
+                AND `district`=#{district}
+            </if>
 
+            <if test="scaleBegin!=null and scaleEnd!=null">
+                and `scale` between #{scaleBegin} and #{scaleEnd}
+            </if>
+            <if test="scaleBegin!=null and scaleEnd==null">
+                and `scale` &gt;= #{scaleBegin}
+            </if>
+            <if test="scaleBegin==null and scaleEnd!=null">
+                and `scale` &lt;= #{scaleEnd}
+            </if>
+
+            <if test="recordDateBegin!=null and recordDateEnd!=null">
+                and `recordDate` between #{recordDateBegin} and #{recordDateEnd}
+            </if>
+            <if test="recordDateBegin!=null and recordDateEnd==null">
+                and `recordDate` &gt;= #{recordDateBegin}
+            </if>
+            <if test="recordDateBegin==null and recordDateEnd!=null">
+                and `recordDate` &lt;= #{recordDateEnd}
+            </if>
+
+            <if test="registeredCapitalBegin!=null and registeredCapitalEnd!=null">
+                and `registeredCapital` between #{registeredCapitalBegin} and #{registeredCapitalEnd}
+            </if>
+            <if test="registeredCapitalBegin!=null and registeredCapitalEnd==null">
+                and `registeredCapital` &gt;= #{registeredCapitalBegin}
+            </if>
+            <if test="registeredCapitalBegin==null and registeredCapitalEnd!=null">
+                and `registeredCapital` &lt;= #{registeredCapitalEnd}
+            </if>
+
+            <if test="statue!=null and statue!=''">
+                AND `statue`=#{statue}
+            </if>
+
+            <if test="keyWord!=null and keyWord!=''">
+                AND (`firmname` like CONCAT('%',#{keyWord},'%') or `industry` like CONCAT('%',#{keyWord},'%'))
+            </if>
+
+
+        </where>
+        order by subtime desc
+    </select>
 
 
 </mapper>

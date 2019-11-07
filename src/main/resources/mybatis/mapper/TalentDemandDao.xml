@@ -3,34 +3,6 @@
 
 <mapper namespace="com.example.busniess.dao.TalentDemandDao">
 
-    <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.example.busniess.entity.TalentDemandEntity" id="baseMap">
-        <result property="id" column="id"/>
-        <result property="userName" column="user_name"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="engagedIndustry" column="engaged_industry"/>
-        <result property="engagedIndustryDetail" column="engaged_industry_detail"/>
-        <result property="industryExperience" column="industry_experience"/>
-        <result property="technologyScope" column="technology_scope"/>
-        <result property="researchDirection" column="research_direction"/>
-        <result property="demandsType" column="demands_type"/>
-        <result property="peopleNum" column="people_num"/>
-        <result property="remuneration" column="remuneration"/>
-        <result property="salary" column="salary"/>
-        <result property="contact" column="contact"/>
-        <result property="phoneNum" column="phone_num"/>
-        <result property="status" column="status"/>
-        <result property="approvalStatus" column="approval_status"/>
-        <result property="approvalOpinion" column="approval_opinion"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="companyName" column="companyName"/>
-        <result property="province" column="province"/>
-        <result property="city" column="city"/>
-        <result property="district" column="district"/>
-    </resultMap>
-
     <sql id="columnNames">
                 d.id,d.user_name,d.title,d.content,d.engaged_industry,d.engaged_industry_detail,d.industry_experience,d.technology_scope,d.research_direction,
                 d.demands_type,d.people_num,d.remuneration,d.salary,d.contact,d.phone_num,d.status,d.approval_status,d.approval_opinion,d.create_time,d.update_time,
@@ -73,18 +45,7 @@
                 #{createTime}
             </sql>
 
-    <insert id="add" parameterType="com.example.busniess.entity.TalentDemandEntity">
-        insert into talent_demand (<include refid="addColumnNames"></include>)
-        values (<include refid="attrnames"></include>);
-    </insert>
-
-    <select id="selectById" parameterType="Integer" resultMap="baseMap">
-        select <include refid="columnNames"></include>
-        from talent_demand d ,businesscenter b
-        where d.user_name = b.uname and d.id=#{id}
-    </select>
-
-    <update id="updateById" parameterType="com.example.busniess.entity.TalentDemandEntity">
+    <update id="updateById" parameterType="talentDemandEntity">
         update talent_demand
         <set>
             <if test="title!=null and title!=''">
@@ -126,10 +87,10 @@
             <if test="phoneNum!=null and phoneNum!=''">
                 phone_num=#{phoneNum},
             </if>
-            <if test="status!=null and status!=''">
+            <if test="status!=null">
                 status=#{status},
             </if>
-            <if test="approvalStatus!=null and approvalStatus!=''">
+            <if test="approvalStatus!=null">
                 approval_status=#{approvalStatus},
             </if>
             <if test="approvalOpinion!=null and approvalOpinion!=''">
@@ -145,14 +106,10 @@
         where id = #{id}
     </update>
 
-    <delete id="realDeleteById" parameterType="Integer">
-        delete from talent_demand where id = #{id};
-    </delete>
-
-    <select id="search" resultMap="baseMap" parameterType="com.example.busniess.entity.TalentDemandEntity">
+    <select id="search" resultType="talentDemandEntity" parameterType="talentDemandEntity">
         select <include refid="columnNames"></include> from talent_demand d,businesscenter b
         <where>
-            d.user_name = b.uname
+            d.user_name = b.uname and b.statue=1 and d.del_flag = 0
             <if test="userName!=null and userName!=''">
                 and d.user_name=#{userName}
             </if>

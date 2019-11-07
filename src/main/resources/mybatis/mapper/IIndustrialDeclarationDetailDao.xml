@@ -15,9 +15,9 @@
         <result property="investmentLoans" column="investment_loans"/>
         <result property="investmentUsingForex" column="investment_using_forex"/>
         <result property="completedInvestment" column="completed_investment"/>
+        <result property="completedInvestmentLoans" column="completed_investment_loans"/>
+        <result property="completedInvestmentSelfPrepare" column="completed_investment_self_prepare"/>
         <result property="lastYearInvestment" column="last_year_investment"/>
-        <result property="totalInvestmentSelfPrepare" column="total_investment_self_prepare"/>
-        <result property="totalInvestmentLoans" column="total_investment_loans"/>
         <result property="projectedInvestment" column="projected_investment"/>
         <result property="projectedSelfPrepare" column="projected_self_prepare"/>
         <result property="projectedLoans" column="projected_loans"/>
@@ -54,15 +54,15 @@
     </resultMap>
 
     <sql id="columnNames">
-		aid,declaration_id,project_industry,construction_nature,minerals,investment_self_prepare,investment_loans,investment_using_forex,completed_investment,last_year_investment,total_investment_self_prepare,total_investment_loans,projected_investment,projected_self_prepare,projected_loans,new_sales_revenue,new_profits,new_tax,new_forex,energy_saving,CO2_emission_reduction,water_conservation,waste_utilization,COD_emission_reduction,ammonia_nitrogen_emission_reduction,NOx_emission_reduction,VOCs_emission_reduction,SO2_emission_reduction,other_emission_reduction,social_benefits_analysis,remark,implementation_investment,implementation_loans,fundraising_intention,private_enterprise,total_equipment_investment,equipment_name_num,projected_equipment,current_year_investment,patents_declaration,patents_obtain,partner,product_launch_date,provincial_technology_center,advanced_manufacturing_type
+		aid,declaration_id,project_industry,construction_nature,minerals,investment_self_prepare,investment_loans,investment_using_forex,completed_investment,completed_investment_loans,completed_investment_self_prepare,last_year_investment,total_investment_self_prepare,total_investment_loans,projected_investment,projected_self_prepare,projected_loans,new_sales_revenue,new_profits,new_tax,new_forex,energy_saving,CO2_emission_reduction,water_conservation,waste_utilization,COD_emission_reduction,ammonia_nitrogen_emission_reduction,NOx_emission_reduction,VOCs_emission_reduction,SO2_emission_reduction,other_emission_reduction,social_benefits_analysis,remark,implementation_investment,implementation_loans,fundraising_intention,private_enterprise,total_equipment_investment,equipment_name_num,projected_equipment,current_year_investment,patents_declaration,patents_obtain,partner,product_launch_date,provincial_technology_center,advanced_manufacturing_type
 	</sql>
 
     <sql id="addColumnNames">
-		declaration_id,project_industry,construction_nature,minerals,investment_self_prepare,investment_loans,investment_using_forex,completed_investment,last_year_investment,total_investment_self_prepare,total_investment_loans,projected_investment,projected_self_prepare,projected_loans,new_sales_revenue,new_profits,new_tax,new_forex,energy_saving,CO2_emission_reduction,water_conservation,waste_utilization,COD_emission_reduction,ammonia_nitrogen_emission_reduction,NOx_emission_reduction,VOCs_emission_reduction,SO2_emission_reduction,other_emission_reduction,social_benefits_analysis,remark,implementation_investment,implementation_loans,fundraising_intention,private_enterprise,total_equipment_investment,equipment_name_num,projected_equipment,current_year_investment,patents_declaration,patents_obtain,partner,product_launch_date,provincial_technology_center,advanced_manufacturing_type
+		declaration_id,project_industry,construction_nature,minerals,investment_self_prepare,investment_loans,investment_using_forex,completed_investment,completed_investment_loans,completed_investment_self_prepare,last_year_investment,projected_investment,projected_self_prepare,projected_loans,new_sales_revenue,new_profits,new_tax,new_forex,energy_saving,CO2_emission_reduction,water_conservation,waste_utilization,COD_emission_reduction,ammonia_nitrogen_emission_reduction,NOx_emission_reduction,VOCs_emission_reduction,SO2_emission_reduction,other_emission_reduction,social_benefits_analysis,remark,implementation_investment,implementation_loans,fundraising_intention,private_enterprise,total_equipment_investment,equipment_name_num,projected_equipment,current_year_investment,patents_declaration,patents_obtain,partner,product_launch_date,provincial_technology_center,advanced_manufacturing_type
 	</sql>
 
     <sql id="attrnames">
-		#{declarationId},#{projectIndustry},#{constructionNature},#{minerals},#{investmentSelfPrepare},#{investmentLoans},#{investmentUsingForex},#{completedInvestment},#{lastYearInvestment},#{totalInvestmentSelfPrepare},#{totalInvestmentLoans},#{projectedInvestment},#{projectedSelfPrepare},#{projectedLoans},#{newSalesRevenue},#{newProfits},#{newTax},#{newForex},#{energySaving},#{co2EmissionReduction},#{waterConservation},#{wasteUtilization},#{codEmissionReduction},#{ammoniaNitrogenEmissionReduction},#{noxEmissionReduction},#{vocsEmissionReduction},#{so2EmissionReduction},#{otherEmissionReduction},#{socialBenefitsAnalysis},#{remark},#{implementationInvestment},#{implementationLoans},#{fundraisingIntention},#{privateEnterprise},#{totalEquipmentInvestment},#{equipmentNameNum},#{projectedEquipment},#{currentYearInvestment},#{patentsDeclaration},#{patentsObtain},#{partner},#{productLaunchDate},#{provincialTechnologyCenter},#{advancedManufacturingType}
+		#{declarationId},#{projectIndustry},#{constructionNature},#{minerals},#{investmentSelfPrepare},#{investmentLoans},#{investmentUsingForex},#{completedInvestment},#{completedInvestmentLoans},#{completedInvestmentSelfPrepare},#{lastYearInvestment},#{projectedInvestment},#{projectedSelfPrepare},#{projectedLoans},#{newSalesRevenue},#{newProfits},#{newTax},#{newForex},#{energySaving},#{co2EmissionReduction},#{waterConservation},#{wasteUtilization},#{codEmissionReduction},#{ammoniaNitrogenEmissionReduction},#{noxEmissionReduction},#{vocsEmissionReduction},#{so2EmissionReduction},#{otherEmissionReduction},#{socialBenefitsAnalysis},#{remark},#{implementationInvestment},#{implementationLoans},#{fundraisingIntention},#{privateEnterprise},#{totalEquipmentInvestment},#{equipmentNameNum},#{projectedEquipment},#{currentYearInvestment},#{patentsDeclaration},#{patentsObtain},#{partner},#{productLaunchDate},#{provincialTechnologyCenter},#{advancedManufacturingType}
     </sql>
 
     <insert id="add" parameterType="com.example.busniess.entity.IndustrialDeclarationDetailEntity">
@@ -99,14 +99,14 @@
             <if test="completedInvestment!=null">
                 completed_investment=#{completedInvestment},
             </if>
+            <if test="completedInvestmentLoans!=null">
+                completed_investment_loans=#{completedInvestmentLoans},
+            </if>
+            <if test="completedInvestmentSelfPrepare!=null">
+                completed_investment_self_prepare=#{completedInvestmentSelfPrepare},
+            </if>
             <if test="lastYearInvestment!=null">
                 last_year_investment=#{lastYearInvestment},
-            </if>
-            <if test="totalInvestmentSelfPrepare!=null">
-                total_investment_self_prepare=#{totalInvestmentSelfPrepare},
-            </if>
-            <if test="totalInvestmentLoans!=null">
-                total_investment_loans=#{totalInvestmentLoans},
             </if>
             <if test="projectedInvestment!=null">
                 projected_investment=#{projectedInvestment},
@@ -214,4 +214,5 @@
     <delete id="realDeleteByDeclarationId" parameterType="Integer">
         delete from industrial_declaration_detail where declaration_id = #{declarationId};
     </delete>
+
 </mapper>

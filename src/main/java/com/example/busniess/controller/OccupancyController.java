@@ -1,17 +1,18 @@
 package com.example.busniess.controller;
 
-import com.example.busniess.dao.OccupancyDao;
+import com.example.busniess.annotation.SysLog;
 import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.OccupancyService;
+import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -25,7 +26,7 @@ import javax.validation.constraints.NotNull;
 public class OccupancyController {
 
     @Resource
-    OccupancyService occupancyServiceimpl;
+    OccupancyService occupancyService;
 //    @Autowired
 //    OccupancyDao occupancyDao;
 
@@ -47,9 +48,11 @@ public class OccupancyController {
      * @param occupancy
      * @return
      */
+    @SysLog(value="新增科技成果",type="科技成果")
     @RequestMapping("/addOccupancy")
     public ReturnResult addOccupancy(@Validated({UserValidator.InSet.class}) Occupancy occupancy) {
-        if (occupancyServiceimpl.addOccupancy(occupancy)) {
+
+        if (occupancyService.addOccupancy(occupancy)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -60,9 +63,10 @@ public class OccupancyController {
     /**
      * 删除入住成果
      */
+    @SysLog(value="删除科技成果",type="科技成果")
     @RequestMapping("/delectOccupancy")
     public ReturnResult delectOccupancy(Integer id) {
-        if (occupancyServiceimpl.delectOccupancy(id)) {
+        if (occupancyService.delectOccupancy(id)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -72,16 +76,18 @@ public class OccupancyController {
     /**
      * 查看自己发布的科技成果
      *
-     * @param userName//用户姓名
      * @param pageNumber//第几页
      * @param pageSize//显示多少
      * @return
      */
     @RequestMapping("/examineMyOccupancy")
-    public ReturnResult examineMyOccupancy(@NotBlank(message = "传入值不能为空") String userName, @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNumber, @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageSize) {
-        PageInfo o = occupancyServiceimpl.selectMyOccupancy(userName, pageNumber, pageSize);
+    public ReturnResult examineMyOccupancy(@Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNumber, @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageSize) {
+        String userName = ShiroUtils.getUserName();
+        if (userName == null) {
+            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
+        }
+        PageInfo o = occupancyService.selectMyOccupancy(userName, pageNumber, pageSize);
         return ReturnResult.success(o);
-
     }
 
     /**
@@ -89,7 +95,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectOneOccupancyById")
     public ReturnResult selectOneOccupancyById(Integer id) {
-        Occupancy occupancy = occupancyServiceimpl.seleOccupancyById(id);
+        Occupancy occupancy = occupancyService.seleOccupancyById(id);
         return ReturnResult.success(occupancy);
     }
 
@@ -102,7 +108,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectOnShowOccupancy")
     public ReturnResult selectOnShowOccupancy(@NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
-        PageInfo pageInfo = occupancyServiceimpl.selectOnShowOccupancy(pageNum, pagesize);
+        PageInfo pageInfo = occupancyService.selectOnShowOccupancy(pageNum, pagesize);
         return ReturnResult.success(pageInfo);
     }
 
@@ -114,9 +120,10 @@ public class OccupancyController {
      * @param id
      * @return
      */
+    @SysLog(value="修改科技成果状态",type="科技成果")
     @RequestMapping("/upKstatue")
     public ReturnResult upKstatue(@NotNull(message = "跟新状态不能为空") Integer kStatue, @NotNull(message = "发布成果的id不能为空") Integer id) {
-        if (occupancyServiceimpl.upDateKstatue(kStatue, id)) {
+        if (occupancyService.upDateKstatue(kStatue, id)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
@@ -130,7 +137,7 @@ public class OccupancyController {
     @RequestMapping("/selectByIndustry")
     public ReturnResult selectByIndustry(Occupancy occupancy, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
 
-        return ReturnResult.success(occupancyServiceimpl.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
+        return ReturnResult.success(occupancyService.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
     }
 
     /**
@@ -141,7 +148,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectBystatue")
     public ReturnResult selectBystatue(Integer statue) {
-        return ReturnResult.success(occupancyServiceimpl.seleOccupancyByStatue(statue));
+        return ReturnResult.success(occupancyService.seleOccupancyByStatue(statue));
     }
 
     /**
@@ -150,9 +157,10 @@ public class OccupancyController {
      * @param id
      * @return
      */
+    @SysLog(value="修改科技成果审核状态",type="科技成果")
     @RequestMapping("/updateOccupancyStatue")
     public ReturnResult updateOccupancyStatue(Integer statue, Integer id) {
-        if (occupancyServiceimpl.updateStatue(statue, id)) {
+        if (occupancyService.updateStatue(statue, id)) {
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.UPDATE_ERROR);
@@ -163,9 +171,10 @@ public class OccupancyController {
      * @param occupancy
      * @return
      */
+    @SysLog(value="修改科技成果",type="科技成果")
     @RequestMapping("/updateOccupancy")
     public  ReturnResult updateOccupancy(Occupancy occupancy){
-      if(occupancyServiceimpl.updateOccupancy(occupancy)){
+      if(occupancyService.updateOccupancy(occupancy)){
           return ReturnResult.success();
       }
 
@@ -182,7 +191,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectBrokenImg")
     public ReturnResult selectBrokenImg() {
-        Echarts echarts = occupancyServiceimpl.returnBrokenImg();
+        Echarts echarts = occupancyService.returnBrokenImg();
 
         return ReturnResult.success(echarts);
     }
@@ -194,9 +203,94 @@ public class OccupancyController {
      */
     @RequestMapping("/selectPieImg")
     public ReturnResult selectPieImg() {
-        Echarts echarts = occupancyServiceimpl.returnPieImg();
+        Echarts echarts = occupancyService.returnPieImg();
 
         return ReturnResult.success(echarts);
     }
 
+    /**
+     * 分页展示(大厅,包含检索功能)
+     * @param occupancy
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
+    @RequestMapping("/showByPage")
+    public ReturnResult showByPage(Occupancy occupancy, @RequestParam(defaultValue = "1")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,  @RequestParam(defaultValue = "9")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
+        if(occupancy.getAdvantages()!=null){
+            occupancy.setAdvantages(occupancy.getAdvantages().replaceAll(",","','"));
+        }
+        if(occupancy.getTransferType()!=null){
+            occupancy.setTransferType(occupancy.getTransferType().replaceAll(",","','"));
+        }
+        if(occupancy.getStage()!=null){
+            occupancy.setStage(occupancy.getStage().replaceAll(",","','"));
+        }
+        if(occupancy.getAttribute()!=null){
+            occupancy.setAttribute(occupancy.getAttribute().replaceAll(",","','"));
+        }
+        return ReturnResult.success(occupancyService.showByPage(occupancy, pageNum, pagesize));
+    }
+
+    /**
+     * 分页展示(企业中心,包含检索功能)
+     * @param occupancy
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
+    @RequestMapping("/showByPageForCenter")
+    public ReturnResult showByPageForCenter(Occupancy occupancy, @RequestParam(defaultValue = "1")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,  @RequestParam(defaultValue = "10")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
+        String userName = ShiroUtils.getUserName();
+        if (userName == null) {
+            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
+        }else{
+            occupancy.setUserName(userName);
+        }
+        return ReturnResult.success(occupancyService.showByPageForCenter(occupancy, pageNum, pagesize));
+    }
+
+    /**
+     * 热门行业
+     * @param size
+     * @return
+     */
+    @GetMapping("/getHotIndustry")
+    public ReturnResult getHotIndustry(@RequestParam(defaultValue = "8")Integer size){
+        return ReturnResult.success(occupancyService.getHotIndustry(size));
+    }
+
+    /**
+     * 更新发布状态
+     *
+     * @param id
+     * @param closeReason
+     * @return
+     */
+    @SysLog(value="关闭科技成果-企业中心",type="科技成果")
+    @RequestMapping("/closeById")
+    public ReturnResult closeById(@NotNull(message = "发布成果的id不能为空") Integer id,@NotNull(message = "关闭原因不能为空") String closeReason) {
+        if (occupancyService.closeById(id,closeReason)) {
+            return ReturnResult.success();
+        } else {
+            return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
+        }
+    }
+
+    /**
+     * 更新发布状态
+     *
+     * @param id
+     * @param closeReason
+     * @return
+     */
+    @SysLog(value="关闭科技成果-管理员",type="科技成果")
+    @RequestMapping("/closeByIdForManager")
+    public ReturnResult closeByIdForManager(@NotNull(message = "发布成果的id不能为空") Integer id,@NotNull(message = "关闭原因不能为空") String closeReason) {
+        if (occupancyService.closeByIdForManager(id,closeReason)) {
+            return ReturnResult.success();
+        } else {
+            return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
+        }
+    }
 }

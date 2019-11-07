@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.SysLogDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.example.busniess.entity.SysLogEntity" id="baseMap">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="type" column="type"/>
+        <result property="operation" column="operation"/>
+        <result property="method" column="method"/>
+        <result property="params" column="params"/>
+        <result property="time" column="time"/>
+        <result property="ip" column="ip"/>
+        <result property="createDate" column="create_date"/>
+    </resultMap>
+
+    <sql id="columnNames">
+                id,username,type,operation,method,params,time,ip,create_date
+            </sql>
+
+    <sql id="addColumnNames">
+                username,type,operation,method,params,time,ip,create_date
+            </sql>
+
+    <sql id="attrnames">
+                #{username},#{type},#{operation},#{method},#{params},#{time},#{ip},#{createDate}
+            </sql>
+
+    <insert id="save" parameterType="com.example.busniess.entity.SysLogEntity">
+        insert into sys_log (<include refid="addColumnNames"></include>)
+        values (<include refid="attrnames"></include>);
+    </insert>
+
+    <select id="getById" parameterType="Integer" resultMap="baseMap">
+        select <include refid="columnNames"></include> from sys_log where id = #{id}
+    </select>
+
+    <update id="updateById" parameterType="com.example.busniess.entity.SysLogEntity">
+        update sys_log
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="type!=null and type!=''">
+                type=#{type},
+            </if>
+            <if test="operation!=null and operation!=''">
+                operation=#{operation},
+            </if>
+            <if test="method!=null and method!=''">
+                method=#{method},
+            </if>
+            <if test="params!=null and params!=''">
+                params=#{params},
+            </if>
+            <if test="time!=null and time!=''">
+                time=#{time},
+            </if>
+            <if test="ip!=null and ip!=''">
+                ip=#{ip},
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                create_date=#{createDate},
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+
+    <select id="search" resultMap="baseMap" parameterType="com.example.busniess.entity.SysLogEntity">
+        select <include refid="columnNames"></include> from sys_log
+        <where>
+            <if test="username!=null and username!=''">
+                username=#{username}
+            </if>
+            <if test="type!=null and type!=''">
+                and type=#{type}
+            </if>
+            <if test="operation!=null and operation!=''">
+                and operation=#{operation}
+            </if>
+            <if test="method!=null and method!=''">
+                and method=#{method}
+            </if>
+            <if test="params!=null and params!=''">
+                and params=#{params}
+            </if>
+            <if test="time!=null and time!=''">
+                and time=#{time}
+            </if>
+            <if test="ip!=null and ip!=''">
+                and ip=#{ip}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                and to_days(create_date)=to_days(#{createDate})
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -3,20 +3,56 @@
 
 <mapper namespace="com.example.busniess.dao.OccupancyDao">
     <sql id="OccupancyByIndustry_sql">
-        <if test="industry!=null and industry!=''">
-            or `industry` like "%${industry}%"
+        <if test="appliedRange!=null and appliedRange!=''">
+            and `appliedRange` = #{appliedRange}
         </if>
-        <if test="industry!=null and industry!=''">
-            or `resultTechnolo` like "%${industry}%"
-
+        <if test="advantages!=null and advantages!=''">
+            and `advantages` in ('${advantages}')
+        </if>
+        <if test="stage!=null and stage!=''">
+            and `stage` in ('${stage}')
+        </if>
+        <if test="transferType!=null and transferType!=''">
+            and `transferType` in ('${transferType}')
+        </if>
+        <if test="attribute!=null and attribute!=''">
+            and `attribute` in ('${attribute}')
         </if>
 
+        <if test="priceBegin!=null and priceEnd!=null">
+            and `price` between #{priceBegin} and #{priceEnd}
+        </if>
+        <if test="priceBegin!=null and priceEnd==null">
+            and `price` &gt;= #{priceBegin}
+        </if>
+        <if test="priceBegin==null and priceEnd!=null">
+            and `price` &lt;= #{priceEnd}
+        </if>
+
+        <if test="statue!=null and statue!=''">
+            and `statue` = #{statue}
+        </if>
+        <if test="keyWord!=null and keyWord!=''">
+            and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like "%${keyWord}%")
+        </if>
 
     </sql>
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultType="occupancy">
         SELECT * FROM occupancy
         <where>
          statue=1 AND kstatue=1 <include refid="OccupancyByIndustry_sql"></include>
+        </where>
+        ORDER BY creattime DESC
+
+    </select>
+
+    <select id="showByPageForCenter" parameterType="occupancy" resultType="occupancy">
+        SELECT id,resultTechnolo,industry,advantages,stage,kstatue,statue FROM occupancy
+        <where>
+            username = #{userName}
+            <if test="keyWord!=null and keyWord!=''">
+                and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like "%${keyWord}%")
+            </if>
         </where>
         ORDER BY creattime DESC
 

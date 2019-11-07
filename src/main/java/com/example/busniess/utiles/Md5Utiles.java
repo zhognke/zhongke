@@ -39,5 +39,8 @@ public class Md5Utiles {
         return str.toString();
     }
 
+    public static void main(String[] args) {
+        System.out.println(returnMd5("md5", "123456", "admin", 1024));
+    }
 
 }

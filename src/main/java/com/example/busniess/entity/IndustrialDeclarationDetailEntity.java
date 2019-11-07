@@ -48,6 +48,14 @@ public class IndustrialDeclarationDetailEntity {
      */
     private BigDecimal completedInvestment;
     /**
+     * 累计完成投资-贷款
+     */
+    private BigDecimal completedInvestmentLoans;
+    /**
+     * 累计完成投资-自筹
+     */
+    private BigDecimal completedInvestmentSelfPrepare;
+    /**
      * 去年累计投资
      */
     private BigDecimal lastYearInvestment;
@@ -60,9 +68,13 @@ public class IndustrialDeclarationDetailEntity {
      */
     private BigDecimal projectedInvestment;
     /**
-     * 预计投资-贷款
+     * 本年度预计投资总额-贷款
      */
     private BigDecimal projectedLoans;
+    /**
+     * 本年度预计投资总额-自筹
+     */
+    private BigDecimal projectedSelfPrepare;
     /**
      * 预计投资-设备投资
      */
@@ -158,15 +170,11 @@ public class IndustrialDeclarationDetailEntity {
     /**
      * 截止去年底累计投资-贷款
      */
-    private BigDecimal totalInvestmentLoans;
+    //private BigDecimal totalInvestmentLoans;
     /**
      * 截止去年底累计投资-自筹
      */
-    private BigDecimal totalInvestmentSelfPrepare;
-    /**
-     * 本年度预计投资-自筹
-     */
-    private BigDecimal projectedSelfPrepare;
+    //private BigDecimal totalInvestmentSelfPrepare;
     /**
      * 建设性质
      */

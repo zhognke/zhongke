@@ -3,43 +3,10 @@
 
 <mapper namespace="com.example.busniess.dao.IndustrialDeclarationDao">
 
-    <resultMap type="com.example.busniess.entity.IndustrialDeclarationEntity" id="industrialDeclarationMap">
-        <result property="id" column="id"/>
-        <result property="declarationType" column="declaration_type"/>
-        <result property="isNew" column="is_new"/>
-        <result property="declarationIndustry" column="declaration_industry"/>
-        <result property="industryTypeDetail" column="industry_type_detail"/>
-        <result property="projectType" column="project_type"/>
-        <result property="projectTypeDetail" column="project_type_detail"/>
-        <result property="companyName" column="company_name"/>
-        <result property="projectName" column="project_name"/>
-        <result property="projectContent" column="project_content"/>
-        <result property="province" column="province"/>
-        <result property="city" column="city"/>
-        <result property="district" column="district"/>
-        <result property="status" column="status"/>
-        <result property="approvalStatus" column="approval_status"/>
-        <result property="approvalOpinion" column="approval_opinion"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="startDate" column="start_date"/>
-        <result property="endDate" column="end_date"/>
-        <result property="totalInvestment" column="total_investment"/>
-    </resultMap>
 
-    <select id="selectById" resultMap="industrialDeclarationMap" parameterType="Integer">
-        select id,declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,
-        province,city,district,status,approval_status,approval_opinion,DATE_FORMAT(create_time,'%Y-%m-%d') create_time,start_date,end_date,total_investment
-        from industrial_declaration where status != '44' and id=#{id};
-    </select>
-
-    <select id="selectAll" resultMap="industrialDeclarationMap">
-        select id,declaration_type,project_type,company_name,project_name,status,approval_status,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from industrial_declaration where status != '44';
-    </select>
-
-    <select id="search" resultMap="industrialDeclarationMap" parameterType="com.example.busniess.entity.IndustrialDeclarationEntity">
+    <select id="search" resultType="industrialDeclarationEntity" parameterType="industrialDeclarationEntity">
         select id,declaration_type,project_type,company_name,project_name,status,approval_status,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from industrial_declaration
-        where status != '44'
+        where del_flag = 0
         <if test="status!=null">
             and `status` = #{status}
         </if>
@@ -55,24 +22,25 @@
         <if test="companyName!=null and companyName!=''">
             and `company_name` = #{companyName}
         </if>
-        <if test="declarationYear!=null and declarationYear!=''">
-            and year(`create_time`) = #{declarationYear}
+        <if test="declarationYearBegin!=null and declarationYearEnd!=null">
+            and year(`create_time`) between #{declarationYearBegin} and #{declarationYearEnd}
+        </if>
+        <if test="declarationYearBegin!=null and declarationYearEnd==null">
+            and year(`create_time`) &gt;= #{declarationYearBegin}
+        </if>
+        <if test="declarationYearBegin==null and declarationYearEnd!=null">
+            and year(`create_time`) &lt;= #{declarationYearEnd}
         </if>
         <if test="approvalStatus!=null">
             and `approval_status` = #{approvalStatus}
         </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (`declaration_type` like CONCAT('%',#{keyWord},'%') or `declaration_industry` like CONCAT('%',#{keyWord},'%') or `industry_type_detail` like CONCAT('%',#{keyWord},'%') or `project_name` like CONCAT('%',#{keyWord},'%'))
+            and (`declaration_type` like CONCAT('%',#{keyWord},'%') or `project_name` like CONCAT('%',#{keyWord},'%') or `project_type` like CONCAT('%',#{keyWord},'%'))
         </if>
         order by create_time desc
     </select>
 
-    <insert id="add" parameterType="com.example.busniess.entity.IndustrialDeclarationEntity" useGeneratedKeys="true" keyProperty="id">
-        insert into industrial_declaration(declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,province,city,district,start_date,end_date,total_investment)
-        value (#{declarationType},#{isNew},#{declarationIndustry},#{industryTypeDetail},#{projectType},#{projectTypeDetail},#{companyName},#{projectName},#{projectContent},#{province},#{city},#{district},#{startDate},#{endDate},#{totalInvestment});
-    </insert>
-
-    <update id="update" parameterType="com.example.busniess.entity.IndustrialDeclarationEntity">
+    <update id="update" parameterType="industrialDeclarationEntity">
         update industrial_declaration
         <set>
             <if test="declarationType!=null and declarationType!=''">

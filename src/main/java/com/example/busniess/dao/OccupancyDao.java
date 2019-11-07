@@ -80,10 +80,10 @@ public interface OccupancyDao {
      */
 
     @Update("UPDATE `occupancy` SET `resultTechnolo`=#{resultTechnolo}, `stage`=#{stage}, " +
-            "`advantages`=#{advantages}, `industry`=#{industry}, `attribute`=#{attribute}," +
+            "`advantages`=#{advantages}, `industry`=#{industry},`industryDetail`=#{industryDetail},`attribute`=#{attribute}," +
             " `patenNname`=#{patenNname}, `patenNumber`=#{patenNumber}, `price`=#{price}," +
             "`registerNumber`=#{registerNumber}, `describe`=#{describe}, `appliedRange`=#{appliedRange}," +
-            "`linkman`=#{linkMan}, `phonenumber`=#{phoneNumber}, " +
+            "`transferType`=#{transferType},`linkman`=#{linkMan}, `phonenumber`=#{phoneNumber}, " +
             "`uptime`=NOW() WHERE (`id`=#{id})")
     public Boolean upDataOccupancy(Occupancy occupancy);
 
@@ -104,13 +104,12 @@ public interface OccupancyDao {
      * @return
      */
     @Insert("INSERT INTO `occupancy` (`username`, `resultTechnolo`, `stage`, " +
-            "`advantages`, `industry`, `attribute`, `patenNname`, `patenNumber`," +
-            " `price`, `describe`, `appliedRange`, `linkman`, `phonenumber`," +
-            "`creattime`,`kstatue`, " +
-            "`statue`) VALUES (#{userName}, #{resultTechnolo}, #{stage}, #{advantages}, " +
-            "#{industry}, #{attribute}, #{patenNname}, #{patenNumber}, " +
-            "#{price}, #{describe}, #{appliedRange}, #{linkMan}, #{phoneNumber}," +
-            "NOW(), '1', '0')")
+            "`advantages`, `industry`, `industryDetail`,`attribute`, `patenNname`, `patenNumber`," +
+            " `price`, `registerNumber`,`describe`, `appliedRange`,`transferType`,`linkman`, `phonenumber`,`stoptime`," +
+            "`creattime`,`kstatue`, `statue`) " +
+            "VALUES (#{userName}, #{resultTechnolo}, #{stage}, #{advantages}, #{industry}, #{industryDetail},#{attribute}, #{patenNname}, #{patenNumber}, " +
+            "#{price},#{registerNumber},#{describe}, #{appliedRange},#{transferType},#{linkMan}, #{phoneNumber},#{stopTime}," +
+            "NOW(), '1', '1')")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public Boolean insertOccupancy(Occupancy occupancy);
 
@@ -120,8 +119,16 @@ public interface OccupancyDao {
      * @param kstatue
      * @return
      */
-    @Update("UPDATE `occupancy` SET `kstatue`=#{kstatue},stoptime=NOW() WHERE id=#{id}")
+    @Update("UPDATE `occupancy` SET `kstatue`=#{kstatue},close_reason=#{reason},stoptime=NOW() WHERE id=#{id}")
     public Boolean updateKstatue(@Param("kstatue") Integer kstatue, @Param("id") Integer id);
+    /**
+     * 结束
+     *
+     * @param kstatue
+     * @return
+     */
+    @Update("UPDATE `occupancy` SET `kstatue`=#{kstatue},close_reason=#{closeReason},stoptime=NOW() WHERE id=#{id}")
+    public Boolean closeById(@Param("id") Integer id,@Param("kstatue")Integer kstatue,@Param("closeReason")String closeReason);
 
     /**
      * 更改审核状态
@@ -166,5 +173,8 @@ public interface OccupancyDao {
     @Select("SELECT COUNT(industry) FROM occupancy WHERE statue=1")
     public Integer countIndustry();
 
+    @Select("SELECT industry FROM `occupancy` where statue=1 and kstatue =1 group by industry order by count(industry) desc limit #{size};")
+    List<Occupancy> getHotIndustry(@Param("size")Integer size);
 
+    List<Occupancy> showByPageForCenter(Occupancy occupancy);
 }

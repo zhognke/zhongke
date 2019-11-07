@@ -1,13 +1,15 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.MsendMail;
 import com.example.busniess.entity.User;
 import com.example.busniess.exception.MyException;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
+import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.ForgetPassword;
-import com.example.busniess.service.imp.MsendMailServiceImpl;
 import com.example.busniess.service.UserService;
+import com.example.busniess.service.imp.MsendMailServiceImpl;
 import com.example.busniess.utiles.EmailUtiles;
 import com.example.busniess.utiles.Md5Utiles;
 import com.example.busniess.validator.UserValidator;
@@ -18,10 +20,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -29,7 +28,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -39,7 +40,8 @@ public class UserController {
     UserService UserServiceImpl;
     @Resource
     ForgetPassword ForgetPasswordImpl;
-
+    @Resource
+    BusinessCenterService businessCenterService;
     @Resource
     MsendMailServiceImpl msendMailServiceImpl;
 
@@ -57,64 +59,88 @@ public class UserController {
                                   @RequestParam(value = "remb", defaultValue = "false",
                                           required = false) Boolean remb) throws ShiroException {
         Subject subject = SecurityUtils.getSubject();//获取subject对象
+        BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
+        Integer status = null;
+        if (businessCenter != null) {
+            status = businessCenter.getStatue();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
         if (subject.isAuthenticated()) {
-              User user = UserServiceImpl.findUserByName(userName);
-        return ReturnResult.success(user.getUserName());
-       }
+            User user = UserServiceImpl.findUserByName(userName);
+            String username = user.getUserName();
+            String email = user.getEmail();
+            map.put("userName", username);
+            map.put("email",email);
+            map.put("status", status);
+            return ReturnResult.success(map);
+        }
+
         UsernamePasswordToken up = new UsernamePasswordToken(userName, password);
 
         subject.login(up);
         up.setRememberMe(remb);//记住我
         //登录成功
         User user = UserServiceImpl.findUserByName(userName);
-        return ReturnResult.success(user.getUserName());
+        String email = user.getEmail();
+        map.put("userName", userName);
+        map.put("email",email);
+        map.put("status", status);
+        return ReturnResult.success(map);
     }
 
+    @RequestMapping("/logout")
+    public ReturnResult logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return ReturnResult.success("登出成功!");
+    }
 
     /**
      * 发送邮箱验证码
+     *
      * @param session
-     * @param email 收件箱
+     * @param email   收件箱
      * @return
      */
     @PostMapping("/sendCode")
-    public ReturnResult sendCode(HttpSession session,@NotBlank(message = "邮箱buneng为空")@Email(message = "邮箱格式不能为空") String email){
+    public ReturnResult sendCode(HttpSession session, @NotBlank(message = "邮箱buneng为空") @Email(message = "邮箱格式不能为空") String email) {
         String peopleCode = Md5Utiles.getNum(6);
         User user = new User();
         user.setEmail(email);
         user.setUserName(peopleCode);
         user.setLastdate(new Date());
-        session.setAttribute("REGISTER_CODE_SESSION",user);         //存入session
+        session.setAttribute("REGISTER_CODE_SESSION", user);         //存入session
         List<MsendMail> list = msendMailServiceImpl.selectAll();  //获取邮箱服务器
-        if(list.get(0)!=null){
+        if (list.get(0) != null) {
             MsendMail mail = list.get(0);
-            EmailUtiles.sendMailCode(mail,peopleCode,email);
+            EmailUtiles.sendMailCode(mail, peopleCode, email);
             return ReturnResult.success("发送成功");
-        }else{
+        } else {
             return ReturnResult.erro(CodeMsg.EMAIL_ERROR);
         }
     }
 
     /**
      * 验证邮箱验证码
+     *
      * @param session
-     * @param code  邮箱验证码
+     * @param code    邮箱验证码
      * @return
      */
     @PostMapping("/checkCode")
-    public ReturnResult checkCode(HttpSession session, @NotBlank(message = "验证码不能为空") String code){
+    public ReturnResult checkCode(HttpSession session, @NotBlank(message = "验证码不能为空") String code) {
         Object obj = session.getAttribute("REGISTER_CODE_SESSION");
-        User user = (User)obj;
-        if(user!=null){
+        User user = (User) obj;
+        if (user != null) {
             String peopleCode = user.getUserName();
             Date sendDate = user.getLastdate();
             Date now = new Date();
-            if((now.getTime()-sendDate.getTime())/(1000)>600){  //超时
+            if ((now.getTime() - sendDate.getTime()) / (1000) > 600) {  //超时
                 return ReturnResult.erro(CodeMsg.CODE_TIMEOUT_ERROR);
-            }else if(!StringUtils.isNotBlank(peopleCode)){      //验证码为空
+            } else if (!StringUtils.isNotBlank(peopleCode)) {      //验证码为空
                 return ReturnResult.erro(CodeMsg.CODE_NOTBLANK_ERROR);
             }
-            if(code.equalsIgnoreCase(peopleCode)){
+            if (code.equalsIgnoreCase(peopleCode)) {
                 return ReturnResult.success("验证成功");
             }
         }
@@ -128,7 +154,7 @@ public class UserController {
      * @return
      * @throws MyException
      */
-    @RequestMapping("/registerUser")
+    @RequestMapping(value="/registerUser",method = {RequestMethod.POST})
     public ReturnResult registerUser(@Validated({UserValidator.InSet.class}) User user) throws MyException {
 
         UserServiceImpl.addUser(user);
@@ -138,31 +164,32 @@ public class UserController {
 
     /**
      * 忘记密码
+     *
      * @param session
-     * @param mmCode  邮箱验证吗
-     * @param userName 用户名
+     * @param mmCode      邮箱验证吗
+     * @param userName    用户名
      * @param newPassword 新密码
      * @return
      * @throws MessagingException
      * @throws MyException
      */
-    @RequestMapping("/retrievePassword")
-    public ReturnResult retrievePassword(HttpSession session,@NotBlank(message = "验证码不能为空")String mmCode, @NotBlank(message = "用户名不能为空")String userName, @NotBlank(message = "密码不能为空")String newPassword) throws MessagingException, MyException {
+    @RequestMapping(value="/retrievePassword",method = {RequestMethod.POST})
+    public ReturnResult retrievePassword(HttpSession session, @NotBlank(message = "验证码不能为空") String mmCode, @NotBlank(message = "用户名不能为空") String userName, @NotBlank(message = "密码不能为空") String newPassword) throws MessagingException, MyException {
 
-     User user =new User();
-     user.setUserName(userName);
-     user.setPassword(newPassword);
-       if (ForgetPasswordImpl.upPassword(session,mmCode,user)){
-           return ReturnResult.success();
-       }
-       return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(newPassword);
+        if (ForgetPasswordImpl.upPassword(session, mmCode, user)) {
+            return ReturnResult.success();
+        }
+        return ReturnResult.erro(CodeMsg.SERVER_ERROR);
 
     }
 
     /**
      * 修改密码
      */
-    @RequestMapping("/updataPassword")
+    @RequestMapping(value="/updataPassword",method = {RequestMethod.POST})
     public ReturnResult updataPassword(@NotBlank(message = "用户名不能为空") String userName, @NotBlank(message = "原密码不能为空") String password, @NotBlank(message = "新密码不能为空") String newPassword) throws MyException {
 
         if (UserServiceImpl.retSetPassword(userName, password, newPassword)) {

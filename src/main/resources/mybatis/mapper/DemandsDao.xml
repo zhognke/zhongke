@@ -3,34 +3,6 @@
 
 <mapper namespace="com.example.busniess.dao.DemandsDao">
 
-    <resultMap type="com.example.busniess.entity.DemandsEntity" id="demandsMap">
-        <result property="id" column="id"/>
-        <result property="userName" column="user_name"/>
-        <result property="companyName" column="company_name"/>
-        <result property="demandType" column="demand_type"/>
-        <result property="cooperationType" column="cooperation_type"/>
-        <result property="cooperationIntention" column="cooperation_intention"/>
-        <result property="demandIndustry" column="demand_industry"/>
-        <result property="demandIndustryDetail" column="demand_industry_detail"/>
-        <result property="demandOutline" column="demand_outline"/>
-        <result property="demandContent" column="demand_content"/>
-        <result property="expectedResult" column="expected_result"/>
-        <result property="province" column="province"/>
-        <result property="city" column="city"/>
-        <result property="district" column="district"/>
-        <result property="contact" column="contact"/>
-        <result property="phoneNum" column="phone_num"/>
-        <result property="email" column="email"/>
-        <result property="preInvestmentAmount" column="pre_investment_amount"/>
-        <result property="endDate" column="end_date"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="status" column="status"/>
-        <result property="approvalStatus" column="approval_status"/>
-        <result property="approvalOpinion" column="approval_opinion"/>
-        <result property="remark" column="remark"/>
-    </resultMap>
-
     <sql id="demands_sql">
         <if test="demandType!=null and demandType!=''">
             `demand_type`=#{demandType},
@@ -77,7 +49,7 @@
         <if test="status!=null">
             `status`=#{status},
         </if>
-        <if test="approvalStatus!=null and approvalStatus!=''">
+        <if test="approvalStatus!=null">
             `approval_status`=#{approvalStatus},
         </if>
         <if test="approvalOpinion!=null and approvalOpinion!=''">
@@ -88,11 +60,11 @@
         </if>
     </sql>
 
-    <select id="search" parameterType="demandsEntity" resultMap="demandsMap">
+    <select id="search" parameterType="demandsEntity" resultType="demandsEntity">
         SELECT d.`id`,d.user_name,b.firmName company_name,`demand_type`,`cooperation_type`,cooperation_intention,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,b.country province,b.`city`,b.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion`
         FROM `demands` d,`businesscenter` b
         <where>
-            d.user_name = b.uname and status!='44'
+            d.user_name = b.uname and del_flag=0 and b.statue=1
             <if test="demandIndustry!=null and demandIndustry!=''">
                 and d.`demand_industry`=#{demandIndustry}
             </if>
@@ -136,7 +108,7 @@
                 and b.firmName=#{companyName}
             </if>
             <if test="keyWord!=null and keyWord!=''">
-                and (d.`demand_industry` like CONCAT('%',#{keyWord},'%') or d.`demand_industry_detail` like CONCAT('%',#{keyWord},'%') or d.`demand_outline` like CONCAT('%',#{keyWord},'%'))
+                and (d.`demand_type` like CONCAT('%',#{keyWord},'%') or d.`demand_industry` like CONCAT('%',#{keyWord},'%') or d.`demand_outline` like CONCAT('%',#{keyWord},'%'))
             </if>
         </where>
         order by create_time desc

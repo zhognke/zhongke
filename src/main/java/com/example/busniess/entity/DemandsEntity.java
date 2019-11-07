@@ -1,6 +1,7 @@
 package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -120,10 +121,12 @@ public class DemandsEntity implements Serializable {
     /**
      * 需求创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     /**
      * 需求更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
     /**
      * 浏览次数
@@ -134,9 +137,13 @@ public class DemandsEntity implements Serializable {
      */
     private String remark;
     /**
-     * 需求态状:0有效;1已到期;2用户关闭;3管理员关闭
+     * 需求态状:0有效;1已到期;2管理员关闭;3用户关闭;
      */
     private Integer status;
+    /**
+     * 关闭原因
+     */
+    private String close_reason;
     /**
      * 审核态状:0待审核;1已审核;2驳回
      */
@@ -145,6 +152,15 @@ public class DemandsEntity implements Serializable {
      * 审批意见(原因)
      */
     private String approvalOpinion;
+    /**
+     * 审核时间
+     */
+    private Date approvalTime;
+    /**
+     * 删除状态
+     * 0未删除;1已删除
+     */
+    private Integer delFlag;
     /**
      * 统计(echarts表格需要,非数据库表格字段)
      */
@@ -157,4 +173,8 @@ public class DemandsEntity implements Serializable {
     private BigDecimal preInvestmentAmountBegin;
 
     private BigDecimal preInvestmentAmountEnd;
+
+    private String logo;//公司logo
+
+    private String typeEnterprise;//企业类型
 }

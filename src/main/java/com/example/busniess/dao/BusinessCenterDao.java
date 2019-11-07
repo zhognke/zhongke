@@ -64,7 +64,7 @@ public interface BusinessCenterDao {
             "`identification`=#{identification}, `societycode`=#{societyCode}, " +
             "`legalperson`=#{legalPerson}, `persioncode`=#{persionCode}, " +
             "`address`=#{address}, `phonenumber`=#{phoneNumber}, `agentperson`=#{agentPerson}, " +
-            "`appersioncode`=#{apPersionCode},`uptime`=NOW() WHERE (`id`=#{id})")
+            "`appersioncode`=#{apPersionCode},`uptime`=NOW(),`statue`=0 WHERE (`id`=#{id})")
     public Boolean updateBusinessCenter(BusinessCenter businessCenter);
 
     /**
@@ -87,7 +87,7 @@ public interface BusinessCenterDao {
     /**
      * 查看自己的
      */
-    @Select("SELECT id,statue FROM businesscenter WHERE uname=#{uName}")
+    @Select("SELECT id,statue,firmname firmName,logo,country,city,district,typeEnterprise,statue FROM businesscenter WHERE uname=#{uName}")
     public BusinessCenter selectOneBusinessCenter(String uName);
 
     /**
@@ -106,7 +106,7 @@ public interface BusinessCenterDao {
     public List<String> selectFirmName(String firmName);
 
 
-
+    List<BusinessCenter> search(BusinessCenter businessCenter);
 
 }
 

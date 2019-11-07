@@ -2,6 +2,7 @@ package com.example.busniess.service;
 
 import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.Occupancy;
+import com.example.busniess.resultpackage.ReturnResult;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.*;
 
@@ -34,6 +35,9 @@ public interface OccupancyService {
      */
     Boolean upDateKstatue(Integer kStatue, Integer id);
 
+    boolean closeById(Integer id,String closeReason);
+
+    boolean closeByIdForManager(Integer id,String closeReason);
     /**
      * 更新发布状态
      * @param userName
@@ -105,4 +109,10 @@ public interface OccupancyService {
      * @return
      */
     boolean updateOccupancy(Occupancy occupancy);
+
+    PageInfo showByPage(Occupancy occupancy, Integer pageNum, Integer pagesize);
+
+    List<Occupancy> getHotIndustry(Integer size);
+
+    PageInfo showByPageForCenter(Occupancy occupancy, Integer pageNum, Integer pagesize);
 }
