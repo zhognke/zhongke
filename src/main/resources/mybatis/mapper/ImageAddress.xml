@@ -10,4 +10,20 @@
 
     </insert>
 
+
+    <update id="upDateImageAddress" parameterType="list">
+        <foreach collection="list" item="image" index="index" open="" close="" separator=";">
+            UPDATE system
+            <set>
+                `img`=#{image.img}
+            </set>
+            <where>
+                `id`=#{image.id}
+            </where>
+        </foreach>
+
+    </update>
+
+
+
 </mapper>
