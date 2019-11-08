@@ -175,8 +175,11 @@ public class OccupancyServiceimpl implements OccupancyService {
      */
     @Override
     public boolean updateOccupancy(Occupancy occupancy) {
+        if(imageAddressDao.upDateImageAddress(occupancy.getImgAddress())){
+            return   occupancyDao.upDataOccupancy(occupancy);
+        }
 
-        return   occupancyDao.upDataOccupancy(occupancy);
+        return false;
     }
 
     /**
