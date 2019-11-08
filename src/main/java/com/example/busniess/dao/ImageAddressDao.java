@@ -39,8 +39,8 @@ public interface ImageAddressDao {
      * @param id
      * @return
      */
-    @Update("UPDATE `imageaddress` SET `img`=#{img} WHERE (`id`=#{id})")
-   public Boolean upDateImageAddress(String imgAddress,Integer id);
+//    @Update("UPDATE `imageaddress` SET `img`=#{img} WHERE (`id`=#{id})")
+   public Boolean upDateImageAddress(List<ImageAddress> imageAddresses);
 
     /**
      *查看图片
