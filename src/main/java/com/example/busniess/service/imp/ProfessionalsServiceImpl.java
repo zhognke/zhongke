@@ -78,11 +78,8 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     * @return
     */
     @Override
-    public boolean delectById(Integer id) {
-        ProfessionalsEntity professionalsEntity = new ProfessionalsEntity();
-        professionalsEntity.setId(id);
-        professionalsEntity.setStatus(4);
-        return professionalsDao.updateById(professionalsEntity);
+    public boolean deleteById(Integer id) {
+        return professionalsDao.deleteById(id);
     }
 
     /**
@@ -92,7 +89,7 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     */
     @Override
     public boolean realDeleteById(Integer id) {
-        return professionalsDao.realDelectById(id);
+        return professionalsDao.realDeleteById(id);
     }
 
     /**
@@ -128,11 +125,19 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     */
     @Override
     public boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion) {
-        ProfessionalsEntity professionalsEntity = new ProfessionalsEntity();
-        professionalsEntity.setId(id);
-        professionalsEntity.setApprovalStatus(approvalStatus);
-        professionalsEntity.setApprovalOpinion(approvalOpinion);
-        return professionalsDao.updateById(professionalsEntity);
+        return professionalsDao.updateApprovalStatus(id,approvalStatus,approvalOpinion);
+    }
+
+    @Override
+    public boolean closeById(Integer id, String closeReason) {
+        Integer status =3;
+        return professionalsDao.closeById(id,status,closeReason);
+    }
+
+    @Override
+    public boolean closeByIdForManager(Integer id, String closeReason) {
+        Integer status =2;
+        return professionalsDao.closeById(id,status,closeReason);
     }
 
 }

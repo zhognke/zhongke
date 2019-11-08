@@ -4,8 +4,11 @@ import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.dao.RejectDao;
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.Reject;
 import com.example.busniess.service.BusinessCenterService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -121,13 +124,27 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
 
     /**
      *修改认证信息
-     * @param id
+     * @param businessCenter
      * @return
      */
     @Override
     public Boolean updateBusinessCenter(BusinessCenter businessCenter) {
-       boolean a= businessCenterDao.updateBusinessCenter(businessCenter);
+        return businessCenterDao.updateBusinessCenter(businessCenter);
+    }
 
-        return a;
+    /**
+     * 分页展示-大厅
+     * @param businessCenter
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageInfo showByPage(BusinessCenter businessCenter, Integer pageNum, Integer pageSize) {
+        businessCenter.setStatue(1);
+        PageHelper.startPage(pageNum, pageSize);
+        List<BusinessCenter> list = businessCenterDao.search(businessCenter);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 }

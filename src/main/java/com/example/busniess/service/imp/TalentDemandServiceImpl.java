@@ -32,11 +32,6 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     */
     @Override
     public List<TalentDemandEntity> search(TalentDemandEntity talentDemandEntity) {
-        if(talentDemandEntity.getStatus()==null){
-            talentDemandEntity.setStatus(0);
-        }else if(talentDemandEntity.getStatus()==6){
-            talentDemandEntity.setStatus(null);
-        }
         return talentDemandDao.search(talentDemandEntity);
     }
 
@@ -50,11 +45,6 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     @Override
     public PageInfo showByPage(TalentDemandEntity talentDemandEntity, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        if(talentDemandEntity.getStatus()==null){
-            talentDemandEntity.setStatus(0);
-        }else if(talentDemandEntity.getStatus()==6){
-            talentDemandEntity.setStatus(null);
-        }
         List<TalentDemandEntity> list = talentDemandDao.search(talentDemandEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
@@ -77,8 +67,6 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     */
     @Override
     public boolean add(TalentDemandEntity talentDemandEntity) {
-        talentDemandEntity.setStatus(0);
-        talentDemandEntity.setApprovalStatus(0);
         return talentDemandDao.add(talentDemandEntity);
     }
 
@@ -102,7 +90,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     */
     @Override
     public boolean realDeleteById(Integer id) {
-        return talentDemandDao.realDelectById(id);
+        return talentDemandDao.realDeleteById(id);
     }
 
     /**
@@ -144,5 +132,18 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         talentDemandEntity.setApprovalOpinion(approvalOpinion);
         return talentDemandDao.updateById(talentDemandEntity);
     }
+
+    @Override
+    public boolean closeDemands(Integer id, String closeReason) {
+        Integer status = 3;
+        return talentDemandDao.closeById(id,status,closeReason);
+    }
+
+    @Override
+    public boolean closeDemandsForManager(Integer id, String closeReason) {
+        Integer status = 2;
+        return talentDemandDao.closeById(id,status,closeReason);
+    }
+
 
 }

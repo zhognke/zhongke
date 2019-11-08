@@ -114,9 +114,9 @@ public class UserServiceImpl implements UserService {
         }
         String newPs = Md5Utiles.returnMd5("md5",newPassword, userName, 1024);
         user.setPassword( newPs);
-       // userDao.updatPassword(user);//更改密码
+       return userDao.updatPassword(user);//更改密码
 
-        return true;
+        //return true;
     }
 
     /**

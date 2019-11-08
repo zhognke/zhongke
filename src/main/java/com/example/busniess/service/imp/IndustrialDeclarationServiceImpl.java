@@ -61,21 +61,14 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
         industrialDeclarationEntity.setApprovalStatus(0);
         industrialDeclarationDao.add(industrialDeclarationEntity);
         Integer id = industrialDeclarationEntity.getId();
-        if(id!=null){
-            IndustrialDeclarationDetailEntity detailEntity = industrialDeclarationEntity.getDetailEntity();
-            detailEntity.setDeclarationId(id);
-            industrialDeclarationDetailDao.add(detailEntity);
-            return true;
-        }
-        return false;
+        IndustrialDeclarationDetailEntity detailEntity = industrialDeclarationEntity.getDetailEntity();
+        detailEntity.setDeclarationId(id);
+        return industrialDeclarationDetailDao.add(detailEntity);
     }
 
     @Override
     public boolean delectById(Integer id) {
-        IndustrialDeclarationEntity industrialDeclarationEntity = new IndustrialDeclarationEntity();
-        industrialDeclarationEntity.setId(id);
-        industrialDeclarationEntity.setStatus(44);
-        return industrialDeclarationDao.update(industrialDeclarationEntity);
+        return industrialDeclarationDao.deleteById(id);
     }
 
     @Override
@@ -99,11 +92,8 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     }
 
     @Override
-    public boolean updateStatus(Integer id,Integer status) {
-        IndustrialDeclarationEntity industrialDeclarationEntity = new IndustrialDeclarationEntity();
-        industrialDeclarationEntity.setId(id);
-        industrialDeclarationEntity.setStatus(status);
-        return industrialDeclarationDao.update(industrialDeclarationEntity);
+    public boolean updateStatus(Integer id,Integer status,String closeReason) {
+        return industrialDeclarationDao.updateStatus(id,status,closeReason);
     }
 
     @Override
@@ -136,6 +126,11 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     @Override
     public List<IndustrialDeclarationEntity> getCompanyList() {
         return industrialDeclarationDao.getCompanyList();
+    }
+
+    @Override
+    public List<IndustrialDeclarationEntity> lastDeclarations(Integer size) {
+        return industrialDeclarationDao.lastDeclarations(size);
     }
 
 

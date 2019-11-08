@@ -75,13 +75,13 @@ public class DemandsServiceImpl implements DemandsService {
     }
 
     @Override
-    public List<DemandsEntity> lastDemandsShow() {
-        return demandsDao.lastDemandsShow();
+    public List<DemandsEntity> lastDemandsShow(Integer size) {
+        return demandsDao.lastDemandsShow(size);
     }
 
     @Override
-    public List<String> hotDemandsIndustry() {
-        return demandsDao.hotDemandsIndustry();
+    public List<String> hotDemandsIndustry(Integer size) {
+        return demandsDao.hotDemandsIndustry(size);
     }
 
     @Override
@@ -99,8 +99,8 @@ public class DemandsServiceImpl implements DemandsService {
     }
 
     @Override
-    public boolean updateDemandsStatus(int status, int id) {
-        return demandsDao.updateDemandsStatus(status,id);
+    public boolean updateDemandsStatus(Integer id,Integer status,String reason) {
+        return demandsDao.updateDemandsStatus(id,status,reason);
     }
 
 
@@ -116,8 +116,7 @@ public class DemandsServiceImpl implements DemandsService {
 
     @Override
     public boolean deleteDemandsByID(int id) {
-        Integer status = 44;
-        return demandsDao.updateDemandsStatus(status,id);
+        return demandsDao.deleteById(id);
     }
 
     @Override
@@ -128,7 +127,7 @@ public class DemandsServiceImpl implements DemandsService {
     @Override
     public boolean insert(DemandsEntity demandsEntity) {
         demandsEntity.setStatus(0);
-        demandsEntity.setApprovalStatus(1);
+        demandsEntity.setApprovalStatus(0);
         return demandsDao.insert(demandsEntity);
     }
 

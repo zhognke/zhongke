@@ -1,16 +1,15 @@
 package com.example.busniess.service.imp;
 
+import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.dao.ImageAddressDao;
 import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
-import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.OccupancyService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.mail.imap.protocol.ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Service
 public class OccupancyServiceimpl implements OccupancyService {
@@ -28,6 +26,8 @@ public class OccupancyServiceimpl implements OccupancyService {
     ImageAddressDao imageAddressDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    BusinessCenterDao businessCenterDao;
 
     /**
      * 新建科技成果入住
@@ -41,12 +41,14 @@ public class OccupancyServiceimpl implements OccupancyService {
         //2.插入附表
         if (occupancyDao.insertOccupancy(occupancy)) {
             List<ImageAddress> i = occupancy.getImgAddress();
-            for (ImageAddress img : i) {
-                img.setOId(occupancy.getId());
-
+            if(i!=null&&i.size()>0) {
+                for (ImageAddress img : i) {
+                    img.setOId(occupancy.getId());
+                }
+                return imageAddressDao.insertImageAddress(i);
+            }else{
+                return true;
             }
-
-            return imageAddressDao.insertImageAddress(i);
         } else {
             return false;
         }
@@ -99,6 +101,18 @@ public class OccupancyServiceimpl implements OccupancyService {
         return occupancyDao.updateKstatue(kStatue, id);
     }
 
+    @Override
+    public boolean closeById(Integer id, String closeReason) {
+        Integer status = 3;
+        return occupancyDao.closeById(id,status,closeReason);
+    }
+
+    @Override
+    public boolean closeByIdForManager(Integer id, String closeReason) {
+        Integer status = 2;
+        return occupancyDao.closeById(id,status,closeReason);
+    }
+
     /**
      * 查看所有审核的并状态正常的
      */
@@ -139,9 +153,9 @@ public class OccupancyServiceimpl implements OccupancyService {
      * @return
      */
     public  Occupancy seleOccupancyById(Integer id){
-
-
-        return occupancyDao.selectOneById(id);
+        Occupancy occupancy = occupancyDao.selectOneById(id);
+        occupancy.setBusinessCenter(businessCenterDao.selectOneBusinessCenter(occupancy.getUserName()));
+        return occupancy;
     }
 
     /**
@@ -163,6 +177,34 @@ public class OccupancyServiceimpl implements OccupancyService {
     public boolean updateOccupancy(Occupancy occupancy) {
 
         return   occupancyDao.upDataOccupancy(occupancy);
+    }
+
+    /**
+     * 分页展示(大厅,包含检索功能)
+     * @param occupancy
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
+    @Override
+    public PageInfo showByPage(Occupancy occupancy, Integer pageNum, Integer pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<Occupancy> o = occupancyDao.selectOccupancyByIndustry(occupancy);
+        PageInfo pageInfo = new PageInfo(o);
+        return pageInfo;
+    }
+
+    @Override
+    public List<Occupancy> getHotIndustry(Integer size) {
+        return occupancyDao.getHotIndustry(size);
+    }
+
+    @Override
+    public PageInfo showByPageForCenter(Occupancy occupancy, Integer pageNum, Integer pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<Occupancy> o = occupancyDao.showByPageForCenter(occupancy);
+        PageInfo pageInfo = new PageInfo(o);
+        return pageInfo;
     }
 
     /**
