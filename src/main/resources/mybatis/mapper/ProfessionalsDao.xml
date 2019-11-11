@@ -22,10 +22,13 @@
         <result property="iconAddress" column="icon_address"/>
         <result property="certificateAddress" column="certificate_address"/>
         <result property="status" column="status"/>
+        <result property="closeReason" column="close_reason"/>
         <result property="approvalStatus" column="approval_status"/>
         <result property="approvalOpinion" column="approval_opinion"/>
+        <result property="approvalTime" column="approval_time"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
     </resultMap>
 
     <sql id="columnNames">
@@ -47,8 +50,10 @@
                 status,
                 approval_status,
                 approval_opinion,
+                approval_time,
                 create_time,
-                update_time
+                update_time,
+                del_flag
             </sql>
 
     <sql id="addColumnNames">
