@@ -95,6 +95,11 @@ public class ProfessionalsEntity implements Serializable {
      */
     private String approvalOpinion;
     /**
+     * 审批时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date approvalTime;
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -104,5 +109,8 @@ public class ProfessionalsEntity implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
-
+    /**
+     * 删除标记
+     */
+    private Integer delFlag;
 }

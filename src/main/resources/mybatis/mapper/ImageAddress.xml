@@ -13,12 +13,12 @@
 
     <update id="upDateImageAddress" parameterType="list">
         <foreach collection="list" item="image" index="index" open="" close="" separator=";">
-            UPDATE system
+            UPDATE imageaddress
             <set>
                 `img`=#{image.img}
             </set>
             <where>
-                `id`=#{image.id}
+                `oid`=#{image.oId}
             </where>
         </foreach>
 

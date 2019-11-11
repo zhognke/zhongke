@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 //企业中心
 @Data
@@ -84,4 +85,5 @@ public class BusinessCenter implements Serializable {
     private BigDecimal registeredCapitalBegin;
     private BigDecimal registeredCapitalEnd;
     private String keyWord;
+    private List<Occupancy> occupancyList;
 }

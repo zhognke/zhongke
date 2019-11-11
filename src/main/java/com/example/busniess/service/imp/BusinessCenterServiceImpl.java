@@ -1,10 +1,12 @@
 package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.BusinessCenterDao;
+import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.RejectDao;
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.DemandsEntity;
+import com.example.busniess.entity.Occupancy;
 import com.example.busniess.entity.Reject;
 import com.example.busniess.service.BusinessCenterService;
 import com.github.pagehelper.PageHelper;
@@ -23,6 +25,8 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
     BusinessCenterDao businessCenterDao;
     @Autowired
     RejectDao rejectDao;
+    @Autowired
+    OccupancyDao occupancyDao;
 
     /**
      * 提交认证
@@ -107,7 +111,12 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
      */
     @Override
     public BusinessCenter selectBusinessCenterById(Integer id) {
-        return businessCenterDao.selectBussinessByid(id);
+        BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(id);
+        if(businessCenter!=null){
+            List<Occupancy> occupancyList = occupancyDao.selectMyOccupancy(businessCenter.getUName());
+            businessCenter.setOccupancyList(occupancyList);
+        }
+        return businessCenter;
     }
 
     /**

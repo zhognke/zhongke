@@ -174,12 +174,25 @@ public class OccupancyServiceimpl implements OccupancyService {
      * @return
      */
     @Override
+    @Transactional
     public boolean updateOccupancy(Occupancy occupancy) {
-        if(imageAddressDao.upDateImageAddress(occupancy.getImgAddress())){
-            return   occupancyDao.upDataOccupancy(occupancy);
+        Integer oid = occupancy.getId();
+        List<ImageAddress> list = occupancy.getImgAddress();
+        if(list!=null&&list.size()>0){
+            for(ImageAddress img : list){
+                img.setOId(oid);
+            }
+            imageAddressDao.delectImageAddress(oid);
+            if(imageAddressDao.insertImageAddress(occupancy.getImgAddress())){
+                occupancyDao.updateStatue(0,oid);
+                return occupancyDao.upDataOccupancy(occupancy);
+            }else{
+                return false;
+            }
+        }else{
+            occupancyDao.updateStatue(0,oid);
+            return occupancyDao.upDataOccupancy(occupancy);
         }
-
-        return false;
     }
 
     /**

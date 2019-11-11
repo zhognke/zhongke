@@ -1,11 +1,14 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
+import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.ProfessionalsEntity;
 import com.example.busniess.entity.User;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
+import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.ProfessionalsService;
+import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
@@ -29,6 +32,8 @@ import java.util.Date;
 public class ProfessionalsController {
     @Autowired
     private ProfessionalsService professionalsService;
+    @Autowired
+    BusinessCenterService businessCenterService;
 
     /**
      * 新增
@@ -36,16 +41,17 @@ public class ProfessionalsController {
      * @return
      */
     @SysLog(value="新增专家入驻",type="专家入驻")
-    @PostMapping("/add")
-    public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) ProfessionalsEntity professionalsEntity){
-        String userName = professionalsEntity.getUserName();
-        if(userName==null){
-            Object obj = SecurityUtils.getSubject().getPrincipal();
-            if(obj!=null){
-                userName = ((User)obj).getUserName();
+    @PostMapping("/addProfessionals")
+    public ReturnResult addProfessionals(@Validated({UserValidator.InSet.class}) ProfessionalsEntity professionalsEntity){
+        String userName = ShiroUtils.getUserName();
+        if (userName == null) {
+            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
+        }else{
+            BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
+            if(businessCenter!=null&&businessCenter.getStatue()==1){    //判断当前用户是否通过企业认证
                 professionalsEntity.setUserName(userName);
             }else{
-                return ReturnResult.erro(CodeMsg.BIND_ERROR);
+                return ReturnResult.erro(CodeMsg.ACCESS_DENIED);
             }
         }
         professionalsEntity.setCreateTime(new Date());
@@ -92,7 +98,7 @@ public class ProfessionalsController {
      * @return
      */
     @SysLog(value="修改专家入驻信息",type="专家入驻")
-    @PostMapping("/update")
+    @PostMapping("/updateById")
     public ReturnResult updateDeclaration(@Validated({UserValidator.UpDate.class}) ProfessionalsEntity professionalsEntity){
         if(professionalsService.update(professionalsEntity)){
             return ReturnResult.success("修改成功");
