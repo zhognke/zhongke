@@ -14,7 +14,7 @@ public class NewsInformation implements Serializable {
     @NotNull(message = "id参数不能为空", groups = UserValidator.UpDate.class)
     private int id; //新闻资讯id号
     @NotBlank(message = "用户名不能为空", groups = UserValidator.UpDate.class)
-    private String uname;//用户名
+    private String uName;//用户名
     @NotBlank(message = "类别不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String category;//类别
     @NotBlank(message = "标题不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
