@@ -24,8 +24,8 @@ public interface NewsInformationDao {
     /**
      * 修改新闻资讯
      */
-    @Update("UPDATE `newsinformation` SET `uname`=#{uNaem}," +
-            "category`=#{category}, `title`=#{title}, `cover`=#{cover}," +
+    @Update("UPDATE `newsinformation` SET " +
+            "`category`=#{category}, `title`=#{title}, `cover`=#{cover}," +
             " `detail`=#{detail}, `uptime`=NOW() WHERE (`id`=#{id})")
     public Boolean udateNewsInformation(NewsInformation newsInformation);
 
