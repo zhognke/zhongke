@@ -57,7 +57,7 @@ public  Boolean checkEmail(String userName,HttpSession session) throws MyExcepti
     }
     String mmcode=Md5Utiles.getNum(4);//产生新的验证码
     session.setAttribute("mmcode",mmcode);//放入session
-    EmailUtiles.sendEmail("您的验证功码",user.getEmail(),mmcode);
+    EmailUtiles.sendEmail("您的验证码",user.getEmail(),mmcode);
     return true;
 
 }
