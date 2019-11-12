@@ -32,15 +32,23 @@
         <if test="statue!=null and statue!=''">
             and `statue` = #{statue}
         </if>
+        <if test="industry!=null and industry!=''">
+            and `industry` = #{industry}
+        </if>
+        <if test="industryDetail!=null and industryDetail!=''">
+            and `industryDetail` = #{industryDetail}
+        </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like "%${keyWord}%")
+            and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like
+            "%${keyWord}%")
         </if>
 
     </sql>
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultType="occupancy">
         SELECT * FROM occupancy
         <where>
-         statue=1 AND kstatue=1 <include refid="OccupancyByIndustry_sql"></include>
+            statue=1 AND kstatue=1
+            <include refid="OccupancyByIndustry_sql"></include>
         </where>
         ORDER BY creattime DESC
 
@@ -51,7 +59,8 @@
         <where>
             username = #{userName}
             <if test="keyWord!=null and keyWord!=''">
-                and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like "%${keyWord}%")
+                and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like
+                "%${keyWord}%")
             </if>
         </where>
         ORDER BY creattime DESC
