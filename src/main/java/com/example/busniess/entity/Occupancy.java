@@ -39,7 +39,7 @@ public class Occupancy implements Serializable {
     @NotBlank(message = "专利号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String patenNumber;//专利号
     //@NotNull(message = "专利价格不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private BigDecimal price;//专利价格
+    private String price;//专利价格
 
     private String registerNumber;//软件登记号
     @NotNull(message = "详情描述不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
