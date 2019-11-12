@@ -70,7 +70,7 @@ public class UserController {
             String username = user.getUserName();
             String email = user.getEmail();
             map.put("userName", username);
-            map.put("email",email);
+            map.put("email", email);
             map.put("status", status);
             return ReturnResult.success(map);
         }
@@ -83,7 +83,7 @@ public class UserController {
         User user = UserServiceImpl.findUserByName(userName);
         String email = user.getEmail();
         map.put("userName", userName);
-        map.put("email",email);
+        map.put("email", email);
         map.put("status", status);
         return ReturnResult.success(map);
     }
@@ -103,17 +103,18 @@ public class UserController {
      * @return
      */
     @PostMapping("/sendCode")
-    public ReturnResult sendCode(HttpSession session, @NotBlank(message = "邮箱buneng为空") @Email(message = "邮箱格式不能为空") String email) {
+    public ReturnResult sendCode(HttpSession session, @NotBlank(message = "邮箱不能为空") @Email(message = "邮箱格式不能为空") String email) {
         String peopleCode = Md5Utiles.getNum(6);
         User user = new User();
         user.setEmail(email);
         user.setUserName(peopleCode);
         user.setLastdate(new Date());
-        session.setAttribute("REGISTER_CODE_SESSION", user);         //存入session
+
         List<MsendMail> list = msendMailServiceImpl.selectAll();  //获取邮箱服务器
         if (list.get(0) != null) {
             MsendMail mail = list.get(0);
             EmailUtiles.sendMailCode(mail, peopleCode, email);
+            session.setAttribute("REGISTER_CODE_SESSION", user);         //存入session
             return ReturnResult.success("发送成功");
         } else {
             return ReturnResult.erro(CodeMsg.EMAIL_ERROR);
@@ -154,7 +155,7 @@ public class UserController {
      * @return
      * @throws MyException
      */
-    @RequestMapping(value="/registerUser",method = {RequestMethod.POST})
+    @RequestMapping(value = "/registerUser", method = {RequestMethod.POST})
     public ReturnResult registerUser(@Validated({UserValidator.InSet.class}) User user) throws MyException {
 
         UserServiceImpl.addUser(user);
@@ -173,7 +174,7 @@ public class UserController {
      * @throws MessagingException
      * @throws MyException
      */
-    @RequestMapping(value="/retrievePassword",method = {RequestMethod.POST})
+    @RequestMapping(value = "/retrievePassword", method = {RequestMethod.POST})
     public ReturnResult retrievePassword(HttpSession session, @NotBlank(message = "验证码不能为空") String mmCode, @NotBlank(message = "用户名不能为空") String userName, @NotBlank(message = "密码不能为空") String newPassword) throws MessagingException, MyException {
 
         User user = new User();
@@ -189,7 +190,7 @@ public class UserController {
     /**
      * 修改密码
      */
-    @RequestMapping(value="/updataPassword",method = {RequestMethod.POST})
+    @RequestMapping(value = "/updataPassword", method = {RequestMethod.POST})
     public ReturnResult updataPassword(@NotBlank(message = "用户名不能为空") String userName, @NotBlank(message = "原密码不能为空") String password, @NotBlank(message = "新密码不能为空") String newPassword) throws MyException {
 
         if (UserServiceImpl.retSetPassword(userName, password, newPassword)) {
@@ -199,5 +200,12 @@ public class UserController {
         }
     }
 
-
+    /**
+     * 清除session中的数据
+     * @param session
+     */
+    @RequestMapping("/clearSession")
+    public void clearSession(HttpSession session) {
+        session.removeAttribute("REGISTER_CODE_SESSION");
+    }
 }
