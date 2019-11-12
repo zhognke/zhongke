@@ -112,7 +112,7 @@ public class DemandsEntity implements Serializable {
      * 预投金额
      */
     @NotNull(message = "预投金额不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private BigDecimal preInvestmentAmount;
+    private String preInvestmentAmount;
     /**
      * 需求截止日期
      */

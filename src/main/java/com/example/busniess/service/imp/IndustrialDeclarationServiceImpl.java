@@ -86,9 +86,13 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     @Override
     @Transactional
     public boolean update(IndustrialDeclarationEntity industrialDeclarationEntity) {
-        IndustrialDeclarationEntity entity = industrialDeclarationDao.selectById(industrialDeclarationEntity.getId());
+        industrialDeclarationEntity.setStatus(0);
+        industrialDeclarationEntity.setApprovalStatus(0);
+        IndustrialDeclarationDetailEntity declarationDetailEntity = industrialDeclarationEntity.getDetailEntity();
+        declarationDetailEntity.setDeclarationId(industrialDeclarationEntity.getId());
         industrialDeclarationDao.update(industrialDeclarationEntity);
-        return industrialDeclarationDetailDao.update(industrialDeclarationEntity.getDetailEntity());
+        boolean flag = industrialDeclarationDetailDao.update(declarationDetailEntity);
+        return flag;
     }
 
     @Override

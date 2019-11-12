@@ -109,7 +109,7 @@ public interface OccupancyDao {
             "`creattime`,`kstatue`, `statue`) " +
             "VALUES (#{userName}, #{resultTechnolo}, #{stage}, #{advantages}, #{industry}, #{industryDetail},#{attribute}, #{patenNname}, #{patenNumber}, " +
             "#{price},#{registerNumber},#{describe}, #{appliedRange},#{transferType},#{linkMan}, #{phoneNumber},#{stopTime}," +
-            "NOW(), '1', '1')")
+            "NOW(), '1', '0')")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public Boolean insertOccupancy(Occupancy occupancy);
 

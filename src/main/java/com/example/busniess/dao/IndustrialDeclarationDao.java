@@ -60,6 +60,13 @@ public interface IndustrialDeclarationDao {
      * @return
      */
     public boolean update(IndustrialDeclarationEntity industrialDeclarationEntity);
+    /**
+     * 修改状态
+     * @param id
+     * @param status
+     * @param closeReason
+     * @return
+     */
     @Update("update industrial_declaration set status = #{status},close_reason = #{closeReason} where id = #{id}")
     public boolean updateStatus(@Param("id")Integer id,@Param("id")Integer status,@Param("id")String closeReason);
     /**
@@ -73,14 +80,14 @@ public interface IndustrialDeclarationDao {
      * 工业申报行业占比统计(饼图)
      * @return
      */
-    @Select("SELECT count(declaration_type) counts,declaration_type declarationType FROM `industrial_declaration` where status = 0 and approval_status = 1 group by declaration_type")
+    @Select("SELECT count(declaration_type) counts,declaration_type declarationType FROM `industrial_declaration` where del_flag = 0 and status = 0 and approval_status = 1 group by declaration_type")
     public List<IndustrialDeclarationEntity> declartionsIndustryProp();
 
     /**
      * 工业申报增长趋势(折线图)
      * @return
      */
-    @Select("SELECT count(create_time) as counts,DATE_FORMAT(create_time,'%Y/%m') companyName FROM `industrial_declaration` where status = 0 and approval_status = 1 group by DATE_FORMAT(create_time,'%y/%m')")
+    @Select("SELECT count(create_time) as counts,DATE_FORMAT(create_time,'%Y/%m') companyName FROM `industrial_declaration` where del_flag = 0 and status = 0 and approval_status = 1 group by DATE_FORMAT(create_time,'%y/%m')")
     public List<IndustrialDeclarationEntity> declartionsRiseTrend();
 
     /**
@@ -90,6 +97,6 @@ public interface IndustrialDeclarationDao {
     @Select("SELECT distinct company_name companyName FROM `industrial_declaration`")
     List<IndustrialDeclarationEntity> getCompanyList();
 
-    @Select("select project_name,approval_status,project_type,create_time from industrial_declaration where status=0 and approval_status =1 order by create_time desc limit #{size}")
+    @Select("select project_name,approval_status,project_type,create_time from industrial_declaration where del_flag = 0 and status=0 and approval_status =1 order by create_time desc limit #{size}")
     List<IndustrialDeclarationEntity> lastDeclarations(@Param("size")Integer size);
 }

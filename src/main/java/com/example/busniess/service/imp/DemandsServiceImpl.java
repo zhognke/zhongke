@@ -95,6 +95,8 @@ public class DemandsServiceImpl implements DemandsService {
 
     @Override
     public boolean updateDemands(DemandsEntity demandsEntity) {
+        demandsEntity.setStatus(0);
+        demandsEntity.setApprovalStatus(0);
         return demandsDao.updateDemands(demandsEntity);
     }
 

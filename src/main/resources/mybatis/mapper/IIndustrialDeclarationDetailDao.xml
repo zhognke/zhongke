@@ -202,7 +202,7 @@
                 product_launch_date=#{productLaunchDate},
             </if>
             <if test="provincialTechnologyCenter!=null">
-                provincial_technology_center=#{provincialTechnologyCenter}
+                provincial_technology_center=#{provincialTechnologyCenter},
             </if>
             <if test="advancedManufacturingType!=null and advancedManufacturingType!=''">
                 advanced_manufacturing_type=#{advancedManufacturingType}
