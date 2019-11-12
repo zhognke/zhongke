@@ -34,10 +34,7 @@ public interface ImageAddressDao {
     public Boolean delectOneImageAddress(Integer id);
 
     /**
-     * 修改图片
-     * @param imgAddress
-     * @param id
-     * @return
+     * 批量修改图片
      */
 //    @Update("UPDATE `imageaddress` SET `img`=#{img} WHERE (`id`=#{id})")
    public Boolean upDateImageAddress(List<ImageAddress> imageAddresses);
