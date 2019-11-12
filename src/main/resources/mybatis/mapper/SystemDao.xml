@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.SystemDao">
+
+<insert id="insertSystem" parameterType="list">
+INSERT INTO system (url,statue,inserttime) VALUES
+    <foreach collection="list" item="url" index="index" separator=",">
+        (#{url},1,Now())
+    </foreach>
+ </insert>
+
+    <update id="updateSystem" parameterType="list">
+        <foreach collection="list" item="system" index="index" open="" close="" separator=";">
+            UPDATE system
+            <set>
+                statue=#{system.statue},
+                updatetime=NOW()
+            </set>
+            <where>
+                id=#{system.id}
+            </where>
+        </foreach>
+
+    </update>
+
+</mapper>
