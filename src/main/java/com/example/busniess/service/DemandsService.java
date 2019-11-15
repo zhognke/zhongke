@@ -43,7 +43,13 @@ public interface DemandsService {
      * @return
      */
     public List<DemandsEntity> search(DemandsEntity demandsEntity);
-
+    /**
+     * 筛选查询_新(用户端)
+     *
+     * @param demandsEntity
+     * @return
+     */
+    public List<DemandsEntity> searchNew(DemandsEntity demandsEntity);
     /**
      * 筛选查询(管理端)
      *
@@ -115,12 +121,18 @@ public interface DemandsService {
 
     /**
      * 根据id查找需求(详情)
+     * 旧版
+     * @param id 需求id
+     * @return
+     */
+    public DemandsEntity getByIDOld(int id);
+    /**
+     * 根据id查找需求(详情)
      *
      * @param id 需求id
      * @return
      */
     public DemandsEntity getByID(int id);
-
     /**
      * 根据id删除需求(逻辑删除)
      *

@@ -2,12 +2,8 @@ package com.example.busniess.dao;
 
 
 import com.example.busniess.entity.DemandsEntity;
-import lombok.Data;
 import org.apache.ibatis.annotations.*;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,11 +37,18 @@ public interface DemandsDao {
     public List<DemandsEntity> selectByStatus(@Param("status") int status);
 
     /**
-     * 筛选查询(sql在mapper文件)
+     * 筛选查询_关联企业认证表(sql在mapper文件)
      * @param demandsEntity
      * @return
      */
 	public List<DemandsEntity> search(DemandsEntity demandsEntity);
+
+    /**
+     * 筛选查询_新_关联用户表(sql在mapper文件)
+     * @param demandsEntity
+     * @return
+     */
+    public List<DemandsEntity> searchNew(DemandsEntity demandsEntity);
 
     /**
      * 获取总条数(sql在mapper文件)
@@ -102,16 +105,20 @@ public interface DemandsDao {
      * @param id    需求id
      * @return
      */
-    @Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`," +
+    /*@Select("select d.`id`,d.user_name userName,b.firmName as companyName,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`," +
             "`demand_outline`,`demand_content`,`expected_result`,b.country province,b.`city`,b.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`," +
-            "`remark`,`approval_status`,d.`status`,b.logo,b.typeEnterprise from `demands` d,businesscenter b where d.user_name = b.uname and d.id = #{id} and b.statue=1 ")
+            "`remark`,`approval_status`,d.`status`,b.logo,b.typeEnterprise from `demands` d,businesscenter b where d.user_name = b.uname and d.id = #{id} and b.statue=1 ")*/
+    @Select("select d.`id`,`user_name`,d.company_name,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`," +
+            "`demand_outline`,`demand_content`,`expected_result`,d.`province`,d.`city`,d.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`," +
+            "`remark`,`approval_status`,d.`status` from `demands` d,user u where d.user_name = u.username and d.id = #{id} and u.statu=1 ")
 	public DemandsEntity getByID(@Param("id") Integer id);
 
     /**
      * 最新需求
      * @return
      */
-    @Select("select d.`id`,d.user_name,`demand_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,b.country province,b.`city`,b.`district`,`create_time` from `demands` d,businesscenter b where d.user_name = b.uname and d.status=0 and d.approval_status=1 and b.statue=1 and d.del_flag=0 order by create_time desc limit #{size}")
+    //@Select("select d.`id`,d.user_name,`demand_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,b.country province,b.`city`,b.`district`,`create_time` from `demands` d,businesscenter b where d.user_name = b.uname and d.status=0 and d.approval_status=1 and b.statue=1 and d.del_flag=0 order by create_time desc limit #{size}")
+    @Select("select d.`id`,d.user_name,`demand_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,b.country province,b.`city`,b.`district`,`create_time` from `demands` d,user u where d.user_name = u.username and d.status=0 and d.approval_status=1 and u.statu=1 and d.del_flag=0 order by create_time desc limit #{size}")
     public List<DemandsEntity> lastDemandsShow(@Param("size")Integer size);
     /**
      * 热门需求
@@ -131,10 +138,16 @@ public interface DemandsDao {
      * @param demandsEntity
      * @return
      */
-    @Insert("insert into `demands` " +
+    /*@Insert("insert into `demands` " +
             "(`user_name`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
             "`expected_result`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`," +
             "`remark`,`status`,`approval_status`) values(#{userName},#{demandType},#{cooperationType},#{cooperationIntention},#{demandIndustry}," +
+            "#{demandIndustryDetail},#{demandOutline},#{demandContent},#{expectedResult},#{contact},#{phoneNum}," +
+            "#{preInvestmentAmount},#{endDate},#{remark},#{status},#{approvalStatus})")*/
+    @Insert("insert into `demands` " +
+            "(`user_name`,`company_name`,`province`,`city`,`district`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`," +
+            "`expected_result`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`," +
+            "`remark`,`status`,`approval_status`) values(#{userName},#{companyName},#{province},#{city},#{district},#{demandType},#{cooperationType},#{cooperationIntention},#{demandIndustry}," +
             "#{demandIndustryDetail},#{demandOutline},#{demandContent},#{expectedResult},#{contact},#{phoneNum}," +
             "#{preInvestmentAmount},#{endDate},#{remark},#{status},#{approvalStatus})")
 	public boolean insert(DemandsEntity demandsEntity);

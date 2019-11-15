@@ -4,6 +4,18 @@
 <mapper namespace="com.example.busniess.dao.DemandsDao">
 
     <sql id="demands_sql">
+        <if test="companyName!=null and companyName!=''">
+            `company_name`=#{companyName},
+        </if>
+        <if test="province!=null and province!=''">
+            `province`=#{province},
+        </if>
+        <if test="city!=null and city!=''">
+            `city`=#{city},
+        </if>
+        <if test="district!=null and district!=''">
+            `district`=#{district},
+        </if>
         <if test="demandType!=null and demandType!=''">
             `demand_type`=#{demandType},
         </if>
@@ -106,6 +118,51 @@
             </if>
             <if test="companyName!=null and companyName!=''">
                 and b.firmName=#{companyName}
+            </if>
+            <if test="keyWord!=null and keyWord!=''">
+                and (d.`demand_type` like CONCAT('%',#{keyWord},'%') or d.`demand_industry` like CONCAT('%',#{keyWord},'%') or d.`demand_outline` like CONCAT('%',#{keyWord},'%'))
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="searchNew" parameterType="demandsEntity" resultType="demandsEntity">
+        SELECT d.`id`,d.user_name,d.company_name,`demand_type`,`cooperation_type`,cooperation_intention,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,d.province,d.`city`,d.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion`
+        FROM `demands` d,user u
+        <where>
+            d.user_name = u.username and d.del_flag=0 and u.statu = 1
+            <if test="demandIndustry!=null and demandIndustry!=''">
+                and d.`demand_industry`=#{demandIndustry}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and d.`user_name`=#{userName}
+            </if>
+            <if test="demandType!=null and demandType!=''">
+                and d.`demand_type` in ('${demandType}')
+            </if>
+            <if test="status!=null">
+                and d.`status`=#{status}
+            </if>
+            <if test="cooperationType!=null and cooperationType!=''">
+                and d.`cooperation_type` in ('${cooperationType}')
+            </if>
+            <if test="cooperationIntention!=null and cooperationIntention!=''">
+                and d.`cooperation_intention` in ('${cooperationIntention}')
+            </if>
+            <if test="preInvestmentAmountBegin!=null and preInvestmentAmountEnd!=null">
+                and d.`pre_investment_amount` between #{preInvestmentAmountBegin} and #{preInvestmentAmountEnd}
+            </if>
+            <if test="preInvestmentAmountBegin!=null and preInvestmentAmountEnd==null">
+                and d.`pre_investment_amount` &gt;= #{preInvestmentAmountBegin}
+            </if>
+            <if test="preInvestmentAmountBegin==null and preInvestmentAmountEnd!=null">
+                and d.`pre_investment_amount` &lt;= #{preInvestmentAmountEnd}
+            </if>
+            <if test="approvalStatus!=null">
+                and d.`approval_status`=#{approvalStatus}
+            </if>
+            <if test="companyName!=null and companyName!=''">
+                and d.`company_name`=#{companyName}
             </if>
             <if test="keyWord!=null and keyWord!=''">
                 and (d.`demand_type` like CONCAT('%',#{keyWord},'%') or d.`demand_industry` like CONCAT('%',#{keyWord},'%') or d.`demand_outline` like CONCAT('%',#{keyWord},'%'))

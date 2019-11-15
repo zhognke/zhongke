@@ -69,9 +69,11 @@ public class UserController {
             User user = UserServiceImpl.findUserByName(userName);
             String username = user.getUserName();
             String email = user.getEmail();
+            Integer isPerson = user.getPersion();
             map.put("userName", username);
             map.put("email", email);
             map.put("status", status);
+            map.put("isPerson", isPerson);
             return ReturnResult.success(map);
         }
 
@@ -82,9 +84,11 @@ public class UserController {
         //登录成功
         User user = UserServiceImpl.findUserByName(userName);
         String email = user.getEmail();
+        Integer isPerson = user.getPersion();
         map.put("userName", userName);
         map.put("email", email);
         map.put("status", status);
+        map.put("isPerson", isPerson);
         return ReturnResult.success(map);
     }
 
