@@ -125,7 +125,7 @@ public class BusinessCenterController {
     }
 
     /**
-     * 查看具体认证信息
+     * 查看具体认证信息hello
      */
 
     @RequestMapping("/findBussinessCenter")
