@@ -97,9 +97,9 @@ public class BusinessCenterController {
      * @return
      */
     @RequestMapping("/findAllBusinessCenter")
-    public ReturnResult findAllBusinessCenter(BusinessCenter businessCenter) {
+    public ReturnResult findAllBusinessCenter(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize) {
         //System.out.println(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter));
-        return ReturnResult.success(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter));
+        return ReturnResult.success(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter, pageNumber,pageSize));
     }
 
     /**
@@ -142,6 +142,6 @@ public class BusinessCenterController {
         if(businessCenterServiceImpl.updateBusinessCenter(businessCenter)){
             return ReturnResult.success();
         }
-       return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
+        return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
     }
 }
