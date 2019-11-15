@@ -11,13 +11,13 @@ public interface PersonDao {
      * @param person
      * @return
      */
-    @Insert("INSERT INTO `person` (`uname`, `name`, `personcode`, `unit`, `territory`,`province`,`city`,`district`,`experience`, `telephone`, `post`, `statue`, `inserttime`) VALUES " +
-            "(#{uName}, #{name}, #{personCode}, #{unit},#{territory},#{province}, #{city},#{district},#{experience},#{telephone},#{post}, 0, NOW())")
+    @Insert("INSERT INTO `person` (`uname`, `name`, `personcode`, `imgaddress`,`unit`, `territory`,`province`,`city`,`district`,`experience`, `telephone`, `post`, `statue`, `inserttime`) VALUES " +
+            "(#{uName}, #{name}, #{personCode},#{imgAddress}, #{unit},#{territory},#{province}, #{city},#{district},#{experience},#{telephone},#{post}, 0, NOW())")
     public Boolean insertPerson(Person person);
     /**
      * 修改私人认证
      */
-    @Update("UPDATE `person` SET  `unit`=#{unit}, `territory`=#{territory}, `province`=#{province},`city`=#{city},`district`=#{district},`experience`=#{experience}, `telephone`=#{telephone}, `post`=#{post},`updatetime`= NOW() WHERE (`id`=#{id})")
+    @Update("UPDATE `person` SET `name`=#{name},`personcode`=#{personcode},`imgaddress`=#{imgAddress},`unit`=#{unit}, `territory`=#{territory}, `province`=#{province},`city`=#{city},`district`=#{district},`experience`=#{experience}, `telephone`=#{telephone}, `post`=#{post},`updatetime`= NOW() WHERE (`id`=#{id})")
     public Boolean updatePerson(Person person);
 
     /**
