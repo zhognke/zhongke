@@ -36,7 +36,7 @@ public interface BusinessCenterService {
     /**
      * 查看所有的
      */
-    List<BusinessCenter> selectAllBusinessCenter(BusinessCenter businessCenter);
+    PageInfo selectAllBusinessCenter(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize);
 
     /**
      * 查看自己的企业认证

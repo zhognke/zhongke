@@ -99,9 +99,10 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
      * @return
      */
     @Override
-    public List<BusinessCenter> selectAllBusinessCenter(BusinessCenter businessCenter) {
+    public PageInfo selectAllBusinessCenter(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize) {
+        PageHelper.startPage(pageNumber, pageSize);
 
-        return  businessCenterDao.selectAllBusinessCenter(businessCenter);
+        return   new  PageInfo(businessCenterDao.selectAllBusinessCenter(businessCenter));
     }
 
     /**
