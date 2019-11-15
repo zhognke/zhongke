@@ -5,11 +5,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.math.BigDecimal;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -37,26 +36,22 @@ public class DemandsEntity implements Serializable {
     /**
      * 企业名称
      */
+    @NotNull(message = "企业名称不能为空", groups = {UserValidator.InSet.class})
     private String companyName;
     /**
      * 需求类别:1.技术需求;2.人才需求;3.生产需求;4.其他
      */
     @NotNull(message = "需求类别不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String demandType;
-    private String[] demandTypes;
     /**
      * 合作方式:1.技术转让;2.专利许可;3.委托开发;4.合作开发;5.技术服务;6.技术入股;7.其他
      */
     @NotNull(message = "合作方式不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String cooperationType;
-
-    private String[] cooperationTypes;
     /**
      * 合作倾向:不限;高新技术企业;技术先进型服务企业;新产品备案企业;其他
      */
     private String cooperationIntention;
-
-    private String[] cooperationIntentions;
     /**
      * 需求行业
      */
@@ -85,14 +80,17 @@ public class DemandsEntity implements Serializable {
     /**
      * 省
      */
+    @NotNull(message = "所属省份不能为空", groups = {UserValidator.InSet.class})
     private String province;
     /**
      * 市
      */
+    @NotNull(message = "所属城市不能为空", groups = {UserValidator.InSet.class})
     private String city;
     /**
      * 区
      */
+    @NotNull(message = "所属县区不能为空", groups = {UserValidator.InSet.class})
     private String district;
     /**
      * 邮箱

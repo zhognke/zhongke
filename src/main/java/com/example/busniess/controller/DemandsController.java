@@ -1,7 +1,6 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
-import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
@@ -166,12 +165,7 @@ public class DemandsController {
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }else{
-            BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
-            if(businessCenter!=null&&businessCenter.getStatue()==1){    //判断当前用户是否通过企业认证
-                demandsEntity.setUserName(userName);
-            }else{
-                return ReturnResult.erro(CodeMsg.ACCESS_DENIED);
-            }
+            demandsEntity.setUserName(userName);
         }
         if (demandsService.insert(demandsEntity)) {
             return ReturnResult.success();

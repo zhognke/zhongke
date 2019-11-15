@@ -1,6 +1,8 @@
 package com.example.busniess.service.imp;
 
+import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.dao.DemandsDao;
+import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.service.DemandsService;
 import com.github.pagehelper.PageHelper;
@@ -17,6 +19,9 @@ public class DemandsServiceImpl implements DemandsService {
 
     @Autowired
     DemandsDao demandsDao;
+
+    @Autowired
+    BusinessCenterDao businessCenterDao;
 
     @Override
     public List<DemandsEntity> selectAll() {
@@ -41,8 +46,15 @@ public class DemandsServiceImpl implements DemandsService {
     }
 
     @Override
+    public List<DemandsEntity> searchNew(DemandsEntity demandsEntity) {
+        demandsEntity.setStatus(0);
+        demandsEntity.setApprovalStatus(1);
+        return demandsDao.searchNew(demandsEntity);
+    }
+
+    @Override
     public List<DemandsEntity> searchForManager(DemandsEntity demandsEntity) {
-        return demandsDao.search(demandsEntity);
+        return demandsDao.searchNew(demandsEntity);
     }
 
     @Override
@@ -60,16 +72,16 @@ public class DemandsServiceImpl implements DemandsService {
     @Override
     public PageInfo showByPage(DemandsEntity demandsEntity, int pageNum, int pagesize) {
         if(demandsEntity.getDemandType()!=null){
-            demandsEntity.setDemandTypes(demandsEntity.getDemandType().split(","));
+            demandsEntity.setDemandType(demandsEntity.getDemandType().replaceAll(",","','"));
         }
         if(demandsEntity.getCooperationType()!=null){
-            demandsEntity.setCooperationTypes(demandsEntity.getCooperationType().split(","));
+            demandsEntity.setCooperationType(demandsEntity.getCooperationType().replaceAll(",","','"));
         }
         if(demandsEntity.getCooperationIntention()!=null){
-            demandsEntity.setCooperationIntentions(demandsEntity.getCooperationIntention().split(","));
+            demandsEntity.setCooperationIntention(demandsEntity.getCooperationIntention().replaceAll(",","','"));
         }
         PageHelper.startPage(pageNum, pagesize);
-        List<DemandsEntity> list = demandsDao.search(demandsEntity);
+        List<DemandsEntity> list = demandsDao.searchNew(demandsEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }
@@ -87,7 +99,7 @@ public class DemandsServiceImpl implements DemandsService {
     @Override
     public PageInfo showByPageForManager(DemandsEntity demandsEntity, int pageNum, int pagesize) {
         PageHelper.startPage(pageNum, pagesize);
-        List<DemandsEntity> list = demandsDao.search(demandsEntity);
+        List<DemandsEntity> list = demandsDao.searchNew(demandsEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }
@@ -112,8 +124,21 @@ public class DemandsServiceImpl implements DemandsService {
     }
 
     @Override
-    public DemandsEntity getByID(int id) {
+    public DemandsEntity getByIDOld(int id) {
         return demandsDao.getByID(id);
+    }
+
+    @Override
+    public DemandsEntity getByID(int id) {
+        DemandsEntity entity = demandsDao.getByID(id);
+        if(entity!=null&&entity.getUserName()!=null){
+            BusinessCenter businessCenter = businessCenterDao.selectOneBusinessCenter(entity.getUserName());
+            if (businessCenter!=null){
+                entity.setLogo(businessCenter.getLogo());
+                entity.setTypeEnterprise(businessCenter.getTypeEnterprise());
+            }
+        }
+        return entity;
     }
 
     @Override
