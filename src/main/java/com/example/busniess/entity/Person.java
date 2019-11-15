@@ -11,6 +11,7 @@ public class Person {
     private String uName;//关联的账号2
     private String name;//姓名3
     private String personCode;//身份证号4
+    private String imgAddress;//身份证图片
     private String unit;//所属企业
     private String territory;//企业类型
     private String province;//省
