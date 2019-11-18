@@ -56,6 +56,11 @@ public class Occupancy implements Serializable {
 //    @Pattern(regexp = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$", message = "手机号码格式错误", groups = {UserValidator.InSet.class})
     private String phoneNumber;//联系人电话
 
+    private String  province;//省 8
+
+    private String city;//市  9
+    private String district;//区 ··10
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date stopTime;//停止发布时间（过期）
     private Date creatTime;//创建时间

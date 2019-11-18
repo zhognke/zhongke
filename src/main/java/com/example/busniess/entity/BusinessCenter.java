@@ -20,20 +20,20 @@ public class BusinessCenter implements Serializable {
     @NotBlank(message = "关联用户名不能为空", groups = {UserValidator.InSet.class, UserValidator.UpDate.class})
     private String uName;//关联的用户名2
     @NotBlank(message = "企业名称不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String firmName;//企业名字 3firmName
+    private String firmName;//企业名字   企业名字
     @NotBlank(message = "所属行业不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String industry;//所属行业 4(增加)
+    private String industry;//所属行业     行业领域
     @NotBlank(message = "企业类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String typeEnterprise;
+    private String typeEnterprise;     //企业类型
 
-    @NotNull(message = "规模不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private Integer scale;//规模 5
+//    @NotNull(message = "规模不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private Integer scale;//规模 5 从业人数
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Past(message = "注册日期必须必须小于当前日期", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private Date recordDate;//注册日期6（增加）
+    private Date recordDate;//注册日期   注册时间
     //    @NotBlank(message = "注册资金不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     @DecimalMin(value = "1", message = "注册资金不能小于1", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private BigDecimal registeredCapital;//注册资金7（增加）
+    private BigDecimal registeredCapital;//注册资金    注册资金
 
     @NotBlank(message = "所属省不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String country;//省 8
@@ -41,30 +41,33 @@ public class BusinessCenter implements Serializable {
     private String city;//市  9
     @NotBlank(message = "所属区不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String district;//区 ··10
-    @NotBlank(message = "企业简介不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String enterpriseProfile;//企业简介//11（增加
+//    @NotBlank(message = "企业简介不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private String enterpriseProfile;//企业简介/  企业简介
     @NotBlank(message = "logo地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String logo;//企业logo 12
+    private String logo;//企业logo 企业logo
 
     @NotBlank(message = "身份不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String identification;//身份识别  1.法人2.代理人 2 //13
     @NotBlank(message = "统一社会信用不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String societyCode;//统一社会信用代码 14
+    private String societyCode;//统一社会信用代码    统一社会信用代码
 //    @NotBlank(message = "社会代码不能为空", groups = {UserValidator.InSet.class})
 //    private Integer codeStatue;//社会代码状态 14
 
 
     @NotBlank(message = "法人姓名不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String legalPerson;//法人 15
-    @NotBlank(message = "法人身份证号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String persionCode;//身份证号  16
+    private String legalPerson;//法人 法人代表
+//    法人身份证号去掉
+//    @NotBlank(message = "法人身份证号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+     private String persionCode;//身份证号  税务登记号
     //    @NotBlank(message = "附件描述不能为空", groups = {UserValidator.InSet.class})
 //    private String accessoryDesc;//附件描述 17
     @NotBlank(message = "附件地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String address;//附件地址 17
-    @NotNull(message = "联系电话不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private String address;//附件地址  附件
+//    @NotNull(message = "联系电话不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
 //    @Pattern(regexp = "((13[0-9])|(15[0-9])|(18[0,5-9]))\\d{8}",message = "输入手机号码有误")
-    private BigInteger phoneNumber;//手机号码（增加）18
+    private BigInteger phoneNumber;//手机号码  （手机号码
+
+
     //    @NotBlank(message = "代理人姓名不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String agentPerson;//代理人姓名 19
     //    @NotBlank(message = "代理人身份证号不能为空",groups = {UserValidator.UpDate.class, UserValidator.InSet.class})

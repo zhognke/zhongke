@@ -83,8 +83,8 @@ public interface OccupancyDao {
             "`advantages`=#{advantages}, `industry`=#{industry},`industryDetail`=#{industryDetail},`attribute`=#{attribute}," +
             " `patenNname`=#{patenNname}, `patenNumber`=#{patenNumber}, `price`=#{price}," +
             "`registerNumber`=#{registerNumber}, `describe`=#{describe}, `appliedRange`=#{appliedRange}," +
-            "`transferType`=#{transferType},`linkman`=#{linkMan}, `phonenumber`=#{phoneNumber}, " +
-            "`uptime`=NOW() WHERE (`id`=#{id})")
+            "`transferType`=#{transferType},`linkman`=#{linkMan}, `phonenumber`=#{phoneNumber},`province`=#{province}," +
+            "`city`=#{city},`district`=#{district},`uptime`=NOW() WHERE (`id`=#{id})")
     public Boolean upDataOccupancy(Occupancy occupancy);
 
     /**
@@ -105,10 +105,10 @@ public interface OccupancyDao {
      */
     @Insert("INSERT INTO `occupancy` (`username`, `resultTechnolo`, `stage`, " +
             "`advantages`, `industry`, `industryDetail`,`attribute`, `patenNname`, `patenNumber`," +
-            " `price`, `registerNumber`,`describe`, `appliedRange`,`transferType`,`linkman`, `phonenumber`,`stoptime`," +
+            " `price`, `registerNumber`,`describe`, `appliedRange`,`transferType`,`linkman`, `phonenumber`,`province`,`city`,`district`,`stoptime`," +
             "`creattime`,`kstatue`, `statue`) " +
             "VALUES (#{userName}, #{resultTechnolo}, #{stage}, #{advantages}, #{industry}, #{industryDetail},#{attribute}, #{patenNname}, #{patenNumber}, " +
-            "#{price},#{registerNumber},#{describe}, #{appliedRange},#{transferType},#{linkMan}, #{phoneNumber},#{stopTime}," +
+            "#{price},#{registerNumber},#{describe}, #{appliedRange},#{transferType},#{linkMan}, #{phoneNumber},#{province},#{city},#{district},#{stopTime}," +
             "NOW(), '1', '0')")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public Boolean insertOccupancy(Occupancy occupancy);
