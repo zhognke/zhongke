@@ -3,10 +3,12 @@ package com.example.busniess.controller;
 import com.example.busniess.annotation.SysLog;
 import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.InformEntity;
 import com.example.busniess.entity.Reject;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessCenterService;
+import com.example.busniess.utiles.RabbitUtil;
 import com.example.busniess.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/bussinessCenter")
@@ -50,6 +54,14 @@ public class BusinessCenterController {
             return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
         }
         if (businessCenterServiceImpl.addBusinessCenter(businessCenter)) {
+            InformEntity informEntity=new InformEntity();
+            informEntity.setUserName(businessCenter.getUName());
+            informEntity.setCount("提交了"+businessCenter.getFirmName()+"的企业认证");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
+            informEntity.setTime(df.format(new Date()));
+
+
+            RabbitUtil.sendRabbic(RabbitUtil.EXCHANGE,RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
