@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 public class DemandsCommentController {
     @Autowired
     private DemandsCommentService demandsCommentService;
-
     @PostMapping("/addDemandsComment")
     public ReturnResult addDemandsComment(@Validated({UserValidator.InSet.class}) DemandsCommentEntity demandsCommentEntity){
         if(demandsCommentService.addComment(demandsCommentEntity)){
@@ -38,5 +37,4 @@ public class DemandsCommentController {
         PageInfo info =  demandsCommentService.showByPage(demandsID,pageNum,pageSize);
         return ReturnResult.success(info);
     }
-
 }

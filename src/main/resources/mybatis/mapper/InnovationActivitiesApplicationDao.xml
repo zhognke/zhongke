@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.InnovationActivitiesApplicationDao">
+
+    <sql id="columnNames">
+         id,username,activities_topic,activities_content,organizers,contractors,co_organizers,start_time,end_time,province,city,district,contact,tel,email,img_addr,create_time,update_time,del_flag
+    </sql>
+
+    <sql id="searchColumns">
+         id,activities_topic,activities_content,organizers,contractors,co_organizers,start_time,end_time,province,city,district,contact,tel,email,create_time,del_flag
+    </sql>
+
+    <select id="search" resultType="innovationActivitiesApplicationEntity" parameterType="innovationActivitiesApplicationEntity">
+        select <include refid="searchColumns"></include> from innovation_activities_application
+        where del_flag = 0
+        <if test="username!=null and username!=''">
+            and username=#{username}
+        </if>
+        <if test="activitiesTopic!=null and activitiesTopic!=''">
+            and activities_topic=#{activitiesTopic}
+        </if>
+        <if test="activitiesContent!=null and activitiesContent!=''">
+            and activities_content=#{activitiesContent}
+        </if>
+        <if test="organizers!=null and organizers!=''">
+            and organizers=#{organizers}
+        </if>
+        <if test="contractors!=null and contractors!=''">
+            and contractors=#{contractors}
+        </if>
+        <if test="coOrganizers!=null and coOrganizers!=''">
+            and co_organizers=#{coOrganizers}
+        </if>
+        <if test="startTime!=null and startTime!=''">
+            and start_time=#{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+            and end_time=#{endTime}
+        </if>
+        <if test="province!=null and province!=''">
+            and province=#{province}
+        </if>
+        <if test="city!=null and city!=''">
+            and city=#{city}
+        </if>
+        <if test="district!=null and district!=''">
+            and district=#{district}
+        </if>
+    </select>
+
+</mapper>

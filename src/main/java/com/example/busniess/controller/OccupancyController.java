@@ -216,7 +216,7 @@ public class OccupancyController {
      * @return
      */
     @RequestMapping("/showByPage")
-    public ReturnResult showByPage(Occupancy occupancy, @RequestParam(defaultValue = "1")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,  @RequestParam(defaultValue = "9")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
+    public ReturnResult showByPage(Occupancy occupancy, @RequestParam(defaultValue = "1")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,  @RequestParam(defaultValue = "9")  @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageSize) {
         if(occupancy.getAdvantages()!=null){
             occupancy.setAdvantages(occupancy.getAdvantages().replaceAll(",","','"));
         }
@@ -229,7 +229,7 @@ public class OccupancyController {
         if(occupancy.getAttribute()!=null){
             occupancy.setAttribute(occupancy.getAttribute().replaceAll(",","','"));
         }
-        return ReturnResult.success(occupancyService.showByPage(occupancy, pageNum, pagesize));
+        return ReturnResult.success(occupancyService.showByPage(occupancy, pageNum, pageSize));
     }
 
     /**
