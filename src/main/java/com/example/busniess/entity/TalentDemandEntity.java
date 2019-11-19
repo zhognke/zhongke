@@ -77,7 +77,7 @@ public class TalentDemandEntity implements Serializable {
     /**
      * 待遇：0 面议;1 月薪;2 年薪;
      */
-    @NotNull(message = "待遇不能为空", groups = {UserValidator.InSet.class})
+//    @NotNull(message = "待遇不能为空", groups = {UserValidator.InSet.class})
     private String remuneration;
     /**
      * 薪资
@@ -132,12 +132,18 @@ public class TalentDemandEntity implements Serializable {
      */
     private String keyWord;
 
+    @NotNull(message = "公司名称不能为空", groups = { UserValidator.InSet.class})
+    private String companyName;//公司名称
+    @NotNull(message = "所在省份不能为空", groups = { UserValidator.InSet.class})
+    private String province;//省
+    @NotNull(message = "所在城市不能为空", groups = { UserValidator.InSet.class})
+    private String city;//城市
+    @NotNull(message = "所在区县不能为空", groups = { UserValidator.InSet.class})
+    private String district;//区县
+
     /**
      * 关联查询
      */
-    private String companyName;//公司名称
-    private String province;//省
-    private String city;//城市
-    private String district;//区县
     private String logo;//公司logo
+    private String typeEnterprise;//企业类型
 }

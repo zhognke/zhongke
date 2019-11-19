@@ -1,6 +1,8 @@
 package com.example.busniess.service.imp;
 
+import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.dao.TalentDemandDao;
+import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.service.TalentDemandService;
 import com.github.pagehelper.PageHelper;
@@ -16,6 +18,8 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     @Autowired
     TalentDemandDao talentDemandDao;
 
+    @Autowired
+    BusinessCenterDao businessCenterDao;
     /**
     * 查询所有
  * @return
@@ -57,7 +61,15 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     */
     @Override
     public TalentDemandEntity selectById(Integer id) {
-        return talentDemandDao.selectById(id);
+        TalentDemandEntity entity = talentDemandDao.selectById(id);
+        if(entity!=null&&entity.getUserName()!=null){
+            BusinessCenter businessCenter = businessCenterDao.selectOneBusinessCenter(entity.getUserName());
+            if (businessCenter!=null){
+                entity.setLogo(businessCenter.getLogo());
+                entity.setTypeEnterprise(businessCenter.getTypeEnterprise());
+            }
+        }
+        return entity;
     }
 
     /**

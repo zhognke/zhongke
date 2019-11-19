@@ -6,7 +6,7 @@
     <sql id="columnNames">
                 d.id,d.user_name,d.title,d.content,d.engaged_industry,d.engaged_industry_detail,d.industry_experience,d.technology_scope,d.research_direction,
                 d.demands_type,d.people_num,d.remuneration,d.salary,d.contact,d.phone_num,d.status,d.approval_status,d.approval_opinion,d.create_time,d.update_time,
-                b.firmName companyName,b.country province,b.city,b.district
+                d.company_name,d.province,d.city,d.district
             </sql>
 
     <sql id="addColumnNames">
@@ -54,6 +54,18 @@
             <if test="content!=null and content!=''">
                 content=#{content},
             </if>
+            <if test="companyName!=null and companyName!=''">
+                company_name=#{companyName},
+            </if>
+            <if test="province!=null and province!=''">
+                province=#{province},
+            </if>
+            <if test="city!=null and city!=''">
+                city=#{city},
+            </if>
+            <if test="district!=null and district!=''">
+                district=#{district},
+            </if>
             <if test="engagedIndustry!=null and engagedIndustry!=''">
                 engaged_industry=#{engagedIndustry},
             </if>
@@ -74,9 +86,6 @@
             </if>
             <if test="peopleNum!=null and peopleNum!=''">
                 people_num=#{peopleNum},
-            </if>
-            <if test="remuneration!=null and remuneration!=''">
-                remuneration=#{remuneration},
             </if>
             <if test="salary!=null and salary!=''">
                 salary=#{salary},
@@ -107,9 +116,9 @@
     </update>
 
     <select id="search" resultType="talentDemandEntity" parameterType="talentDemandEntity">
-        select <include refid="columnNames"></include> from talent_demand d,businesscenter b
+        select <include refid="columnNames"></include> from talent_demand d,user u
         <where>
-            d.user_name = b.uname and b.statue=1 and d.del_flag = 0
+            d.user_name = u.username and u.statu = 1 and d.del_flag = 0
             <if test="userName!=null and userName!=''">
                 and d.user_name=#{userName}
             </if>
@@ -138,7 +147,7 @@
                 and d.approval_status=#{approvalStatus}
             </if>
             <if test="companyName!=null and companyName!=''">
-                and b.firmName=#{companyName}
+                and d.company_name=#{companyName}
             </if>
             <if test="keyWord!=null and keyWord!=''">
                 and (d.`engaged_industry` like CONCAT('%',#{keyWord},'%') or d.`engaged_industry_detail` like
