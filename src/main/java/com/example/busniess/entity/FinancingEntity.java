@@ -21,6 +21,8 @@ public class FinancingEntity {
     private String city;//市
     private String discribe;//区
     private String projecrPhase;//项目阶段
+    private String pgreat;//周期最大值
+    private String pless;//周期最小值
     private String period;//项目周期
     private String linkMan;//联系人
     private String phoneNumber;//电话号码
