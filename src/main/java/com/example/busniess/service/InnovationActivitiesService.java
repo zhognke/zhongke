@@ -75,5 +75,12 @@ public interface InnovationActivitiesService {
      * @return
      */
     public boolean updateStatus(Integer id,Integer status);
+
+    /**
+     * 根据id查询当前活动能否报名
+     * @param id
+     * @return
+     */
+    public boolean enbaleRegistration(Integer id);
 }
 

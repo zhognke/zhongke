@@ -77,6 +77,7 @@ public class InnovationActivitiesRegistrationEntity implements Serializable {
     /**
      * 活动参与目的
      */
+    @NotNull(message = "活动参与目的不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String context;
     /**
      * 删除标记:0未删除,1已删除

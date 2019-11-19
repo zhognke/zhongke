@@ -68,6 +68,6 @@ public interface InnovationActivitiesRegistrationDao {
      * @param innovationId
      * @return
      */
-    @Select("select id,realname from innovation_activities_registration where del_flag = 0 and innovation_id = {innovationId} and username=#{username}")
+    @Select("select id,realname from innovation_activities_registration where del_flag = 0 and innovation_id = #{innovationId} and username=#{username}")
     public InnovationActivitiesRegistrationEntity isRegistration(@Param("username")String username, @Param("innovationId")Integer innovationId);
 }

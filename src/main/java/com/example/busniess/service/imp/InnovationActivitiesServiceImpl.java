@@ -97,6 +97,11 @@ public class InnovationActivitiesServiceImpl implements InnovationActivitiesServ
         return innovationActivitiesDao.updateStatus(id, status);
     }
 
+    @Override
+    public boolean enbaleRegistration(Integer id) {
+        return innovationActivitiesDao.enbaleRegistration(id)>0;
+    }
+
 
 }
 

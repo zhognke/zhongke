@@ -73,4 +73,11 @@ public interface InnovationActivitiesDao {
     */
     public List<InnovationActivitiesEntity> search(InnovationActivitiesEntity innovationActivitiesEntity);
 
+    /**
+     * 根据id查询活动能否报名(未删除且阶段处于报名中)
+     * @param id
+     * @return
+     */
+    @Select("select count(id) from innovation_activities where del_flag=0 and status =0 and id = #{id}")
+    int enbaleRegistration(@Param("id")Integer id);
 }

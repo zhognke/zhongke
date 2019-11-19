@@ -4,6 +4,7 @@ import com.example.busniess.entity.InnovationActivitiesRegistrationEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.InnovationActivitiesRegistrationService;
+import com.example.busniess.service.InnovationActivitiesService;
 import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
@@ -26,6 +27,9 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/innovationActivitiesRegistration")
 public class InnovationActivitiesRegistrationController {
     @Autowired
+    private InnovationActivitiesService innovationActivitiesService;
+
+    @Autowired
     private InnovationActivitiesRegistrationService innovationActivitiesRegistrationService;
 
     /**
@@ -34,7 +38,7 @@ public class InnovationActivitiesRegistrationController {
      * @return
      */
     @PostMapping("/addInnovationActivitiesRegistration")
-    public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) InnovationActivitiesRegistrationEntity innovationActivitiesRegistrationEntity){
+    public ReturnResult addInnovationActivitiesRegistration(@Validated({UserValidator.InSet.class}) InnovationActivitiesRegistrationEntity innovationActivitiesRegistrationEntity){
         String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
@@ -43,8 +47,11 @@ public class InnovationActivitiesRegistrationController {
         if(innovationActivitiesRegistrationService.isRegistration(userName,innovationId)){//判断是否已经报名
             return ReturnResult.erro(CodeMsg.INNOVATION_REGISTRATIONED);
         }
+        if(!innovationActivitiesService.enbaleRegistration(innovationId)){//判断活动能否报名
+            return ReturnResult.erro(CodeMsg.INNOVATION_DISABLED);
+        }
         if(innovationActivitiesRegistrationService.addInnovationActivitiesRegistration(innovationActivitiesRegistrationEntity)){
-            return ReturnResult.success("添加成功");
+            return ReturnResult.success("报名成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -98,7 +105,7 @@ public class InnovationActivitiesRegistrationController {
      * @return
      */
     @PostMapping("/updateById")
-    public ReturnResult updateDeclaration(@Validated({UserValidator.UpDate.class}) InnovationActivitiesRegistrationEntity innovationActivitiesRegistrationEntity){
+    public ReturnResult updateById(@Validated({UserValidator.UpDate.class}) InnovationActivitiesRegistrationEntity innovationActivitiesRegistrationEntity){
         if(innovationActivitiesRegistrationService.updateByID(innovationActivitiesRegistrationEntity)){
             return ReturnResult.success("修改成功");
         }else{
