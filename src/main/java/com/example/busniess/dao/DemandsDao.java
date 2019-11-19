@@ -118,10 +118,10 @@ public interface DemandsDao {
      * @return
      */
     //@Select("select d.`id`,d.user_name,`demand_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,b.country province,b.`city`,b.`district`,`create_time` from `demands` d,businesscenter b where d.user_name = b.uname and d.status=0 and d.approval_status=1 and b.statue=1 and d.del_flag=0 order by create_time desc limit #{size}")
-    @Select("select d.`id`,d.user_name,`demand_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,b.country province,b.`city`,b.`district`,`create_time` from `demands` d,user u where d.user_name = u.username and d.status=0 and d.approval_status=1 and u.statu=1 and d.del_flag=0 order by create_time desc limit #{size}")
+    @Select("select d.`id`,d.user_name,`demand_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,d.province,d.`city`,d.`district`,`create_time`,d.pre_investment_amount from `demands` d,user u where d.user_name = u.username and d.status=0 and d.approval_status=1 and u.statu=1 and d.del_flag=0 order by create_time desc limit #{size}")
     public List<DemandsEntity> lastDemandsShow(@Param("size")Integer size);
     /**
-     * 热门需求
+     * 热门需求行业
      */
     @Select("SELECT demand_industry from `demands` where status = 0 and approval_status=1 and del_flag=0 group by demand_industry order by count(demand_industry) desc limit #{size}")
     public List<String> hotDemandsIndustry(@Param("size") Integer size);
