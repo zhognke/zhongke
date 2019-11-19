@@ -33,6 +33,7 @@ public class CodeMsg {
     public static CodeMsg UPDATE_ERROR = new CodeMsg(500122, "更新失败!");
     public static CodeMsg DATA_DUPLICATION = new CodeMsg(500201, "当前用户已提交企业认证，请勿重复提交!");
     public static CodeMsg ACCESS_DENIED = new CodeMsg(500202, "请提交企业认证，或等待企业认证通过!");
+    public static CodeMsg INNOVATION_REGISTRATIONED = new CodeMsg(500301, "请勿重复提交报名!");
 
     private Integer code;
     private String msg;
