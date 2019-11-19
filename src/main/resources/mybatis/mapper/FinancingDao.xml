@@ -11,7 +11,10 @@
             AND  `industry`=#{industry}
         </if>
         <if test="income!=null and income!=''">
-            AND  `income` between #{greater} and #{less}
+            AND  `income` between #{less} and #{greater}
+        </if>
+        <if test="period!=null and period!=''">
+            AND  `period` between #{pless} and #{pgreat}
         </if>
         <if test="province!=null and province!=''">
             AND `province`=#{province}
