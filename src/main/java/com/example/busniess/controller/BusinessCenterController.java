@@ -30,7 +30,7 @@ public class BusinessCenterController {
     BusinessCenterService businessCenterServiceImpl;
 
     @Autowired
-    BusinessCenterDao businessCenterDao;
+     BusinessCenterDao businessCenterDao;
 
     /**
      * 根据关键字返回企业名
@@ -47,21 +47,21 @@ public class BusinessCenterController {
     /**
      * 提交认证
      */
-    @SysLog(value="提交企业认证",type="企业认证")
+    @SysLog(value = "提交企业认证", type = "企业认证")
     @RequestMapping("/addAuthentication")
     public ReturnResult addAuthentication(@Validated({UserValidator.InSet.class}) BusinessCenter businessCenter) {
-        if(businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName())!=null){
+        if (businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName()) != null) {
             return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
         }
         if (businessCenterServiceImpl.addBusinessCenter(businessCenter)) {
-            InformEntity informEntity=new InformEntity();
+            //通知
+            InformEntity informEntity = new InformEntity();
             informEntity.setUserName(businessCenter.getUName());
-            informEntity.setCount("提交了"+businessCenter.getFirmName()+"的企业认证");
+            informEntity.setCount("提交了" + businessCenter.getFirmName() + "的企业认证");
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
             informEntity.setTime(df.format(new Date()));
+            RabbitUtil.sendRabbic(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
 
-
-            RabbitUtil.sendRabbic(RabbitUtil.EXCHANGE,RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
@@ -70,10 +70,19 @@ public class BusinessCenterController {
     /**
      * 驳回认证
      */
-    @SysLog(value="驳回企业认证",type="企业认证")
+    @SysLog(value = "驳回企业认证", type = "企业认证")
     @RequestMapping("/dismissTheCertification")
     public ReturnResult dismissTheCertification(@Validated({UserValidator.InSet.class}) Reject reject) {
         if (businessCenterServiceImpl.rejectAudit(reject)) {
+            //通知
+            InformEntity informEntity = new InformEntity();
+            BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(reject.getBId());
+            informEntity.setUserName(businessCenter.getUName());
+            informEntity.setCount("提交的" + businessCenter.getFirmName() + "的企业认证被驳回了请重新认证");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
+            informEntity.setTime(df.format(new Date()));
+            RabbitUtil.sendRabbic(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
+
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
@@ -89,10 +98,20 @@ public class BusinessCenterController {
      * @param reId     驳回原因id
      * @return
      */
-    @SysLog(value="审核企业认证-通过",type="企业认证")
+    @SysLog(value = "审核企业认证-通过", type = "企业认证")
     @RequestMapping("/passTheAudit")
     public ReturnResult passTheAudit(@NotNull(message = "企业id不能为空") Integer id, @NotNull(message = "角色名不能为空") Integer rid, @NotNull(message = "用户名不能为空") String userName, @NotNull(message = "状态不能为空") Integer statue, @NotNull(message = "驳回原因id不能为空") Integer reId) {
         if (businessCenterServiceImpl.updateAuditStatue(id, rid, userName, statue, reId)) {
+            //通知
+            InformEntity informEntity = new InformEntity();
+            BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(id);
+            informEntity.setUserName(userName);
+            informEntity.setCount("提交的" + businessCenter.getFirmName() + "的企业认证已经通过");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
+            informEntity.setTime(df.format(new Date()));
+            RabbitUtil.sendRabbic(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
+
+
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
@@ -105,17 +124,19 @@ public class BusinessCenterController {
      * 人数 scale
      * 名称 firmName
      * 审核状态 statue
+     *
      * @param businessCenter
      * @return
      */
     @RequestMapping("/findAllBusinessCenter")
-    public ReturnResult findAllBusinessCenter(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize) {
+    public ReturnResult findAllBusinessCenter(BusinessCenter businessCenter, Integer pageNumber, Integer pageSize) {
         //System.out.println(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter));
-        return ReturnResult.success(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter, pageNumber,pageSize));
+        return ReturnResult.success(businessCenterServiceImpl.selectAllBusinessCenter(businessCenter, pageNumber, pageSize));
     }
 
     /**
      * 分页展示
+     *
      * @param businessCenter
      * @param pageNum
      * @param pageSize
@@ -123,11 +144,12 @@ public class BusinessCenterController {
      */
     @RequestMapping("/showByPage")
     public ReturnResult showByPage(BusinessCenter businessCenter, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
-        return ReturnResult.success(businessCenterServiceImpl.showByPage(businessCenter,pageNum,pageSize));
+        return ReturnResult.success(businessCenterServiceImpl.showByPage(businessCenter, pageNum, pageSize));
     }
 
     /**
      * 查询自己的企业认证状态
+     *
      * @param userName
      * @return
      */
@@ -148,10 +170,10 @@ public class BusinessCenterController {
     /**
      * 修改认证
      */
-    @SysLog(value="修改企业认证",type="企业认证")
+    @SysLog(value = "修改企业认证", type = "企业认证")
     @RequestMapping("/updateBusinessCenter")
     public ReturnResult updateBusinessCenter(BusinessCenter businessCenter) {
-        if(businessCenterServiceImpl.updateBusinessCenter(businessCenter)){
+        if (businessCenterServiceImpl.updateBusinessCenter(businessCenter)) {
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
