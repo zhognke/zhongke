@@ -32,7 +32,7 @@ public class FinancingEntity {
     private int time;//所占时间
     private String unit;//单位
     private BigDecimal projectFinancing;//计划融资
-    private BigDecimal income;//计划融资
+    private BigDecimal income;//计划融资所得
     private BigDecimal greater;//资金大于
     private BigDecimal less;//资金小于
     private BigDecimal profit;//利润
