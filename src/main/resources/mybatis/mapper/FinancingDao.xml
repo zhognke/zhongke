@@ -5,16 +5,16 @@
     <sql id="business_sql">
 
         <if test=" statue!=null and  statue!=''">
-           `statue`=#{statue}
+            `statue`=#{statue}
         </if>
         <if test="industry!=null and industry!=''">
             AND instr('${industry}',`industry`)
         </if>
         <if test="income!=null and income!=''">
-            AND  `income` between #{less} and #{greater}
+            AND `income` between #{less} and #{greater}
         </if>
         <if test="period!=null and period!=''">
-            AND  `period` between #{pless} and #{pgreat}
+            AND `period` between #{pless} and #{pgreat}
         </if>
         <if test="province!=null and province!=''">
             AND `province`=#{province}
@@ -37,16 +37,13 @@
 
     </sql>
     <select id="selectAllFinancing" parameterType="financingEntity" resultType="financingEntity">
-        SELECT id,projectName,industry,financing,income,projecrphase,period FROM financing
+        SELECT id,projectName,industry,financing,income,projecrphase,period,statue,insertTimeFROM financing
         <where>
-
             <include refid="business_sql"></include>
 
         </where>
         ORDER BY `insertTime` DESC
     </select>
-
-
 
 
 </mapper>
