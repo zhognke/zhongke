@@ -1,5 +1,6 @@
 package com.example.busniess.service.imp;
 
+import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.ProfessionalsDao;
 import com.example.busniess.entity.ProfessionalsEntity;
 import com.example.busniess.service.ProfessionalsService;
@@ -15,6 +16,8 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
 
     @Autowired
     ProfessionalsDao professionalsDao;
+    @Autowired
+    OccupancyDao occupancyDao;
 
     /**
     * 查询所有
@@ -45,19 +48,35 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     @Override
     public PageInfo showByPage(ProfessionalsEntity professionalsEntity, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        if(professionalsEntity.getTechnologyScope()!=null){
+            professionalsEntity.setTechnologyScope(professionalsEntity.getTechnologyScope().replaceAll(",","','"));
+        }
         List<ProfessionalsEntity> list = professionalsDao.search(professionalsEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }
+    /**
+     * 根据id查找
+     * @param id
+     * @return
+     */
+    @Override
+    public ProfessionalsEntity selectById(Integer id) {
+        return professionalsDao.selectById(id);
+    }
 
     /**
-    * 根据id查找
+    * 根据id查找_新
     * @param id
     * @return
     */
     @Override
-    public ProfessionalsEntity selectById(Integer id) {
-        return professionalsDao.selectById(id);
+    public ProfessionalsEntity selectById(Integer id,Integer size) {
+        ProfessionalsEntity entity = professionalsDao.selectById(id);
+        if(entity!=null){
+            entity.setOccupancyList(occupancyDao.getOccupanyForProfessional(entity.getUserName(),size));
+        }
+        return entity;
     }
 
     /**

@@ -41,6 +41,13 @@ public interface ProfessionalsService {
     public ProfessionalsEntity selectById(Integer id);
 
     /**
+     * 根据id查找_新
+     * @param id
+     * @return
+     */
+    public ProfessionalsEntity selectById(Integer id,Integer size);
+
+    /**
      * 新增
      * @param professionalsEntity
      * @return
