@@ -134,6 +134,15 @@
             <if test="phoneNum!=null and phoneNum!=''">
                 phone_num=#{phoneNum},
             </if>
+            <if test="province!=null and province!=''">
+                province=#{province},
+            </if>
+            <if test="city!=null and city!=''">
+                city=#{city},
+            </if>
+            <if test="district!=null and district!=''">
+                district=#{district},
+            </if>
             <if test="iconAddress!=null and iconAddress!=''">
                 icon_address=#{iconAddress},
             </if>
@@ -162,15 +171,9 @@
 
     <select id="search" resultType="professionalsEntity" parameterType="professionalsEntity">
         select <include refid="columnNames"></include> from professionals
-        where status != '4'
+        where del_flag = 0
         <if test="userName!=null and userName!=''">
             and user_name=#{userName}
-        </if>
-        <if test="realName!=null and realName!=''">
-            and real_name=#{realName}
-        </if>
-        <if test="institutions!=null and institutions!=''">
-            and institutions=#{institutions}
         </if>
         <if test="engagedIndustry!=null and engagedIndustry!=''">
             and engaged_industry=#{engagedIndustry}
@@ -182,13 +185,10 @@
             and industry_experience=#{industryExperience}
         </if>
         <if test="technologyScope!=null and technologyScope!=''">
-            and technology_scope=#{technologyScope}
+            and technology_scope in ('${technologyScope}')
         </if>
-        <if test="outstandingContribution!=null and outstandingContribution!=''">
-            and outstanding_contribution=#{outstandingContribution}
-        </if>
-        <if test="researchDirection!=null and researchDirection!=''">
-            and research_direction=#{researchDirection}
+        <if test="keyWord!=null and keyWord!=''">
+            and (research_direction like CONCAT('%',#{keyWord},'%') or real_name like CONCAT('%',#{keyWord},'%') or institutions like CONCAT('%',#{keyWord},'%'))
         </if>
         <if test="status!=null">
             and status=#{status}

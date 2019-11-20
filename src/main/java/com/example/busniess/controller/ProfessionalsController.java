@@ -208,11 +208,11 @@ public class ProfessionalsController {
      * @return
      */
     @RequestMapping(value="getById",method = RequestMethod.GET)
-    public ReturnResult getById(Integer id){
+    public ReturnResult getById(Integer id,@RequestParam(defaultValue = "5") Integer size){
         if(id==null){
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
         }else{
-            ProfessionalsEntity obj = professionalsService.selectById(id);
+            ProfessionalsEntity obj = professionalsService.selectById(id,size);
             if(obj!=null){
                 return ReturnResult.success(obj);
             }else{
