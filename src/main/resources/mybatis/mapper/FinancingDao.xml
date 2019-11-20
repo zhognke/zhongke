@@ -8,7 +8,7 @@
            `statue`=#{statue}
         </if>
         <if test="industry!=null and industry!=''">
-            AND  `industry`=#{industry}
+            AND instr('${industry}',`industry`)
         </if>
         <if test="income!=null and income!=''">
             AND  `income` between #{less} and #{greater}
@@ -26,10 +26,10 @@
             AND `discribe`=#{discribe}
         </if>
         <if test="projecrPhase!=null and projecrPhase!=''">
-            AND `projecrPhase`=#{projecrPhase}
+            AND instr('${projecrPhase}',`projecrPhase`)
         </if>
         <if test="financing!=null and financing!=''">
-            AND `financing`=#{financing}
+            AND instr('${financing}',`financing`)
         </if>
         <if test="projectName!=null and projectName!=''">
             AND `projectName` like "%${projectName}%"

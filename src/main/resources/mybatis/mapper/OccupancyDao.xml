@@ -7,16 +7,16 @@
             and `appliedRange` = #{appliedRange}
         </if>
         <if test="advantages!=null and advantages!=''">
-            and `advantages` in ('${advantages}')
+            and instr('${advantages}',`advantages`)
         </if>
         <if test="stage!=null and stage!=''">
-            and `stage` in ('${stage}')
+            and instr('${stage}',`stage`)
         </if>
         <if test="transferType!=null and transferType!=''">
-            and `transferType` in ('${transferType}')
+            and instr('${transferType}',`transferType`)
         </if>
         <if test="attribute!=null and attribute!=''">
-            and `attribute` in ('${attribute}')
+            and instr('${attribute}',`attribute`)
         </if>
 
         <if test="priceBegin!=null and priceEnd!=null">
