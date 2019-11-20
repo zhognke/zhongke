@@ -132,13 +132,13 @@
                 and d.industry_experience=#{industryExperience}
             </if>
             <if test="technologyScope!=null and technologyScope!=''">
-                and d.technology_scope=#{technologyScope}
+                and d.technology_scope in ('${technologyScope}')
             </if>
             <if test="researchDirection!=null and researchDirection!=''">
                 and d.research_direction=#{researchDirection}
             </if>
             <if test="demandsType!=null and demandsType!=''">
-                and d.demands_type=#{demandsType}
+                and d.demands_type in ('${demandsType}')
             </if>
             <if test="status!=null">
                 and d.status=#{status}
@@ -146,13 +146,10 @@
             <if test="approvalStatus!=null">
                 and d.approval_status=#{approvalStatus}
             </if>
-            <if test="companyName!=null and companyName!=''">
-                and d.company_name=#{companyName}
-            </if>
             <if test="keyWord!=null and keyWord!=''">
-                and (d.`engaged_industry` like CONCAT('%',#{keyWord},'%') or d.`engaged_industry_detail` like
-                CONCAT('%',#{keyWord},'%') or d.`title` like CONCAT('%',#{keyWord},'%'))
+                and (d.`company_name` like CONCAT('%',#{keyWord},'%') or d.`title` like CONCAT('%',#{keyWord},'%'))
             </if>
         </where>
+        order by create_time desc
     </select>
 </mapper>

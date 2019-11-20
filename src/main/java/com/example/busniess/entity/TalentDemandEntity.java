@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 人才需求表
@@ -146,4 +147,6 @@ public class TalentDemandEntity implements Serializable {
      */
     private String logo;//公司logo
     private String typeEnterprise;//企业类型
+    BusinessCenter businessCenter;
+    List<Occupancy> occupancyList;
 }

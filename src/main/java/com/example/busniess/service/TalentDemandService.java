@@ -39,7 +39,13 @@ public interface TalentDemandService {
      * @return
      */
     public TalentDemandEntity selectById(Integer id);
-
+    /**
+     * 根据id查找_新
+     * @param id
+     * @param size
+     * @return
+     */
+    TalentDemandEntity selectById(Integer id,Integer size);
     /**
      * 新增
      * @param talentDemandEntity

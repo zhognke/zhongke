@@ -178,6 +178,6 @@ public interface OccupancyDao {
 
     List<Occupancy> showByPageForCenter(Occupancy occupancy);
 
-    @Select("SELECT * FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{userName} ORDER BY creattime DESC limit #{size}")
+    @Select("SELECT resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
     List<Occupancy> getOccupanyForProfessional(@Param("username")String username,@Param("size")Integer size);
 }

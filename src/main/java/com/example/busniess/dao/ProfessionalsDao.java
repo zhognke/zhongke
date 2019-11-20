@@ -22,7 +22,7 @@ public interface ProfessionalsDao {
     @Insert("insert into professionals (user_name,real_name,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope," +
             "outstanding_contribution,research_direction,introduced,phone_num,province,city,district,icon_address,certificate_address,create_time) " +
             "values (#{userName},#{realName},#{institutions},#{positions},#{engagedIndustry},#{engagedIndustryDetail},#{industryExperience},#{technologyScope}," +
-            "#{outstandingContribution},#{researchDirection},#{introduced},#{phoneNum},#{province},#[city},#{district},#{iconAddress},#{certificateAddress},now());")
+            "#{outstandingContribution},#{researchDirection},#{introduced},#{phoneNum},#{province},#{city},#{district},#{iconAddress},#{certificateAddress},now());")
     public boolean add(ProfessionalsEntity professionalsEntity);
     /**
      * 逻辑删除

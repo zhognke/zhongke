@@ -109,7 +109,7 @@ public class ProfessionalsEntity implements Serializable {
     /**
      * 附件地址
      */
-    @NotNull(message = "所在区县不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+    @NotNull(message = "附件地址不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
     private String certificateAddress;
 	/**
 	 * 附件地址数组(非数据库字段)

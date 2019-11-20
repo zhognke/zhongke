@@ -260,4 +260,24 @@ public class TalentDemandController {
             }
         }
     }
+
+    /**
+     * 根据id显示详情
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "showById", method = RequestMethod.GET)
+    public ReturnResult showById(Integer id,@RequestParam(defaultValue = "5") Integer size) {
+        if (id == null) {
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        } else {
+            TalentDemandEntity obj = talentDemandService.selectById(id,size);
+            if (obj != null) {
+                return ReturnResult.success(obj);
+            } else {
+                return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+            }
+        }
+    }
 }
