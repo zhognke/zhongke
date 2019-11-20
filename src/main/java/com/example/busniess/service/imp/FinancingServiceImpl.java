@@ -79,9 +79,9 @@ public class FinancingServiceImpl implements FinancingService {
      * @return
      */
     @Override
-    public Boolean updateFinacingStatue(Integer id, Integer statue) {
+    public Boolean updateFinacingStatue(Integer id, Integer statue,String reject) {
 
-        return  financingDao.upFinacingStatue(statue,id);
+        return  financingDao.upFinacingStatue(id,statue,reject);
     }
 
     /**

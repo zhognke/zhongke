@@ -101,7 +101,7 @@ public interface OccupancyService {
      * @param id
      * @return
      */
-    boolean updateStatue(Integer statue, Integer id);
+    boolean updateStatue(Integer statue, Integer id,String reject);
 
     /**
      * 更新科技成果入住信息

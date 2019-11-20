@@ -28,7 +28,7 @@ public interface FinancingService {
     /**
      * 修改审核状态
      */
-    public Boolean updateFinacingStatue(Integer id,Integer statue);
+    public Boolean updateFinacingStatue(Integer id,Integer statue,String reject);
 
     /**
      * 查看具体的

@@ -80,8 +80,8 @@ public interface FinancingDao {
     /**
      *修改审核状态
      */
-    @Update("UPDATE `financing` SET `statue`=#{statue} WHERE (`id`=#{id})")
-    public Boolean upFinacingStatue(@Param("statue") Integer statue,@Param("id") Integer id);
+    @Update("UPDATE `financing` SET `statue`=#{statue},`reject`=#{reject} WHERE (`id`=#{id})")
+    public Boolean upFinacingStatue(@Param("id") Integer id,@Param("statue") Integer statue,@Param("reject")String reject);
 
     /**
      *查看所有 的

@@ -77,21 +77,15 @@ public class OccupancyServiceimpl implements OccupancyService {
      * @param id
      * @return
      */
-    public  boolean updateStatue(Integer statue,Integer id){
-        return occupancyDao.updateStatue(statue,id);
+    public  boolean updateStatue(Integer statue,Integer id,String reject){
+
+        return occupancyDao.updateStatue(statue,id,reject);
     }
 
 
 
 
-//
-//    public Boolean upDateStatue(String userName, Integer roleId) {
-//
-//
-//        return userDao.authorization(roleId, userName);
-//
-//
-//    }
+
 
     /**
      * 跟新发布状态
@@ -184,13 +178,13 @@ public class OccupancyServiceimpl implements OccupancyService {
             }
             imageAddressDao.delectImageAddress(oid);
             if(imageAddressDao.insertImageAddress(occupancy.getImgAddress())){
-                occupancyDao.updateStatue(0,oid);
+                occupancyDao.updateStatue(0,oid,null);
                 return occupancyDao.upDataOccupancy(occupancy);
             }else{
                 return false;
             }
         }else{
-            occupancyDao.updateStatue(0,oid);
+            occupancyDao.updateStatue(0,oid,null);
             return occupancyDao.upDataOccupancy(occupancy);
         }
     }

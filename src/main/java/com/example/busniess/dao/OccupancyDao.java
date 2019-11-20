@@ -136,8 +136,8 @@ public interface OccupancyDao {
      * @param statue
      * @return
      */
-    @Update("UPDATE `occupancy` SET `statue`=#{statue},`audittime`=NOW() WHERE id=#{id}")
-    public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id);
+    @Update("UPDATE `occupancy` SET `statue`=#{statue},`reject`=#{reject},`audittime`=NOW() WHERE id=#{id}")
+    public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id, @Param("reject")String reject);
 
     /**
      * 根据行业查询

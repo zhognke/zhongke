@@ -44,4 +44,5 @@ public class FinancingEntity {
     private int statue;//发布状态
     private Date insertTime;//插入时间
     private Date updateTiem;//更新时间
+    private String reject;//驳回原因
 }
