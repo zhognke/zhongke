@@ -134,6 +134,15 @@
             <if test="phoneNum!=null and phoneNum!=''">
                 phone_num=#{phoneNum},
             </if>
+            <if test="province!=null and province!=''">
+                province=#{province},
+            </if>
+            <if test="city!=null and city!=''">
+                city=#{city},
+            </if>
+            <if test="district!=null and district!=''">
+                district=#{district},
+            </if>
             <if test="iconAddress!=null and iconAddress!=''">
                 icon_address=#{iconAddress},
             </if>
