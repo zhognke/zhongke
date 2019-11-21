@@ -67,7 +67,7 @@ public interface FinancingDao {
      * @param uName
      * @return
      */
-    @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,statue,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
+    @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
     public List<FinancingEntity> selectMyFinancing(String uName);
 
     /**
@@ -87,6 +87,6 @@ public interface FinancingDao {
      *查看所有 的
      * @return
      */
-    @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,statue,insertTime FROM financing ORDER BY insertTime DESC")
+    @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing ORDER BY insertTime DESC")
     public List<FinancingEntity> selectAllFinacing();
 }
