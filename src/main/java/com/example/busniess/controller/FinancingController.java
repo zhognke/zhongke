@@ -6,6 +6,8 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.FinancingService;
 import com.example.busniess.utiles.RabbitUtil;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +21,8 @@ import java.util.Date;
 public class FinancingController {
     //审核通过或者没通过的转义
     private String str;
-
+    @Autowired
+RabbitTemplate rabbitTemplate;
 
     @Resource
     FinancingService financingServiceImpl;
@@ -39,7 +42,7 @@ public class FinancingController {
             informEntity.setCount("发布了" + financing.getProjectName());
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
             informEntity.setTime(df.format(new Date()));
-            RabbitUtil.sendRabbic(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         }
         return ReturnResult.success(CodeMsg.SUMIT_ERROR);
@@ -107,7 +110,7 @@ public class FinancingController {
             informEntity.setCount(financing.getProjectName() + str);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
             informEntity.setTime(df.format(new Date()));
-            RabbitUtil.sendRabbic(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
             return ReturnResult.success();
         }

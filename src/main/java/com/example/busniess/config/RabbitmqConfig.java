@@ -11,18 +11,19 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitmqConfig {
 
 
-    @Bean
-    public MessageConverter converterMessage() {
-        return new Jackson2JsonMessageConverter();
-    }
+//    @Bean
+//    public MessageConverter converterMessage() {
+//        return new Jackson2JsonMessageConverter();
+//    }
 
     /**
      * 交换器
      *
      * @return
      */
-    @Bean("exchange")
+    @Bean("inform")
     public DirectExchange creatExchange() {
+
         return new DirectExchange("inform");
     }
 
@@ -47,12 +48,12 @@ public class RabbitmqConfig {
     }
 
     @Bean
-    public Binding bingUser(@Qualifier("user") Queue queue, @Qualifier("exchange") DirectExchange exchange) {
+    public Binding bingUser(@Qualifier("user") Queue queue, @Qualifier("inform") DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with("user");
     }
 
     @Bean
-    public Binding bingAdmin(@Qualifier("Administrator") Queue queue, @Qualifier("exchange") DirectExchange exchange) {
+    public Binding bingAdmin(@Qualifier("Administrator") Queue queue, @Qualifier("inform") DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with("admin");
     }
 }
