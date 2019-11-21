@@ -116,8 +116,8 @@ public class WebSocketServer {
     @RabbitListener(queues = "user")
     public void sendtoUser(InformEntity informEntity) throws IOException, EncodeException {
 //用户在线就把信息推送给用户
-        if (webSocketSet.get(userName) != null) {
-            webSocketSet.get(userName).sendMessage(informEntity);
+        if (webSocketSet.get(informEntity.getUserName()) != null) {
+            webSocketSet.get(informEntity.getUserName()).sendMessage(informEntity);
 //            if(!id.equals(sendUserId)) {
 //                webSocketSet.get(sendUserId).sendMessage( message);
 //            } else {
@@ -127,14 +127,14 @@ public class WebSocketServer {
             //如果用户不在线把用户信息储存
             //用户以前的消息队列中有消息就继续增加
             //没有消息对列就创建
-            if ( (webUser.get(userName).size())!=0) {
-                (webUser.get(userName)).add(informEntity);
+            if ( webUser.get(informEntity.getUserName())!=null) {
+                (webUser.get(informEntity.getUserName())).add(informEntity);
             }else {
                 list = new Vector();
                 list.add(informEntity);
             }
             //放入map
-            webUser.put(userName, list);
+            webUser.put(informEntity.getUserName(), list);
 
         }
     }
@@ -147,8 +147,8 @@ public class WebSocketServer {
      */
     @RabbitListener(queues = "Administrator")
     public void sendtoAdmin(InformEntity informEntity) throws IOException, EncodeException {
-        if (webSocketSet.get(userName) != null) {
-            webSocketSet.get(userName).sendMessage(informEntity);
+        if (webSocketSet.get(informEntity.getUserName()) != null) {
+            webSocketSet.get(informEntity.getUserName()).sendMessage(informEntity);
 //            if(!id.equals(sendUserId)) {
 //                webSocketSet.get(sendUserId).sendMessage( message);
 //            } else {
@@ -158,14 +158,14 @@ public class WebSocketServer {
             //如果用户不在线把用户信息储存
             //用户以前的消息队列中有消息就继续增加
             //没有消息对列就创建
-            if ( (webUser.get(userName).size())!=0) {
-                (webUser.get(userName)).add(informEntity);
+            if ( webUser.get(informEntity.getUserName())!=null) {
+                webUser.get(informEntity.getUserName()).add(informEntity);
             }else {
                 list = new Vector();
                 list.add(informEntity);
             }
             //放入map
-            webUser.put(userName, list);
+            webUser.put(informEntity.getUserName(), list);
 
         }
     }
