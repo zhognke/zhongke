@@ -208,7 +208,26 @@ public class ProfessionalsController {
      * @return
      */
     @RequestMapping(value="getById",method = RequestMethod.GET)
-    public ReturnResult getById(Integer id,@RequestParam(defaultValue = "5") Integer size){
+    public ReturnResult getById(Integer id){
+        if(id==null){
+            return ReturnResult.erro(CodeMsg.BIND_ERROR);
+        }else{
+            ProfessionalsEntity obj = professionalsService.selectById(id);
+            if(obj!=null){
+                return ReturnResult.success(obj);
+            }else{
+                return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+            }
+        }
+    }
+
+    /**
+     * 根据id搜索
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="showById",method = RequestMethod.GET)
+    public ReturnResult showById(Integer id,@RequestParam(defaultValue = "5") Integer size){
         if(id==null){
             return ReturnResult.erro(CodeMsg.BIND_ERROR);
         }else{

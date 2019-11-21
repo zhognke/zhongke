@@ -27,6 +27,6 @@ public class User implements Serializable {
     private String statu;//用户状态备用
     private Date lastdate;
     private String ip;
-    private  int persion;//区分私人和企业
+    private Integer persion;//区分私人和企业
 
 }
