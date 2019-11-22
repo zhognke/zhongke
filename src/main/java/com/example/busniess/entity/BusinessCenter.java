@@ -15,15 +15,15 @@ import java.util.List;
 @Data
 public class BusinessCenter implements Serializable {
 
-//    @NotBlank(message = "主键不能为空", groups = {UserValidator.UpDate.class})
+   @NotBlank(message = "主键不能为空", groups = {UserValidator.UpDate.class})
     private Integer id;//主键 1
-//    @NotBlank(message = "关联用户名不能为空", groups = {UserValidator.InSet.class, UserValidator.UpDate.class})
+   @NotBlank(message = "关联用户名不能为空", groups = {UserValidator.InSet.class, UserValidator.UpDate.class})
     private String uName;//关联的用户名2
-//    @NotBlank(message = "企业名称不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+   @NotBlank(message = "企业名称不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String firmName;//企业名字   企业名字
-//    @NotBlank(message = "所属行业不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    @NotBlank(message = "所属行业不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String industry;//所属行业     行业领域
-//    @NotBlank(message = "企业类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+   @NotBlank(message = "企业类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String typeEnterprise;     //企业类型
 
 //    @NotBlank(message = "所属省不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
