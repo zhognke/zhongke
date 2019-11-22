@@ -74,7 +74,7 @@ public interface TalentDemandDao {
      */
     @Select("select d.id,d.user_name,d.title,d.content,d.engaged_industry,d.engaged_industry_detail,d.industry_experience,d.technology_scope,d.research_direction," +
             "d.demands_type,d.people_num,d.remuneration,d.salary,d.contact,d.phone_num,d.status,d.approval_status,d.approval_opinion,d.create_time," +
-            "d.update_time,d.company_name,d.province,d.city,d.district " +
+            "d.update_time,d.company_name,d.province,d.city,d.district,d.view_count " +
             "from talent_demand d ,user u " +
             "where d.user_name = u.username and d.id=#{id}")
     public TalentDemandEntity selectById(@Param("id")Integer id);
@@ -87,4 +87,6 @@ public interface TalentDemandDao {
      */
     public List<TalentDemandEntity> search(TalentDemandEntity talentDemandEntity);
 
+    @Update("update talent_demand set view_count = #{viewCount} where id = ${id}")
+    void updateArticleViewCount(Integer id, Integer viewCount);
 }

@@ -95,5 +95,7 @@ public interface TalentDemandService {
     boolean closeDemands(Integer id,String closeReason);
 
     boolean closeDemandsForManager(Integer id,String closeReason);
+
+    void updateArticleViewCount(Integer articleId, Integer viewCount);
 }
 

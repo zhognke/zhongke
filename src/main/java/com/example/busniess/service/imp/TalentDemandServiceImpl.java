@@ -186,4 +186,9 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         return talentDemandDao.closeById(id, status, closeReason);
     }
 
+    @Override
+    public void updateArticleViewCount(Integer articleId, Integer viewCount) {
+        talentDemandDao.updateArticleViewCount(articleId, viewCount);
+    }
+
 }
