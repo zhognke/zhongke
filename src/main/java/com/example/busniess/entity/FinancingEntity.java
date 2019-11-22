@@ -12,6 +12,7 @@ public class FinancingEntity {
     private int id;
     @NotBlank(message = "关联用户名不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String uName;//关联用户的名字
+    private  String companyName;//公司名
     @NotBlank(message = "项目类型不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String projectType;//项目类型名
     @NotBlank(message = "项目类型不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})

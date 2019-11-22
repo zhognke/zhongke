@@ -75,5 +75,8 @@ public class Occupancy implements Serializable {
     private BigDecimal priceEnd;//专利价格
     private String keyWord; //搜索关键字(非数据库存储字段)
     private String closeReason; //关闭原因
+
+
+    private String companyName;
     private BusinessCenter businessCenter;  //存储对应企业的基本信息(名称,logo,地址,类型等)
 }

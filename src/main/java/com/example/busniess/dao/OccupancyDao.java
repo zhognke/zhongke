@@ -103,7 +103,7 @@ public interface OccupancyDao {
      * @param occupancy
      * @return
      */
-    @Insert("INSERT INTO `occupancy` (`username`, `resultTechnolo`, `stage`, " +
+    @Insert("INSERT INTO `occupancy` (`username`, `companyName`,`resultTechnolo`, `stage`, " +
             "`advantages`, `industry`, `industryDetail`,`attribute`, `patenNname`, `patenNumber`," +
             " `price`, `registerNumber`,`describe`, `appliedRange`,`transferType`,`linkman`, `phonenumber`,`province`,`city`,`district`,`stoptime`," +
             "`creattime`,`kstatue`, `statue`) " +
@@ -178,6 +178,6 @@ public interface OccupancyDao {
 
     List<Occupancy> showByPageForCenter(Occupancy occupancy);
 
-    @Select("SELECT resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
+    @Select("SELECT companyName,resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price,province,city,district FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
     List<Occupancy> getOccupanyForProfessional(@Param("username")String username,@Param("size")Integer size);
 }

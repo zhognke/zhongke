@@ -26,7 +26,7 @@ public class FileUpLoad {
             String suffixName = fileNme.substring(fileNme.lastIndexOf("."));//后缀
             String newFilename = UUID.randomUUID().toString().replace("-", "") + suffixName;//新文件名
             String now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            //String upPath ="D://appData//";// "F://myFile//";//上传路径
+            String upPath ="D://appData//";// "F://myFile//";//上传路径
             //String upPath ="/project/tools/tomcat8.5/introduce/img/";// "F://myFile//";//上传路径
             String mk = upPath + "//" + now;//文件夹的名字
             File filel = new File(mk, newFilename);

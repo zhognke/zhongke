@@ -87,7 +87,7 @@ public interface BusinessCenterDao {
     /**
      * 查看自己的
      */
-    @Select("SELECT id,statue,firmname firmName,enterpriseprofile enterpriseProfile,logo,country,city,district,typeEnterprise,statue FROM businesscenter WHERE uname=#{uName}")
+    @Select("SELECT * FROM businesscenter WHERE uname=#{uName}")
     public BusinessCenter selectOneBusinessCenter(String uName);
 
     /**
