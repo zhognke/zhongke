@@ -24,5 +24,8 @@ public class Person {
     private Date inserttime;//11
     private Date updatetime;//12
 
+    private String address;//附件地址
+    private  String selfIntroduction;//个人介绍
+
     private  Reject reject;//驳回
 }
