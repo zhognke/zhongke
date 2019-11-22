@@ -22,7 +22,7 @@ public class WebSocketServer {
     //用来存放每一个session和指定的用户名
     private static ConcurrentHashMap<String, WebSocketServer> webSocketSet = new ConcurrentHashMap<>();
     //用来存储用户的名和要推送的消息
-    private static ConcurrentHashMap<String, List> webUser = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, Vector> webUser = new ConcurrentHashMap<>();
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
     //    private static Logger log = LogManager.getLogger(WebSocketServer.class);
@@ -127,9 +127,10 @@ public class WebSocketServer {
             //如果用户不在线把用户信息储存
             //用户以前的消息队列中有消息就继续增加
             //没有消息对列就创建
-            if ( webUser.get(informEntity.getUserName())!=null) {
-                (webUser.get(informEntity.getUserName())).add(informEntity);
-            }else {
+            if (webUser.get(informEntity.getUserName()) != null) {
+                list = webUser.get(informEntity.getUserName());
+                list.add(informEntity);
+            } else {
                 list = new Vector();
                 list.add(informEntity);
             }
@@ -141,6 +142,7 @@ public class WebSocketServer {
 
     /**
      * 监听的管理员的通知
+     *
      * @param informEntity
      * @throws IOException
      * @throws EncodeException
@@ -158,9 +160,10 @@ public class WebSocketServer {
             //如果用户不在线把用户信息储存
             //用户以前的消息队列中有消息就继续增加
             //没有消息对列就创建
-            if ( webUser.get(informEntity.getUserName())!=null) {
-                webUser.get(informEntity.getUserName()).add(informEntity);
-            }else {
+            if (webUser.get(informEntity.getUserName()) != null) {
+           list=webUser.get(informEntity.getUserName());
+           list.add(informEntity);
+            } else {
                 list = new Vector();
                 list.add(informEntity);
             }
