@@ -141,7 +141,10 @@ public class TalentDemandEntity implements Serializable {
     private String city;//城市
     @NotNull(message = "所在区县不能为空", groups = { UserValidator.InSet.class})
     private String district;//区县
-
+    /**
+     * 浏览量统计
+     */
+    private Integer viewCount;
     /**
      * 关联查询
      */
