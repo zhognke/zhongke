@@ -52,10 +52,10 @@ public class BusinessCenterController {
      */
     @SysLog(value = "提交企业认证", type = "企业认证")
     @RequestMapping("/addAuthentication")
-    public ReturnResult addAuthentication(@Validated({UserValidator.InSet.class}) BusinessCenter businessCenter) {
-        if (businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName()) != null) {
-            return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
-        }
+    public ReturnResult addAuthentication( BusinessCenter businessCenter) {
+//        if (businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName()) != null) {
+//            return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
+//        }
         if (businessCenterServiceImpl.addBusinessCenter(businessCenter)) {
             //通知
             InformEntity informEntity = new InformEntity();

@@ -3,8 +3,10 @@
 
 <mapper namespace="com.example.busniess.dao.FinancingDao">
     <sql id="business_sql">
-
-        <if test=" statue!=null and  statue!=''">
+        <if test="uName!=null and  uName!=''">
+            `uName`=#{uName}
+        </if>
+        <if test="statue!=null and  statue!=''">
             `statue`=#{statue}
         </if>
         <if test="industry!=null and industry!=''">

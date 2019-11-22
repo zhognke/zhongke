@@ -1,15 +1,20 @@
 package com.example.busniess.entity;
 
+import com.example.busniess.validator.UserValidator;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 public class FinancingEntity {
     private int id;
+    @NotBlank(message = "关联用户名不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String uName;//关联用户的名字
+    @NotBlank(message = "项目类型不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String projectType;//项目类型名
+    @NotBlank(message = "项目类型不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String projectStatic;//项目状态
     private String goal;//目的
     private String type;//类型
