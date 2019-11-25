@@ -3,6 +3,7 @@ package com.example.busniess.dao;
 
 import com.example.busniess.entity.DemandsEntity;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -166,4 +167,6 @@ public interface DemandsDao {
     @Select("SELECT count(create_time) counts,DATE_FORMAT(create_time,'%Y/%m') as companyName FROM `demands` where status =0 and approval_status = 1 and del_flag=0 group by DATE_FORMAT(create_time,'%y/%m')")
     public List<DemandsEntity> demandsRiseTrend();
 
+    @Delete("update demands set del_flag = 1 where id in ('${ids}');")
+    boolean deleteBatch(@Param("ids")String ids);
 }

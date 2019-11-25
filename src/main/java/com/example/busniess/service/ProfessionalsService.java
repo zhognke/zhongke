@@ -1,5 +1,6 @@
 package com.example.busniess.service;
 
+import com.example.busniess.resultpackage.ReturnResult;
 import com.github.pagehelper.PageInfo;
 import com.example.busniess.entity.ProfessionalsEntity;
 
@@ -60,7 +61,12 @@ public interface ProfessionalsService {
      * @return
      */
     public boolean deleteById(Integer id);
-
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    public boolean deleteBatch(String ids);
     /**
      * 根据id彻底删除
      * @param id
@@ -96,5 +102,7 @@ public interface ProfessionalsService {
     boolean closeById(Integer id, String closeReason);
 
     boolean closeByIdForManager(Integer id, String closeReason);
+
+    PageInfo showHot(Integer pageNum, Integer pageSize);
 }
 

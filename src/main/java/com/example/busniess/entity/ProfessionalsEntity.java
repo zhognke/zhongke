@@ -151,6 +151,18 @@ public class ProfessionalsEntity implements Serializable {
      */
     private String keyWord;
     /**
+     * 是否是热门,0否,1是
+     */
+    private Integer isHot;
+    /**
+     * 是否置顶,0否,1是
+     */
+    private Integer isTop;
+    /**
+     * 排序(热门/置顶使用)
+     */
+    private Integer sort;
+    /**
      * 专家科技成果,非数据库字段
      */
     List<Occupancy> occupancyList;

@@ -165,5 +165,7 @@ public interface DemandsService {
      * @return
      */
     public List<DemandsEntity> demandsRiseTrend();
+
+    boolean deleteBatch(String ids);
 }
 

@@ -105,6 +105,8 @@ public interface BusinessCenterDao {
     @Select("SELECT firmName FROM businesscenter WHERE firmName LIKE '%${value}%'")
     public List<String> selectFirmName(String firmName);
 
+    @Select("SELECT b.typeEnterprise,b.firmname,b.industry,bu.logo,b.country,b.city,b.district FROM `businesscenter` b LEFT JOIN businessInformation bu on b.uname = bu.uname where b.uname =#{uname} limit 1")
+    BusinessCenter selectBussinessByUname(@Param("uname")String uname);
 
     List<BusinessCenter> search(BusinessCenter businessCenter);
 

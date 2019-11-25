@@ -16,6 +16,9 @@
         <if test="projectType!=null and projectType!=''">
             and `project_type` = #{projectType}
         </if>
+        <if test="projectTypeDetail!=null and projectTypeDetail!=''">
+            and `project_type_detail` = #{projectTypeDetail}
+        </if>
         <if test="declarationIndustry!=null and declarationIndustry!=''">
             and `declaration_industry` = #{declarationIndustry}
         </if>

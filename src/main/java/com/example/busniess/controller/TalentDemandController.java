@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
+import java.util.Map;
+
 
 /**
  * 人才需求表
@@ -29,7 +32,6 @@ public class TalentDemandController {
     private TalentDemandService talentDemandService;
     @Autowired
     BusinessCenterService businessCenterService;
-
     /**
      * 新增
      *
@@ -74,6 +76,20 @@ public class TalentDemandController {
     }
 
     /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value="/deleteByBatch",method = {RequestMethod.DELETE,RequestMethod.POST})
+    public ReturnResult deleteByBatch(@NotNull(message = "参数不能为空")String ids){
+        if(talentDemandService.deleteBatch(ids)){
+            return ReturnResult.success("删除成功");
+        }else{
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
      * 彻底删除
      *
      * @param id
@@ -97,7 +113,7 @@ public class TalentDemandController {
      */
     @SysLog(value="修改人才需求",type="人才需求")
     @PostMapping("/update")
-    public ReturnResult updateDeclaration(@Validated({UserValidator.UpDate.class}) TalentDemandEntity talentDemandEntity) {
+    public ReturnResult updateById(@Validated({UserValidator.UpDate.class}) TalentDemandEntity talentDemandEntity) {
         if (talentDemandService.update(talentDemandEntity)) {
             return ReturnResult.success("修改成功");
         } else {

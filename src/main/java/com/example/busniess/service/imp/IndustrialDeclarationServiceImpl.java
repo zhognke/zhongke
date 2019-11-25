@@ -137,5 +137,11 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
         return industrialDeclarationDao.lastDeclarations(size);
     }
 
+    @Override
+    public boolean deleteBatch(String ids) {
+        ids = ids.replaceAll(",","','");
+        return industrialDeclarationDao.deleteBatch(ids);
+    }
+
 
 }
