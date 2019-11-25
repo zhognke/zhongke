@@ -132,7 +132,7 @@ public class DemandsServiceImpl implements DemandsService {
     public DemandsEntity getByID(int id) {
         DemandsEntity entity = demandsDao.getByID(id);
         if(entity!=null&&entity.getUserName()!=null){
-            BusinessCenter businessCenter = businessCenterDao.selectOneBusinessCenter(entity.getUserName());
+            BusinessCenter businessCenter = businessCenterDao.selectBussinessByUname(entity.getUserName());
             if (businessCenter!=null){
                 entity.setLogo(businessCenter.getLogo());
                 entity.setTypeEnterprise(businessCenter.getTypeEnterprise());
@@ -166,5 +166,11 @@ public class DemandsServiceImpl implements DemandsService {
     @Override
     public List<DemandsEntity> demandsRiseTrend(){
         return demandsDao.demandsRiseTrend();
+    }
+
+    @Override
+    public boolean deleteBatch(String ids) {
+        ids = ids.replaceAll(",","','");
+        return demandsDao.deleteBatch(ids);
     }
 }

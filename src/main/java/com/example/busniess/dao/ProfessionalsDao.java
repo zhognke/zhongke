@@ -3,6 +3,7 @@ package com.example.busniess.dao;
 import com.example.busniess.entity.ProfessionalsEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -78,4 +79,10 @@ public interface ProfessionalsDao {
      */
     @Update("update professionals set approval_status = #{approvalStatus},approval_opinion=#{approvalOpinion},approval_time=now() where id = #{id}")
     boolean updateApprovalStatus(Integer id,Integer approvalStatus,String approvalOpinion);
+
+    @Delete("update professionals set del_flag = 1 where id in ('${ids}');")
+    boolean deleteBatch(@Param("ids")String ids);
+
+    @Select("select id,real_name,institutions,positions,technology_scope,research_direction,icon_address from professionals where status=0 and approval_status=1 and del_flag = 0 and is_hot =1 order by sort")
+    List<ProfessionalsEntity> showHot();
 }

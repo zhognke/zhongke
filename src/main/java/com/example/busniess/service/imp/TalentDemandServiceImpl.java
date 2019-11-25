@@ -191,4 +191,10 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         talentDemandDao.updateArticleViewCount(articleId, viewCount);
     }
 
+    @Override
+    public boolean deleteBatch(String ids) {
+        ids = ids.replaceAll(",","','");
+        return talentDemandDao.deleteBatch(ids);
+    }
+
 }

@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -189,6 +190,20 @@ public class DemandsController {
         if (demandsService.deleteDemandsByID(id)) {
             return ReturnResult.success();
         } else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value="/deleteByBatch",method = {RequestMethod.DELETE,RequestMethod.POST})
+    public ReturnResult deleteByBatch(@NotNull(message = "参数不能为空")String ids){
+        if(demandsService.deleteBatch(ids)){
+            return ReturnResult.success("删除成功");
+        }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
     }

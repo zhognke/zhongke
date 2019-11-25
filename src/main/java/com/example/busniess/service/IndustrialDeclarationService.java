@@ -105,5 +105,7 @@ public interface IndustrialDeclarationService {
     List<IndustrialDeclarationEntity> getCompanyList();
 
     List<IndustrialDeclarationEntity> lastDeclarations(Integer size);
+
+    boolean deleteBatch(String ids);
 }
 

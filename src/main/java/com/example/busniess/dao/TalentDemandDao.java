@@ -3,6 +3,7 @@ package com.example.busniess.dao;
 import com.example.busniess.entity.TalentDemandEntity;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -88,5 +89,8 @@ public interface TalentDemandDao {
     public List<TalentDemandEntity> search(TalentDemandEntity talentDemandEntity);
 
     @Update("update talent_demand set view_count = #{viewCount} where id = ${id}")
-    void updateArticleViewCount(Integer id, Integer viewCount);
+    void updateArticleViewCount(@Param("id")Integer id, @Param("viewCount")Integer viewCount);
+
+    @Delete("update talent_demand set del_flag = 1 where id in ('${ids}');")
+    boolean deleteBatch(@Param("ids")String ids);
 }

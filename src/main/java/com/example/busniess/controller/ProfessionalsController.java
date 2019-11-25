@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
@@ -29,7 +30,7 @@ import java.util.Date;
 @RequestMapping("/professionals")
 public class ProfessionalsController {
     @Autowired
-    private ProfessionalsService professionalsService;
+    ProfessionalsService professionalsService;
     @Autowired
     BusinessCenterService businessCenterService;
 
@@ -66,9 +67,22 @@ public class ProfessionalsController {
      * @return
      */
     @SysLog(value="逻辑删除专家入驻信息",type="专家入驻")
-    @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.GET})
+    @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteById(Integer id){
         if(professionalsService.deleteById(id)){
+            return ReturnResult.success("删除成功");
+        }else{
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value="/deleteByBatch",method = {RequestMethod.DELETE,RequestMethod.POST})
+    public ReturnResult deleteByBatch(@NotNull(message = "参数不能为空")String ids){
+        if(professionalsService.deleteBatch(ids)){
             return ReturnResult.success("删除成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -238,5 +252,17 @@ public class ProfessionalsController {
                 return ReturnResult.erro(CodeMsg.DATA_EMPTY);
             }
         }
+    }
+
+    /**
+     * 热门数据
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="showHot",method = RequestMethod.GET)
+    public ReturnResult showHot(@RequestParam(defaultValue = "1")Integer pageNum,@RequestParam(defaultValue = "5") Integer pageSize){
+        PageInfo pageInfo = professionalsService.showHot(pageNum,pageSize);;
+        return ReturnResult.success(pageInfo);
     }
 }

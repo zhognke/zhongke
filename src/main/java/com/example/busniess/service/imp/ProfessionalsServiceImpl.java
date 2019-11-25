@@ -102,6 +102,17 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     }
 
     /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @Override
+    public boolean deleteBatch(String ids) {
+        ids = ids.replaceAll(",","','");
+        return professionalsDao.deleteBatch(ids);
+    }
+
+    /**
     * 从数据库中删除
     * @param id
     * @return
@@ -157,6 +168,14 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     public boolean closeByIdForManager(Integer id, String closeReason) {
         Integer status =2;
         return professionalsDao.closeById(id,status,closeReason);
+    }
+
+    @Override
+    public PageInfo showHot(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<ProfessionalsEntity> list = professionalsDao.showHot();
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
 }
