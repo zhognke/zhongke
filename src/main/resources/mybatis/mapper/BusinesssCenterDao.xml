@@ -2,9 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.busniess.dao.BusinessCenterDao">
+
+    <resultMap id="business" type="businessCenter">
+        <id property="id" column="id" />
+        <result property="uName" column="uName" />
+        <result property="firmName" column="firmName" />
+        <result property="industry" column="industry" />
+        <result property="typeEnterprise" column="typeEnterprise" />
+        <result property="country" column="country" />
+        <result property="city" column="city" />
+        <result property="country" column="country" />
+        <result property="district" column="district" />
+        <result property="address" column="address" />
+        <result property="district" column="district" />
+        <result property="district" column="district" />
+
+        <association property="businessInformation" javaType="businessInformation" >
+            <id property="id" column="id"/>
+            <result property="uName" column="uName"/>
+            <result property="registrationDate" column="registrationDate"/>
+            <result property="scale" column="scale"/>
+            <result property="enterprise" column="enterprise"/>
+            <result property="logo" column="logo"/>
+            <result property="insertTime" column="insertTime"/>
+            <result property="updateTime" column="updateTime"/>
+            <result property="statue" column="statue"/>
+        </association>
+    </resultMap>
+
+
     <sql id="business_sql">
         <if test="industry!=null and industry!=''">
-            `industry`=#{industry}
+            instr(`industry`,'${industry}')
+
         </if>
         <if test="firmName!=null and firmName!=''">
             AND `firmname`=#{firmName}
@@ -18,75 +48,73 @@
 
     </sql>
     <select id="selectAllBusinessCenter" parameterType="businessCenter" resultType="businessCenter">
-        SELECT id,legalperson,phonenumber,firmname, industry,societycode
-        ,scale,statue,subtime FROM businesscenter
+        SELECT * FROM businesscenter b  i INNER JOIN  businessInformation i ON b.uname=i.uname
         <where>
             <include refid="business_sql"></include>
         </where>
         ORDER BY subtime DESC
     </select>
 
-    <select id="search" parameterType="businessCenter" resultType="businessCenter">
-        select id,firmname,industry,typeEnterprise,registeredcapital,recorddate,scale,country,city,district,logo
-        from businesscenter
+    <select id="search" parameterType="businessCenter" resultMap="business">
+        SELECT * FROM businesscenter b  INNER JOIN  businessInformation i ON b.uname=i.uname
         <where>
             <if test="industry!=null and industry!=''">
-                `industry`=#{industry}
+                b.`industry`=#{industry}
             </if>
             <if test="typeEnterprise!=null and typeEnterprise!=''">
-                AND `typeEnterprise`=#{typeEnterprise}
+                AND b.`typeEnterprise`=#{typeEnterprise}
             </if>
             <if test="country!=null and country!=''">
-                AND `country`=#{country}
+                AND b.`country`=#{country}
             </if>
             <if test="city!=null and city!=''">
-                AND `city`=#{city}
+                AND b.`city`=#{city}
             </if>
             <if test="district!=null and district!=''">
-                AND `district`=#{district}
+                AND b.`district`=#{district}
             </if>
 
             <if test="scaleBegin!=null and scaleEnd!=null">
-                and `scale` between #{scaleBegin} and #{scaleEnd}
+                and b.`scale` between #{scaleBegin} and #{scaleEnd}
             </if>
             <if test="scaleBegin!=null and scaleEnd==null">
-                and `scale` &gt;= #{scaleBegin}
+                and b.`scale` &gt;= #{scaleBegin}
             </if>
             <if test="scaleBegin==null and scaleEnd!=null">
-                and `scale` &lt;= #{scaleEnd}
+                and b.`scale` &lt;= #{scaleEnd}
             </if>
 
             <if test="recordDateBegin!=null and recordDateEnd!=null">
-                and `recordDate` between #{recordDateBegin} and #{recordDateEnd}
+                and b.`recordDate` between #{recordDateBegin} and #{recordDateEnd}
             </if>
             <if test="recordDateBegin!=null and recordDateEnd==null">
-                and `recordDate` &gt;= #{recordDateBegin}
+                and b.`recordDate` &gt;= #{recordDateBegin}
             </if>
             <if test="recordDateBegin==null and recordDateEnd!=null">
-                and `recordDate` &lt;= #{recordDateEnd}
+                and b.`recordDate` &lt;= #{recordDateEnd}
             </if>
 
             <if test="registeredCapitalBegin!=null and registeredCapitalEnd!=null">
-                and `registeredCapital` between #{registeredCapitalBegin} and #{registeredCapitalEnd}
+                and b.`registeredCapital` between #{registeredCapitalBegin} and #{registeredCapitalEnd}
             </if>
             <if test="registeredCapitalBegin!=null and registeredCapitalEnd==null">
-                and `registeredCapital` &gt;= #{registeredCapitalBegin}
+                and b.`registeredCapital` &gt;= #{registeredCapitalBegin}
             </if>
             <if test="registeredCapitalBegin==null and registeredCapitalEnd!=null">
-                and `registeredCapital` &lt;= #{registeredCapitalEnd}
+                and b.`registeredCapital` &lt;= #{registeredCapitalEnd}
             </if>
 
             <if test="statue!=null and statue!=''">
-                AND `statue`=#{statue}
+                AND b.statue=#{statue}
             </if>
 
             <if test="keyWord!=null and keyWord!=''">
-                AND (`firmname` like CONCAT('%',#{keyWord},'%') or `industry` like CONCAT('%',#{keyWord},'%'))
+                AND (b.`firmname` like CONCAT('%',#{keyWord},'%') or b.`industry` like CONCAT('%',#{keyWord},'%'))
             </if>
 
 
         </where>
-        order by subtime desc
+        order by b.subtime desc
     </select>
 
 
