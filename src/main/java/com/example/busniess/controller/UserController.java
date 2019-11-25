@@ -212,4 +212,17 @@ public class UserController {
     public void clearSession(HttpSession session) {
         session.removeAttribute("REGISTER_CODE_SESSION");
     }
+
+    /**
+     * 根据用户名检查认证状态
+     * @param username
+     * @param isPerson
+     * @return
+     */
+    @RequestMapping("/checkStatus")
+    public ReturnResult checkStatus(String username,Integer isPerson){
+        Integer status = UserServiceImpl.checkStatus(username,isPerson);
+        return ReturnResult.success(status);
+    }
+
 }

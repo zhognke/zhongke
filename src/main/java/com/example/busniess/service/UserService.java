@@ -23,4 +23,6 @@ public interface UserService {
     Set<String> findAllRole();
 
     Boolean retSetPassword(String userName, String password, String newPassword) throws MyException;
+
+    Integer checkStatus(String username, Integer isPerson);
 }

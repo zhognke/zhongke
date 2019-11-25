@@ -39,7 +39,7 @@
 
     </sql>
     <select id="selectAllFinancing" parameterType="financingEntity" resultType="financingEntity">
-        SELECT id,companyName,projectName,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing
+        SELECT id,companyName,projectName,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime,province,city,discribe FROM financing
         <where>
             <include refid="business_sql"></include>
 
