@@ -2,6 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.busniess.dao.OccupancyDao">
+
+
+    <!--    private List<ImageAddress> imgAddress;//图片地址-->
+
+    <resultMap type="occupancy" id="occupancyResultMap">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="resultTechnolo" column="resultTechnolo"/>
+        <result property="stage" column="stage"/>
+        <result property="advantages" column="advantages"/>
+        <result property="industry" column="industry"/>
+        <result property="industryDetail" column="industryDetail"/>
+        <result property="attribute" column="attribute"/>
+        <result property="patenNname" column="patenNname"/>
+        <result property="patenNumber" column="patenNumber"/>
+        <result property="price" column="pricee"/>
+        <result property="registerNumber" column="registerNumber"/>
+        <result property="describe" column="describe"/>
+        <result property="appliedRange" column="appliedRange"/>
+        <result property="transferType" column="transferType"/>
+        <result property="linkMan" column="linkMan"/>
+        <result property="phoneNumber" column="phoneNumber"/>
+        <result property="city" column="city"/>
+        <result property="district" column="district"/>
+        <result property="stopTime" column="stopTime"/>
+        <result property="creatTime" column="creatTime"/>
+        <result property="upTiem" column="upTiem"/>
+        <result property="auditTime" column="auditTime"/>
+        <result property="kstatue" column="kstatue"/>
+        <result property="statue" column="statue"/>
+        <result property="priceBegin" column="priceBegin"/>
+        <result property="priceEnd" column="priceEnd"/>
+        <result property="keyWord" column="keyWord"/>
+        <result property="closeReason" column="closeReason"/>
+        <result property="companyName" column="companyName"/>
+
+
+        <association property="businessInformation" javaType="businessInformation">
+            <id property="id" column="id"/>
+            <result property="uName" column="uName"/>
+            <result property="registrationDate" column="registrationDate"/>
+            <result property="scale" column="scale"/>
+            <result property="enterprise" column="enterprise"/>
+            <result property="logo" column="logo"/>
+            <result property="insertTime" column="insertTime"/>
+            <result property="updateTime" column="updateTime"/>
+            <result property="statue" column="statue"/>
+        </association>
+
+    </resultMap>
+
+
     <sql id="OccupancyByIndustry_sql">
         <if test="appliedRange!=null and appliedRange!=''">
             and `appliedRange` = #{appliedRange}
@@ -44,20 +96,24 @@
         </if>
 
     </sql>
-    <select id="selectOccupancyByIndustry" parameterType="occupancy" resultType="occupancy">
-        SELECT * FROM occupancy
+    <select id="selectOccupancyByIndustry" parameterType="occupancy" resultMap="occupancyResultMap">
+        -- SELECT * FROM occupancy
+        SELECT * FROM occupancy o left JOIN businessInformation b
+        on o.username=b.uname
         <where>
-            statue=1 AND kstatue=1
+            o.statue=1 AND o.kstatue=1
             <include refid="OccupancyByIndustry_sql"></include>
         </where>
         ORDER BY creattime DESC
 
     </select>
 
-    <select id="showByPageForCenter" parameterType="occupancy" resultType="occupancy">
---         SELECT id,companyName,resultTechnolo,industry,advantages,stage,kstatue,statue FROM occupancy
-        SELECT * FROM occupancy
+    <select id="showByPageForCenter" parameterType="occupancy" resultMap="occupancyResultMap">
+        -- SELECT id,companyName,resultTechnolo,industry,advantages,stage,kstatue,statue FROM occupancy
+        SELECT * FROM occupancy o INNER JOIN businessInformation b
+
         <where>
+            o.username=b.uname and
             username = #{userName}
             <if test="keyWord!=null and keyWord!=''">
                 and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like
