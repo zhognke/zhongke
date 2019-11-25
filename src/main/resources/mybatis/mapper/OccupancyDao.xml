@@ -55,7 +55,8 @@
     </select>
 
     <select id="showByPageForCenter" parameterType="occupancy" resultType="occupancy">
-        SELECT id,companyName,resultTechnolo,industry,advantages,stage,kstatue,statue FROM occupancy
+--         SELECT id,companyName,resultTechnolo,industry,advantages,stage,kstatue,statue FROM occupancy
+        SELECT * FROM occupancy
         <where>
             username = #{userName}
             <if test="keyWord!=null and keyWord!=''">
