@@ -18,15 +18,16 @@
         <result property="district" column="district" />
 
         <association property="businessInformation" javaType="businessInformation" >
-            <id property="id" column="id"/>
-            <result property="uName" column="uName"/>
-            <result property="registrationDate" column="registrationDate"/>
-            <result property="scale" column="scale"/>
-            <result property="enterprise" column="enterprise"/>
-            <result property="logo" column="logo"/>
-            <result property="insertTime" column="insertTime"/>
-            <result property="updateTime" column="updateTime"/>
-            <result property="statue" column="statue"/>
+            <id property="id" column="id1"/>
+            <result property="uName" column="uname1"/>
+            <result property="registrationDate" column="registrationDate1"/>
+            <result property="registeredCapita" column="registeredCapita1"/>
+            <result property="scale" column="scale1"/>
+            <result property="enterprise" column="enterprise1"/>
+            <result property="logo" column="logo1"/>
+            <result property="insertTime" column="insertTime1"/>
+            <result property="updateTime" column="updateTime1"/>
+            <result property="statue" column="statue1"/>
         </association>
     </resultMap>
 
@@ -56,7 +57,7 @@
     </select>
 
     <select id="search" parameterType="businessCenter" resultMap="business">
-        SELECT * FROM businesscenter b  INNER JOIN  businessInformation i ON b.uname=i.uname
+        SELECT b.*,i.id id1,i.uname uname1,i.registrationDate registrationDate1,i.registeredCapita registeredCapita1,i.scale scale1,i.enterprise enterprise1,i.logo logo1,i.statue statue1,i.insertTime insertTime1,i.updateTime updateTime1 FROM businesscenter b  INNER JOIN  businessInformation i ON b.uname=i.uname
         <where>
             <if test="industry!=null and industry!=''">
                 b.`industry`=#{industry}
