@@ -84,14 +84,15 @@ public class BusinessCenter implements Serializable {
     private Date auditTime;//审核时间//24
     private Reject reject;//关联驳回
 
-    private List<Occupancy> occupancyList;  //科技成果列表,非数据库字段
-    private Integer scaleBegin; //范围搜索-从业人数最小值,非数据库字段
-    private Integer scaleEnd;   //范围搜索-从业人数最大值,非数据库字段
+    private Integer scaleBegin;
+    private Integer scaleEnd;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date recordDateBegin;   //范围搜索-注册时间最小值,非数据库字段
+    private Date recordDateBegin;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date recordDateEnd; //范围搜索-注册时间最大值,非数据库字段
-    private BigDecimal registeredCapitalBegin;  //范围搜索-注册资金最小值,非数据库字段
-    private BigDecimal registeredCapitalEnd;    //范围搜索-注册资金最大值,非数据库字段
-    private String keyWord; //搜索关键字,非数据库字段
+    private Date recordDateEnd;
+    private BigDecimal registeredCapitalBegin;
+    private BigDecimal registeredCapitalEnd;
+    private String keyWord;
+    private List<Occupancy> occupancyList;
+    private  BusinessInformation businessInformation;
 }

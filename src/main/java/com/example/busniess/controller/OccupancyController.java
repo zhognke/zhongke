@@ -1,12 +1,10 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
-import com.example.busniess.entity.Echarts;
-import com.example.busniess.entity.FinancingEntity;
-import com.example.busniess.entity.InformEntity;
-import com.example.busniess.entity.Occupancy;
+import com.example.busniess.entity.*;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
+import com.example.busniess.service.BusinessInformationService;
 import com.example.busniess.service.OccupancyService;
 import com.example.busniess.utiles.RabbitUtil;
 import com.example.busniess.utiles.ShiroUtils;
@@ -33,7 +31,8 @@ import java.util.Date;
 public class OccupancyController {
     //转义审核状态
     private String str;
-
+    @Autowired
+    BusinessInformationService usinessInformationServiceImpl;
     @Resource
     OccupancyService OccupancyServiceimpl;
     @Autowired
@@ -63,11 +62,12 @@ public class OccupancyController {
     @RequestMapping("/addOccupancy")
     public ReturnResult addOccupancy(@Validated({UserValidator.InSet.class}) Occupancy occupancy) {
 
+
         if (OccupancyServiceimpl.addOccupancy(occupancy)) {
             //通知
             InformEntity informEntity = new InformEntity();//创建消息
             informEntity.setUserName(occupancy.getUserName());
-            informEntity.setCount("发布了"+occupancy.getResultTechnolo() +"待审核");
+            informEntity.setCount("发布了" + occupancy.getResultTechnolo() + "待审核");
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
             informEntity.setTime(df.format(new Date()));
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);

@@ -26,7 +26,10 @@ public interface OccupancyDao {
      */
     @Select("SELECT * FROM occupancy  WHERE id=#{id} ")
     @Results({
-         @Result(property = "imgAddress", column = "id", many = @Many(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress"))
+            @Result(property = "id",column = "id"),
+            @Result(property = "userName",column = "userName"),
+         @Result(property = "imgAddress", column = "id", many = @Many(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
+            @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation"))
     })
     public Occupancy selectOneById(Integer id);
 
@@ -60,9 +63,11 @@ public interface OccupancyDao {
      * @param id
      * @return imgAddress
      */
+
     @Select("SELECT * FROM occupancy WHERE id=#{id}")
     @Results({
-            @Result(property = "imgAddress", column = "id", one = @One(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress"))
+            @Result(property = "imgAddress", column = "id", one = @One(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
+            @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation"))
     })
     public Occupancy selectOneOccupancy(Integer id);
 
@@ -107,7 +112,7 @@ public interface OccupancyDao {
             "`advantages`, `industry`, `industryDetail`,`attribute`, `patenNname`, `patenNumber`," +
             " `price`, `registerNumber`,`describe`, `appliedRange`,`transferType`,`linkman`, `phonenumber`,`province`,`city`,`district`,`stoptime`," +
             "`creattime`,`kstatue`, `statue`) " +
-            "VALUES (#{userName}, #{resultTechnolo}, #{stage}, #{advantages}, #{industry}, #{industryDetail},#{attribute}, #{patenNname}, #{patenNumber}, " +
+            "VALUES (#{userName},#{companyName} ,#{resultTechnolo}, #{stage}, #{advantages}, #{industry}, #{industryDetail},#{attribute}, #{patenNname}, #{patenNumber}, " +
             "#{price},#{registerNumber},#{describe}, #{appliedRange},#{transferType},#{linkMan}, #{phoneNumber},#{province},#{city},#{district},#{stopTime}," +
             "NOW(), '1', '0')")
     @Options(useGeneratedKeys = true, keyProperty = "id")

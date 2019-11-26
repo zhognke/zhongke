@@ -53,9 +53,9 @@ public class BusinessCenterController {
     @SysLog(value = "提交企业认证", type = "企业认证")
     @RequestMapping("/addAuthentication")
     public ReturnResult addAuthentication( BusinessCenter businessCenter) {
-//        if (businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName()) != null) {
-//            return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
-//        }
+        if (businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName()) != null) {
+            return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
+        }
         if (businessCenterServiceImpl.addBusinessCenter(businessCenter)) {
             //通知
             InformEntity informEntity = new InformEntity();
@@ -146,7 +146,7 @@ public class BusinessCenterController {
      * @return
      */
     @RequestMapping("/showByPage")
-    public ReturnResult showByPage(BusinessCenter businessCenter, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public ReturnResult showByPage(BusinessCenter businessCenter, @RequestParam(required = false,defaultValue = "1") Integer pageNum, @RequestParam(required = false,defaultValue = "5") Integer pageSize) {
         return ReturnResult.success(businessCenterServiceImpl.showByPage(businessCenter, pageNum, pageSize));
     }
 

@@ -79,4 +79,5 @@ public class Occupancy implements Serializable {
 
     private String companyName;
     private BusinessCenter businessCenter;  //存储对应企业的基本信息(名称,logo,地址,类型等)
+    private BusinessInformation businessInformation;//对应
 }
