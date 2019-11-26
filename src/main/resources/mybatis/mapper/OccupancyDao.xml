@@ -17,7 +17,7 @@
         <result property="attribute" column="attribute"/>
         <result property="patenNname" column="patenNname"/>
         <result property="patenNumber" column="patenNumber"/>
-        <result property="price" column="pricee"/>
+        <result property="price" column="price"/>
         <result property="registerNumber" column="registerNumber"/>
         <result property="describe" column="describe"/>
         <result property="appliedRange" column="appliedRange"/>
@@ -37,8 +37,6 @@
         <result property="keyWord" column="keyWord"/>
         <result property="closeReason" column="closeReason"/>
         <result property="companyName" column="companyName"/>
-
-
         <association property="businessInformation" javaType="businessInformation">
             <id property="id" column="id"/>
             <result property="uName" column="uName"/>
@@ -50,7 +48,13 @@
             <result property="updateTime" column="updateTime"/>
             <result property="statue" column="statue"/>
         </association>
-
+        <collection property="imgAddress" select="selectimgAddress" ofType="ImageAddress" column="id">
+            <id property="id" column="id"/>
+            <result property="oId" column="oId"/>
+            <result property="img" column="img"/>
+            <result property="insertTime" column="insertTime"/>
+            <result property="updateTime" column="updateTime"/>
+        </collection>
     </resultMap>
 
 
@@ -96,6 +100,12 @@
         </if>
 
     </sql>
+
+
+    <select id="selectimgAddress" resultType="imageAddress" parameterType="string">
+SELECT * FROM imageaddress WHERE oid=#{id}
+    </select>
+
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultMap="occupancyResultMap">
         -- SELECT * FROM occupancy
         SELECT * FROM occupancy o left JOIN businessInformation b
