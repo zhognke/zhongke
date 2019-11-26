@@ -60,6 +60,10 @@ public interface FinancingDao {
      * @return
      */
     @Select("SELECT * FROM financing WHERE id=#{id}")
+    @Results({
+            @Result(property = "uName",column = "uname"),
+            @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+    })
     public FinancingEntity seleOneFinancing(Integer id);
 
     /**
@@ -68,6 +72,10 @@ public interface FinancingDao {
      * @return
      */
     @Select("SELECT id,companyName,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
+    @Results({
+            @Result(property = "uName",column = "uname"),
+            @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+    })
     public List<FinancingEntity> selectMyFinancing(String uName);
 
     /**

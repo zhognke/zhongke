@@ -51,4 +51,5 @@ public class FinancingEntity {
     private Date insertTime;//插入时间
     private Date updateTiem;//更新时间
     private String reject;//驳回原因
+    private  BusinessInformation businessInformation;//关联企业补充信息
 }

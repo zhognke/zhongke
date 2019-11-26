@@ -1,5 +1,6 @@
 package com.example.busniess.dao;
 
+import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
 import org.apache.ibatis.annotations.*;
 
@@ -185,4 +186,11 @@ public interface OccupancyDao {
 
     @Select("SELECT companyName,resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price,province,city,district FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
     List<Occupancy> getOccupanyForProfessional(@Param("username")String username,@Param("size")Integer size);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+//    public List<ImageAddress> selectimgAddress(Integer id);
 }

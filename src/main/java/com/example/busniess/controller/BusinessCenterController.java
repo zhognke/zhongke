@@ -106,12 +106,9 @@ public class BusinessCenterController {
     public ReturnResult passTheAudit(@NotNull(message = "企业id不能为空") Integer id, @NotNull(message = "角色名不能为空") Integer rid, @NotNull(message = "用户名不能为空") String userName, @NotNull(message = "状态不能为空") Integer statue, @NotNull(message = "驳回原因id不能为空") Integer reId) {
         if (businessCenterServiceImpl.updateAuditStatue(id, rid, userName, statue, reId)) {
             //通知
-            InformEntity informEntity = new InformEntity();
             BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(id);
-            informEntity.setUserName(userName);
-            informEntity.setCount("提交的" + businessCenter.getFirmName() + "的企业认证已经通过");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-            informEntity.setTime(df.format(new Date()));
+      InformEntity informEntity= RabbitUtil.sendRabbic(userName,"提交的" + businessCenter.getFirmName() + "的企业认证已经通过",new Date());
+
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
 
@@ -162,7 +159,7 @@ public class BusinessCenterController {
     }
 
     /**
-     * 查看具体认证信息hello
+     * 查看具体认证信息
      */
 
     @RequestMapping("/findBussinessCenter")
