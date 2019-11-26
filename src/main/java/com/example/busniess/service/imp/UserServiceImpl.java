@@ -1,6 +1,10 @@
 package com.example.busniess.service.imp;
 
+import com.example.busniess.dao.BusinessCenterDao;
+import com.example.busniess.dao.PersonDao;
 import com.example.busniess.dao.UserDao;
+import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.Person;
 import com.example.busniess.entity.User;
 import com.example.busniess.exception.MyException;
 import com.example.busniess.resultpackage.CodeMsg;
@@ -20,6 +24,10 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
+    @Autowired
+    BusinessCenterDao businessCenterDao;
+    @Autowired
+    PersonDao personDao;
 
     /**
      * 按名字查询用户
@@ -117,6 +125,24 @@ public class UserServiceImpl implements UserService {
        return userDao.updatPassword(user);//更改密码
 
         //return true;
+    }
+
+    @Override
+    public Integer checkStatus(String username, Integer isPerson) {
+        if(isPerson==1){
+            Person person = personDao.selectPerson(username);
+            if(person!=null){
+                return person.getStatue();
+            }
+        }else if(isPerson==2){
+            BusinessCenter businessCenter = businessCenterDao.selectOneBusinessCenter(username);
+            if(businessCenter!=null){
+                return businessCenter.getStatue();
+            }
+        }else{
+            return null;
+        }
+        return null;
     }
 
     /**
