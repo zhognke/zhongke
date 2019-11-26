@@ -94,6 +94,10 @@ public interface BusinessCenterDao {
      * 根据id查询企业中心的具体情况
      */
     @Select("SELECT * FROM businesscenter WHERE id=#{id}")
+    @Results({
+            @Result(property = "occupancyList", column = "uname", many = @Many(select = "com.example.busniess.dao.OccupancyDao.selectByname")),
+            @Result(property = "businessInformation", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation"))
+    })
     public BusinessCenter selectBussinessByid(Integer id);
 
     /**

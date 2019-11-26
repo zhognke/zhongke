@@ -59,6 +59,14 @@ public interface OccupancyDao {
     public List<Occupancy> selectMyOccupancy(String userName);
 
     /**
+     * 名字
+     * @param userName
+     * @return
+     */
+    @Select("SELECT * FROM occupancy WHERE username=#{userName} AND `statue`=1 AND `kstatue`=1   ORDER BY creattime DESC")
+    public List<Occupancy> selectByname(String userName);
+
+    /**
      * 根据id 查询单个
      *
      * @param id
