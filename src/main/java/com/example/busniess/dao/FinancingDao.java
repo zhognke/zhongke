@@ -22,7 +22,7 @@ public interface FinancingDao {
             "`unit`, `projectfinancing`, `income`, " +
             "`profit`, `proportion`, `agelimit`, " +
             "`lunit`, `statue`, `insertTime`) VALUES " +
-            "(#{uName},#{projectType}, #{projectStatic}, #{goal}, #{type}, " +
+            "(#{uName},#{companyName},#{projectType}, #{projectStatic}, #{goal}, #{type}, " +
             "#{projectName}, #{projectOutline}, #{advantage}, #{industry}," +
             " #{province}, #{city}, #{discribe}, #{projecrPhase}, " +
             "#{period}, #{linkMan}, #{phoneNumber}, #{extensive}, " +
