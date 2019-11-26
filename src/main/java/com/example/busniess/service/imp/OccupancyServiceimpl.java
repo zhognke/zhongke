@@ -41,12 +41,12 @@ public class OccupancyServiceimpl implements OccupancyService {
         //2.插入附表
         if (occupancyDao.insertOccupancy(occupancy)) {
             List<ImageAddress> i = occupancy.getImgAddress();
-            if(i!=null&&i.size()>0) {
+            if (i != null && i.size() > 0) {
                 for (ImageAddress img : i) {
                     img.setOId(occupancy.getId());
                 }
                 return imageAddressDao.insertImageAddress(i);
-            }else{
+            } else {
                 return true;
             }
         } else {
@@ -77,14 +77,10 @@ public class OccupancyServiceimpl implements OccupancyService {
      * @param id
      * @return
      */
-    public  boolean updateStatue(Integer statue,Integer id,String reject){
+    public boolean updateStatue(Integer statue, Integer id, String reject) {
 
-        return occupancyDao.updateStatue(statue,id,reject);
+        return occupancyDao.updateStatue(statue, id, reject);
     }
-
-
-
-
 
 
     /**
@@ -98,13 +94,13 @@ public class OccupancyServiceimpl implements OccupancyService {
     @Override
     public boolean closeById(Integer id, String closeReason) {
         Integer status = 3;
-        return occupancyDao.closeById(id,status,closeReason);
+        return occupancyDao.closeById(id, status, closeReason);
     }
 
     @Override
     public boolean closeByIdForManager(Integer id, String closeReason) {
         Integer status = 2;
-        return occupancyDao.closeById(id,status,closeReason);
+        return occupancyDao.closeById(id, status, closeReason);
     }
 
     /**
@@ -128,8 +124,10 @@ public class OccupancyServiceimpl implements OccupancyService {
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
     }
+
     /**
      * 根据行业查询
+     *
      * @param occupancy
      * @return
      */
@@ -143,28 +141,31 @@ public class OccupancyServiceimpl implements OccupancyService {
 
     /**
      * 查看具体 具体的科技成果
+     *
      * @param id
      * @return
      */
-    public  Occupancy seleOccupancyById(Integer id){
+    public Occupancy seleOccupancyById(Integer id) {
         Occupancy occupancy = occupancyDao.selectOneById(id);
 //        System.out.println(occupancy);
-       occupancy.setBusinessCenter(businessCenterDao.selectOneBusinessCenter(occupancy.getUserName()));
+        occupancy.setBusinessCenter(businessCenterDao.selectOneBusinessCenter(occupancy.getUserName()));
         return occupancy;
     }
 
     /**
      * 根据认证状态查询科技成果
+     *
      * @param statue
      * @return
      */
-    public List<Occupancy> seleOccupancyByStatue(Integer statue){
+    public List<Occupancy> seleOccupancyByStatue(Integer statue) {
 
         return occupancyDao.selectOnStatueOccupancy(statue);
     }
 
     /**
      * 更新科技成果信息
+     *
      * @param occupancy
      * @return
      */
@@ -173,25 +174,26 @@ public class OccupancyServiceimpl implements OccupancyService {
     public boolean updateOccupancy(Occupancy occupancy) {
         Integer oid = occupancy.getId();
         List<ImageAddress> list = occupancy.getImgAddress();
-        if(list!=null&&list.size()>0){
-            for(ImageAddress img : list){
+        if (list != null && list.size() > 0) {
+            for (ImageAddress img : list) {
                 img.setOId(oid);
             }
             imageAddressDao.delectImageAddress(oid);
-            if(imageAddressDao.insertImageAddress(occupancy.getImgAddress())){
-                occupancyDao.updateStatue(0,oid,null);
+            if (imageAddressDao.insertImageAddress(occupancy.getImgAddress())) {
+                occupancyDao.updateStatue(0, oid, null);
                 return occupancyDao.upDataOccupancy(occupancy);
-            }else{
+            } else {
                 return false;
             }
-        }else{
-            occupancyDao.updateStatue(0,oid,null);
+        } else {
+            occupancyDao.updateStatue(0, oid, null);
             return occupancyDao.upDataOccupancy(occupancy);
         }
     }
 
     /**
      * 分页展示(大厅,包含检索功能)
+     *
      * @param occupancy
      * @param pageNum
      * @param pagesize
@@ -220,6 +222,7 @@ public class OccupancyServiceimpl implements OccupancyService {
 
     /**
      * 折线图
+     *
      * @return
      */
     public Echarts returnBrokenImg() {
@@ -242,6 +245,7 @@ public class OccupancyServiceimpl implements OccupancyService {
 
     /**
      * 饼状图
+     *
      * @return
      */
     public Echarts returnPieImg() {
@@ -261,7 +265,6 @@ public class OccupancyServiceimpl implements OccupancyService {
 
         return echart;
     }
-
 
 
 }

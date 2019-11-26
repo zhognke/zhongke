@@ -178,7 +178,7 @@ public interface OccupancyDao {
     @Select("SELECT COUNT(industry) FROM occupancy WHERE statue=1")
     public Integer countIndustry();
 
-    @Select("SELECT industry FROM `occupancy` where statue=1 and kstatue =1 group by industry order by count(industry) desc limit #{size};")
+    @Select("SELECT industry FROM `occupancy` where statue=1 and kstatue =1 and hot='热门' ORDER BY `creattime` DESC LIMIT 0,#{size}")
     List<Occupancy> getHotIndustry(@Param("size")Integer size);
 
     List<Occupancy> showByPageForCenter(Occupancy occupancy);
