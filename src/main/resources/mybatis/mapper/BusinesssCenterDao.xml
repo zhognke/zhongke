@@ -59,6 +59,11 @@
     <select id="search" parameterType="businessCenter" resultMap="business">
         SELECT b.*,i.id id1,i.uname uname1,i.registrationDate registrationDate1,i.registeredCapita registeredCapita1,i.scale scale1,i.enterprise enterprise1,i.logo logo1,i.statue statue1,i.insertTime insertTime1,i.updateTime updateTime1 FROM businesscenter b  INNER JOIN  businessInformation i ON b.uname=i.uname
         <where>
+
+            <if test="statue!=null and statue!=''">
+                b.`statue`=#{statue}
+            </if>
+
             <if test="industry!=null and industry!=''">
                 b.`industry`=#{industry}
             </if>

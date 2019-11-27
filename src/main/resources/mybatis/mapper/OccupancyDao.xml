@@ -103,7 +103,7 @@
 
 
     <select id="selectimgAddress" resultType="imageAddress" parameterType="string">
-SELECT * FROM imageaddress WHERE oid=#{id}
+           SELECT * FROM imageaddress WHERE oid=#{id}
     </select>
 
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultMap="occupancyResultMap">
@@ -115,13 +115,11 @@ SELECT * FROM imageaddress WHERE oid=#{id}
             <include refid="OccupancyByIndustry_sql"></include>
         </where>
         ORDER BY creattime DESC
-
     </select>
 
     <select id="showByPageForCenter" parameterType="occupancy" resultMap="occupancyResultMap">
         -- SELECT id,companyName,resultTechnolo,industry,advantages,stage,kstatue,statue FROM occupancy
         SELECT * FROM occupancy o INNER JOIN businessInformation b
-
         <where>
             o.username=b.uname and
             username = #{userName}
@@ -131,6 +129,5 @@ SELECT * FROM imageaddress WHERE oid=#{id}
             </if>
         </where>
         ORDER BY creattime DESC
-
     </select>
 </mapper>
