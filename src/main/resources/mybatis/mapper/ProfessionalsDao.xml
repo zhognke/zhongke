@@ -3,34 +3,6 @@
 
 <mapper namespace="com.example.busniess.dao.ProfessionalsDao">
 
-
-    <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.example.busniess.entity.ProfessionalsEntity" id="baseMap">
-        <result property="id" column="id"/>
-        <result property="userName" column="user_name"/>
-        <result property="realName" column="real_name"/>
-        <result property="institutions" column="institutions"/>
-        <result property="positions" column="positions"/>
-        <result property="engagedIndustry" column="engaged_industry"/>
-        <result property="engagedIndustryDetail" column="engaged_industry_detail"/>
-        <result property="industryExperience" column="industry_experience"/>
-        <result property="technologyScope" column="technology_scope"/>
-        <result property="outstandingContribution" column="outstanding_contribution"/>
-        <result property="researchDirection" column="research_direction"/>
-        <result property="introduced" column="introduced"/>
-        <result property="phoneNum" column="phone_num"/>
-        <result property="iconAddress" column="icon_address"/>
-        <result property="certificateAddress" column="certificate_address"/>
-        <result property="status" column="status"/>
-        <result property="closeReason" column="close_reason"/>
-        <result property="approvalStatus" column="approval_status"/>
-        <result property="approvalOpinion" column="approval_opinion"/>
-        <result property="approvalTime" column="approval_time"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="delFlag" column="del_flag"/>
-    </resultMap>
-
     <sql id="columnNames">
                 id,
                 user_name,
@@ -54,42 +26,6 @@
                 create_time,
                 update_time,
                 del_flag
-            </sql>
-
-    <sql id="addColumnNames">
-                user_name,
-                real_name,
-                institutions,
-                positions,
-                engaged_industry,
-                engaged_industry_detail,
-                industry_experience,
-                technology_scope,
-                outstanding_contribution,
-                research_direction,
-                introduced,
-                phone_num,
-                icon_address,
-                certificate_address,
-                create_time
-            </sql>
-
-    <sql id="attrnames">
-                #{userName},
-                #{realName},
-                #{institutions},
-                #{positions},
-                #{engagedIndustry},
-                #{engagedIndustryDetail},
-                #{industryExperience},
-                #{technologyScope},
-                #{outstandingContribution},
-                #{researchDirection},
-                #{introduced},
-                #{phoneNum},
-                #{iconAddress},
-                #{certificateAddress},
-                #{createTime}
             </sql>
 
     <update id="updateById" parameterType="professionalsEntity">

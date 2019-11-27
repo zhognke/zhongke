@@ -1,16 +1,15 @@
 package com.example.busniess.service.imp;
 
-import com.example.busniess.dao.BusinessCenterDao;
+import com.example.busniess.dao.BusinessCenterInformationDao;
 import com.example.busniess.dao.DemandsDao;
-import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.service.DemandsService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -21,7 +20,7 @@ public class DemandsServiceImpl implements DemandsService {
     DemandsDao demandsDao;
 
     @Autowired
-    BusinessCenterDao businessCenterDao;
+    BusinessCenterInformationDao businessCenterInformationDao;
 
     @Override
     public List<DemandsEntity> selectAll() {
@@ -132,10 +131,10 @@ public class DemandsServiceImpl implements DemandsService {
     public DemandsEntity getByID(int id) {
         DemandsEntity entity = demandsDao.getByID(id);
         if(entity!=null&&entity.getUserName()!=null){
-            BusinessCenter businessCenter = businessCenterDao.selectBussinessByUname(entity.getUserName());
-            if (businessCenter!=null){
-                entity.setLogo(businessCenter.getLogo());
-                entity.setTypeEnterprise(businessCenter.getTypeEnterprise());
+            BusinessCenterInformationEntity businessCenterInformationEntity = businessCenterInformationDao.selectOnByUname(entity.getUserName());
+            if (businessCenterInformationEntity!=null){
+                entity.setLogo(businessCenterInformationEntity.getLogo());
+                entity.setTypeEnterprise(businessCenterInformationEntity.getTypeEnterprise());
             }
         }
         return entity;

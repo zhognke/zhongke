@@ -38,7 +38,7 @@
             and `approval_status` = #{approvalStatus}
         </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (`declaration_type` like CONCAT('%',#{keyWord},'%') or `project_name` like CONCAT('%',#{keyWord},'%') or `project_type` like CONCAT('%',#{keyWord},'%'))
+            and (`declaration_type` like CONCAT('%',#{keyWord},'%') or `project_name` like CONCAT('%',#{keyWord},'%') or `project_type` like CONCAT('%',#{keyWord},'%') or `company_name` like CONCAT('%',#{keyWord},'%'))
         </if>
         order by create_time desc
     </select>
