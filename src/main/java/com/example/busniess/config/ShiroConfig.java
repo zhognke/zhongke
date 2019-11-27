@@ -5,6 +5,8 @@ import com.example.busniess.service.MyShiroRealm;
 
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -36,7 +38,7 @@ public class ShiroConfig {
 
         shiroFilterFactoryBean.setLoginUrl("/#/login");
         Map<String, String> map = new LinkedHashMap<>();
-//    map.put("/loginout", "logout");
+        map.put("/loginout", "logout");
         /*
 //登录接口设置
         map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问
@@ -83,9 +85,13 @@ public class ShiroConfig {
     public SecurityManager securityManager(@Qualifier("myShiroRealm") MyShiroRealm myShiroRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(myShiroRealm);
+        securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
-
+    @Bean
+    public CacheManager cacheManager() {
+        return new MemoryConstrainedCacheManager();
+    }
 
     /**
      * 设置加密

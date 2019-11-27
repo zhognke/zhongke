@@ -6,6 +6,12 @@
         <if test="uName!=null and  uName!=''">
             `uName`=#{uName}
         </if>
+        <if test="lunit!=null and  lunit!=''">
+            `lunit`=#{lunit}
+        </if>
+        <if test="unit!=null and  unit!=''">
+            `unit`=#{unit}
+        </if>
         <if test="statue!=null and  statue!=''">
             `statue`=#{statue}
         </if>

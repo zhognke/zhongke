@@ -59,6 +59,7 @@ public class UserController {
                                   @RequestParam(value = "remb", defaultValue = "false",
                                           required = false) Boolean remb) throws ShiroException {
         Subject subject = SecurityUtils.getSubject();//获取subject对象
+        subject.getSession().setTimeout(-1);
         BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
         Integer status = null;
         if (businessCenter != null) {
@@ -80,7 +81,7 @@ public class UserController {
         UsernamePasswordToken up = new UsernamePasswordToken(userName, password);
 
         subject.login(up);
-        up.setRememberMe(remb);//记住我
+//        up.setRememberMe(remb);//记住我
         //登录成功
         User user = UserServiceImpl.findUserByName(userName);
         String email = user.getEmail();
@@ -95,6 +96,7 @@ public class UserController {
     @RequestMapping("/logout")
     public ReturnResult logout() {
         Subject subject = SecurityUtils.getSubject();
+        System.out.println("ss"+subject);
         subject.logout();
         return ReturnResult.success("登出成功!");
     }
