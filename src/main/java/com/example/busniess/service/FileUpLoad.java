@@ -21,7 +21,7 @@ public class FileUpLoad {
     String upPath;
 
     public String uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
-            String realPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+//            String realPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String fileNme = file.getOriginalFilename();//获取文件名
             String suffixName = fileNme.substring(fileNme.lastIndexOf("."));//后缀
             String newFilename = UUID.randomUUID().toString().replace("-", "") + suffixName;//新文件名
@@ -32,7 +32,7 @@ public class FileUpLoad {
                 filel.mkdirs();
             }
             file.transferTo(filel);
-            String path = realPath + "/img/" + now + "/" + newFilename;
+            String path = "/img/" + now + "/" + newFilename;
         return path;
     }
 
