@@ -1,9 +1,9 @@
 package com.example.busniess.service.imp;
 
-import com.example.busniess.dao.BusinessCenterDao;
+import com.example.busniess.dao.BusinessCenterInformationDao;
 import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.TalentDemandDao;
-import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.service.TalentDemandService;
 import com.github.pagehelper.PageHelper;
@@ -21,7 +21,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     TalentDemandDao talentDemandDao;
 
     @Autowired
-    BusinessCenterDao businessCenterDao;
+    BusinessCenterInformationDao businessCenterInformationDao;
 
     /**
      * 查询所有
@@ -82,8 +82,8 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     public TalentDemandEntity selectById(Integer id,Integer size) {
         TalentDemandEntity entity = talentDemandDao.selectById(id);
         if (entity != null && entity.getUserName() != null) {
-            BusinessCenter businessCenter = businessCenterDao.selectOneBusinessCenter(entity.getUserName());
-            entity.setBusinessCenter(businessCenter);
+            BusinessCenterInformationEntity businessCenterInformationEntity = businessCenterInformationDao.selectOnByUname(entity.getUserName());
+            entity.setBusinessCenter(businessCenterInformationEntity);
             entity.setOccupancyList(occupancyDao.getOccupanyForProfessional(entity.getUserName(),size));
         }
         return entity;

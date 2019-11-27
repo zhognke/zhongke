@@ -150,6 +150,6 @@ public class TalentDemandEntity implements Serializable {
      */
     private String logo;//公司logo
     private String typeEnterprise;//企业类型
-    BusinessCenter businessCenter;
+    BusinessCenterInformationEntity businessCenter;
     List<Occupancy> occupancyList;
 }

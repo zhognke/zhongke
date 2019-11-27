@@ -5,7 +5,6 @@ import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.RejectDao;
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
-import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.entity.Reject;
 import com.example.busniess.service.BusinessCenterService;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class BusinessCenterServiceImpl implements BusinessCenterService {
