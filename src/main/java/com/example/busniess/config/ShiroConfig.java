@@ -36,9 +36,9 @@ public class ShiroConfig {
         // 拦截器
         //设置登录的页面
 
-        shiroFilterFactoryBean.setLoginUrl("/#/login");
+       shiroFilterFactoryBean.setLoginUrl("/#/login");
         Map<String, String> map = new LinkedHashMap<>();
-        map.put("/loginout", "logout");
+//        map.put("/loginout", "logout");
         /*
 //登录接口设置
         map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问

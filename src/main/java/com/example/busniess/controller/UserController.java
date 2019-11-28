@@ -18,6 +18,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +60,6 @@ public class UserController {
                                   @RequestParam(value = "remb", defaultValue = "false",
                                           required = false) Boolean remb) throws ShiroException {
         Subject subject = SecurityUtils.getSubject();//获取subject对象
-        subject.getSession().setTimeout(-1);
         BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
         Integer status = null;
         if (businessCenter != null) {
@@ -96,8 +96,11 @@ public class UserController {
     @RequestMapping("/logout")
     public ReturnResult logout() {
         Subject subject = SecurityUtils.getSubject();
-        System.out.println("ss"+subject);
-        subject.logout();
+
+        if (subject.getSession() != null) {
+            subject.logout();
+        }
+
         return ReturnResult.success("登出成功!");
     }
 
@@ -208,6 +211,7 @@ public class UserController {
 
     /**
      * 清除session中的数据
+     *
      * @param session
      */
     @RequestMapping("/clearSession")
@@ -217,13 +221,14 @@ public class UserController {
 
     /**
      * 根据用户名检查认证状态
+     *
      * @param username
      * @param isPerson
      * @return
      */
     @RequestMapping("/checkStatus")
-    public ReturnResult checkStatus(String username,Integer isPerson){
-        Integer status = UserServiceImpl.checkStatus(username,isPerson);
+    public ReturnResult checkStatus(String username, Integer isPerson) {
+        Integer status = UserServiceImpl.checkStatus(username, isPerson);
         return ReturnResult.success(status);
     }
 

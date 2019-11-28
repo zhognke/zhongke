@@ -7,6 +7,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.session.InvalidSessionException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -67,6 +68,16 @@ public class AllException {
 
     }
 
+    /**
+     * session失效
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(InvalidSessionException.class)
+    public ReturnResult shiroSessionError(MyException e) {
+        return ReturnResult.success("登出成功!");
+
+    }
     /**
      * 参数校验异常
      *

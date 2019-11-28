@@ -31,7 +31,7 @@ public class BusinessCenterController {
     BusinessCenterService businessCenterServiceImpl;
 
     @Autowired
-     BusinessCenterDao businessCenterDao;
+    BusinessCenterDao businessCenterDao;
     @Autowired
     RabbitTemplate rabbitTemplate;
 
@@ -52,7 +52,7 @@ public class BusinessCenterController {
      */
     @SysLog(value = "提交企业认证", type = "企业认证")
     @RequestMapping("/addAuthentication")
-    public ReturnResult addAuthentication( BusinessCenter businessCenter) {
+    public ReturnResult addAuthentication(BusinessCenter businessCenter) {
         if (businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName()) != null) {
             return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
         }
@@ -78,12 +78,10 @@ public class BusinessCenterController {
     public ReturnResult dismissTheCertification(@Validated({UserValidator.InSet.class}) Reject reject) {
         if (businessCenterServiceImpl.rejectAudit(reject)) {
             //通知
-            InformEntity informEntity = new InformEntity();
+
             BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(reject.getBId());
-            informEntity.setUserName(businessCenter.getUName());
-            informEntity.setCount("提交的" + businessCenter.getFirmName() + "的企业认证被驳回了请重新认证");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-            informEntity.setTime(df.format(new Date()));
+            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUName(), "提交的" + businessCenter.getFirmName() + "的企业认证被驳回了请重新认证", new Date());
+
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
             return ReturnResult.success();
@@ -107,7 +105,7 @@ public class BusinessCenterController {
         if (businessCenterServiceImpl.updateAuditStatue(id, rid, userName, statue, reId)) {
             //通知
             BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(id);
-      InformEntity informEntity= RabbitUtil.sendRabbic(userName,"提交的" + businessCenter.getFirmName() + "的企业认证已经通过",new Date());
+            InformEntity informEntity = RabbitUtil.sendRabbic(userName, "提交的" + businessCenter.getFirmName() + "的企业认证已经通过", new Date());
 
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
@@ -143,7 +141,7 @@ public class BusinessCenterController {
      * @return
      */
     @RequestMapping("/showByPage")
-    public ReturnResult showByPage(BusinessCenter businessCenter, @RequestParam(required = false,defaultValue = "1") Integer pageNum, @RequestParam(required = false,defaultValue = "5") Integer pageSize) {
+    public ReturnResult showByPage(BusinessCenter businessCenter, @RequestParam(required = false, defaultValue = "1") Integer pageNum, @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         return ReturnResult.success(businessCenterServiceImpl.showByPage(businessCenter, pageNum, pageSize));
     }
 
