@@ -33,7 +33,7 @@ public interface NotificationDao {
      *
      * @return
      */
-    @Select("SELECT * FROM notification ORDER BY sort")
+    @Select("SELECT * FROM notification ORDER BY inserttime DESC ")
     public List<Notification> selectAllNotification();
 
     /**

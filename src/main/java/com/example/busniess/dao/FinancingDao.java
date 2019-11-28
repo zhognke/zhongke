@@ -12,7 +12,7 @@ public interface FinancingDao {
      * @param financing
      * @return
      */
-    @Insert("INSERT INTO `financing` (`uname`,`companyName`,`projecttype`, `projectstatic`," +
+    @Insert("INSERT INTO `financing` (`uname`,`projecttype`, `projectstatic`," +
             " `goal`, `type`, `projectname`, " +
             "`projectoutline`,`advantage`, `industry`, " +
             "`province`, `city`, `discribe`, " +
@@ -22,7 +22,7 @@ public interface FinancingDao {
             "`unit`, `projectfinancing`, `income`, " +
             "`profit`, `proportion`, `agelimit`, " +
             "`lunit`, `statue`, `insertTime`) VALUES " +
-            "(#{uName},#{companyName},#{projectType}, #{projectStatic}, #{goal}, #{type}, " +
+            "(#{uName},#{projectType}, #{projectStatic}, #{goal}, #{type}, " +
             "#{projectName}, #{projectOutline}, #{advantage}, #{industry}," +
             " #{province}, #{city}, #{discribe}, #{projecrPhase}, " +
             "#{period}, #{linkMan}, #{phoneNumber}, #{extensive}, " +
@@ -50,7 +50,7 @@ public interface FinancingDao {
             " `time`=#{time}, `unit`=#{unit}, `projectfinancing`=#{projectFinancing}, " +
             "`income`=#{income}, `profit`=#{profit}, `proportion`=#{proportion}, " +
             "`agelimit`=#{ageLimit}, `lunit`=#{lunit}, " +
-            "`updateTime`=NOW() WHERE (`id`=#{id})")
+            "`statu`=0,`updateTime`=NOW() WHERE (`id`=#{id})")
     public Boolean updateFinancing(FinancingEntity financing);
 
     /**
@@ -71,7 +71,7 @@ public interface FinancingDao {
      * @param uName
      * @return
      */
-    @Select("SELECT id,companyName,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
+    @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
     @Results({
             @Result(property = "uName",column = "uname"),
             @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
@@ -95,6 +95,11 @@ public interface FinancingDao {
      *查看所有 的
      * @return
      */
-    @Select("SELECT id,companyName,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing ORDER BY insertTime DESC")
-    public List<FinancingEntity> selectAllFinacing();
+    @Select("SELECT id,uname,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing ORDER BY insertTime DESC")
+    @Results({
+            @Result(property = "uName",column = "uname"),
+            @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+    })
+    //selectAllFinancing
+    public List<FinancingEntity> selectAllFinacing0();
 }
