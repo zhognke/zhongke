@@ -1,5 +1,6 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.MsendMail;
 import com.example.busniess.entity.User;
@@ -20,6 +21,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +30,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +49,7 @@ public class UserController {
     @Resource
     MsendMailServiceImpl msendMailServiceImpl;
 
+
     /**
      * 登录验证
      *
@@ -57,8 +61,21 @@ public class UserController {
     @RequestMapping("/userLogin")
     public ReturnResult userLogin(@NotBlank(message = "名字不能为空") String userName,
                                   @NotBlank(message = "密码不能为空") String password,
+                                  @NotNull(message = "身份识别号不能为空") Integer code,
                                   @RequestParam(value = "remb", defaultValue = "false",
                                           required = false) Boolean remb) throws ShiroException {
+
+        User user = UserServiceImpl.findUserByName(userName);//use对象
+
+        if(user==null){
+            return ReturnResult.erro(CodeMsg.USER_NOT_EXSIS);
+        }
+        Integer isPerson = user.getPersion();//身份个人或者企业
+        String email = user.getEmail();//邮箱
+
+        if (code != isPerson) {
+            return ReturnResult.erro(CodeMsg.IDENTITY_ERROR);
+        }
         Subject subject = SecurityUtils.getSubject();//获取subject对象
         BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
         Integer status = null;
@@ -66,15 +83,11 @@ public class UserController {
             status = businessCenter.getStatue();
         }
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userName", userName);
+        map.put("email", email);
+        map.put("status", status);//null是没提交0待审核1通过2驳回
+        map.put("isPerson", isPerson);
         if (subject.isAuthenticated()) {
-            User user = UserServiceImpl.findUserByName(userName);
-            String username = user.getUserName();
-            String email = user.getEmail();
-            Integer isPerson = user.getPersion();
-            map.put("userName", username);
-            map.put("email", email);
-            map.put("status", status);
-            map.put("isPerson", isPerson);
             return ReturnResult.success(map);
         }
 
@@ -83,13 +96,6 @@ public class UserController {
         subject.login(up);
 //        up.setRememberMe(remb);//记住我
         //登录成功
-        User user = UserServiceImpl.findUserByName(userName);
-        String email = user.getEmail();
-        Integer isPerson = user.getPersion();
-        map.put("userName", userName);
-        map.put("email", email);
-        map.put("status", status);
-        map.put("isPerson", isPerson);
         return ReturnResult.success(map);
     }
 

@@ -35,7 +35,7 @@ public class CodeMsg {
     public static CodeMsg ACCESS_DENIED = new CodeMsg(500202, "请提交企业认证，或等待企业认证通过!");
     public static CodeMsg INNOVATION_REGISTRATIONED = new CodeMsg(500301, "请勿重复提交报名!");
     public static CodeMsg INNOVATION_DISABLED = new CodeMsg(500302, "当前活动无法报名!");
-
+    public static CodeMsg IDENTITY_ERROR = new CodeMsg(500301, "身份识别错误!");
     private Integer code;
     private String msg;
 
