@@ -7,21 +7,21 @@
             `uName`=#{uName}
         </if>
         <if test="lunit!=null and  lunit!=''">
-            `lunit`=#{lunit}
+            AND  `lunit`=#{lunit}
         </if>
         <if test="unit!=null and  unit!=''">
-            `unit`=#{unit}
+            AND  `unit`=#{unit}
         </if>
         <if test="statue!=null and  statue!=''">
-            `statue`=#{statue}
+            AND   `statue`=#{statue}
         </if>
         <if test="industry!=null and industry!=''">
             AND instr('${industry}',`industry`)
         </if>
-        <if test="income!=null and income!=''">
+        <if test="less!=null and less!='' and greater!=null and greater!=''">
             AND `income` between #{less} and #{greater}
         </if>
-        <if test="period!=null and period!=''">
+        <if test="pless!=null and pless!='' and pgreat!=null and pgreat!=''">
             AND `period` between #{pless} and #{pgreat}
         </if>
         <if test="province!=null and province!=''">
@@ -44,11 +44,49 @@
         </if>
 
     </sql>
-    <select id="selectAllFinancing" parameterType="financingEntity" resultType="financingEntity">
-        SELECT id,companyName,projectName,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime,province,city,discribe FROM financing
+    <resultMap id="businessCenterInformation" type="financingEntity">
+        <id property="id" column="id" />
+        <result property="uName" column="uName" />
+        <result property="projectName" column="projectName" />
+        <result property="industry" column="industry" />
+        <result property="financing" column="financing" />
+        <result property="income" column="income" />
+        <result property="projecrPhase" column="projecrphase" />
+        <result property="period" column="period" />
+        <result property="projectFinancing" column="projectFinancing" />
+        <result property="statue" column="statue" />
+        <result property="insertTime" column="insertTime" />
+        <result property="province" column="province" />
+        <result property="city" column="city" />
+        <result property="discribe" column="discribe" />
+
+
+
+
+
+        <association property="businessCenter" column="uname" javaType="businessCenter" select="selectBusinessCenter">
+            <id property="id" column="id"/>
+            <result property="firmName" column="firmName"/>
+            <result property="country" column="country"/>
+            <result property="city" column="city"/>
+            <result property="district" column="district"/>
+
+        </association>
+
+
+
+
+    </resultMap>
+
+    <select id="selectBusinessCenter" parameterType="string" resultType="BusinessCenter">
+        SELECT id,firmName,country,city,district FROM businesscenter WHERE uname=#{uName}
+    </select>
+
+
+    <select id="selectAllFinancing" parameterType="financingEntity" resultMap="businessCenterInformation">
+        SELECT id,uname,projectName,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime,province,city,discribe FROM financing
         <where>
             <include refid="business_sql"></include>
-
         </where>
         ORDER BY `insertTime` DESC
     </select>
