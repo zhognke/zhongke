@@ -5,8 +5,6 @@ import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.Reject;
 import com.github.pagehelper.PageInfo;
 
-import java.util.List;
-
 public interface BusinessCenterService {
     /**
      * 提交认证

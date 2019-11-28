@@ -76,7 +76,7 @@ public class DictController {
      * @return
      */
     @GetMapping("/getDictByParentId")
-    public ReturnResult getByParentId(String parentId){
+    public ReturnResult getByParentId(Integer parentId){
         List<DictEntity> list = dictService.getByParentId(parentId);
         if(list.size()>0){
             return ReturnResult.success(list);
@@ -94,6 +94,20 @@ public class DictController {
         List<DictEntity> list = dictService.getByType(type);
         if(list.size()>0){
             return ReturnResult.success(list);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }
+    }
+
+    /**
+     * 根据type获取字典树
+     * @return
+     */
+    @GetMapping("/getTreeByType")
+    public ReturnResult getTreeByType(String type){
+        DictEntity entity = dictService.getTreeByType(type);
+        if(entity!=null){
+            return ReturnResult.success(entity);
         }else{
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }

@@ -21,12 +21,14 @@ public interface DictService {
 
     List<DictEntity> getByType(String type);
 
-    List<DictEntity> getByParentId(String parentId);
+    List<DictEntity> getByParentId(Integer parentId);
 
     DictEntity getById(Integer id);
 
     boolean delById(Integer id);
 
     boolean realDeleteById(Integer id);
+
+    DictEntity getTreeByType(String type);
 }
 

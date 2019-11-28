@@ -19,7 +19,6 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     OccupancyDao occupancyDao;
     @Autowired
     TalentDemandDao talentDemandDao;
-
     @Autowired
     BusinessCenterInformationDao businessCenterInformationDao;
 
@@ -57,6 +56,12 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         }
         if (talentDemandEntity.getDemandsType() != null) {
             talentDemandEntity.setDemandsType(talentDemandEntity.getDemandsType().replaceAll(",", "','"));
+        }
+        if (talentDemandEntity.getSalary() != null) {
+            talentDemandEntity.setSalary(talentDemandEntity.getSalary().replaceAll(",", "','"));
+        }
+        if (talentDemandEntity.getDegree() != null) {
+            talentDemandEntity.setDegree(talentDemandEntity.getDegree().replaceAll(",", "','"));
         }
         List<TalentDemandEntity> list = talentDemandDao.search(talentDemandEntity);
         PageInfo pageInfo = new PageInfo(list);
@@ -129,6 +134,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
      */
     @Override
     public boolean update(TalentDemandEntity talentDemandEntity) {
+        talentDemandEntity.setApprovalStatus(0);
         return talentDemandDao.updateById(talentDemandEntity);
     }
 

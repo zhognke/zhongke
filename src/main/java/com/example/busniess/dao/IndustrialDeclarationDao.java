@@ -2,7 +2,6 @@ package com.example.busniess.dao;
 
 import com.example.busniess.entity.IndustrialDeclarationEntity;
 import org.apache.ibatis.annotations.*;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

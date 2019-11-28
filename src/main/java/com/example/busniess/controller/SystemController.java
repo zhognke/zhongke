@@ -6,14 +6,11 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/system")
@@ -29,7 +26,7 @@ public class SystemController {
       if(SystemImpl.addSystem(url)) {
           return ReturnResult.success();
       }
-      return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+      return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
     /**
      * 删除系统
@@ -38,7 +35,7 @@ public class SystemController {
     public ReturnResult delectSystem(Integer id){
         if(SystemImpl.delectSystem(id)){
         return ReturnResult.success();}
-        return ReturnResult.erro(CodeMsg.DELECT_ERROR);
+        return ReturnResult.erro(CodeMsg.DELETE_ERROR);
     }
     /**
      * 修改系统显示问题

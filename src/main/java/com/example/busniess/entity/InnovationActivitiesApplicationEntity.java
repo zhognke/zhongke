@@ -1,15 +1,12 @@
 package com.example.busniess.entity;
 
-import lombok.Data;
-
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 import com.example.busniess.validator.UserValidator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 创新活动申请表

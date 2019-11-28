@@ -31,7 +31,7 @@ public class NewsInformationController {
         if (newsInformationServiceImpl.insertNewsInformation(newsInformation)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**
@@ -45,7 +45,7 @@ public class NewsInformationController {
         if (newsInformationServiceImpl.delectNewsInformation(id)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.DELECT_ERROR);
+        return ReturnResult.erro(CodeMsg.DELETE_ERROR);
     }
 
     /**

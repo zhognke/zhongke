@@ -1,15 +1,12 @@
 package com.example.busniess.entity;
 
-import com.alibaba.druid.sql.visitor.functions.Char;
 import com.example.busniess.validator.UserValidator;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;

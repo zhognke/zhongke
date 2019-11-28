@@ -67,7 +67,7 @@ public class BusinessCenterController {
 
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**
@@ -86,7 +86,7 @@ public class BusinessCenterController {
 
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**
@@ -112,7 +112,7 @@ public class BusinessCenterController {
 
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**

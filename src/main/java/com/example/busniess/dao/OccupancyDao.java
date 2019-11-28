@@ -1,6 +1,5 @@
 package com.example.busniess.dao;
 
-import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
 import org.apache.ibatis.annotations.*;
 

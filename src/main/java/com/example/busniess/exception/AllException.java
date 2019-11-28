@@ -3,7 +3,6 @@ package com.example.busniess.exception;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import org.apache.shiro.ShiroException;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -33,7 +32,7 @@ public class AllException {
     public ReturnResult loginError(ShiroException e) {
 
         if (e instanceof UnknownAccountException) {
-            return new ReturnResult(CodeMsg.USER_NOT_EXSIS);//用户不存在
+            return new ReturnResult(CodeMsg.USER_NOT_EXISTS);//用户不存在
         } else if (e instanceof IncorrectCredentialsException) {
             return new ReturnResult(CodeMsg.WRONG_PASSWORD);//密码错误
         } else if (e instanceof UnauthorizedException) {
@@ -45,7 +44,7 @@ public class AllException {
 //
 //    @ExceptionHandler(UnknownAccountException.class)
 //    public ReturnResult shiroAccountError(UnknownAccountException e) {
-//        return new ReturnResult(CodeMsg.USER_NOT_EXSIS);//用户不存在
+//        return new ReturnResult(CodeMsg.USER_NOT_EXISTS);//用户不存在
 //    }
 //
 

@@ -29,7 +29,7 @@ public class ForgetPasswordImpl implements ForgetPassword {
 //
 //    User fuser= userDao.selectUser(userName);//根据用户名查询用户
 //        if(fuser==null){
-//            throw new MyException(CodeMsg.USER_NOT_EXSIS);
+//            throw new MyException(CodeMsg.USER_NOT_EXISTS);
 //        }
 //
 //
@@ -53,7 +53,7 @@ public class ForgetPasswordImpl implements ForgetPassword {
 public  Boolean checkEmail(String userName,HttpSession session) throws MyException, MessagingException {
     User user=userDao.selectUser(userName);
     if(user==null){
-        throw new  MyException(CodeMsg.USER_NOT_EXSIS);
+        throw new  MyException(CodeMsg.USER_NOT_EXISTS);
     }
     String mmcode=Md5Utiles.getNum(4);//产生新的验证码
     session.setAttribute("mmcode",mmcode);//放入session
@@ -72,7 +72,7 @@ public  Boolean upPassword(HttpSession session,String mmCode,User user) throws M
     }
 User  user1=userDao.selectUser(user.getUserName());//根据用户名或email获取用户
     if(user1==null){
-        throw new  MyException(CodeMsg.USER_NOT_EXSIS);//用户不存在
+        throw new  MyException(CodeMsg.USER_NOT_EXISTS);//用户不存在
     }
     String ps=user.getPassword();//获取传来的密码
 String password=Md5Utiles.returnMd5("md5",ps,user1.getUserName(),1024);//加密

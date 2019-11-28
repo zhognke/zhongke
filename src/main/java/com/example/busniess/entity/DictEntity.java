@@ -5,7 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 /**
  * 数据字典表
@@ -43,6 +43,10 @@ public class DictEntity implements Serializable {
      */
 	@NotNull(message = "值不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String value;
+    /**
+     * 子标签
+     */
+	private List<DictEntity> children;
     /**
      * 排序
      */

@@ -58,12 +58,12 @@ public class TalentDemandEntity implements Serializable {
     /**
      * 技术领域
      */
-    @NotNull(message = "技术领域不能为空", groups = {UserValidator.InSet.class})
+//    @NotNull(message = "技术领域不能为空", groups = {UserValidator.InSet.class})
     private String technologyScope;
     /**
      * 研究方向
      */
-    @NotNull(message = "研究方向不能为空", groups = {UserValidator.InSet.class})
+//    @NotNull(message = "研究方向不能为空", groups = {UserValidator.InSet.class})
     private String researchDirection;
     /**
      * 需求类型
@@ -75,6 +75,11 @@ public class TalentDemandEntity implements Serializable {
      */
     @NotNull(message = "所需人数不能为空", groups = {UserValidator.InSet.class})
     private Integer peopleNum;
+    /**
+     * 学历
+     */
+    @NotNull(message = "学历不能为空", groups = {UserValidator.InSet.class})
+    private String degree;
     /**
      * 待遇：0 面议;1 月薪;2 年薪;
      */

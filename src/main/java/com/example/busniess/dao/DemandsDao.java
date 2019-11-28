@@ -3,7 +3,6 @@ package com.example.busniess.dao;
 
 import com.example.busniess.entity.DemandsEntity;
 import org.apache.ibatis.annotations.*;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

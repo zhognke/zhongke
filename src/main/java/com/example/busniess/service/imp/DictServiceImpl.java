@@ -61,7 +61,7 @@ public class DictServiceImpl implements DictService {
      * @return
      */
     @Override
-    public List<DictEntity> getByParentId(String parentId) {
+    public List<DictEntity> getByParentId(Integer parentId) {
         return dictDao.getByParentId(parentId);
     }
 
@@ -101,5 +101,27 @@ public class DictServiceImpl implements DictService {
     @Override
     public boolean realDeleteById(Integer id) {
         return dictDao.realDeleteById(id);
+    }
+
+    @Override
+    public DictEntity getTreeByType(String type) {
+        List<DictEntity> list = dictDao.getByType(type);
+        if(!list.isEmpty()){
+            DictEntity entity = list.get(0);
+            getTreeByParentId(entity);
+            return entity;
+        }else{
+            return null;
+        }
+    }
+
+    public void getTreeByParentId(DictEntity entity) {
+        List<DictEntity> list = dictDao.getByParentId(entity.getId());
+        entity.setChildren(list);
+        if(!list.isEmpty()){
+            for(DictEntity d:list){
+                getTreeByParentId(d);
+            }
+        }
     }
 }

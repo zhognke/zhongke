@@ -2,7 +2,6 @@ package com.example.busniess.dao;
 
 
 import com.example.busniess.entity.DictEntity;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -27,5 +26,5 @@ public interface DictDao {
 
     public List<DictEntity> selectAll();
 
-    public List<DictEntity> getByParentId(String parentId);
+    public List<DictEntity> getByParentId(Integer parentId);
 }

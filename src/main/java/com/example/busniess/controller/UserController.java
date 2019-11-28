@@ -1,6 +1,5 @@
 package com.example.busniess.controller;
 
-import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.MsendMail;
 import com.example.busniess.entity.User;
@@ -19,9 +18,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,7 +65,7 @@ public class UserController {
         User user = UserServiceImpl.findUserByName(userName);//use对象
 
         if(user==null){
-            return ReturnResult.erro(CodeMsg.USER_NOT_EXSIS);
+            return ReturnResult.erro(CodeMsg.USER_NOT_EXISTS);
         }
         Integer isPerson = user.getPersion();//身份个人或者企业
         String email = user.getEmail();//邮箱
@@ -154,7 +151,7 @@ public class UserController {
             if ((now.getTime() - sendDate.getTime()) / (1000) > 600) {  //超时
                 return ReturnResult.erro(CodeMsg.CODE_TIMEOUT_ERROR);
             } else if (!StringUtils.isNotBlank(peopleCode)) {      //验证码为空
-                return ReturnResult.erro(CodeMsg.CODE_NOTBLANK_ERROR);
+                return ReturnResult.erro(CodeMsg.CODE_NOT_BLANK_ERROR);
             }
             if (code.equalsIgnoreCase(peopleCode)) {
                 return ReturnResult.success("验证成功");

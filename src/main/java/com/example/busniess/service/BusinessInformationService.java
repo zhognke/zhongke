@@ -3,8 +3,6 @@ package com.example.busniess.service;
 import com.example.busniess.entity.BusinessInformation;
 import com.github.pagehelper.PageInfo;
 
-import java.util.List;
-
 public interface BusinessInformationService {
     /**
      * 增加

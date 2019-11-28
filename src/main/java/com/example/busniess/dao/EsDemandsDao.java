@@ -1,6 +1,5 @@
 package com.example.busniess.dao;
 
-import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.search.model.EsDemands;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

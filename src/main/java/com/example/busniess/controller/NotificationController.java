@@ -21,7 +21,7 @@ public class NotificationController {
         if (notificationServiceImpl.addNotification(notification)){
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**
@@ -32,7 +32,7 @@ public class NotificationController {
         if (notificationServiceImpl.delectNotification(id)){
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.DELECT_ERROR);
+        return ReturnResult.erro(CodeMsg.DELETE_ERROR);
     }
     /**
      * 修改

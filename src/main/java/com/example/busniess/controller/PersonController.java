@@ -24,7 +24,7 @@ public class PersonController {
         if (personServiceImpl.addPerson(person)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**
@@ -35,7 +35,7 @@ public class PersonController {
         if (personServiceImpl.delectPerson(id)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.DELECT_ERROR);
+        return ReturnResult.erro(CodeMsg.DELETE_ERROR);
     }
 
     /**
@@ -73,7 +73,7 @@ public class PersonController {
         if (personServiceImpl.upStatue(id, rid, userName, statue, reId)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**

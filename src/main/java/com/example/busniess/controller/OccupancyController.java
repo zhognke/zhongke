@@ -1,7 +1,9 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
-import com.example.busniess.entity.*;
+import com.example.busniess.entity.Echarts;
+import com.example.busniess.entity.InformEntity;
+import com.example.busniess.entity.Occupancy;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessInformationService;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;

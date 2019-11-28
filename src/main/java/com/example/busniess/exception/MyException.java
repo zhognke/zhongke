@@ -1,7 +1,6 @@
 package com.example.busniess.exception;
 
 import com.example.busniess.resultpackage.CodeMsg;
-
 import lombok.Data;
 
 @Data

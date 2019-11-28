@@ -5,7 +5,6 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +27,7 @@ public class BusinessInformationController {
         if (businessInformationServiceImpl.addBusinessInformation(businessInformation)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
     /**
@@ -42,7 +41,7 @@ public class BusinessInformationController {
         if (businessInformationServiceImpl.delectBusinessInformation(id)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.DELECT_ERROR);
+        return ReturnResult.erro(CodeMsg.DELETE_ERROR);
     }
 
     /**

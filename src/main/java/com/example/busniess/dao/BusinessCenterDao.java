@@ -1,11 +1,9 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.BusinessCenter;
-import com.example.busniess.service.BusinessCenterService;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
-import java.util.Map;
 
 public interface BusinessCenterDao {
     /**

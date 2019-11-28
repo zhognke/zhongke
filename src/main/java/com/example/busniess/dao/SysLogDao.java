@@ -2,7 +2,7 @@ package com.example.busniess.dao;
 
 import com.example.busniess.entity.SysLogEntity;
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

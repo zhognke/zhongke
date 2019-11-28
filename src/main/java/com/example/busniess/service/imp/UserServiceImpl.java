@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         String email=user.getEmail();//邮箱
         User user1 = userDao.selectUserByName(name);
         if (user1 != null) {
-            throw new MyException(CodeMsg.USER_ALREADY_EXSIS);
+            throw new MyException(CodeMsg.USER_ALREADY_EXISTS);
         }
         User user2 = userDao.selectUserByEmail(email);
 
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
             throw new MyException(CodeMsg.EMAIL_Have_EXIST);
         }
         user.setPassword(Md5Utiles.returnMd5("md5", password, name, 1024));
-
+        user.setStatu("1");
         return userDao.insertUser(user);
     }
 
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
     public Boolean retSetPassword(String userName, String password,String newPassword) throws MyException {
         User user = userDao.selectUser(userName);//根据用户名查询用户
         if(user==null){
-            throw new MyException(CodeMsg.USER_NOT_EXSIS);
+            throw new MyException(CodeMsg.USER_NOT_EXISTS);
         }
 
         String ps = Md5Utiles.returnMd5("md5", password, userName, 1024);

@@ -49,12 +49,12 @@ public class ProfessionalsEntity implements Serializable {
     /**
      * 从事行业
      */
-    @NotNull(message = "从事行业不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+//    @NotNull(message = "从事行业不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
     private String engagedIndustry;
     /**
      * 从事行业二级目录
      */
-    @NotNull(message = "从事行业明细不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+//    @NotNull(message = "从事行业明细不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
     private String engagedIndustryDetail;
     /**
      * 行业经验

@@ -45,7 +45,7 @@ public class InnovationActivitiesRegistrationController {
         }
         Integer innovationId = innovationActivitiesRegistrationEntity.getInnovationId();
         if(innovationActivitiesRegistrationService.isRegistration(userName,innovationId)){//判断是否已经报名
-            return ReturnResult.erro(CodeMsg.INNOVATION_REGISTRATIONED);
+            return ReturnResult.erro(CodeMsg.INNOVATION_REGISTRATION);
         }
         if(!innovationActivitiesService.enbaleRegistration(innovationId)){//判断活动能否报名
             return ReturnResult.erro(CodeMsg.INNOVATION_DISABLED);

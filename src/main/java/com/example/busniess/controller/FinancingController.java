@@ -45,7 +45,7 @@ RabbitTemplate rabbitTemplate;
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         }
-        return ReturnResult.success(CodeMsg.SUMIT_ERROR);
+        return ReturnResult.success(CodeMsg.SUBMIT_ERROR);
     }
 
     /**
@@ -56,7 +56,7 @@ RabbitTemplate rabbitTemplate;
         if (financingServiceImpl.delectFinacing(id)) {
             return ReturnResult.success();
         }
-        return ReturnResult.erro(CodeMsg.DELECT_ERROR);
+        return ReturnResult.erro(CodeMsg.DELETE_ERROR);
     }
 
     /**
