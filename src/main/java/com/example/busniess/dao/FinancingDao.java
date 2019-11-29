@@ -40,17 +40,19 @@ public interface FinancingDao {
     /**
      * 修改
      */
-    @Update("UPDATE `financing` SET `projecttype`=#{projectType}, `projectstatic`=#{projectStatic}, " +
-            "`goal`= #{goal}, `type`=#{type}, `projectname`=#{projectName}," +
-            " `projectoutline`=#{projectOutline}, `advantage`=#{advantage}, `industry`=#{industry}, " +
-            "`province`=#{city}, `city`='32', `discribe`='32'," +
-            " `projecrphase`=#{province}, `period`=#{city}, `linkman`=#{linkMan}, " +
-            "`phonenumber`=#{phoneNumber}, `extensive`=#{extensive}, `cost`=#{cost}, " +
-            "`hascost`=#{hascost}, `financing`=#{financing}, `interest`=#{interest}," +
-            " `time`=#{time}, `unit`=#{unit}, `projectfinancing`=#{projectFinancing}, " +
-            "`income`=#{income}, `profit`=#{profit}, `proportion`=#{proportion}, " +
-            "`agelimit`=#{ageLimit}, `lunit`=#{lunit}, " +
-            "`statu`=0,`updateTime`=NOW() WHERE (`id`=#{id})")
+    @Update("UPDATE `financing` SET " +
+            "`projectName`=#{projectName}, `projectOutline`=#{projectOutline}, " +
+            "`advantage`= #{advantage}, `industry`=#{industry}, " +
+            "`province`=#{province}, `city`=#{city}, `discribe`=#{discribe}," +
+            " `projecrphase`=#{projecrPhase}, " +
+            " `projectType`=#{projectType}, `projectStatic`=#{projectStatic}, " +
+            "`goal`=#{goal}, `type`=#{type}, `period`=#{period}," +
+            " `linkMan`=#{linkMan}, `phoneNumber`=#{phoneNumber}, `extensive`=#{extensive}, " +
+            "`cost`=#{cost}, `hascost`=#{hascost}, `financing`=#{financing}, " +
+            "`interest`=#{interest}, `time`=#{time}, " +
+            "`unit`=#{unit},`lunit`=#{lunit},`projectFinancing`=#{projectFinancing}," +
+            "`income`=#{income},`profit`=#{profit},`proportion`=#{proportion},`statue`=0," +
+            "`updateTime`=NOW() WHERE (`id`=#{id})")
     public Boolean updateFinancing(FinancingEntity financing);
 
     /**

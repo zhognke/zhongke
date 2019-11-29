@@ -55,10 +55,10 @@ public class PersonServiceImpl implements PersonService {
      * @return
      */
     @Override
-    public PageInfo selectAllPerson(Integer pageNumber, Integer pageSize) {
+    public PageInfo selectAllPerson(Person person,Integer pageNumber, Integer pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
 
-        return  new PageInfo(personDao.selectAllPerson());
+        return  new PageInfo(personDao.selectAllPerson(person));
     }
 
     /**
@@ -119,5 +119,26 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person selectOnePerson(String userName,Integer statue) {
         return rejectDao.selectPersonAndReject(userName,statue);
+    }
+
+    /**
+     * 查看详情1
+     * @param id
+     * @return
+     */
+    @Override
+    public Person selectOnePersonById(Integer id) {
+
+        return  personDao.selectPersonByid(id);
+    }
+
+    /**
+     * 查看详情
+     * @param id
+     * @return
+     */
+    @Override
+    public Person selectOnePersonByid(Integer id) {
+        return  personDao.selectOnePerson(id);
     }
 }

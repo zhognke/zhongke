@@ -29,11 +29,11 @@ public interface RejectDao {
 
     /**
      * 根据pid查询驳回理由私人验证
-     * @param bId
+     * @param
      * @return
      */
     @Select("SELECT * from reject WHERE pid=#{pId}")
-    public Reject selectRejectpByPerson(Insert bId);
+    public Reject selectRejectpByPerson(Integer pId);
 
 
     /**
@@ -47,7 +47,7 @@ public interface RejectDao {
     /**
      *查询私人认证信息以及驳回原因
      */
-    @Select("SELECT * from businesscenter WHERE uname=#{userName} AND statue=#{statue}")
+    @Select("SELECT * from person WHERE uname=#{userName} AND statue=#{statue}")
     @Results({
             @Result(property = "reject", column = "id", one = @One(select = "com.example.busniess.dao.RejectDao.selectRejectpByPerson"))
     })

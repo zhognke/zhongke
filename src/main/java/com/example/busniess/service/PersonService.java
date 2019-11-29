@@ -27,7 +27,7 @@ public interface PersonService {
      * 查看所有的
      */
 
-    public PageInfo selectAllPerson(Integer pigeNumber,Integer pigeSize);
+    public PageInfo selectAllPerson(Person person,Integer pigeNumber,Integer pigeSize);
 
     /**
      * 查看自己的
@@ -47,10 +47,19 @@ public interface PersonService {
     public Boolean rejectPerson(Reject reject);
 
     /**
-     * 查看具体的
+     * 查看自己具体的
      * @param id
      * @return
      */
     public  Person selectOnePerson(String userName,Integer statue);
+
+    /**
+     * 查看具体的
+     * @return
+     */
+    public Person selectOnePersonByid(Integer id);
+
+
+    public Person selectOnePersonById(Integer id);
 
 }

@@ -4,12 +4,19 @@ import com.example.busniess.entity.BusinessInformation;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessInformationService;
+import com.example.busniess.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/BusinessInformation")
+@Validated
 public class BusinessInformationController {
 
     @Autowired
@@ -22,7 +29,9 @@ public class BusinessInformationController {
      * @return
      */
     @RequestMapping("/addBusinessInformation")
-    public ReturnResult addBusinessInformation(BusinessInformation businessInformation) {
+    public ReturnResult addBusinessInformation(
+            @Validated({UserValidator.InSet.class})
+            BusinessInformation businessInformation) {
 
         if (businessInformationServiceImpl.addBusinessInformation(businessInformation)) {
             return ReturnResult.success();
@@ -37,7 +46,8 @@ public class BusinessInformationController {
      * @return
      */
     @RequestMapping("/delectBusinessInformation")
-    public ReturnResult delectBusinessInformation(Integer id) {
+    public ReturnResult delectBusinessInformation(
+            @NotNull(message = "id不能为空") Integer id) {
         if (businessInformationServiceImpl.delectBusinessInformation(id)) {
             return ReturnResult.success();
         }
@@ -51,7 +61,9 @@ public class BusinessInformationController {
      * @return
      */
     @RequestMapping("/updateBusinessInformation")
-    public ReturnResult updateBusinessInformation(BusinessInformation businessInformation) {
+    public ReturnResult updateBusinessInformation(
+            @Validated({UserValidator.UpDate.class})
+                    BusinessInformation businessInformation) {
         if (businessInformationServiceImpl.upDateBusinessInformation(businessInformation)) {
             return ReturnResult.success();
         }
@@ -65,7 +77,9 @@ public class BusinessInformationController {
      * @return
      */
     @RequestMapping("/selectBusinessInformation")
-    public ReturnResult selectBusinessInformation(String userName) {
+    public ReturnResult selectBusinessInformation(
+            @NotBlank(message = "用户名不能为空")
+                    String userName) {
         return ReturnResult.success(businessInformationServiceImpl.selectBusinessInformation(userName));
     }
 
@@ -73,7 +87,11 @@ public class BusinessInformationController {
      * 查看所有
      */
     @RequestMapping("/selectAllBusinessInfoemation")
-    public ReturnResult selectAllBusinessInfoemation(Integer pageNum, Integer pagesize) {
+    public ReturnResult selectAllBusinessInfoemation(
+            @RequestParam(required = false,defaultValue ="1")
+                    Integer pageNum,
+            @RequestParam(required = false,defaultValue ="5")
+            Integer pagesize) {
         return ReturnResult.success(businessInformationServiceImpl.selectBusinessInformation(pageNum, pagesize));
     }
 }

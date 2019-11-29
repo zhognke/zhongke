@@ -32,8 +32,8 @@ public interface PersonDao {
      * 查询所有的
      * @return
      */
-    @Select("SELECT * from person")
-    public List<Person> selectAllPerson();
+//    @Select("SELECT * from person")
+    public List<Person> selectAllPerson(Person person);
 
     /**
      * 查看具体的
@@ -58,6 +58,7 @@ public interface PersonDao {
      */
     @Select("select * from person where id=#{id}")
     @Results({
+           @Result(property ="id",column = "id"),
             @Result(property = "reject", column = "id", one = @One(select = "com.example.busniess.dao.RejectDao.selectRejectpByPerson"))
     })
     public Person selectPersonByid(Integer id);

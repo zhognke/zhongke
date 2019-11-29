@@ -6,18 +6,23 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.FinancingService;
 import com.example.busniess.utiles.RabbitUtil;
+import com.example.busniess.validator.UserValidator;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
 @RequestMapping("/Financing")
+@Validated
 public class FinancingController {
     //审核通过或者没通过的转义
     private String str;
@@ -34,7 +39,8 @@ RabbitTemplate rabbitTemplate;
      * @return
      */
     @RequestMapping("/addFinancing")
-    public ReturnResult addFinancing(FinancingEntity financing) {
+    public ReturnResult addFinancing(@Validated(UserValidator.InSet.class)
+                                                 FinancingEntity financing) {
         if (financingServiceImpl.insertFinacing(financing)) {
             //通知
             InformEntity informEntity = new InformEntity();//创建消息
@@ -52,7 +58,7 @@ RabbitTemplate rabbitTemplate;
      * 删除融资
      */
     @RequestMapping("/delectFinancing")
-    public ReturnResult delectFinancing(Integer id) {
+    public ReturnResult delectFinancing(@NotNull(message = "id号不能为空") Integer id) {
         if (financingServiceImpl.delectFinacing(id)) {
             return ReturnResult.success();
         }
@@ -63,7 +69,8 @@ RabbitTemplate rabbitTemplate;
      * 修改融资
      */
     @RequestMapping("/updateFinancing")
-    public ReturnResult updateFinancing(FinancingEntity financing) {
+    public ReturnResult updateFinancing(@Validated({UserValidator.UpDate.class})
+                                                    FinancingEntity financing) {
         if (financingServiceImpl.updateFinacing(financing)) {
             return ReturnResult.success();
         }
@@ -75,7 +82,12 @@ RabbitTemplate rabbitTemplate;
      * 查询自己的
      */
     @RequestMapping("/findMyFinancing")
-    public ReturnResult findMyFinancing(String uName, Integer pagenum, Integer pageSize) {
+    public ReturnResult findMyFinancing(@NotNull(message = "用户名不能为空")
+                                                    String uName,
+                                        @RequestParam(required = false,defaultValue = "1")
+                                        Integer pagenum,
+                                        @RequestParam(required = false,defaultValue = "5")
+                                        Integer pageSize) {
         return ReturnResult.success(financingServiceImpl.selectMyFiancing(uName, pagenum, pageSize));
 
     }
@@ -84,7 +96,11 @@ RabbitTemplate rabbitTemplate;
      * 根据条件查询
      */
     @RequestMapping("/findFinancingByCondition")
-    public ReturnResult findFinancingByCondition(FinancingEntity financing, Integer pagenum, Integer pageSize) {
+    public ReturnResult findFinancingByCondition(FinancingEntity financing,
+                                                 @RequestParam(required = false,defaultValue = "1")
+                                                 Integer pagenum,
+                                                 @RequestParam(required = false,defaultValue = "5")
+                                                 Integer pageSize) {
         return ReturnResult.success(financingServiceImpl.SelectAllFinacing(financing, pagenum, pageSize));
     }
 
@@ -92,7 +108,11 @@ RabbitTemplate rabbitTemplate;
      * 修改状态
      */
     @RequestMapping("/upFinancingStatue")
-    public ReturnResult upFinancingStatue(Integer id, Integer statue, @RequestParam(required = false) String reject) {
+    public ReturnResult upFinancingStatue(@NotNull(message = "id号不能为空")
+                                                      Integer id,
+                                          @NotNull(message = "状态号不能为空")
+                                          Integer statue,
+                                          @RequestParam(required = false) String reject) {
         if (statue == 1) {
             str = "审核通过了";
         } else {
@@ -124,7 +144,7 @@ RabbitTemplate rabbitTemplate;
      * @return
      */
     @RequestMapping("/selectOneById")
-    public ReturnResult selectOneById(Integer id) {
+    public ReturnResult selectOneById(@NotNull(message = "id号不能为空") Integer id) {
         return ReturnResult.success(financingServiceImpl.selectFinancingById(id));
 
     }

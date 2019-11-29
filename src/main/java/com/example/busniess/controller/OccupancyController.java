@@ -61,7 +61,9 @@ public class OccupancyController {
      */
     @SysLog(value = "新增科技成果", type = "科技成果")
     @RequestMapping("/addOccupancy")
-    public ReturnResult addOccupancy(@Validated({UserValidator.InSet.class}) Occupancy occupancy) {
+    public ReturnResult addOccupancy(
+            @Validated({UserValidator.InSet.class})
+                    Occupancy occupancy) {
 
 
         if (occupancyServceImpl.addOccupancy(occupancy)) {
@@ -86,7 +88,7 @@ public class OccupancyController {
      */
     @SysLog(value = "删除科技成果", type = "科技成果")
     @RequestMapping("/delectOccupancy")
-    public ReturnResult delectOccupancy(Integer id) {
+    public ReturnResult delectOccupancy(@NotNull(message = "id号不能为空") Integer id) {
         if (occupancyServceImpl.delectOccupancy(id)) {
             return ReturnResult.success();
         } else {
@@ -102,7 +104,9 @@ public class OccupancyController {
      * @return
      */
     @RequestMapping("/examineMyOccupancy")
-    public ReturnResult examineMyOccupancy(@Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNumber, @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageSize) {
+    public ReturnResult examineMyOccupancy(
+            @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNumber,
+            @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageSize) {
         String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
@@ -115,7 +119,9 @@ public class OccupancyController {
      * 查看具体的科技成果
      */
     @RequestMapping("/selectOneOccupancyById")
-    public ReturnResult selectOneOccupancyById(Integer id) {
+    public ReturnResult selectOneOccupancyById(
+            @NotNull(message = "id号不能为空")
+                    Integer id) {
         Occupancy occupancy = occupancyServceImpl.seleOccupancyById(id);
         return ReturnResult.success(occupancy);
     }
@@ -128,7 +134,9 @@ public class OccupancyController {
      * @return
      */
     @RequestMapping("/selectOnShowOccupancy")
-    public ReturnResult selectOnShowOccupancy(@NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
+    public ReturnResult selectOnShowOccupancy(
+            @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,
+            @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
         PageInfo pageInfo = occupancyServceImpl.selectOnShowOccupancy(pageNum, pagesize);
         return ReturnResult.success(pageInfo);
     }
@@ -143,7 +151,10 @@ public class OccupancyController {
      */
     @SysLog(value = "修改科技成果状态", type = "科技成果")
     @RequestMapping("/upKstatue")
-    public ReturnResult upKstatue(@NotNull(message = "跟新状态不能为空") Integer kStatue, @NotNull(message = "发布成果的id不能为空") Integer id) {
+    public ReturnResult upKstatue(@NotNull(message = "跟新状态不能为空")
+                                              Integer kStatue,
+                                  @NotNull(message = "发布成果的id不能为空")
+                                          Integer id) {
         if (occupancyServceImpl.upDateKstatue(kStatue, id)) {
             return ReturnResult.success();
         } else {
@@ -156,7 +167,11 @@ public class OccupancyController {
      * industry
      */
     @RequestMapping("/selectByIndustry")
-    public ReturnResult selectByIndustry(Occupancy occupancy, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum, @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
+    public ReturnResult selectByIndustry(Occupancy occupancy,
+                                         @NotNull(message = "参数不能为空")
+                                         @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,
+                                         @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1")
+                                                     Integer pagesize) {
 
         return ReturnResult.success(occupancyServceImpl.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
     }
@@ -168,7 +183,7 @@ public class OccupancyController {
      * @return
      */
     @RequestMapping("/selectBystatue")
-    public ReturnResult selectBystatue(Integer statue) {
+    public ReturnResult selectBystatue(@NotNull(message = "状态值不能为空") Integer statue) {
         return ReturnResult.success(occupancyServceImpl.seleOccupancyByStatue(statue));
     }
 
@@ -181,7 +196,9 @@ public class OccupancyController {
      */
     @SysLog(value = "修改科技成果审核状态", type = "科技成果")
     @RequestMapping("/updateOccupancyStatue")
-    public ReturnResult updateOccupancyStatue(Integer statue, Integer id, @RequestParam(required = false) String reject) {
+    public ReturnResult updateOccupancyStatue(@NotNull(message = "状态值不能为空") Integer statue,
+                                              @NotNull(message = "id号不能为空")      Integer id,
+                                              @RequestParam(required = false) String reject) {
         if (statue == 1) {
             str = "审核通过";
         }
@@ -212,7 +229,8 @@ public class OccupancyController {
      */
     @SysLog(value = "修改科技成果", type = "科技成果")
     @RequestMapping("/updateOccupancy")
-    public ReturnResult updateOccupancy(Occupancy occupancy) {
+    public ReturnResult updateOccupancy( @Validated({UserValidator.InSet.class})
+                                                     Occupancy occupancy) {
         if (occupancyServceImpl.updateOccupancy(occupancy)) {
             return ReturnResult.success();
         }

@@ -5,13 +5,20 @@ import com.example.busniess.entity.Reject;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.PersonService;
+import com.example.busniess.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/person")
+@Validated
 public class PersonController {
     @Autowired
     PersonService personServiceImpl;
@@ -20,7 +27,7 @@ public class PersonController {
      * 添加
      */
     @RequestMapping("/addPerson")
-    public ReturnResult addPerson(Person person) {
+    public ReturnResult addPerson(@Validated(UserValidator.InSet.class) Person person) {
         if (personServiceImpl.addPerson(person)) {
             return ReturnResult.success();
         }
@@ -31,7 +38,7 @@ public class PersonController {
      * 删除
      */
     @RequestMapping("/delectPerson")
-    public ReturnResult delectPerson(Integer id) {
+    public ReturnResult delectPerson(@NotNull(message = "id号不能为空") Integer id) {
         if (personServiceImpl.delectPerson(id)) {
             return ReturnResult.success();
         }
@@ -42,7 +49,7 @@ public class PersonController {
      * 修改
      */
     @RequestMapping("/updatePerson")
-    public ReturnResult updatePerson(Person person) {
+    public ReturnResult updatePerson(@Validated(UserValidator.UpDate.class) Person person) {
         if (personServiceImpl.updatePerson(person)) {
             return ReturnResult.success();
         }
@@ -53,15 +60,18 @@ public class PersonController {
      * 查看所有的
      */
     @RequestMapping("/selectAllPerson")
-    public ReturnResult selectAllPerson(Integer pageNumber, Integer pageSize) {
-        return ReturnResult.success(personServiceImpl.selectAllPerson(pageNumber,pageSize));
+    public ReturnResult selectAllPerson(Person person,@RequestParam(required = false,defaultValue = "1")
+                                                    Integer pageNumber,
+                                        @RequestParam(required = false,defaultValue = "5")
+                                        Integer pageSize) {
+        return ReturnResult.success(personServiceImpl.selectAllPerson(person,pageNumber,pageSize));
     }
 
     /**
      * 查看自己的
      */
     @RequestMapping("/selectMyPerson")
-    public ReturnResult selectMyPerson(String uName) {
+    public ReturnResult selectMyPerson(@NotNull(message = "名字不能为空") String uName) {
         return ReturnResult.success(personServiceImpl.selectMyPerson(uName));
     }
 
@@ -69,7 +79,16 @@ public class PersonController {
      * 审核通过
      */
     @RequestMapping("/updateStatue")
-    public ReturnResult updateStatue(Integer id, Integer rid, String userName, Integer statue, Integer reId) {
+    public ReturnResult updateStatue(@NotNull(message = "id号不能为空")
+                                                 Integer id,
+                                     @NotNull(message = "角色id不能为空")
+                                     Integer rid,
+                                     @NotBlank(message = "关联用户名不能为空")
+                                     String userName,
+                                   @RequestParam(required = false,defaultValue = "1")
+                                     Integer statue,
+                                     @RequestParam(required = false,defaultValue = "0")
+                                     Integer reId) {
         if (personServiceImpl.upStatue(id, rid, userName, statue, reId)) {
             return ReturnResult.success();
         }
@@ -88,12 +107,20 @@ public class PersonController {
     }
 
     /**
-     * 查看具体的
+     * 根据状态查看自己的
      */
     @RequestMapping("/selectOnePerson")
-    public ReturnResult selectOnePerson(String uName,Integer statue){
+    public ReturnResult selectOnePerson(@NotBlank(message = "名字不能为空") String uName,
+                                        @NotNull(message = "状态不能为空") Integer statue){
         return  ReturnResult.success(personServiceImpl.selectOnePerson(uName, statue));
     }
+/**
+ * 查看具体的
+ */
+public  ReturnResult selectOne(@NotNull(message = "id不能为空") Integer id){
+    return ReturnResult.success(personServiceImpl.selectOnePersonByid(id));
+}
+
 
 }
 
