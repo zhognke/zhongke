@@ -39,7 +39,7 @@ public class ShiroConfig {
        shiroFilterFactoryBean.setLoginUrl("/#/login");
         Map<String, String> map = new LinkedHashMap<>();
 //        map.put("/loginout", "logout");
-
+/*
 //登录接口设置
         map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问
         //企业认证中心的
@@ -85,7 +85,7 @@ public class ShiroConfig {
         map.put("/intention/getById", "anon");
         map.put("/intention/**", "authc");
   //新闻超级管理员
-        map.put("/news/**", "authc");
+        map.put("/news/**", "anon");
 //通知
         map.put("/notification/**", "authc");
    //个人认证/person
@@ -101,7 +101,7 @@ public class ShiroConfig {
         map.put("/talentDemand/getById","anon");
         map.put("/talentDemand/**","authc");
 
-
+*/
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
