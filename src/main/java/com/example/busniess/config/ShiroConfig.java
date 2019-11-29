@@ -39,7 +39,7 @@ public class ShiroConfig {
        shiroFilterFactoryBean.setLoginUrl("/#/login");
         Map<String, String> map = new LinkedHashMap<>();
 //        map.put("/loginout", "logout");
-/*
+
 //登录接口设置
         map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问
         //企业认证中心的
@@ -48,8 +48,7 @@ public class ShiroConfig {
         map.put("/BusinessInformation/**", "authc");//企业中心所有的接口需要登录
         //上传文件按的接口。。。/fileUpload
         map.put("/fileUpload", "authc");//需要登
-        // 融资接口需要有某个角色才能用    //Financing
-        map.put("/Financing/**", "roles[vip]");//需要登录并拥有某个角色
+
         /////////////////////////////
 //科技成果需要某个角色才能用/occupancy
         map.put("/occupancy/showByPage", "anon");
@@ -78,7 +77,7 @@ public class ShiroConfig {
 //项目融资/Financing   /findFinancingByCondition
         map.put("/Financing/findFinancingByCondition", "anon");
         map.put("/Financing/selectOneById", "anon");
-        map.put("/Financing/**", "authc");
+       map.put("/Financing/**", "authc");
 
  //意向表intention
         map.put("/intention/showByPage", "anon");
@@ -94,6 +93,7 @@ public class ShiroConfig {
 //专家入住/professionals
         map.put("/professionals/showByPage","anon");
         map.put("/professionals/getById","anon");
+        map.put("/professionals/showHot","anon");
         map.put("/professionals/**","authc");
 //人才需求/talentDemand
         map.put("/talentDemand/showByPageForCenter","anon");
@@ -101,7 +101,7 @@ public class ShiroConfig {
         map.put("/talentDemand/getById","anon");
         map.put("/talentDemand/**","authc");
 
-*/
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }

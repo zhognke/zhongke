@@ -99,7 +99,7 @@ public class PersonController {
      * 审核驳回
      */
     @RequestMapping("/rejectPerson")
-    public ReturnResult rejectPerson(Reject reject) {
+    public ReturnResult rejectPerson(@Validated(UserValidator.InSet.class) Reject reject) {
         if (personServiceImpl.rejectPerson(reject)) {
             return ReturnResult.success();
         }

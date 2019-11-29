@@ -207,12 +207,10 @@ public class OccupancyController {
 
         if (occupancyServceImpl.updateStatue(statue, id, reject)) {
 //通知
+
             Occupancy occupancy = occupancyServceImpl.seleOccupancyById(id);
-            InformEntity informEntity = new InformEntity();//创建消息
-            informEntity.setUserName(occupancy.getUserName());
-            informEntity.setCount(occupancy.getResultTechnolo() + str);
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-            informEntity.setTime(df.format(new Date()));
+
+        InformEntity informEntity= RabbitUtil.sendRabbic(occupancy.getUserName(),occupancy.getResultTechnolo() + str,new Date());
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
 

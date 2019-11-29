@@ -24,6 +24,7 @@ public class User implements Serializable {
     private String password;//密码
     @Pattern(regexp = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$", message = "手机号码格式错误", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String phoneNumber;//手机号
+    @NotNull(message = "邮箱不能为空")
     @Email(message = "请填写正确的邮箱格式",groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String email;//邮箱
     private String statu;//用户状态备用
