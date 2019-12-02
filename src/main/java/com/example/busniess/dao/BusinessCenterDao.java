@@ -14,19 +14,19 @@ public interface BusinessCenterDao {
      */
     @Insert("INSERT INTO `businesscenter`" +
             " (`uname`, `firmname`, `industry`, " +
-            "`typeEnterprise`, `scale`, `recorddate`, " +
-            "`registeredcapital`, `country`, `city`, " +
-            "`district`, `enterpriseprofile`," +
-            " `logo`, `identification`, `societycode`, " +
-            "`legalperson`, `persioncode`, `address`," +
-            " `phonenumber`, `agentperson`, `appersioncode`," +
+            "`typeEnterprise`,  " +
+            " `country`, `city`, " +
+            "`district`," +
+            "`societycode`, " +
+            "`legalperson`, `address`," +
+            " `phonenumber`," +
             " `statue`, `subtime`" +
             ") VALUES (#{uName}, #{firmName}, #{industry}," +
-            " #{typeEnterprise}, #{scale},#{recordDate}," +
-            " #{registeredCapital}, #{country}, #{city}, " +
-            "#{district}, #{enterpriseProfile}, #{logo}, " +
-            "#{identification}, #{societyCode}, #{legalPerson}, #{persionCode}," +
-            " #{address}, #{phoneNumber}, #{agentPerson}, #{apPersionCode}," +
+            " #{typeEnterprise}," +
+            " #{country}, #{city}, " +
+            "#{district}," +
+            "#{societyCode}, #{legalPerson}," +
+            " #{address}, #{phoneNumber}," +
             " 0, NOW()" +
             ")")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
@@ -55,14 +55,12 @@ public interface BusinessCenterDao {
      * 修改审核信息
      */
     @Update("UPDATE `businesscenter` SET `firmname`=#{firmName}, `industry`=#{industry}, " +
-            "`typeEnterprise`=#{typeEnterprise}, `scale`=#{scale}, " +
-            "`recorddate`=#{recordDate}, `registeredcapital`=#{registeredCapital}, " +
+            "`typeEnterprise`=#{typeEnterprise}," +
             "`country`=#{country}, `city`=#{city}, `district`=#{district}, " +
-            "`enterpriseprofile`=#{enterpriseProfile}, `logo`=#{logo}, " +
-            "`identification`=#{identification}, `societycode`=#{societyCode}, " +
-            "`legalperson`=#{legalPerson}, `persioncode`=#{persionCode}, " +
-            "`address`=#{address}, `phonenumber`=#{phoneNumber}, `agentperson`=#{agentPerson}, " +
-            "`appersioncode`=#{apPersionCode},`uptime`=NOW(),`statue`=0 WHERE (`id`=#{id})")
+            "`societycode`=#{societyCode}, " +
+            "`legalperson`=#{legalPerson}," +
+            "`address`=#{address}, `phonenumber`=#{phoneNumber}," +
+            "`uptime`=NOW(),`statue`=0 WHERE (`id`=#{id})")
     public Boolean updateBusinessCenter(BusinessCenter businessCenter);
 
     /**

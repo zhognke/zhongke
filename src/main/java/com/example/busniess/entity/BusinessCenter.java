@@ -33,7 +33,7 @@ public class BusinessCenter implements Serializable {
     @NotBlank(message = "所属区不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String district;//区 ··10
     //    @NotBlank(message = "附件地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String address;//附件地址  附件
+   private String address;//附件地址  附件
     @NotBlank(message = "手机号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigInteger phoneNumber;//手机号码  （手机号码
     @NotBlank(message = "统一社会信用代码不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
