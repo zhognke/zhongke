@@ -28,7 +28,7 @@ public class IntentionEntity implements Serializable {
     /**
      * 关联用户名
      */
-    @NotNull(message = "关联用户名不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    @NotNull(message = "关联用户名不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String userName;
     /**
      * 项目id

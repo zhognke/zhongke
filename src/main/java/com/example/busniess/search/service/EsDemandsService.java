@@ -1,6 +1,7 @@
-package com.example.busniess.service;
+package com.example.busniess.search.service;
 
 import com.example.busniess.search.model.EsDemands;
+import org.springframework.data.domain.Page;
 
 
 import java.util.List;
@@ -33,6 +34,6 @@ public interface EsDemandsService {
     /**
      * 根据关键字搜索名称或者副标题
      */
-//    Page<EsDemands> search(String keyword, Integer pageNum, Integer pageSize);
+    Page<EsDemands> search(String keyword, Integer pageNum, Integer pageSize);
 
 }

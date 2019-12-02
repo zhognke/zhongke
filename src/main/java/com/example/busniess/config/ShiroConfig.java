@@ -96,9 +96,9 @@ public class ShiroConfig {
         map.put("/professionals/showHot","anon");
         map.put("/professionals/**","authc");
 //人才需求/talentDemand
-        map.put("/talentDemand/showByPageForCenter","anon");
+        map.put("/talentDemand/showByPage","anon");
         map.put("/talentDemand/showById","anon");
-        map.put("/talentDemand/getById","anon");
+        map.put("/talentDemand/getById","authc");
         map.put("/talentDemand/**","authc");
 
 

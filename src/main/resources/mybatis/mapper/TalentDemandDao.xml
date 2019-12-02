@@ -92,8 +92,14 @@
             <if test="engagedIndustryDetail!=null and engagedIndustryDetail!=''">
                 and d.engaged_industry_detail=#{engagedIndustryDetail}
             </if>
-            <if test="industryExperience!=null and industryExperience!=''">
-                and d.industry_experience=#{industryExperience}
+            <if test="industryExperienceBegin!=null and industryExperienceEnd!=null">
+                and d.`industry_experience` between #{industryExperienceBegin} and #{industryExperienceEnd}
+            </if>
+            <if test="industryExperienceBegin!=null and industryExperienceEnd==null">
+                and d.`industry_experience` &gt;= #{industryExperienceBegin}
+            </if>
+            <if test="industryExperienceBegin==null and industryExperienceEnd!=null">
+                and d.`industry_experience` &lt;= #{industryExperienceEnd}
             </if>
             <if test="technologyScope!=null and technologyScope!=''">
                 and d.technology_scope in ('${technologyScope}')
