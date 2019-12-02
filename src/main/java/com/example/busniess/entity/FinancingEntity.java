@@ -48,7 +48,7 @@ public class FinancingEntity {
 //    @NotBlank(message = "可承担利息不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String interest;//可承担利息16
 //    @NotNull(message = "所占时间不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private Integer time;//所占时间17
+    private BigDecimal time;//所占时间17
     @NotBlank(message = "单位类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String unit;//单位18
 //    @NotBlank(message = "资金占用时长单位不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
