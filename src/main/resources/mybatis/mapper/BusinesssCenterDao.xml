@@ -92,13 +92,13 @@
             </if>
 
             <if test="recordDateBegin!=null and recordDateEnd!=null">
-                and b.`recordDate` between #{recordDateBegin} and #{recordDateEnd}
+                and i.`registrationDate` between #{recordDateBegin} and #{recordDateEnd}
             </if>
             <if test="recordDateBegin!=null and recordDateEnd==null">
-                and b.`recordDate` &gt;= #{recordDateBegin}
+                and i.`registrationDate` &gt;= #{recordDateBegin}
             </if>
             <if test="recordDateBegin==null and recordDateEnd!=null">
-                and b.`recordDate` &lt;= #{recordDateEnd}
+                and i.`registrationDate` &lt;= #{recordDateEnd}
             </if>
 
             <if test="registeredCapitalBegin!=null and registeredCapitalEnd!=null">
