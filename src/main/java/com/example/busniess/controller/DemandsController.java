@@ -81,7 +81,7 @@ public class DemandsController {
     public ReturnResult showByPageForCenter(DemandsEntity demandsEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         String userName = ShiroUtils.getUserName();
         if (userName == null) {
-            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
+            return ReturnResult.erro(CodeMsg.LOGIN_TIME_OUT);
         }else{
             demandsEntity.setUserName(userName);
         }
@@ -162,12 +162,12 @@ public class DemandsController {
     @SysLog(value="新增企业需求",type="企业需求")
     @PostMapping("/addDemands")
     public ReturnResult addDemands(@Validated({UserValidator.InSet.class}) DemandsEntity demandsEntity) {
-        String userName = ShiroUtils.getUserName();
+        /*String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }else{
             demandsEntity.setUserName(userName);
-        }
+        }*/
         if (demandsService.insert(demandsEntity)) {
             return ReturnResult.success();
         } else {
