@@ -63,6 +63,14 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         if (talentDemandEntity.getDegree() != null) {
             talentDemandEntity.setDegree(talentDemandEntity.getDegree().replaceAll(",", "','"));
         }
+        String industryExperience = talentDemandEntity.getIndustryExperience();
+        if(!industryExperience.isEmpty()){
+            String srr[] = industryExperience.split("-");
+            talentDemandEntity.setIndustryExperienceBegin(srr[0]);
+            if(srr.length>1){
+                talentDemandEntity.setIndustryExperienceEnd(srr[1]);
+            }
+        }
         List<TalentDemandEntity> list = talentDemandDao.search(talentDemandEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;

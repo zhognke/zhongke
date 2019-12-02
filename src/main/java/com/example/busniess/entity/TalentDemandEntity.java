@@ -157,4 +157,7 @@ public class TalentDemandEntity implements Serializable {
     private String typeEnterprise;//企业类型
     BusinessCenterInformationEntity businessCenter;
     List<Occupancy> occupancyList;
+
+    String industryExperienceBegin;
+    String industryExperienceEnd;
 }

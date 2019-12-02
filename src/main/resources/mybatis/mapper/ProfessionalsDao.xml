@@ -124,7 +124,7 @@
             and technology_scope in ('${technologyScope}')
         </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (research_direction like CONCAT('%',#{keyWord},'%') or real_name like CONCAT('%',#{keyWord},'%') or institutions like CONCAT('%',#{keyWord},'%'))
+            and (research_direction like CONCAT('%',#{keyWord},'%') or real_name like CONCAT('%',#{keyWord},'%') or institutions like CONCAT('%',#{keyWord},'%') or technology_scope like CONCAT('%',#{keyWord},'%'))
         </if>
         <if test="status!=null">
             and status=#{status}

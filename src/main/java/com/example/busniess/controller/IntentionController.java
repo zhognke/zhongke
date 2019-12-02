@@ -36,12 +36,12 @@ public class IntentionController {
      */
     @PostMapping("/addIntention")
     public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) IntentionEntity intentionEntity){
-        String userName = ShiroUtils.getUserName();
+        /*String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }else{
             intentionEntity.setUserName(userName);
-        }
+        }*/
         if(intentionService.addIntention(intentionEntity)){
             return ReturnResult.success("添加成功");
         }else{

@@ -142,7 +142,7 @@ public class InnovationActivitiesRegistrationController {
     }
 
     /**
-     *
+     * 检验是否已经报名
      * @param username
      * @param innovationId
      * @return

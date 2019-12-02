@@ -1,6 +1,7 @@
 package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -61,6 +62,7 @@ public class Occupancy implements Serializable {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date stopTime;//停止发布时间（过期）
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date creatTime;//创建时间
 
     private Date upTiem;//修改时间
