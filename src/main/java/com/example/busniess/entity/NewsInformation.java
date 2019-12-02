@@ -2,6 +2,7 @@ package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class NewsInformation implements Serializable {
     @NotBlank(message = "标题不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String title;//标题
     private  String resource;//来源
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private  Date publishDate;//发布时间
 
 //    @NotBlank(message = "封面地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})

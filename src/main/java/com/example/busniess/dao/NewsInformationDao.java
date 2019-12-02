@@ -14,8 +14,8 @@ public interface NewsInformationDao {
      * @param newsInformation
      */
     @Insert("INSERT INTO `newsinformation` (`uname`, `" +
-            "category`, `title`, `cover`, `detail`, `submittime`) VALUES " +
-            "(#{uName}, #{category}, #{title}, #{cover}, #{detail}, NOW())")
+            "category`, `title`, `cover`, `detail`, `submittime`,`resource`,`publishDate`) VALUES " +
+            "(#{uName}, #{category}, #{title}, #{cover}, #{detail}, NOW(),#{resource},#{publishDate})")
     public Boolean insertNewsInformation(NewsInformation newsInformation);
 
     /**
@@ -29,13 +29,13 @@ public interface NewsInformationDao {
      */
     @Update("UPDATE `newsinformation` SET " +
             "`category`=#{category}, `title`=#{title}, `cover`=#{cover}," +
-            " `detail`=#{detail}, `uptime`=NOW() WHERE (`id`=#{id})")
+            " `detail`=#{detail}, `uptime`=NOW(),`resource`=#{resource},`publishDate`=#{publishDate} WHERE (`id`=#{id})")
     public Boolean udateNewsInformation(NewsInformation newsInformation);
 
     /**
      * 查看所有新闻资讯
      */
-    @Select("SELECT * FROM newsinformation ORDER BY submittime DESC")
+    @Select("SELECT * FROM newsinformation ORDER BY `resource` DESC")
 
     public List<NewsInformation> selectNewsInformation();
 
@@ -45,7 +45,7 @@ public interface NewsInformationDao {
      * @param category
      * @return
      */
-    @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY submittime DESC")
+    @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY `resource` DESC")
 
     public List<NewsInformation> selectNewsInformationByCategory(String category);
 
