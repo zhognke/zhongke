@@ -32,7 +32,7 @@ public class FinancingEntity {
     private String projecrPhase;//项目阶段8
 //
     @NotNull(message = "项目周期不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private Integer period;//项目周期9
+    private BigDecimal period;//项目周期9
     @NotBlank(message = "联系人不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String linkMan;//联系人 10
     @NotBlank(message = "电话号码不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})

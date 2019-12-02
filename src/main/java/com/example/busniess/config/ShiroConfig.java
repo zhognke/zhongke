@@ -38,6 +38,7 @@ public class ShiroConfig {
 
         shiroFilterFactoryBean.setLoginUrl("/#/login");
         Map<String, String> map = new LinkedHashMap<>();
+        /**
 //        map.put("/loginout", "logout");
 
 //登录接口设置
@@ -100,7 +101,7 @@ public class ShiroConfig {
         map.put("/talentDemand/showById", "anon");
         map.put("/talentDemand/**", "authc");
 
-
+**/
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }

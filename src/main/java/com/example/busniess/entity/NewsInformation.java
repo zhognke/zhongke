@@ -19,7 +19,11 @@ public class NewsInformation implements Serializable {
     private String category;//类别
     @NotBlank(message = "标题不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String title;//标题
-    @NotBlank(message = "封面地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private  String resource;//来源
+
+    private  Date publishDate;//发布时间
+
+//    @NotBlank(message = "封面地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String cover;//封面地址
     @NotBlank(message = "新闻详情不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String detail;//新闻详情

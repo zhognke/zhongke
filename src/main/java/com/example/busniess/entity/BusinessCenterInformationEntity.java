@@ -23,7 +23,7 @@ public class BusinessCenterInformationEntity implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registrationDate;  //注册时间
-    private BigDecimal registeredCapital;   //注册资金
+    private BigDecimal registeredCapita;   //注册资金
     private int scale;  //规模
     private String enterpriseProfile;//企业简介
     private String logo;//log地址
