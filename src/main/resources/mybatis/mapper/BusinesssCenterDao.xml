@@ -21,7 +21,7 @@
             <id property="id" column="id1"/>
             <result property="uName" column="uname1"/>
             <result property="registrationDate" column="registrationDate1"/>
-            <result property="registeredCapita" column="registeredCapita1"/>
+            <result property="registeredCapital" column="registeredCapital1"/>
             <result property="scale" column="scale1"/>
             <result property="enterprise" column="enterprise1"/>
             <result property="logo" column="logo1"/>
@@ -57,7 +57,7 @@
     </select>
 
     <select id="search" parameterType="businessCenter" resultMap="business">
-        SELECT b.*,i.id id1,i.uname uname1,i.registrationDate registrationDate1,i.registeredCapita registeredCapita1,i.scale scale1,i.enterprise enterprise1,i.logo logo1,i.statue statue1,i.insertTime insertTime1,i.updateTime updateTime1 FROM businesscenter b  INNER JOIN  businessInformation i ON b.uname=i.uname
+        SELECT b.*,i.id id1,i.uname uname1,i.registrationDate registrationDate1,i.registeredCapital registeredCapital1,i.scale scale1,i.enterprise enterprise1,i.logo logo1,i.statue statue1,i.insertTime insertTime1,i.updateTime updateTime1 FROM businesscenter b  INNER JOIN  businessInformation i ON b.uname=i.uname
         <where>
 
             <if test="statue!=null and statue!=''">
@@ -81,13 +81,14 @@
             </if>
 
             <if test="scaleBegin!=null and scaleEnd!=null">
-                and b.`scale` between #{scaleBegin} and #{scaleEnd}
+                and i.`scale` between #{scaleBegin} and #{scaleEnd}
             </if>
+
             <if test="scaleBegin!=null and scaleEnd==null">
-                and b.`scale` &gt;= #{scaleBegin}
+                and i.`scale` &gt;= #{scaleBegin}
             </if>
             <if test="scaleBegin==null and scaleEnd!=null">
-                and b.`scale` &lt;= #{scaleEnd}
+                and i.`scale` &lt;= #{scaleEnd}
             </if>
 
             <if test="recordDateBegin!=null and recordDateEnd!=null">
@@ -101,23 +102,18 @@
             </if>
 
             <if test="registeredCapitalBegin!=null and registeredCapitalEnd!=null">
-                and b.`registeredCapital` between #{registeredCapitalBegin} and #{registeredCapitalEnd}
+                and i.`registeredCapital` between #{registeredCapitalBegin} and #{registeredCapitalEnd}
             </if>
             <if test="registeredCapitalBegin!=null and registeredCapitalEnd==null">
-                and b.`registeredCapital` &gt;= #{registeredCapitalBegin}
+                and i.`registeredCapital` &gt;= #{registeredCapitalBegin}
             </if>
             <if test="registeredCapitalBegin==null and registeredCapitalEnd!=null">
-                and b.`registeredCapital` &lt;= #{registeredCapitalEnd}
-            </if>
-
-            <if test="statue!=null and statue!=''">
-                AND b.statue=#{statue}
+                and i.`registeredCapital` &lt;= #{registeredCapitalEnd}
             </if>
 
             <if test="keyWord!=null and keyWord!=''">
                 AND (b.`firmname` like CONCAT('%',#{keyWord},'%') or b.`industry` like CONCAT('%',#{keyWord},'%'))
             </if>
-
 
         </where>
         order by b.subtime desc
