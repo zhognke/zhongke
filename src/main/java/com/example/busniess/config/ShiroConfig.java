@@ -36,13 +36,14 @@ public class ShiroConfig {
         // 拦截器
         //设置登录的页面
 
-       shiroFilterFactoryBean.setLoginUrl("/#/login");
+        shiroFilterFactoryBean.setLoginUrl("/#/login");
         Map<String, String> map = new LinkedHashMap<>();
 //        map.put("/loginout", "logout");
 
 //登录接口设置
         map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问
         //企业认证中心的
+        map.put("/bussinessCenter/showByPage", "anon");//企业中心所有的接口需要登录
         map.put("/bussinessCenter/**", "authc");//企业中心所有的接口需要登录
 //企业补充信息/BusinessInformation//或者拥有某个角色后
         map.put("/BusinessInformation/**", "authc");//企业中心所有的接口需要登录
@@ -62,44 +63,42 @@ public class ShiroConfig {
         map.put("/industrialdeclaration/showByPageForCenter", "authc");//个人展示
         map.put("/industrialdeclaration/**", "roles[vip]");
 //创新活动申请表/innovationActivitiesApplication
-        map.put("/innovationActivitiesApplication/showByPage", "anon");
-        map.put("/innovationActivitiesApplication/getById", "anon");
+//        map.put("/innovationActivitiesApplication/showByPage", "anon");
+//        map.put("/innovationActivitiesApplication/getById", "anon");
         map.put("/innovationActivitiesApplication/**", "authc");
 
 //创新活动表/innovationActivities
         map.put("/innovationActivities/showByPage", "anon");
         map.put("/innovationActivities/getById", "anon");
-        map.put("/innovationActivities/getById", "authc");
+        map.put("/innovationActivities/**", "authc");
 //创新活动报名表
-        map.put("/innovationActivitiesRegistration/showByPage", "anon");
-        map.put("/innovationActivitiesRegistration/getById", "anon");
+//        map.put("/innovationActivitiesRegistration/showByPage", "anon");
+//        map.put("/innovationActivitiesRegistration/getById", "anon");
         map.put("/innovationActivitiesRegistration/**", "authc");
 //项目融资/Financing   /findFinancingByCondition
         map.put("/Financing/findFinancingByCondition", "anon");
         map.put("/Financing/selectOneById", "anon");
-       map.put("/Financing/**", "authc");
+        map.put("/Financing/**", "authc");
 
- //意向表intention
-        map.put("/intention/showByPage", "anon");
-        map.put("/intention/getById", "anon");
+        //意向表intention
+        map.put("/intention/addIntention", "anon");
         map.put("/intention/**", "authc");
-  //新闻超级管理员
+        //新闻超级管理员
         map.put("/news/**", "anon");
 //通知
         map.put("/notification/**", "authc");
-   //个人认证/person
-      //  map.put("/person/selectAllPerson", "roles[admin]");
+        //个人认证/person
+        //  map.put("/person/selectAllPerson", "roles[admin]");
         map.put("/person/**", "authc");//个人认证需要登录
 //专家入住/professionals
-        map.put("/professionals/showByPage","anon");
-        map.put("/professionals/getById","anon");
-        map.put("/professionals/showHot","anon");
-        map.put("/professionals/**","authc");
+        map.put("/professionals/showByPage", "anon");
+        map.put("/professionals/showById", "anon");
+        map.put("/professionals/showHot", "anon");
+        map.put("/professionals/**", "authc");
 //人才需求/talentDemand
-        map.put("/talentDemand/showByPage","anon");
-        map.put("/talentDemand/showById","anon");
-        map.put("/talentDemand/getById","authc");
-        map.put("/talentDemand/**","authc");
+        map.put("/talentDemand/showByPage", "anon");
+        map.put("/talentDemand/showById", "anon");
+        map.put("/talentDemand/**", "authc");
 
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
@@ -120,6 +119,7 @@ public class ShiroConfig {
         securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
+
     @Bean
     public CacheManager cacheManager() {
         return new MemoryConstrainedCacheManager();
