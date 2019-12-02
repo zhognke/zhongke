@@ -3,7 +3,7 @@
 
 <mapper namespace="com.example.busniess.dao.EsDemandsDao">
 
-    <resultMap type="com.example.busniess.search.model.EsDemands" id="demandsMap">
+    <resultMap type="com.example.busniess.search.model.EsDemandsModel" id="demandsMap">
         <result property="id" column="id"/>
         <result property="companyName" column="company_name"/>
         <result property="demandType" column="demand_type"/>
@@ -29,9 +29,9 @@
     </resultMap>
 
     <select id="getAllEsDemandsList" resultMap="demandsMap" parameterType="Integer">
-        SELECT `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`email`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion` FROM `demands`
+        SELECT `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion` FROM `demands`
         <where>
-            <if test="id!=null and id!=''">
+            <if test="id!=null">
                 and `id`=#{id}
             </if>
         </where>

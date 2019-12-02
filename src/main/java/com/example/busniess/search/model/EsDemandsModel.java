@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Document(indexName = "casita", type = "demands")
 @Data
-public class EsDemands implements Serializable {
+public class EsDemandsModel implements Serializable {
 
     @Id
     private Integer id;
@@ -21,12 +21,10 @@ public class EsDemands implements Serializable {
     @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String demandOutline;
 
-//    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-//    private String content;
-
     @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String demandContent;
-    @Field(type = FieldType.Keyword)
+
+    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String companyName;
 
     @Field(type = FieldType.Keyword)
@@ -38,7 +36,7 @@ public class EsDemands implements Serializable {
 
     private String cooperationType;
 
-    private BigDecimal preInvestmentAmount;
+    private String preInvestmentAmount;
 
     private Date endDate;
 

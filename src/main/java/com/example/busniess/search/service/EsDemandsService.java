@@ -1,6 +1,6 @@
 package com.example.busniess.search.service;
 
-import com.example.busniess.search.model.EsDemands;
+import com.example.busniess.search.model.EsDemandsModel;
 import org.springframework.data.domain.Page;
 
 
@@ -24,16 +24,21 @@ public interface EsDemandsService {
     /**
      * 根据id创建商品
      */
-    EsDemands create(Integer id);
+    EsDemandsModel create(Integer id);
 
     /**
      * 批量删除商品
      */
     void delete(List<Integer> ids);
-
+    /**
+     * 根据id查找
+     * @param id
+     * @return
+     */
+    EsDemandsModel selectById(Integer id);
     /**
      * 根据关键字搜索名称或者副标题
      */
-    Page<EsDemands> search(String keyword, Integer pageNum, Integer pageSize);
+    Page<EsDemandsModel> search(String keyword, Integer pageNum, Integer pageSize);
 
 }

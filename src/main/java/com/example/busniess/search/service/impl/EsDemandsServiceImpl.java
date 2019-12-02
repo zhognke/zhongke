@@ -2,7 +2,7 @@ package com.example.busniess.search.service.impl;
 
 import com.example.busniess.dao.EsDemandsDao;
 import com.example.busniess.search.common.IndexKey;
-import com.example.busniess.search.model.EsDemands;
+import com.example.busniess.search.model.EsDemandsModel;
 import com.example.busniess.search.repository.EsDemandsRepository;
 import com.example.busniess.search.service.EsDemandsService;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
@@ -34,9 +34,9 @@ public class EsDemandsServiceImpl implements EsDemandsService {
 
     @Override
     public int importAll() {
-        List<EsDemands> EsDemandsList = esDemandsDao.getAllEsDemandsList(null);
-        Iterable<EsDemands> EsDemandsIterable = esDemandsRepository.saveAll(EsDemandsList);
-        Iterator<EsDemands> iterator = EsDemandsIterable.iterator();
+        List<EsDemandsModel> EsDemandsList = esDemandsDao.getAllEsDemandsList(null);
+        Iterable<EsDemandsModel> EsDemandsIterable = esDemandsRepository.saveAll(EsDemandsList);
+        Iterator<EsDemandsModel> iterator = EsDemandsIterable.iterator();
         int result = 0;
         while (iterator.hasNext()) {
             result++;
@@ -51,11 +51,11 @@ public class EsDemandsServiceImpl implements EsDemandsService {
     }
 
     @Override
-    public EsDemands create(Integer id) {
-        EsDemands result = null;
-        List<EsDemands> EsDemandsList = esDemandsDao.getAllEsDemandsList(id);
+    public EsDemandsModel create(Integer id) {
+        EsDemandsModel result = null;
+        List<EsDemandsModel> EsDemandsList = esDemandsDao.getAllEsDemandsList(id);
         if (EsDemandsList.size() > 0) {
-            EsDemands EsDemands = EsDemandsList.get(0);
+            EsDemandsModel EsDemands = EsDemandsList.get(0);
             result = esDemandsRepository.save(EsDemands);
         }
         return result;
@@ -64,9 +64,9 @@ public class EsDemandsServiceImpl implements EsDemandsService {
     @Override
     public void delete(List<Integer> ids) {
         if (!CollectionUtils.isEmpty(ids)) {
-            List<EsDemands> EsDemandsList = new ArrayList<>();
+            List<EsDemandsModel> EsDemandsList = new ArrayList<>();
             for (Integer id : ids) {
-                EsDemands EsDemands = new EsDemands();
+                EsDemandsModel EsDemands = new EsDemandsModel();
                 EsDemands.setId(id);
                 EsDemandsList.add(EsDemands);
             }
@@ -75,7 +75,13 @@ public class EsDemandsServiceImpl implements EsDemandsService {
     }
 
     @Override
-    public Page<EsDemands> search(String keyword, Integer pageNum, Integer pageSize) {//多个字段匹配，只要满足一个即可返回结果
+    public EsDemandsModel selectById(Integer id) {
+        return esDemandsRepository.queryEsDemandsById(id);
+    }
+
+    @Override
+    public Page<EsDemandsModel> search(String keyword, Integer pageNum, Integer pageSize) {
+        //多个字段匹配，只要满足一个即可返回结果
         MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(keyword,
                 IndexKey.POST_DEMANDOUTLINE,
                 IndexKey.POST_DEMANDCONTENT,
@@ -84,13 +90,11 @@ public class EsDemandsServiceImpl implements EsDemandsService {
         );
 
         Pageable pageable = PageRequest.of(pageNum, pageSize);
-
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(multiMatchQueryBuilder)
                 .withPageable(pageable)
                 .build();
         return esDemandsRepository.search(searchQuery);
     }
-
 
 }

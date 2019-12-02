@@ -64,7 +64,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
             talentDemandEntity.setDegree(talentDemandEntity.getDegree().replaceAll(",", "','"));
         }
         String industryExperience = talentDemandEntity.getIndustryExperience();
-        if(!industryExperience.isEmpty()){
+        if(industryExperience!=null&&industryExperience!=""){
             String srr[] = industryExperience.split("-");
             talentDemandEntity.setIndustryExperienceBegin(srr[0]);
             if(srr.length>1){

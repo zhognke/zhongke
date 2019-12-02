@@ -2,7 +2,7 @@ package com.example.busniess.search.controller;
 
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
-import com.example.busniess.search.model.EsDemands;
+import com.example.busniess.search.model.EsDemandsModel;
 import com.example.busniess.search.service.EsDemandsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,26 +33,26 @@ public class EsDemandsController {
     }
 
     @ApiOperation(value = "根据id删除需求")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/deleteById", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnResult<Object> delete(@PathVariable Integer id) {
+    public ReturnResult<Object> delete(Integer id) {
         esDemandsService.delete(id);
         return ReturnResult.success(null);
     }
 
     @ApiOperation(value = "根据id批量删除需求")
-    @RequestMapping(value = "/delete/batch", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteByIds", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnResult<Object> delete(@RequestParam("ids") List<Integer> ids) {
+    public ReturnResult<Object> delete(List<Integer> ids) {
         esDemandsService.delete(ids);
         return ReturnResult.success(null);
     }
 
     @ApiOperation(value = "根据id创建需求")
-    @RequestMapping(value = "/create/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnResult<EsDemands> create(@PathVariable Integer id) {
-        EsDemands EsDemands = esDemandsService.create(id);
+    public ReturnResult<EsDemandsModel> create(Integer id) {
+        EsDemandsModel EsDemands = esDemandsService.create(id);
         if (EsDemands != null) {
             return ReturnResult.success(EsDemands);
         } else {
@@ -61,12 +61,20 @@ public class EsDemandsController {
     }
 
     @ApiOperation(value = "根据关键字搜索")
+    @RequestMapping(value = "/searchById", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnResult searchById(Integer id){
+        EsDemandsModel esDemands = esDemandsService.selectById(id);
+        return ReturnResult.success(esDemands);
+    }
+
+    @ApiOperation(value = "根据关键字搜索")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
     public ReturnResult search(@RequestParam(required = false) String keyword,
-                                                      @RequestParam(required = false, defaultValue = "0") Integer pageNum,
-                                                      @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        Page<EsDemands> esProductPage = esDemandsService.search(keyword, pageNum, pageSize);
+                               @RequestParam(required = false, defaultValue = "0") Integer pageNum,
+                               @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        Page<EsDemandsModel> esProductPage = esDemandsService.search(keyword, pageNum, pageSize);
         return ReturnResult.success(esProductPage);
     }
 }
