@@ -14,7 +14,7 @@ public interface BusinessInformationDao {
      * @param businessInformation
      * @return
      */
-    @Insert("INSERT INTO `businessInformation` (`uName`, `registrationDate`, `registeredCapita`, `scale`, `enterprise`, `logo`, `statue`, `insertTime`) VALUES (#{uName}, #{registrationDate}, #{registeredCapita}, #{scale}, #{enterprise}, #{logo}, 1, NoW())")
+    @Insert("INSERT INTO `businessInformation` (`uName`, `registrationDate`, `registeredCapital`, `scale`, `enterprise`, `logo`, `statue`, `insertTime`) VALUES (#{uName}, #{registrationDate}, #{registeredCapital}, #{scale}, #{enterprise}, #{logo}, 1, NoW())")
     public Boolean insertBusinessInformation(BusinessInformation businessInformation);
 
     /**
@@ -30,7 +30,7 @@ public interface BusinessInformationDao {
      * @param businessInformation
      * @return
      */
-    @Update("UPDATE `businessInformation` SET `registrationDate`=#{registrationDate}, `registeredCapita`=#{registeredCapita}, `scale`=#{scale}, `enterprise`=#{enterprise}, `logo`=#{logo}, `updateTime`=#{updateTime} WHERE (`id`=#{id})")
+    @Update("UPDATE `businessInformation` SET `registrationDate`=#{registrationDate}, `registeredCapital`=#{registeredCapital}, `scale`=#{scale}, `enterprise`=#{enterprise}, `logo`=#{logo}, `updateTime`=#{updateTime} WHERE (`id`=#{id})")
     public Boolean updateBusinessInformation(BusinessInformation businessInformation);
 
     /**
