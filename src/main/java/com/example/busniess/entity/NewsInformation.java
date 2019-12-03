@@ -23,8 +23,8 @@ public class NewsInformation implements Serializable {
     @NotBlank(message = "标题不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String title;//标题
     private  String resource;//来源
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private  Date publishDate;//发布时间
 //  @NotBlank(message = "封面地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String cover;//封面地址

@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Document(indexName = "casita", type = "demands")
+@Document(indexName = "demands", type = "demands",shards = 3)
 @Data
 public class EsDemandsModel implements Serializable {
 
@@ -30,14 +30,18 @@ public class EsDemandsModel implements Serializable {
     @Field(type = FieldType.Keyword)
     private String demandIndustry;
 
+    @Field(type = FieldType.Keyword)
     private String demandIndustryDetail;
 
+    @Field(type = FieldType.Keyword)
     private String demandType;
 
+    @Field(type = FieldType.Keyword)
     private String cooperationType;
 
     private String preInvestmentAmount;
 
+    @Field(type = FieldType.Date)
     private Date endDate;
 
     @Field(type = FieldType.Date)
