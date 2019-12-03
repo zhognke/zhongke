@@ -148,7 +148,7 @@ public class OccupancyServiceimpl implements OccupancyService {
     public Occupancy seleOccupancyById(Integer id) {
         Occupancy occupancy = occupancyDao.selectOneById(id);
 //        System.out.println(occupancy);
-        occupancy.setBusinessCenter(businessCenterDao.selectOneBusinessCenter(occupancy.getUserName()));
+//        occupancy.setBusinessCenter(businessCenterDao.selectOneBusinessCenter(occupancy.getUserName()));
         return occupancy;
     }
 

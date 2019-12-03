@@ -21,15 +21,17 @@ public interface OccupancyDao {
 
     /**
      * 查看具体的
+     *
      * @param id
      * @return
      */
     @Select("SELECT * FROM occupancy  WHERE id=#{id} ")
     @Results({
-            @Result(property = "id",column = "id"),
-            @Result(property = "userName",column = "userName"),
-         @Result(property = "imgAddress", column = "id", many = @Many(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
-            @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation"))
+            @Result(property = "id", column = "id"),
+            @Result(property = "userName", column = "userName"),
+            @Result(property = "imgAddress", column = "id", many = @Many(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
+            @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+            @Result(property = "businessCenter", column = "username", one = @One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter"))
     })
     public Occupancy selectOneById(Integer id);
 
@@ -59,6 +61,7 @@ public interface OccupancyDao {
 
     /**
      * 名字
+     *
      * @param userName
      * @return
      */
@@ -75,7 +78,8 @@ public interface OccupancyDao {
     @Select("SELECT * FROM occupancy WHERE id=#{id}")
     @Results({
             @Result(property = "imgAddress", column = "id", one = @One(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
-            @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation"))
+            @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+            @Result(property = "businessCenter", column = "username", one = @One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter"))
     })
     public Occupancy selectOneOccupancy(Integer id);
 
@@ -134,6 +138,7 @@ public interface OccupancyDao {
      */
     @Update("UPDATE `occupancy` SET `kstatue`=#{kstatue},close_reason=#{reason},stoptime=NOW() WHERE id=#{id}")
     public Boolean updateKstatue(@Param("kstatue") Integer kstatue, @Param("id") Integer id);
+
     /**
      * 结束
      *
@@ -141,7 +146,7 @@ public interface OccupancyDao {
      * @return
      */
     @Update("UPDATE `occupancy` SET `kstatue`=#{kstatue},close_reason=#{closeReason},stoptime=NOW() WHERE id=#{id}")
-    public Boolean closeById(@Param("id") Integer id,@Param("kstatue")Integer kstatue,@Param("closeReason")String closeReason);
+    public Boolean closeById(@Param("id") Integer id, @Param("kstatue") Integer kstatue, @Param("closeReason") String closeReason);
 
     /**
      * 更改审核状态
@@ -150,7 +155,7 @@ public interface OccupancyDao {
      * @return
      */
     @Update("UPDATE `occupancy` SET `statue`=#{statue},`reject`=#{reject},`audittime`=NOW() WHERE id=#{id}")
-    public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id, @Param("reject")String reject);
+    public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id, @Param("reject") String reject);
 
     /**
      * 根据行业查询
@@ -180,6 +185,7 @@ public interface OccupancyDao {
 
     /**
      * 统计总数
+     *
      * @param
      * @return
      */
@@ -187,12 +193,12 @@ public interface OccupancyDao {
     public Integer countIndustry();
 
     @Select("SELECT id,resultTechnolo,price,industry,industryDetail,attribute,stage,transferType,negotiable FROM `occupancy` where statue=1 and kstatue =1 and hot='热门' ORDER BY `creattime` DESC LIMIT 0,#{size}")
-    List<Occupancy> getHotIndustry(@Param("size")Integer size);
+    List<Occupancy> getHotIndustry(@Param("size") Integer size);
 
     List<Occupancy> showByPageForCenter(Occupancy occupancy);
 
     @Select("SELECT companyName,resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price,province,city,district,negotiable FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
-    List<Occupancy> getOccupanyForProfessional(@Param("username")String username,@Param("size")Integer size);
+    List<Occupancy> getOccupanyForProfessional(@Param("username") String username, @Param("size") Integer size);
 
     /**
      *
