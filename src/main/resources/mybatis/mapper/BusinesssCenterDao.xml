@@ -65,7 +65,7 @@
             </if>
 
             <if test="industry!=null and industry!=''">
-                b.`industry`=#{industry}
+               AND b.`industry`=#{industry}
             </if>
             <if test="typeEnterprise!=null and typeEnterprise!=''">
                 AND b.`typeEnterprise`=#{typeEnterprise}

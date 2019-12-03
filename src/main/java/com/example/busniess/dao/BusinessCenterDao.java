@@ -26,7 +26,7 @@ public interface BusinessCenterDao {
             " #{country}, #{city}, " +
             "#{district}," +
             "#{societyCode}, #{legalPerson}," +
-            " #{address}, #{phoneNumber},#{persionCode}" +
+            " #{address}, #{phoneNumber},#{persionCode}," +
             " 0, NOW()" +
             ")")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
