@@ -37,6 +37,7 @@
         <result property="keyWord" column="keyWord"/>
         <result property="closeReason" column="closeReason"/>
         <result property="companyName" column="companyName"/>
+        <result property="negotiable" column="negotiable"/>
         <association property="businessInformation" javaType="businessInformation">
             <id property="id" column="id"/>
             <result property="uName" column="uName"/>
@@ -95,7 +96,7 @@
             and `industryDetail` = #{industryDetail}
         </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like
+            and (`negotiable`=#{keyWord} or `industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like
             "%${keyWord}%")
         </if>
 

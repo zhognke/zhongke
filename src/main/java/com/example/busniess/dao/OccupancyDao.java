@@ -97,7 +97,7 @@ public interface OccupancyDao {
             " `patenNname`=#{patenNname}, `patenNumber`=#{patenNumber}, `price`=#{price}," +
             "`registerNumber`=#{registerNumber}, `describe`=#{describe}, `appliedRange`=#{appliedRange}," +
             "`transferType`=#{transferType},`linkman`=#{linkMan}, `phonenumber`=#{phoneNumber},`province`=#{province}," +
-            "`city`=#{city},`district`=#{district},`uptime`=NOW() WHERE (`id`=#{id})")
+            "`city`=#{city},`district`=#{district},`uptime`=NOW(),`negotiable`=#{negotiable} WHERE (`id`=#{id})")
     public Boolean upDataOccupancy(Occupancy occupancy);
 
     /**
@@ -119,10 +119,10 @@ public interface OccupancyDao {
     @Insert("INSERT INTO `occupancy` (`username`, `companyName`,`resultTechnolo`, `stage`, " +
             "`advantages`, `industry`, `industryDetail`,`attribute`, `patenNname`, `patenNumber`," +
             " `price`, `registerNumber`,`describe`, `appliedRange`,`transferType`,`linkman`, `phonenumber`,`province`,`city`,`district`,`stoptime`," +
-            "`creattime`,`kstatue`, `statue`) " +
+            "`creattime`,`kstatue`, `statue`,`negotiable`) " +
             "VALUES (#{userName},#{companyName} ,#{resultTechnolo}, #{stage}, #{advantages}, #{industry}, #{industryDetail},#{attribute}, #{patenNname}, #{patenNumber}, " +
             "#{price},#{registerNumber},#{describe}, #{appliedRange},#{transferType},#{linkMan}, #{phoneNumber},#{province},#{city},#{district},#{stopTime}," +
-            "NOW(), '1', '0')")
+            "NOW(), '1', '0',#{negotiable})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public Boolean insertOccupancy(Occupancy occupancy);
 
@@ -186,12 +186,12 @@ public interface OccupancyDao {
     @Select("SELECT COUNT(industry) FROM occupancy WHERE statue=1")
     public Integer countIndustry();
 
-    @Select("SELECT id,resultTechnolo,price,industry,industryDetail,attribute,stage,transferType FROM `occupancy` where statue=1 and kstatue =1 and hot='热门' ORDER BY `creattime` DESC LIMIT 0,#{size}")
+    @Select("SELECT id,resultTechnolo,price,industry,industryDetail,attribute,stage,transferType,negotiable FROM `occupancy` where statue=1 and kstatue =1 and hot='热门' ORDER BY `creattime` DESC LIMIT 0,#{size}")
     List<Occupancy> getHotIndustry(@Param("size")Integer size);
 
     List<Occupancy> showByPageForCenter(Occupancy occupancy);
 
-    @Select("SELECT companyName,resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price,province,city,district FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
+    @Select("SELECT companyName,resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price,province,city,district,negotiable FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
     List<Occupancy> getOccupanyForProfessional(@Param("username")String username,@Param("size")Integer size);
 
     /**

@@ -18,8 +18,8 @@ public class Person {
     private String name;//姓名3
     @NotBlank(message = "身份证不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String personCode;//身份证号4
-    @NotBlank(message = "身份证图片地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String imgAddress;//身份证图片
+//    @NotBlank(message = "身份证图片地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+   private String imgAddress;//身份证图片
     @NotBlank(message = "所属企业不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String unit;//所属企业
     @NotBlank(message = "企业类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
@@ -40,7 +40,7 @@ public class Person {
 
     @NotBlank(message = "附件地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String address;//附件地址
-    @NotBlank(message = "人介绍不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    @NotBlank(message = "个人介绍不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String selfIntroduction;//个人介绍
 
     private Reject reject;//驳回

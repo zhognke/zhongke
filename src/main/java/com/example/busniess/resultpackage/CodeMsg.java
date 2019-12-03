@@ -39,7 +39,7 @@ public class CodeMsg {
     public static CodeMsg INNOVATION_REGISTRATION = new CodeMsg(500301, "请勿重复提交报名!");
     public static CodeMsg INNOVATION_DISABLED = new CodeMsg(500302, "当前活动无法报名!");
     public static CodeMsg IDENTITY_ERROR = new CodeMsg(500303, "身份识别错误!");
-
+    public static CodeMsg NEED_LOGIN = new CodeMsg(500301, "请先登录!");
     private Integer code;
     private String msg;
 
