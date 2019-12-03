@@ -19,14 +19,14 @@ public interface BusinessCenterDao {
             "`district`," +
             "`societycode`, " +
             "`legalperson`, `address`," +
-            " `phonenumber`," +
+            " `phonenumber`,`persionCode`," +
             " `statue`, `subtime`" +
             ") VALUES (#{uName}, #{firmName}, #{industry}," +
             " #{typeEnterprise}," +
             " #{country}, #{city}, " +
             "#{district}," +
             "#{societyCode}, #{legalPerson}," +
-            " #{address}, #{phoneNumber}," +
+            " #{address}, #{phoneNumber},#{persionCode}" +
             " 0, NOW()" +
             ")")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
@@ -59,7 +59,7 @@ public interface BusinessCenterDao {
             "`country`=#{country}, `city`=#{city}, `district`=#{district}, " +
             "`societycode`=#{societyCode}, " +
             "`legalperson`=#{legalPerson}," +
-            "`address`=#{address}, `phonenumber`=#{phoneNumber}," +
+            "`address`=#{address}, `phonenumber`=#{phoneNumber},`persionCode`=#{persionCode}," +
             "`uptime`=NOW(),`statue`=0 WHERE (`id`=#{id})")
     public Boolean updateBusinessCenter(BusinessCenter businessCenter);
 

@@ -30,7 +30,7 @@ public class FinancingEntity {
     private String discribe;//区 7
     @NotBlank(message = "项目阶段不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String projecrPhase;//项目阶段8
-//
+    //
     @NotNull(message = "项目周期不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigDecimal period;//项目周期9
     @NotBlank(message = "联系人不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
@@ -45,13 +45,13 @@ public class FinancingEntity {
     private BigDecimal hascost;//以融资金额14
     @NotBlank(message = "融资方式不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String financing;//融资方式15
-//    @NotBlank(message = "可承担利息不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    //    @NotBlank(message = "可承担利息不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String interest;//可承担利息16
-//    @NotNull(message = "所占时间不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    //    @NotNull(message = "所占时间不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigDecimal time;//所占时间17
     @NotBlank(message = "单位类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String unit;//单位18
-//    @NotBlank(message = "资金占用时长单位不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    //    @NotBlank(message = "资金占用时长单位不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String lunit;//资金占用时长单位19
     @NotNull(message = "计划融资不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigDecimal projectFinancing;//计划融资20
@@ -59,14 +59,11 @@ public class FinancingEntity {
     private BigDecimal income;//计划融资所得21
     @NotNull(message = "利润不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigDecimal profit;//利润22
-//    @NotBlank(message = "所占比例不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    //    @NotBlank(message = "所占比例不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String proportion;//所占比例 23///////
 
 
-
-
-
-   private String projectType;//项目类型名
+    private String projectType;//项目类型名
 
     private String projectStatic;//项目状态
 
@@ -75,12 +72,8 @@ public class FinancingEntity {
     private String type;//类型
 
 
-
-
-
-
-    private Integer pgreat;//周期最大值
-    private Integer pless;//周期最小值
+    private BigDecimal pgreat;//周期最大值
+    private BigDecimal pless;//周期最小值
     private BigDecimal greater;//资金大于
     private BigDecimal less;//资金小于
     private int ageLimit;//年限
