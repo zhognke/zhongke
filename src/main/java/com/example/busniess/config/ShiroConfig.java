@@ -39,70 +39,68 @@ public class ShiroConfig {
 
         shiroFilterFactoryBean.setLoginUrl("/#/login");
         Map<String, String> map = new LinkedHashMap<>();
-        /**
 //        map.put("/loginout", "logout");
 
 //登录接口设置
-//        map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问
-//        //企业认证中心的
-//        map.put("/bussinessCenter/showByPage", "anon");//企业中心所有的接口需要登录
-//        map.put("/bussinessCenter/**", "authc");//企业中心所有的接口需要登录
-////企业补充信息/BusinessInformation//或者拥有某个角色后
-//        map.put("/BusinessInformation/**", "authc");//企业中心所有的接口需要登录
-//        //上传文件按的接口。。。/fileUpload
-//        map.put("/fileUpload", "authc");//需要登
-//
-//        /////////////////////////////
-////科技成果需要某个角色才能用/occupancy
-//        map.put("/occupancy/showByPage", "anon");
-//        map.put("/occupancy/selectOneOccupancyById", "anon");
-//        map.put("/occupancy/**", "authc");
-////工业申报需要有角色1.新增/addDeclaration删除状态2./deleteById批量删除3./deleteByBatch删除4./realDeleteById
-////      更新  /updateDeclaration修改/updateDeclaration /showByPage
-//        map.put("/industrialdeclaration/selectOneOccupancyById", "anon");//具体的
-//        map.put("/industrialdeclaration/showByPage", "anon");//显示检索
-//        map.put("/industrialdeclaration/getCompanyList", "anon");//获取公司名字
-//        map.put("/industrialdeclaration/showByPageForCenter", "authc");//个人展示
-//        map.put("/industrialdeclaration/**", "roles[vip]");
-////创新活动申请表/innovationActivitiesApplication
-////        map.put("/innovationActivitiesApplication/showByPage", "anon");
-////        map.put("/innovationActivitiesApplication/getById", "anon");
-//        map.put("/innovationActivitiesApplication/**", "authc");
-//
-////创新活动表/innovationActivities
-//        map.put("/innovationActivities/showByPage", "anon");
-//        map.put("/innovationActivities/getById", "anon");
-//        map.put("/innovationActivities/**", "authc");
-////创新活动报名表
-////        map.put("/innovationActivitiesRegistration/showByPage", "anon");
-////        map.put("/innovationActivitiesRegistration/getById", "anon");
-//        map.put("/innovationActivitiesRegistration/**", "authc");
-////项目融资/Financing   /findFinancingByCondition
-//        map.put("/Financing/findFinancingByCondition", "anon");
-//        map.put("/Financing/selectOneById", "anon");
-//        map.put("/Financing/**", "authc");
-//
-//        //意向表intention
-//        map.put("/intention/addIntention", "anon");
-//        map.put("/intention/**", "authc");
-//        //新闻超级管理员
-//        map.put("/news/**", "anon");
-////通知
-//        map.put("/notification/**", "authc");
-//        //个人认证/person
-//        //  map.put("/person/selectAllPerson", "roles[admin]");
-//        map.put("/person/**", "authc");//个人认证需要登录
-////专家入住/professionals
-//        map.put("/professionals/showByPage", "anon");
-//        map.put("/professionals/showById", "anon");
-//        map.put("/professionals/showHot", "anon");
-//        map.put("/professionals/**", "authc");
-////人才需求/talentDemand
-//        map.put("/talentDemand/showByPage", "anon");
-//        map.put("/talentDemand/showById", "anon");
-//        map.put("/talentDemand/**", "authc");
+        map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问
+        //企业认证中心的
+        map.put("/bussinessCenter/showByPage", "anon");//企业中心所有的接口需要登录
+        map.put("/bussinessCenter/**", "authc");//企业中心所有的接口需要登录
+//企业补充信息/BusinessInformation//或者拥有某个角色后
+        map.put("/BusinessInformation/**", "authc");//企业中心所有的接口需要登录
+        //上传文件按的接口。。。/fileUpload
+        map.put("/fileUpload", "authc");//需要登
 
-**/
+        /////////////////////////////
+//科技成果需要某个角色才能用/occupancy
+        map.put("/occupancy/showByPage", "anon");
+        map.put("/occupancy/selectOneOccupancyById", "anon");
+        map.put("/occupancy/**", "authc");
+//工业申报需要有角色1.新增/addDeclaration删除状态2./deleteById批量删除3./deleteByBatch删除4./realDeleteById
+//      更新  /updateDeclaration修改/updateDeclaration /showByPage
+        map.put("/industrialdeclaration/selectOneOccupancyById", "anon");//具体的
+        map.put("/industrialdeclaration/showByPage", "anon");//显示检索
+        map.put("/industrialdeclaration/getCompanyList", "anon");//获取公司名字
+        map.put("/industrialdeclaration/showByPageForCenter", "authc");//个人展示
+        map.put("/industrialdeclaration/**", "roles[vip]");
+//创新活动申请表/innovationActivitiesApplication
+//        map.put("/innovationActivitiesApplication/showByPage", "anon");
+//        map.put("/innovationActivitiesApplication/getById", "anon");
+        map.put("/innovationActivitiesApplication/**", "authc");
+
+//创新活动表/innovationActivities
+        map.put("/innovationActivities/showByPage", "anon");
+        map.put("/innovationActivities/getById", "anon");
+        map.put("/innovationActivities/**", "authc");
+//创新活动报名表
+//        map.put("/innovationActivitiesRegistration/showByPage", "anon");
+//        map.put("/innovationActivitiesRegistration/getById", "anon");
+        map.put("/innovationActivitiesRegistration/**", "authc");
+//项目融资/Financing   /findFinancingByCondition
+        map.put("/Financing/findFinancingByCondition", "anon");
+        map.put("/Financing/selectOneById", "anon");
+        map.put("/Financing/**", "authc");
+
+        //意向表intention
+        map.put("/intention/addIntention", "anon");
+        map.put("/intention/**", "authc");
+        //新闻超级管理员
+        map.put("/news/**", "anon");
+//通知
+        map.put("/notification/**", "authc");
+        //个人认证/person
+        //  map.put("/person/selectAllPerson", "roles[admin]");
+        map.put("/person/**", "authc");//个人认证需要登录
+//专家入住/professionals
+        map.put("/professionals/showByPage", "anon");
+        map.put("/professionals/showById", "anon");
+        map.put("/professionals/showHot", "anon");
+        map.put("/professionals/**", "authc");
+//人才需求/talentDemand
+        map.put("/talentDemand/showByPage", "anon");
+        map.put("/talentDemand/showById", "anon");
+        map.put("/talentDemand/**", "authc");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }

@@ -1,6 +1,7 @@
 package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -17,5 +18,6 @@ public class Reject implements Serializable {
     private Integer PId;//关联的私人认证
     @NotBlank(message = "驳回内容不能为空", groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String content;//驳回的内容
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date rejectTime;//驳回时间
 }

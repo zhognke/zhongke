@@ -61,11 +61,14 @@ public class Occupancy implements Serializable {
     private String district;//区 ··10
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date stopTime;//停止发布时间（过期）
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date creatTime;//创建时间
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date upTiem;//修改时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date auditTime;//审核时间
     private Integer kstatue;//用户的修改状态
     private Integer statue;//入住状态

@@ -1,6 +1,7 @@
 package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -78,7 +79,9 @@ public class FinancingEntity {
     private BigDecimal less;//资金小于
     private int ageLimit;//年限
     private int statue;//发布状态
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date insertTime;//插入时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTiem;//更新时间
     private String reject;//驳回原因
     private BusinessInformation businessInformation;//关联企业补充信息

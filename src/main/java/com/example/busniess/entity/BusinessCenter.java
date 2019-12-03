@@ -1,6 +1,7 @@
 package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -85,8 +86,11 @@ public class BusinessCenter implements Serializable {
      * private String apPersionCode;//代理人身份证号  20
      */
     private Integer statue;//审核状态 17 0审核中 1审核通过 2审核驳回21
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date subTime;//提交时间22
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date upTime;//更新时间23
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date auditTime;//审核时间//24
     private Reject reject;//关联驳回
 

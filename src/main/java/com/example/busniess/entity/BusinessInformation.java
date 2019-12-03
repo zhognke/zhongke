@@ -1,9 +1,9 @@
 package com.example.busniess.entity;
 
 import com.example.busniess.validator.UserValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,6 +21,7 @@ public class BusinessInformation implements Serializable {
     private String uName;//关联用户名
     @NotNull(message = "注册日期不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date registrationDate;//注册日期
     @NotNull(message = "注册资金不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigDecimal registeredCapital;//注册资金
@@ -30,7 +31,9 @@ public class BusinessInformation implements Serializable {
     private String enterprise;//企业简介
     @NotBlank(message = "log地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String logo;//log地址
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date insertTime;//插入时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;//更新时间
     private int statue;//状态
 
