@@ -47,7 +47,7 @@ public class IndustrialDeclarationController {
     @SysLog(value="新增工业申报",type="工业申报")
     @PostMapping("/addDeclaration")
     public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) IndustrialDeclarationEntity industrialDeclarationEntity){
-        String userName = ShiroUtils.getUserName();
+       /* String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }else{
@@ -56,7 +56,7 @@ public class IndustrialDeclarationController {
                 return ReturnResult.erro(CodeMsg.ACCESS_DENIED);  //判断当前用户填写的企业名称是否与数据库一致
             }else{
             }
-        }
+        }*/
         if(industrialDeclarationService.add(industrialDeclarationEntity)){
             return ReturnResult.success("操作成功");
         }else{

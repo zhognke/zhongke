@@ -39,7 +39,8 @@ public class InnovationActivitiesRegistrationController {
      */
     @PostMapping("/addInnovationActivitiesRegistration")
     public ReturnResult addInnovationActivitiesRegistration(@Validated({UserValidator.InSet.class}) InnovationActivitiesRegistrationEntity innovationActivitiesRegistrationEntity){
-        String userName = ShiroUtils.getUserName();
+        //String userName = ShiroUtils.getUserName();
+        String userName = innovationActivitiesRegistrationEntity.getUsername();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }

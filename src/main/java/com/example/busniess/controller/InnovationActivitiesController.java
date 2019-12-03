@@ -35,10 +35,10 @@ public class InnovationActivitiesController {
      */
     @PostMapping("/addInnovationActivities")
     public ReturnResult addInnovationActivities(@Validated({UserValidator.InSet.class}) InnovationActivitiesEntity innovationActivitiesEntity){
-        String userName = ShiroUtils.getUserName();
+        /*String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
-        }
+        }*/
         if(innovationActivitiesService.addInnovationActivities(innovationActivitiesEntity)){
             return ReturnResult.success("添加成功");
         }else{

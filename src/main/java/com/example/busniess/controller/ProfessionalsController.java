@@ -42,8 +42,9 @@ public class ProfessionalsController {
     @SysLog(value="新增专家入驻",type="专家入驻")
     @PostMapping("/addProfessionals")
     public ReturnResult addProfessionals(@Validated({UserValidator.InSet.class}) ProfessionalsEntity professionalsEntity){
-        String userName = ShiroUtils.getUserName();
-        if (userName == null) {
+        String userName = professionalsEntity.getUserName();
+        //String userName = ShiroUtils.getUserName();
+        /*if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }else{
             BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
@@ -52,7 +53,7 @@ public class ProfessionalsController {
             }else{
                 return ReturnResult.erro(CodeMsg.ACCESS_DENIED);
             }
-        }
+        }*/
         professionalsEntity.setCreateTime(new Date());
         if(professionalsService.add(professionalsEntity)){
             return ReturnResult.success("添加成功");

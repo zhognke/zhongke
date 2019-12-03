@@ -40,8 +40,9 @@ public class TalentDemandController {
     @SysLog(value="新增人才需求",type="人才需求")
     @PostMapping("/addTalent")
     public ReturnResult addTalent(@Validated({UserValidator.InSet.class}) TalentDemandEntity talentDemandEntity) {
-        String userName = ShiroUtils.getUserName();
-        if (userName == null) {
+        String userName = talentDemandEntity.getUserName();
+        //String userName = ShiroUtils.getUserName();
+        /*if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }else{
             BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
@@ -50,7 +51,7 @@ public class TalentDemandController {
             }else{
                 return ReturnResult.erro(CodeMsg.ACCESS_DENIED);
             }
-        }
+        }*/
         if (talentDemandService.add(talentDemandEntity)) {
             return ReturnResult.success("操作成功");
         } else {
