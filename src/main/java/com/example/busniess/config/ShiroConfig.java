@@ -44,7 +44,7 @@ public class ShiroConfig {
         map.put("/user/**", "anon");//user/路径下的接口都可以匿名访问
         //企业认证中心的
         map.put("/bussinessCenter/showByPage", "anon");//企业中心所有的接口需要登录
-//        map.put("/bussinessCenter/findBussinessCenter", "anon");
+        map.put("/bussinessCenter/findBussinessCenter", "anon");
         map.put("/bussinessCenter/**", "authc");//企业中心所有的接口需要登录
 //企业补充信息/BusinessInformation//或者拥有某个角色后
         map.put("/BusinessInformation/**", "authc");//企业中心所有的接口需要登录
@@ -90,7 +90,7 @@ public class ShiroConfig {
         map.put("/notification/**", "authc");
         //个人认证/person
         //  map.put("/person/selectAllPerson", "roles[admin]");
-      //  map.put("/person/**", "authc");//个人认证需要登录
+        //  map.put("/person/**", "authc");//个人认证需要登录
 //专家入住/professionals
         map.put("/professionals/showByPage", "anon");
         map.put("/professionals/showById", "anon");
