@@ -1,11 +1,11 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
-import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.IndustrialDeclarationEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
-import com.example.busniess.service.BusinessCenterService;
+import com.example.busniess.service.BusinessCenterInformationService;
 import com.example.busniess.service.IndustrialDeclarationService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.example.busniess.utiles.ShiroUtils;
@@ -37,7 +37,7 @@ public class IndustrialDeclarationController {
     private IndustrialDeclarationService industrialDeclarationService;
 
     @Autowired
-    BusinessCenterService businessCenterService;
+    BusinessCenterInformationService businessCenterInformationService;
 
     /**
      * 新增申报
@@ -244,8 +244,11 @@ public class IndustrialDeclarationController {
     public ReturnResult showByPageForCenter(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10")Integer pageSize){
         String userName = ShiroUtils.getUserName();
         if (ShiroUtils.isLogin()) {
-            BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
-            String companyName = businessCenter.getFirmName();
+            BusinessCenterInformationEntity businessCenterInformation = businessCenterInformationService.selectOnByUname(userName);
+            if(businessCenterInformation==null){
+                return ReturnResult.erro(CodeMsg.ACCESS_DENIED);
+            }
+            String companyName = businessCenterInformation.getCompanyName();
             industrialDeclarationEntity.setCompanyName(companyName);
         }else{
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);

@@ -49,7 +49,7 @@ public class ShiroConfig {
 //企业补充信息/BusinessInformation//或者拥有某个角色后
         map.put("/BusinessInformation/**", "authc");//企业中心所有的接口需要登录
         //上传文件按的接口。。。/fileUpload
-        map.put("/fileUpload", "authc");//需要登
+//        map.put("/fileUpload", "authc");//需要登
 
         /////////////////////////////
 //科技成果需要某个角色才能用/occupancy
