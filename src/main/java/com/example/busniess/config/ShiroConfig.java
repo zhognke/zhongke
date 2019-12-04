@@ -1,7 +1,7 @@
 package com.example.busniess.config;
 
 
-import com.example.busniess.filter.ShiroSessionFilter;
+import com.example.busniess.filter.ShiroSession;
 import com.example.busniess.service.MyShiroRealm;
 
 
@@ -12,12 +12,16 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @Configuration
@@ -37,6 +41,7 @@ public class ShiroConfig {
         //设置登录的页面
 
         Map<String, String> map = new LinkedHashMap<>();
+        map.put("/**","myFilter");
 //        map.put("/loginout", "logout");
 
 //登录接口设置
@@ -120,7 +125,7 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(myShiroRealm);
         securityManager.setSessionManager(sessionManager());
-        securityManager.setCacheManager(cacheManager());
+//        securityManager.setCacheManager(cacheManager());
         return securityManager;
     }
 
@@ -147,13 +152,11 @@ public class ShiroConfig {
 
     //设置session
     @Bean(name = "sessionManager")
-    public DefaultWebSessionManager sessionManager() {
+    public  DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         // 设置session过期时间3600s
-        sessionManager.setGlobalSessionTimeout(3600000L);
-        List a=new ArrayList();
-        a.add(listenSession());
-        sessionManager.setSessionListeners(a);
+        sessionManager.setSessionIdCookieEnabled(true);
+        sessionManager.setSessionIdCookie(sessionIdCookie());
         return sessionManager;
     }
 
@@ -181,11 +184,19 @@ public class ShiroConfig {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
-
-
     @Bean
-    public ShiroSessionFilter  listenSession(){
-        return new ShiroSessionFilter();
+    public ShiroSession myFilter(){
+        return new ShiroSession();
+    }
+
+
+    @Bean(name = "sessionIdCookie")
+    public SimpleCookie sessionIdCookie() {
+        SimpleCookie cookie = new SimpleCookie();
+        cookie.setName("ZHONGKEHUAIBIE");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(18000);
+        return cookie;
     }
 
 }
