@@ -1,6 +1,7 @@
 package com.example.busniess.config;
 
 
+import com.example.busniess.filter.ShiroSessionFilter;
 import com.example.busniess.service.MyShiroRealm;
 
 
@@ -16,9 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @Configuration
@@ -100,6 +99,7 @@ public class ShiroConfig {
         map.put("/talentDemand/showByPage", "anon");
         map.put("/talentDemand/showById", "anon");
         map.put("/talentDemand/**", "authc");
+        map.put("/**", "anon");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
@@ -151,6 +151,9 @@ public class ShiroConfig {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         // 设置session过期时间3600s
         sessionManager.setGlobalSessionTimeout(3600000L);
+        List a=new ArrayList();
+        a.add(listenSession());
+        sessionManager.setSessionListeners(a);
         return sessionManager;
     }
 
@@ -179,5 +182,10 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
+
+    @Bean
+    public ShiroSessionFilter  listenSession(){
+        return new ShiroSessionFilter();
+    }
 
 }
