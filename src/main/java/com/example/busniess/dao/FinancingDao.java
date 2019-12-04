@@ -73,7 +73,7 @@ public interface FinancingDao {
      * @param uName
      * @return
      */
-    @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
+    @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,lunit,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
     @Results({
             @Result(property = "uName",column = "uname"),
             @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
@@ -97,7 +97,7 @@ public interface FinancingDao {
      *查看所有 的
      * @return
      */
-    @Select("SELECT id,uname,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime FROM financing ORDER BY insertTime DESC")
+    @Select("SELECT id,uname,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,lunit,insertTime FROM financing ORDER BY insertTime DESC")
     @Results({
             @Result(property = "uName",column = "uname"),
             @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),

@@ -60,7 +60,7 @@
         <result property="city" column="city" />
         <result property="discribe" column="discribe" />
 
-
+        <result property="lunit" column="lunit" />
 
 
 
@@ -84,7 +84,7 @@
 
 
     <select id="selectAllFinancing" parameterType="financingEntity" resultMap="businessCenterInformation">
-        SELECT id,uname,projectName,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime,province,city,discribe FROM financing
+        SELECT id,uname,projectName,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime,province,city,discribe,lunit FROM financing
         <where>
             <include refid="business_sql"></include>
         </where>
