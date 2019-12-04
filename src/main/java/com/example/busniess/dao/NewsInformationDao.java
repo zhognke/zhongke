@@ -35,7 +35,7 @@ public interface NewsInformationDao {
     /**
      * 查看所有新闻资讯
      */
-    @Select("SELECT * FROM newsinformation ORDER BY `resource` DESC")
+    @Select("SELECT * FROM newsinformation ORDER BY `publishDate` DESC")
 
     public List<NewsInformation> selectNewsInformation();
 
@@ -45,7 +45,7 @@ public interface NewsInformationDao {
      * @param category
      * @return
      */
-    @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY `resource` DESC")
+    @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY `publishDate` DESC")
 
     public List<NewsInformation> selectNewsInformationByCategory(String category);
 
