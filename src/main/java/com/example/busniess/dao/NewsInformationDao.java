@@ -14,8 +14,8 @@ public interface NewsInformationDao {
      * @param newsInformation
      */
     @Insert("INSERT INTO `newsinformation` (`uname`, `" +
-            "category`, `title`, `cover`, `detail`, `submittime`,`resource`,`publishDate`) VALUES " +
-            "(#{uName}, #{category}, #{title}, #{cover}, #{detail}, NOW(),#{resource},#{publishDate})")
+            "category`, `title`, `cover`, `detail`, `submittime`,`resource`,`publishDate`,`summary`) VALUES " +
+            "(#{uName}, #{category}, #{title}, #{cover}, #{detail}, NOW(),#{resource},#{publishDate},#{summary})")
     public Boolean insertNewsInformation(NewsInformation newsInformation);
 
     /**
@@ -29,7 +29,7 @@ public interface NewsInformationDao {
      */
     @Update("UPDATE `newsinformation` SET " +
             "`category`=#{category}, `title`=#{title}, `cover`=#{cover}," +
-            " `detail`=#{detail}, `uptime`=NOW(),`resource`=#{resource},`publishDate`=#{publishDate} WHERE (`id`=#{id})")
+            " `detail`=#{detail}, `uptime`=NOW(),`resource`=#{resource},`publishDate`=#{publishDate},`summary`=#{summary} WHERE (`id`=#{id})")
     public Boolean udateNewsInformation(NewsInformation newsInformation);
 
     /**
