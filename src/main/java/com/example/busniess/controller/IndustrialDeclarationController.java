@@ -1,6 +1,7 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
+import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.IndustrialDeclarationEntity;
 import com.example.busniess.resultpackage.CodeMsg;
@@ -47,16 +48,16 @@ public class IndustrialDeclarationController {
     @SysLog(value="新增工业申报",type="工业申报")
     @PostMapping("/addDeclaration")
     public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) IndustrialDeclarationEntity industrialDeclarationEntity){
-       /* String userName = ShiroUtils.getUserName();
+        String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
         }else{
-            BusinessCenter businessCenter = businessCenterService.selectMyBusinessCenter(userName);
-            if(businessCenter.getStatue()!=1){    //判断当前用户是否通过企业认证
+            BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOnByUname(userName);
+            if(businessCenter==null||businessCenter.getStatue()!=1){    //判断当前用户是否通过企业认证
                 return ReturnResult.erro(CodeMsg.ACCESS_DENIED);  //判断当前用户填写的企业名称是否与数据库一致
             }else{
             }
-        }*/
+        }
         if(industrialDeclarationService.add(industrialDeclarationEntity)){
             return ReturnResult.success("操作成功");
         }else{

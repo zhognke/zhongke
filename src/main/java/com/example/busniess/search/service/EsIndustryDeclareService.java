@@ -40,4 +40,5 @@ public interface EsIndustryDeclareService {
      */
     Page<EsIndustryDeclareModel> search(String keyword, Integer pageNum, Integer pageSize);
 
+    void deleteAll();
 }

@@ -52,6 +52,14 @@ public class EsIndustryDeclareController {
         return ReturnResult.success(null);
     }
 
+    @ApiOperation(value = "根据id批量删除需求")
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnResult<Object> deleteAll(){
+        esIndustryDeclareService.deleteAll();
+        return ReturnResult.success("操作成功");
+    }
+
     @ApiOperation(value = "根据id创建需求")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody

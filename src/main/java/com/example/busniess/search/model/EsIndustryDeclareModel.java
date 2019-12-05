@@ -21,6 +21,12 @@ public class EsIndustryDeclareModel implements Serializable {
      */
     @Id
     private Integer id;
+    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    private String title;   //标题
+    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    private String content; //内容
+    private String industry;    //项目所属行业
+    private String industryDetail;  //项目所属行业细分类目
     /**
      * 申报项目类别
      */
@@ -58,12 +64,10 @@ public class EsIndustryDeclareModel implements Serializable {
     /**
      * 项目名称
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String projectName;
     /**
      * 项目内容
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String projectContent;
     /**
      * 省
@@ -135,4 +139,6 @@ public class EsIndustryDeclareModel implements Serializable {
     @Field(type = FieldType.Object)
     private IndustrialDeclarationDetailEntity detailEntity;
 
+    private String keyword;
+    private String indexType="industrydeclare";
 }

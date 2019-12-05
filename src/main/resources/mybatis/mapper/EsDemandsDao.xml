@@ -5,14 +5,17 @@
 
     <resultMap type="com.example.busniess.search.model.EsDemandsModel" id="demandsMap">
         <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
         <result property="companyName" column="company_name"/>
         <result property="demandType" column="demand_type"/>
         <result property="cooperationType" column="cooperation_type"/>
+        <result property="cooperationIntention" column="cooperation_intention"/>
         <result property="demandIndustry" column="demand_industry"/>
         <result property="demandIndustryDetail" column="demand_industry_detail"/>
         <result property="demandOutline" column="demand_outline"/>
         <result property="demandContent" column="demand_content"/>
         <result property="expectedResult" column="expected_result"/>
+        <result property="province" column="province"/>
         <result property="city" column="city"/>
         <result property="district" column="district"/>
         <result property="contact" column="contact"/>
@@ -23,13 +26,22 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="status" column="status"/>
+        <result property="closeReason" column="close_reason"/>
+        <result property="approvalTime" column="approval_time"/>
         <result property="approvalStatus" column="approval_status"/>
         <result property="approvalOpinion" column="approval_opinion"/>
+        <result property="delFlag" column="del_flag"/>
         <result property="remark" column="remark"/>
+        <result property="title" column="demand_outline"/>
+        <result property="content" column="demand_content"/>
+        <result property="industry" column="demand_industry"/>
+        <result property="industryDetail" column="demand_industry_detail"/>
     </resultMap>
 
     <select id="getAllEsDemandsList" resultMap="demandsMap" parameterType="Integer">
-        SELECT `id`,`company_name`,`demand_type`,`cooperation_type`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,`city`,`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion` FROM `demands`
+        SELECT `id`,`company_name`,`demand_type`,`cooperation_type`,`cooperation_intention`,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,
+        `province`,`city`,`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`close_reason`,
+        `approval_status`,`approval_time`,`approval_opinion`,`del_flag`,`remark` FROM `demands`
         <where>
             <if test="id!=null">
                 and `id`=#{id}

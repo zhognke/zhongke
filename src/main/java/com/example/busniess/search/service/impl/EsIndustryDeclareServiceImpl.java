@@ -83,18 +83,23 @@ public class EsIndustryDeclareServiceImpl implements EsIndustryDeclareService {
     public Page<EsIndustryDeclareModel> search(String keyword, Integer pageNum, Integer pageSize) {
         //多个字段匹配，只要满足一个即可返回结果
         MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(keyword,
-                IndexKey.POST_DEMANDOUTLINE,
-                IndexKey.POST_DEMANDCONTENT,
-                IndexKey.POST_COMPANYNAME,
-                IndexKey.POST_INDUSTRY
+                IndexKey.INDEX_TITLE,
+                IndexKey.INDEX_CONTENT,
+                IndexKey.INDEX_COMPANY_NAME
         );
 
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(multiMatchQueryBuilder)
+//                .withQuery(QueryBuilders.queryStringQuery(keyword))
                 .withPageable(pageable)
                 .build();
         return esIndustryDeclareRepository.search(searchQuery);
+    }
+
+    @Override
+    public void deleteAll() {
+        esIndustryDeclareRepository.deleteAll();
     }
 
 }

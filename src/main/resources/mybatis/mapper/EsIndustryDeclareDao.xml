@@ -5,27 +5,33 @@
 
     <resultMap type="com.example.busniess.search.model.EsIndustryDeclareModel" id="demandsMap">
         <result property="id" column="id"/>
+        <result property="declarationType" column="declaration_type"/>
+        <result property="isNew" column="is_new"/>
+        <result property="declarationIndustry" column="declaration_industry"/>
+        <result property="industryTypeDetail" column="industry_type_detail"/>
+        <result property="projectType" column="project_type"/>
+        <result property="projectTypeDetail" column="project_type_detail"/>
         <result property="companyName" column="company_name"/>
-        <result property="demandType" column="demand_type"/>
-        <result property="cooperationType" column="cooperation_type"/>
-        <result property="demandIndustry" column="demand_industry"/>
-        <result property="demandIndustryDetail" column="demand_industry_detail"/>
-        <result property="demandOutline" column="demand_outline"/>
-        <result property="demandContent" column="demand_content"/>
-        <result property="expectedResult" column="expected_result"/>
+        <result property="projectName" column="project_name"/>
+        <result property="projectContent" column="project_content"/>
+        <result property="province" column="province"/>
         <result property="city" column="city"/>
         <result property="district" column="district"/>
-        <result property="contact" column="contact"/>
-        <result property="phoneNum" column="phone_num"/>
-        <result property="email" column="email"/>
-        <result property="preInvestmentAmount" column="pre_investment_amount"/>
-        <result property="endDate" column="end_date"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
         <result property="status" column="status"/>
+        <result property="closeReason" column="close_reason"/>
         <result property="approvalStatus" column="approval_status"/>
         <result property="approvalOpinion" column="approval_opinion"/>
-        <result property="remark" column="remark"/>
+        <result property="approvalTime" column="approval_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="totalInvestment" column="total_investment"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="industry" column="project_type"/>
+        <result property="industryDetail" column="project_type_detail"/>
         <association property="detailEntity" javaType="com.example.busniess.entity.IndustrialDeclarationDetailEntity">
             <result property="aid" column="aid"/>
             <result property="declarationId" column="declaration_id"/>
@@ -76,7 +82,7 @@
     </resultMap>
 
     <select id="getAllEsDemandsList" resultMap="demandsMap" parameterType="Integer">
-        select ind.id,declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,
+        select ind.id,declaration_type,is_new,declaration_industry,industry_type_detail,project_type,project_type_detail,company_name,project_name,project_content,project_name title,project_content content,
         province,city,district,status,approval_status,approval_opinion,DATE_FORMAT(create_time,'%Y-%m-%d') create_time,start_date,end_date,total_investment,aid,declaration_id,
         project_industry,construction_nature,minerals,investment_self_prepare,investment_loans,investment_using_forex,completed_investment,completed_investment_loans,
         completed_investment_self_prepare,last_year_investment,total_investment_self_prepare,total_investment_loans,projected_investment,projected_self_prepare,projected_loans,

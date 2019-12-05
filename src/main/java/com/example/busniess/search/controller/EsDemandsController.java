@@ -37,7 +37,7 @@ public class EsDemandsController {
     @ResponseBody
     public ReturnResult<Object> delete(Integer id) {
         esDemandsService.delete(id);
-        return ReturnResult.success(null);
+        return ReturnResult.success("操作成功");
     }
 
     @ApiOperation(value = "根据id批量删除需求")
@@ -45,7 +45,15 @@ public class EsDemandsController {
     @ResponseBody
     public ReturnResult<Object> delete(List<Integer> ids) {
         esDemandsService.delete(ids);
-        return ReturnResult.success(null);
+        return ReturnResult.success("操作成功");
+    }
+
+    @ApiOperation(value = "根据id批量删除需求")
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnResult<Object> deleteAll(){
+        esDemandsService.deleteAll();
+        return ReturnResult.success("操作成功");
     }
 
     @ApiOperation(value = "根据id创建需求")
@@ -60,6 +68,18 @@ public class EsDemandsController {
         }
     }
 
+    @ApiOperation(value = "创建需求")
+    @RequestMapping(value = "/addEsModel", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnResult<EsDemandsModel> addEsModel(EsDemandsModel esDemandsModel) {
+        if (esDemandsService.create(esDemandsModel)) {
+            return ReturnResult.success("操作成功");
+        } else {
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+
     @ApiOperation(value = "根据关键字搜索")
     @RequestMapping(value = "/searchById", method = RequestMethod.GET)
     @ResponseBody
@@ -68,13 +88,22 @@ public class EsDemandsController {
         return ReturnResult.success(esDemands);
     }
 
+
     @ApiOperation(value = "根据关键字搜索")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnResult search(@RequestParam(required = false) String keyword,
-                               @RequestParam(required = false, defaultValue = "0") Integer pageNum,
-                               @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        Page<EsDemandsModel> esProductPage = esDemandsService.search(keyword, pageNum, pageSize);
+    public ReturnResult search(EsDemandsModel esDemandsModel,@RequestParam(defaultValue = "0") Integer pageNum,@RequestParam(defaultValue = "5") Integer pageSize) {
+        esDemandsModel.setStatus(0);
+        esDemandsModel.setApprovalStatus(1);
+        Page<EsDemandsModel> esProductPage = esDemandsService.search(esDemandsModel, pageNum, pageSize);
+        return ReturnResult.success(esProductPage);
+    }
+
+    @ApiOperation(value = "根据关键字搜索")
+    @RequestMapping(value = "/searchForCenter", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnResult searchForCenter(EsDemandsModel esDemandsModel,@RequestParam(defaultValue = "0") Integer pageNum,@RequestParam(defaultValue = "5") Integer pageSize) {
+        Page<EsDemandsModel> esProductPage = esDemandsService.search(esDemandsModel, pageNum, pageSize);
         return ReturnResult.success(esProductPage);
     }
 }

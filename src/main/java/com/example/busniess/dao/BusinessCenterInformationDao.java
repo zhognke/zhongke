@@ -15,5 +15,5 @@ public interface BusinessCenterInformationDao {
 
     @Select("select id,uname,company_name,industry,type_enterprise,province,city,district,identification,society_code,scale,logo,enterprise_profile,registration_date,registered_capital,statue,insert_time,update_time" +
             " from business_center_information where statue =1 and uname = #{uname} limit 1")
-    public BusinessCenterInformationEntity selectOnByUname(@Param("uname") String uname);
+    BusinessCenterInformationEntity selectOnByUname(@Param("uname") String uname);
 }

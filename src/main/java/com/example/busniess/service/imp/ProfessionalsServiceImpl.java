@@ -48,6 +48,7 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     @Override
     public PageInfo showByPage(ProfessionalsEntity professionalsEntity, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        professionalsEntity.setApprovalStatus(1);
         if(professionalsEntity.getTechnologyScope()!=null){
             professionalsEntity.setTechnologyScope(professionalsEntity.getTechnologyScope().replaceAll(",","','"));
         }
