@@ -1,10 +1,8 @@
 package com.example.busniess.config;
 
 
-import com.example.busniess.filter.ShiroSession;
+//import com.example.busniess.filter.ShiroSession;
 import com.example.busniess.service.MyShiroRealm;
-
-
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
@@ -14,12 +12,10 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -184,10 +180,10 @@ public class ShiroConfig {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
-    @Bean
-    public ShiroSession myFilter(){
-        return new ShiroSession();
-    }
+//    @Bean
+//    public ShiroSession myFilter(){
+//        return new ShiroSession();
+//    }
 
 
     @Bean(name = "sessionIdCookie")

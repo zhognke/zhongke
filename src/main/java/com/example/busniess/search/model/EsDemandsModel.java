@@ -7,7 +7,6 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Document(indexName = "demands", type = "demands",shards = 3)
@@ -17,11 +16,16 @@ public class EsDemandsModel implements Serializable {
     @Id
     private Integer id;
 
-    // 中文分词器 -> https://github.com/medcl/elasticsearch-analysis-ik
     @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    private String title;
+    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
+    private String content;
+    private String industry;    //项目所属行业
+    private String industryDetail;  //项目所属行业细分类目
+
+    // 中文分词器 -> https://github.com/medcl/elasticsearch-analysis-ik
     private String demandOutline;
 
-    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String demandContent;
 
     @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
@@ -39,6 +43,9 @@ public class EsDemandsModel implements Serializable {
     @Field(type = FieldType.Keyword)
     private String cooperationType;
 
+    @Field(type = FieldType.Keyword)
+    private String cooperationIntention;
+
     private String preInvestmentAmount;
 
     @Field(type = FieldType.Date)
@@ -50,6 +57,10 @@ public class EsDemandsModel implements Serializable {
      * 期望实现结果
      */
     private String expectedResult;
+    /**
+     * 省
+     */
+    private String province;
     /**
      * 市
      */
@@ -73,6 +84,7 @@ public class EsDemandsModel implements Serializable {
     /**
      * 需求更新时间
      */
+    @Field(type=FieldType.Date)
     private Date updateTime;
     /**
      * 备注
@@ -81,14 +93,33 @@ public class EsDemandsModel implements Serializable {
     /**
      * 需求态状:0有效;1已到期;2用户关闭;3管理员关闭
      */
+    @Field(type=FieldType.Integer)
     private Integer status;
+    /**
+     * 关闭原因
+     */
+    private String closeReason;
     /**
      * 审核态状:0待审核;1已审核;2驳回
      */
+    @Field(type=FieldType.Integer)
     private Integer approvalStatus;
+    /**
+     * 审批时间
+     */
+    @Field(type=FieldType.Date)
+    private Date approvalTime;
     /**
      * 审批意见(原因)
      */
     private String approvalOpinion;
-
+    /**
+     * 删除标记
+     */
+    @Field(type=FieldType.Integer)
+    private Integer delFlag;
+    private String keyword; //搜索关键字
+    private String preInvestmentAmountBegin;    //预投金额范围查询
+    private String preInvestmentAmountEnd;  //预投金额范围查询
+    private String indexType="demands"; //数据类型
 }
