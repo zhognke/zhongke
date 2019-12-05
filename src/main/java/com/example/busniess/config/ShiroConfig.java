@@ -38,8 +38,8 @@ public class ShiroConfig {
 
         /*重要，设置自定义拦截器，当访问某些自定义url时，使用这个filter进行验证*/
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
-        //如果map里面key值为authc,表示所有名为authc的过滤条件使用这个自定义的filter
-        //map里面key值为myFilter,表示所有名为myFilter的过滤条件使用这个自定义的filter，具体见下方
+
+        //map里面key值为myFilter,表示所有名为myFilter的过滤条件使用这个自定义的filter
         filters.put("myFilter", new MyFilter());
         shiroFilterFactoryBean.setFilters(filters);
 

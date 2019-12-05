@@ -29,7 +29,7 @@ public class MyFilter extends AccessControlFilter {
         } else if (subject.getPrincipal() == null) {
 
             response.setCharacterEncoding("UTF-8");
-
+//请求头设置参数
             response.addHeader("session-status", "timeout");
 
         }
