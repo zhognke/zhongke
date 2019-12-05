@@ -2,9 +2,11 @@ package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.BusinessCenterInformationDao;
 import com.example.busniess.dao.DemandsDao;
+import com.example.busniess.dao.PersonDao;
 import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.DemandsEntity;
+import com.example.busniess.entity.Person;
 import com.example.busniess.entity.User;
 import com.example.busniess.service.DemandsService;
 import com.github.pagehelper.PageHelper;
@@ -24,6 +26,8 @@ public class DemandsServiceImpl implements DemandsService {
     UserDao userDao;
     @Autowired
     BusinessCenterInformationDao businessCenterInformationDao;
+    @Autowired
+    PersonDao personDao;
 
     @Override
     public List<DemandsEntity> selectAll() {
@@ -133,8 +137,8 @@ public class DemandsServiceImpl implements DemandsService {
     @Override
     public DemandsEntity getByID(int id) {
         DemandsEntity entity = demandsDao.getByID(id);
-        String userName = entity.getUserName();
-        if(entity!=null&&userName!=null){
+        if(entity!=null){
+            String userName = entity.getUserName();
             User user = userDao.selectUserByName(userName);
             entity.setIsPerson(user.getPersion());
             if(user.getPersion()==2){
@@ -142,6 +146,11 @@ public class DemandsServiceImpl implements DemandsService {
                 if (businessCenterInformationEntity!=null){
                     entity.setLogo(businessCenterInformationEntity.getLogo());
                     entity.setTypeEnterprise(businessCenterInformationEntity.getTypeEnterprise());
+                }
+            }else{
+                Person person = personDao.selectPerson(userName);
+                if(person!=null){
+                    entity.setLogo(person.getAddress());
                 }
             }
         }
