@@ -176,4 +176,6 @@ public class DemandsEntity implements Serializable {
     private String logo;//公司logo
 
     private String typeEnterprise;//企业类型
+
+    private Integer isPerson;    //是否个人
 }
