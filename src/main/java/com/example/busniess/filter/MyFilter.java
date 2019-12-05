@@ -22,15 +22,19 @@ public class MyFilter extends AccessControlFilter {
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         Subject subject = getSubject(servletRequest, servletResponse);
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        response.setHeader("Access-Control-Expose-Headers", "sessionStatus");
+        response.setCharacterEncoding("UTF-8");
 
         if (subject.isAuthenticated()) {
-            response.addHeader("session-status", "ok");
+            response.addHeader("sessionStatus", "ok");
             return true;
         } else if (subject.getPrincipal() == null) {
 
-            response.setCharacterEncoding("UTF-8");
+
 //请求头设置参数
-            response.addHeader("session-status", "timeout");
+            response.addHeader("sessionStatus", "timeout");
+
+
 
         }
 

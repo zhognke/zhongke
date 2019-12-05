@@ -166,10 +166,11 @@ public class ShiroConfig {
     @Bean(name = "sessionManager")
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        // 设置session过期时间3600s
+        // 设置session过期时间3600000
         List a = new ArrayList();
         a.add(new ShiroSessionFilter());
         sessionManager.setSessionListeners(a);
+       sessionManager.setGlobalSessionTimeout(3600000);
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie());
         return sessionManager;
