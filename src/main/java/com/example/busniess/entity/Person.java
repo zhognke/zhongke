@@ -16,8 +16,7 @@ public class Person {
     private String uName;//关联的账号2
     @NotBlank(message = "姓名不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String name;//姓名3
-    @NotBlank(message = "身份证不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String personCode;//身份证号4
+//
 //    @NotBlank(message = "身份证图片地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
    private String imgAddress;//身份证图片
     @NotBlank(message = "所属企业不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
@@ -38,7 +37,7 @@ public class Person {
     private String telephone;//电话8
 
 
-    @NotBlank(message = "附件地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    @NotBlank(message = "附件地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String address;//附件地址
     @NotBlank(message = "个人介绍不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String selfIntroduction;//个人介绍
@@ -49,4 +48,9 @@ public class Person {
     private Date inserttime;//11
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updatetime;//12
+
+
+
+//    @NotBlank(message = "身份证不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private String personCode;//身份证号4
 }

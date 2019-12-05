@@ -1,7 +1,9 @@
 package com.example.busniess.config;
 
 
-import com.example.busniess.filter.ShiroSession;
+import com.example.busniess.filter.MyFilter;
+
+import com.example.busniess.filter.ShiroSessionFilter;
 import com.example.busniess.service.MyShiroRealm;
 
 
@@ -9,6 +11,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -19,9 +22,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import javax.servlet.Filter;
+
+import java.util.*;
 
 
 @Configuration
@@ -32,6 +35,15 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+
+        /*重要，设置自定义拦截器，当访问某些自定义url时，使用这个filter进行验证*/
+        Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+        //如果map里面key值为authc,表示所有名为authc的过滤条件使用这个自定义的filter
+        //map里面key值为myFilter,表示所有名为myFilter的过滤条件使用这个自定义的filter，具体见下方
+        filters.put("myFilter", new MyFilter());
+        shiroFilterFactoryBean.setFilters(filters);
+
+
         /**
          * anon:所有url都都可以匿名访问;
          * authc: 需要认证才能进行访问;
@@ -41,7 +53,7 @@ public class ShiroConfig {
         //设置登录的页面
 
         Map<String, String> map = new LinkedHashMap<>();
-        map.put("/**","myFilter");
+        map.put("/**", "myFilter");
 //        map.put("/loginout", "logout");
 
 //登录接口设置
@@ -104,7 +116,7 @@ public class ShiroConfig {
         map.put("/talentDemand/showByPage", "anon");
         map.put("/talentDemand/showById", "anon");
         map.put("/talentDemand/**", "authc");
-        map.put("/**", "anon");
+        map.put("/*", "anon");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
@@ -152,9 +164,12 @@ public class ShiroConfig {
 
     //设置session
     @Bean(name = "sessionManager")
-    public  DefaultWebSessionManager sessionManager() {
+    public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         // 设置session过期时间3600s
+        List a = new ArrayList();
+        a.add(new ShiroSessionFilter());
+        sessionManager.setSessionListeners(a);
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie());
         return sessionManager;
@@ -184,10 +199,6 @@ public class ShiroConfig {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
-    @Bean
-    public ShiroSession myFilter(){
-        return new ShiroSession();
-    }
 
 
     @Bean(name = "sessionIdCookie")
@@ -198,5 +209,6 @@ public class ShiroConfig {
         cookie.setMaxAge(18000);
         return cookie;
     }
+
 
 }

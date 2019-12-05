@@ -90,11 +90,11 @@ public class UserController {
         }
 
         UsernamePasswordToken up = new UsernamePasswordToken(userName, password);
- 
+
 
 
         subject.login(up);
-        subject.getSession().setTimeout(-1000000L);
+//        subject.getSession().setTimeout(-1000000L);
 //        up.setRememberMe(remb);//记住我
         //登录成功
         return ReturnResult.success(map);

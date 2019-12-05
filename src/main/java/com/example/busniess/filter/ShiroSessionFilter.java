@@ -1,13 +1,8 @@
 package com.example.busniess.filter;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
-import org.apache.shiro.subject.Subject;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import java.io.IOException;
 
 public class ShiroSessionFilter implements SessionListener {
     @Override
