@@ -67,6 +67,11 @@ public class ProfessionalsEntity implements Serializable {
     @NotNull(message = "技术领域不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
     private String technologyScope;
     /**
+     * 技术领域二级目录
+     */
+    @NotNull(message = "技术领域二级目录不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+    private String technologyScopeDetail;
+    /**
      * 突出贡献
      */
     @NotNull(message = "突出贡献不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})

@@ -13,6 +13,7 @@
                 engaged_industry_detail,
                 industry_experience,
                 technology_scope,
+                technology_scope_detail,
                 outstanding_contribution,
                 research_direction,
                 introduced,
@@ -57,6 +58,9 @@
             </if>
             <if test="technologyScope!=null and technologyScope!=''">
                 technology_scope=#{technologyScope},
+            </if>
+            <if test="technologyScopeDetail!=null and technologyScopeDetail!=''">
+                technology_scope_detail=#{technologyScopeDetail},
             </if>
             <if test="outstandingContribution!=null and outstandingContribution!=''">
                 outstanding_contribution=#{outstandingContribution},
@@ -122,6 +126,9 @@
         </if>
         <if test="technologyScope!=null and technologyScope!=''">
             and technology_scope in ('${technologyScope}')
+        </if>
+        <if test="technologyScopeDetail!=null and technologyScopeDetail!=''">
+            and technology_scope_datail = #{technologyScopeDetail}
         </if>
         <if test="keyWord!=null and keyWord!=''">
             and (research_direction like CONCAT('%',#{keyWord},'%') or real_name like CONCAT('%',#{keyWord},'%') or institutions like CONCAT('%',#{keyWord},'%') or technology_scope like CONCAT('%',#{keyWord},'%'))
