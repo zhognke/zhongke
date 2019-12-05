@@ -65,6 +65,7 @@ public interface FinancingDao {
     @Results({
             @Result(property = "uName",column = "uname"),
             @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+            @Result(property = "businessCenter", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter") )
     })
     public FinancingEntity seleOneFinancing(Integer id);
 

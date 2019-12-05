@@ -18,6 +18,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -89,8 +90,11 @@ public class UserController {
         }
 
         UsernamePasswordToken up = new UsernamePasswordToken(userName, password);
+ 
+
 
         subject.login(up);
+        subject.getSession().setTimeout(-1000000L);
 //        up.setRememberMe(remb);//记住我
         //登录成功
         return ReturnResult.success(map);

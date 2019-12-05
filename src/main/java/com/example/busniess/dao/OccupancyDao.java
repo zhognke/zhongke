@@ -31,7 +31,8 @@ public interface OccupancyDao {
             @Result(property = "userName", column = "userName"),
             @Result(property = "imgAddress", column = "id", many = @Many(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
             @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
-            @Result(property = "businessCenter", column = "username", one = @One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter"))
+            @Result(property = "businessCenter", column = "username", one = @One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter")),
+            @Result(property = "person", column = "username", one = @One(select = "com.example.busniess.dao.PersonDao.selectPerson"))
     })
     public Occupancy selectOneById(Integer id);
 

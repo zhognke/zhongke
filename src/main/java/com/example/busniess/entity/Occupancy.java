@@ -55,7 +55,7 @@ public class Occupancy implements Serializable {
 //    @Pattern(regexp = "^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\\d{8}$", message = "手机号码格式错误", groups = {UserValidator.InSet.class})
     private String phoneNumber;//联系人电话
     @NotNull(message = "所属省份不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String  province;//省 8
+    private String province;//省 8
     @NotNull(message = "所属市不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String city;//市  9
     @NotNull(message = "所属区不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
@@ -86,4 +86,11 @@ public class Occupancy implements Serializable {
     private BusinessInformation businessInformation;//对应
 
     private String hot;//热门数据
+
+
+
+    private  Person person;//用户类别1.私人2.个人
+
+
+
 }

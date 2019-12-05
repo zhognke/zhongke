@@ -38,6 +38,7 @@
         <result property="closeReason" column="closeReason"/>
         <result property="companyName" column="companyName"/>
         <result property="negotiable" column="negotiable"/>
+
         <association property="businessInformation" javaType="businessInformation">
             <id property="id" column="id"/>
             <result property="uName" column="uName"/>
