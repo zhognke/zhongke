@@ -11,13 +11,13 @@ public interface PersonDao {
      * @param person
      * @return
      */
-    @Insert("INSERT INTO `person` (`uname`, `name`, `personcode`, `imgaddress`,`unit`, `territory`,`province`,`city`,`district`,`experience`, `telephone`, `post`, `statue`, `inserttime`,`address`,`selfIntroduction`) VALUES " +
-            "(#{uName}, #{name}, #{personCode},#{imgAddress}, #{unit},#{territory},#{province}, #{city},#{district},#{experience},#{telephone},#{post}, 0, NOW(),#{address},#{selfIntroduction})")
+    @Insert("INSERT INTO `person` (`uname`, `name`,`imgaddress`,`unit`, `territory`,`province`,`city`,`district`,`experience`, `telephone`, `post`, `statue`, `inserttime`,`address`,`selfIntroduction`) VALUES " +
+            "(#{uName}, #{name}, #{imgAddress}, #{unit},#{territory},#{province}, #{city},#{district},#{experience},#{telephone},#{post}, 0, NOW(),#{address},#{selfIntroduction})")
     public Boolean insertPerson(Person person);
     /**
      * 修改私人认证
      */
-    @Update("UPDATE `person` SET `name`=#{name},`personcode`=#{personCode},`imgaddress`=#{imgAddress},`unit`=#{unit}, `territory`=#{territory}, `province`=#{province},`city`=#{city},`district`=#{district},`experience`=#{experience}, `telephone`=#{telephone}, `post`=#{post},`address`=#{address},`selfIntroduction`=#{selfIntroduction},`updatetime`= NOW(),statue=0 WHERE (`id`=#{id})")
+    @Update("UPDATE `person` SET `name`=#{name},`imgaddress`=#{imgAddress},`unit`=#{unit}, `territory`=#{territory}, `province`=#{province},`city`=#{city},`district`=#{district},`experience`=#{experience}, `telephone`=#{telephone}, `post`=#{post},`address`=#{address},`selfIntroduction`=#{selfIntroduction},`updatetime`= NOW(),statue=0 WHERE (`id`=#{id})")
     public Boolean updatePerson(Person person);
 
     /**

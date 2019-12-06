@@ -52,5 +52,5 @@ public class Person {
 
 
 //    @NotBlank(message = "身份证不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String personCode;//身份证号4
+//    private String personCode;//身份证号4
 }
