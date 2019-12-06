@@ -58,8 +58,8 @@ public interface OccupancyService {
 
     /**
      * 查看自己发布的
-     *
-     * @param userName
+     *可以检索
+     * @param occupancy
      * @param pageNum
      * @param pagesize
      * @return
@@ -110,9 +110,29 @@ public interface OccupancyService {
      */
     boolean updateOccupancy(Occupancy occupancy);
 
+    /**
+     *
+     * @param occupancy
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
+
     PageInfo showByPage(Occupancy occupancy, Integer pageNum, Integer pagesize);
 
+    /**
+     * 热门行业搜索
+     * @param size
+     * @return
+     */
     List<Occupancy> getHotIndustry(Integer size);
 
+    /**
+     * 搜索自己的
+     * @param occupancy
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
     PageInfo showByPageForCenter(Occupancy occupancy, Integer pageNum, Integer pagesize);
 }

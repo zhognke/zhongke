@@ -120,7 +120,7 @@
     <select id="selectimgAddress" resultType="imageAddress" parameterType="string">
            SELECT * FROM imageaddress WHERE oid=#{id}
     </select>
-<!---->
+<!--按条件搜索搜索可以展示的-->
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultMap="occupancyResultMap">
         -- SELECT * FROM occupancy
         SELECT * FROM occupancy o left JOIN businessInformation b

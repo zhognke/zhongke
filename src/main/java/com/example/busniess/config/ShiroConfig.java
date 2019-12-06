@@ -207,7 +207,7 @@ public class ShiroConfig {
         SimpleCookie cookie = new SimpleCookie();
         cookie.setName("ZHONGKEHUAIBIE");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(18000);
+//        cookie.setMaxAge(18000);
         return cookie;
     }
 

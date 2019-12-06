@@ -115,7 +115,7 @@ public class OccupancyController {
 
     /**
      * 显示所有能显示的内容
-     *
+     * 没有检索条件
      * @param pageNum//页数
      * @param pagesize//显示的数量
      * @return
@@ -130,7 +130,7 @@ public class OccupancyController {
 
 
     /**
-     * 更新发布状态1
+     * 更新发布状态
      *
      * @param kStatue
      * @param id
@@ -149,19 +149,7 @@ public class OccupancyController {
         }
     }
 
-//    /**
-//     * 根据行业显示科技成果无用
-//     * industry
-//     */
-//    @RequestMapping("/selectByIndustry")
-//    public ReturnResult selectByIndustry(Occupancy occupancy,
-//                                         @NotNull(message = "参数不能为空")
-//                                         @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,
-//                                         @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1")
-//                                                 Integer pagesize) {
-//
-//        return ReturnResult.success(occupancyServceImpl.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
-//    }
+
 
     /**
      * 根据状态查看
@@ -188,8 +176,8 @@ public class OccupancyController {
                                               @RequestParam(required = false) String reject) {
         if (statue == 1) {
             str = "审核通过";
-        }
-        str = "审核驳回";
+        }else if(statue==2){
+        str = "审核驳回";}
 
 
         if (occupancyServceImpl.updateStatue(statue, id, reject)) {
@@ -277,7 +265,7 @@ public class OccupancyController {
 
     /**
      * 分页展示(企业中心,包含检索功能)1
-     *
+     *搜索自己的
      * @param occupancy
      * @param pageNum
      * @param pagesize
@@ -324,7 +312,6 @@ public class OccupancyController {
 
     /**
      * 管理员驳回1
-     *
      * @param id
      * @param closeReason
      * @return

@@ -52,12 +52,11 @@ public interface OccupancyDao {
     public List<Occupancy> selectOnStatueOccupancy(Integer statue);
 
     /**
-     * 查询自己发布的
-     *
-     * @param userName
+     * 查看自己的
+     * 可以按条件检索
+     * @param occupancy
      * @return
      */
-//    @Select("SELECT * FROM occupancy WHERE username=#{userName} ORDER BY creattime DESC")
     public List<Occupancy> selectMyOccupancy(Occupancy occupancy);
 
     /**
@@ -84,14 +83,7 @@ public interface OccupancyDao {
     })
     public Occupancy selectOneOccupancy(Integer id);
 
-    /**
-     * 根据条件搜索id
-     * id
-     *
-     * @param occupancy
-     * @return
-     */
-    public List<Occupancy> searchOccupancy(Occupancy occupancy);
+
 
     /**
      * 修改科技入住信息
@@ -160,7 +152,7 @@ public interface OccupancyDao {
 
     /**
      * 根据条件查询
-     *
+     *按条件搜索搜索可以展示的
      * @param occupancy
      * @return
      */
@@ -196,6 +188,11 @@ public interface OccupancyDao {
     @Select("SELECT id,resultTechnolo,price,industry,industryDetail,attribute,stage,transferType,negotiable FROM `occupancy` where statue=1 and kstatue =1 and hot='热门' ORDER BY `creattime` DESC LIMIT 0,#{size}")
     List<Occupancy> getHotIndustry(@Param("size") Integer size);
 
+    /**
+     * 根据条件搜索
+     * @param occupancy
+     * @return
+     */
     List<Occupancy> showByPageForCenter(Occupancy occupancy);
 
     @Select("SELECT companyName,resultTechnolo,stage,advantages,industry,industryDetail,attribute,transferType,price,province,city,district,negotiable FROM occupancy WHERE `statue`=1 AND `kstatue`=1 and username=#{username} ORDER BY creattime DESC limit #{size}")
