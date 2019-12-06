@@ -38,19 +38,6 @@ public class OccupancyController {
     OccupancyService occupancyServceImpl;
     @Autowired
     RabbitTemplate rabbitTemplate;
-//    @Autowired
-//    OccupancyDao occupancyDao;
-
-    /**
-     * 查询具体的科技成果
-     *
-     * @param id
-     * @return
-     */
-//    @RequestMapping("/selectOneOccupancy")
-//    public ReturnResult selectOneOccupancy(@NotNull(message = "id不能为空") Integer id) {
-//        return ReturnResult.success(occupancyDao.selectOneOccupancy(id));
-//    }
 
 
     /**
@@ -68,11 +55,9 @@ public class OccupancyController {
 
         if (occupancyServceImpl.addOccupancy(occupancy)) {
             //通知
-            InformEntity informEntity = new InformEntity();//创建消息
-            informEntity.setUserName(occupancy.getUserName());
-            informEntity.setCount("发布了" + occupancy.getResultTechnolo() + "待审核");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-            informEntity.setTime(df.format(new Date()));
+
+            InformEntity informEntity = RabbitUtil.sendRabbic(occupancy.getUserName(), "发布了" + occupancy.getResultTechnolo() + "待审核", new Date());
+
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
 
 
@@ -85,6 +70,7 @@ public class OccupancyController {
 
     /**
      * 删除入住成果
+     * 管理员彻底删除
      */
     @SysLog(value = "删除科技成果", type = "科技成果")
     @RequestMapping("/delectOccupancy")
@@ -98,20 +84,21 @@ public class OccupancyController {
 
     /**
      * 查看自己发布的科技成果
-     *
+     *可以检索
      * @param pageNumber//第几页
      * @param pageSize//显示多少
      * @return
      */
     @RequestMapping("/examineMyOccupancy")
-    public ReturnResult examineMyOccupancy(
+    public ReturnResult examineMyOccupancy(Occupancy occupancy,
             @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNumber,
             @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageSize) {
         String userName = ShiroUtils.getUserName();
+       occupancy.setUserName(userName);
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
         }
-        PageInfo o = occupancyServceImpl.selectMyOccupancy(userName, pageNumber, pageSize);
+        PageInfo o = occupancyServceImpl.selectMyOccupancy(occupancy, pageNumber, pageSize);
         return ReturnResult.success(o);
     }
 
@@ -143,7 +130,7 @@ public class OccupancyController {
 
 
     /**
-     * 更新发布状态
+     * 更新发布状态1
      *
      * @param kStatue
      * @param id
@@ -152,7 +139,7 @@ public class OccupancyController {
     @SysLog(value = "修改科技成果状态", type = "科技成果")
     @RequestMapping("/upKstatue")
     public ReturnResult upKstatue(@NotNull(message = "跟新状态不能为空")
-                                              Integer kStatue,
+                                          Integer kStatue,
                                   @NotNull(message = "发布成果的id不能为空")
                                           Integer id) {
         if (occupancyServceImpl.upDateKstatue(kStatue, id)) {
@@ -162,19 +149,19 @@ public class OccupancyController {
         }
     }
 
-    /**
-     * 根据行业显示科技成果
-     * industry
-     */
-    @RequestMapping("/selectByIndustry")
-    public ReturnResult selectByIndustry(Occupancy occupancy,
-                                         @NotNull(message = "参数不能为空")
-                                         @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,
-                                         @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1")
-                                                     Integer pagesize) {
-
-        return ReturnResult.success(occupancyServceImpl.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
-    }
+//    /**
+//     * 根据行业显示科技成果无用
+//     * industry
+//     */
+//    @RequestMapping("/selectByIndustry")
+//    public ReturnResult selectByIndustry(Occupancy occupancy,
+//                                         @NotNull(message = "参数不能为空")
+//                                         @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,
+//                                         @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1")
+//                                                 Integer pagesize) {
+//
+//        return ReturnResult.success(occupancyServceImpl.selectOccupancyByIndustry(occupancy, pageNum, pagesize));
+//    }
 
     /**
      * 根据状态查看
@@ -197,7 +184,7 @@ public class OccupancyController {
     @SysLog(value = "修改科技成果审核状态", type = "科技成果")
     @RequestMapping("/updateOccupancyStatue")
     public ReturnResult updateOccupancyStatue(@NotNull(message = "状态值不能为空") Integer statue,
-                                              @NotNull(message = "id号不能为空")      Integer id,
+                                              @NotNull(message = "id号不能为空") Integer id,
                                               @RequestParam(required = false) String reject) {
         if (statue == 1) {
             str = "审核通过";
@@ -210,7 +197,7 @@ public class OccupancyController {
 
             Occupancy occupancy = occupancyServceImpl.seleOccupancyById(id);
 
-        InformEntity informEntity= RabbitUtil.sendRabbic(occupancy.getUserName(),occupancy.getResultTechnolo() + str,new Date());
+            InformEntity informEntity = RabbitUtil.sendRabbic(occupancy.getUserName(), occupancy.getResultTechnolo() + str, new Date());
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
 
@@ -227,8 +214,8 @@ public class OccupancyController {
      */
     @SysLog(value = "修改科技成果", type = "科技成果")
     @RequestMapping("/updateOccupancy")
-    public ReturnResult updateOccupancy( @Validated({UserValidator.InSet.class})
-                                                     Occupancy occupancy) {
+    public ReturnResult updateOccupancy(@Validated({UserValidator.InSet.class})
+                                                Occupancy occupancy) {
         if (occupancyServceImpl.updateOccupancy(occupancy)) {
             return ReturnResult.success();
         }
@@ -264,6 +251,8 @@ public class OccupancyController {
 
     /**
      * 分页展示(大厅,包含检索功能)
+     * 默认都是审核通过的才能发布
+     *
      * @param occupancy
      * @param pageNum
      * @param pageSize
@@ -287,7 +276,7 @@ public class OccupancyController {
     }
 
     /**
-     * 分页展示(企业中心,包含检索功能)
+     * 分页展示(企业中心,包含检索功能)1
      *
      * @param occupancy
      * @param pageNum
@@ -317,7 +306,7 @@ public class OccupancyController {
     }
 
     /**
-     * 更新发布状态
+     * 用户结束发布科技成果
      *
      * @param id
      * @param closeReason
@@ -334,7 +323,7 @@ public class OccupancyController {
     }
 
     /**
-     * 更新发布状态
+     * 管理员驳回1
      *
      * @param id
      * @param closeReason

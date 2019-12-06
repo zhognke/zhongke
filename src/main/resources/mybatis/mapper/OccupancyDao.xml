@@ -61,6 +61,18 @@
 
 
     <sql id="OccupancyByIndustry_sql">
+
+        <if test="resultTechnolo!=null and resultTechnolo!=''">
+            and `resultTechnolo` = #{resultTechnolo}
+        </if>
+
+        <if test="statue!=null and statue!=''">
+            and `statue` = #{statue}
+        </if>
+
+        <if test="kstatue!=null and kstatue!=''">
+            and `kstatue` = #{kstatue}
+        </if>
         <if test="appliedRange!=null and appliedRange!=''">
             and `appliedRange` = #{appliedRange}
         </if>
@@ -97,7 +109,8 @@
             and `industryDetail` = #{industryDetail}
         </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (`negotiable`=#{keyWord} or `industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like
+            and (`negotiable`=#{keyWord} or `industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or
+            `industryDetail` like
             "%${keyWord}%")
         </if>
 
@@ -107,7 +120,7 @@
     <select id="selectimgAddress" resultType="imageAddress" parameterType="string">
            SELECT * FROM imageaddress WHERE oid=#{id}
     </select>
-
+<!---->
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultMap="occupancyResultMap">
         -- SELECT * FROM occupancy
         SELECT * FROM occupancy o left JOIN businessInformation b
@@ -118,9 +131,10 @@
         </where>
         ORDER BY creattime DESC
     </select>
+    <!-- 根据条件搜索-->
 
     <select id="showByPageForCenter" parameterType="occupancy" resultMap="occupancyResultMap">
-        -- SELECT id,companyName,resultTechnolo,industry,advantages,stage,kstatue,statue FROM occupancy
+
         SELECT * FROM occupancy o INNER JOIN businessInformation b
         <where>
             o.username=b.uname and
@@ -131,5 +145,18 @@
             </if>
         </where>
         ORDER BY creattime DESC
+    </select>
+
+
+
+<!--    查看自己的可以检索-->
+    <select id="selectMyOccupancy" parameterType="Occupancy" resultType="Occupancy">
+       SELECT * FROM occupancy
+        <where>
+            username=#{userName}
+            <include refid="OccupancyByIndustry_sql"></include>
+        </where>
+
+         ORDER BY creattime DESC
     </select>
 </mapper>

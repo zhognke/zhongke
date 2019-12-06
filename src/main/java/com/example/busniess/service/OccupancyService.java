@@ -64,7 +64,7 @@ public interface OccupancyService {
      * @param pagesize
      * @return
      */
-    PageInfo selectMyOccupancy(String userName, Integer pageNum, Integer pagesize);
+    PageInfo selectMyOccupancy(Occupancy occupancy, Integer pageNum, Integer pagesize);
 
     /**
      * 根据行业查询

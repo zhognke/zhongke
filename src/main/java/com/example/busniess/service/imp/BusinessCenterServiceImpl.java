@@ -111,10 +111,7 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
     @Override
     public BusinessCenter selectBusinessCenterById(Integer id) {
         BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(id);
-        if(businessCenter!=null){
-            List<Occupancy> occupancyList = occupancyDao.selectMyOccupancy(businessCenter.getUName());
-            businessCenter.setOccupancyList(occupancyList);
-        }
+
         return businessCenter;
     }
 

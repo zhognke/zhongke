@@ -91,12 +91,20 @@ public class OccupancyServiceimpl implements OccupancyService {
         return occupancyDao.updateKstatue(kStatue, id);
     }
 
+
+
+
+//结束
     @Override
     public boolean closeById(Integer id, String closeReason) {
         Integer status = 3;
         return occupancyDao.closeById(id, status, closeReason);
     }
 
+
+
+
+//驳回
     @Override
     public boolean closeByIdForManager(Integer id, String closeReason) {
         Integer status = 2;
@@ -118,9 +126,9 @@ public class OccupancyServiceimpl implements OccupancyService {
      * 查看自己发布的
      */
 
-    public PageInfo selectMyOccupancy(String userName, Integer pageNum, Integer pagesize) {
+    public PageInfo selectMyOccupancy(Occupancy occupancy, Integer pageNum, Integer pagesize) {
         PageHelper.startPage(pageNum, pagesize);
-        List<Occupancy> o = occupancyDao.selectMyOccupancy(userName);
+        List<Occupancy> o = occupancyDao.selectMyOccupancy(occupancy);
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
     }

@@ -8,16 +8,16 @@ import java.util.Map;
 
 public interface OccupancyDao {
 
-    /**
-     * 查询所有的
-     *
-     * @return
-     */
-    @Select("SELECT * FROM occupancy ")
-//    @Results({
-//            @Result(property = "imgAddress", column = "oId", many = @Many(select = "com.example.busniess.dao.selectimgAddress"))
-//    })
-    public List<Occupancy> selectAllOccupancy();
+//    /**
+//     * 查询所有的
+//     *
+//     * @return
+//     */
+//    @Select("SELECT * FROM occupancy ")
+////    @Results({
+////            @Result(property = "imgAddress", column = "oId", many = @Many(select = "com.example.busniess.dao.selectimgAddress"))
+////    })
+//    public List<Occupancy> selectAllOccupancy();
 
     /**
      * 查看具体的
@@ -57,8 +57,8 @@ public interface OccupancyDao {
      * @param userName
      * @return
      */
-    @Select("SELECT * FROM occupancy WHERE username=#{userName} ORDER BY creattime DESC")
-    public List<Occupancy> selectMyOccupancy(String userName);
+//    @Select("SELECT * FROM occupancy WHERE username=#{userName} ORDER BY creattime DESC")
+    public List<Occupancy> selectMyOccupancy(Occupancy occupancy);
 
     /**
      * 名字
@@ -159,7 +159,7 @@ public interface OccupancyDao {
     public Boolean updateStatue(@Param("statue") Integer statue, @Param("id") Integer id, @Param("reject") String reject);
 
     /**
-     * 根据行业查询
+     * 根据条件查询
      *
      * @param occupancy
      * @return
