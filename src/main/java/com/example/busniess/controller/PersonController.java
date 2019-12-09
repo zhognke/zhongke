@@ -36,8 +36,8 @@ public class PersonController {
     public ReturnResult addPerson(@Validated(UserValidator.InSet.class) Person person) {
         if (personServiceImpl.addPerson(person)) {
             //通知
-        InformEntity informEntity= RabbitUtil.sendRabbic(person.getUName(),"提交了个人认证",new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE,RabbitUtil.ADMINkEY,informEntity);
+            InformEntity informEntity = RabbitUtil.sendRabbic(person.getUName(), "提交了个人认证", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
@@ -69,11 +69,11 @@ public class PersonController {
      * 查看所有的
      */
     @RequestMapping("/selectAllPerson")
-    public ReturnResult selectAllPerson(Person person,@RequestParam(required = false,defaultValue = "1")
-                                                    Integer pageNumber,
-                                        @RequestParam(required = false,defaultValue = "5")
-                                        Integer pageSize) {
-        return ReturnResult.success(personServiceImpl.selectAllPerson(person,pageNumber,pageSize));
+    public ReturnResult selectAllPerson(Person person, @RequestParam(required = false, defaultValue = "1")
+            Integer pageNumber,
+                                        @RequestParam(required = false, defaultValue = "5")
+                                                Integer pageSize) {
+        return ReturnResult.success(personServiceImpl.selectAllPerson(person, pageNumber, pageSize));
     }
 
     /**
@@ -89,19 +89,19 @@ public class PersonController {
      */
     @RequestMapping("/updateStatue")
     public ReturnResult updateStatue(@NotNull(message = "id号不能为空")
-                                                 Integer id,
+                                             Integer id,
                                      @NotNull(message = "角色id不能为空")
-                                     Integer rid,
+                                             Integer rid,
                                      @NotBlank(message = "关联用户名不能为空")
-                                     String userName,
-                                   @RequestParam(required = false,defaultValue = "1")
-                                     Integer statue,
-                                     @RequestParam(required = false,defaultValue = "0")
-                                     Integer reId) {
+                                             String userName,
+                                     @RequestParam(required = false, defaultValue = "1")
+                                             Integer statue,
+                                     @RequestParam(required = false, defaultValue = "0")
+                                             Integer reId) {
         if (personServiceImpl.upStatue(id, rid, userName, statue, reId)) {
             //通知
-        InformEntity informEntity=    RabbitUtil.sendRabbic(userName,"提交的认证信息审核通过了",new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE,RabbitUtil.USERKEY,informEntity);
+            InformEntity informEntity = RabbitUtil.sendRabbic(userName, "提交的认证信息审核通过了", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
 
             return ReturnResult.success();
@@ -115,6 +115,10 @@ public class PersonController {
     @RequestMapping("/rejectPerson")
     public ReturnResult rejectPerson(@Validated(UserValidator.InSet.class) Reject reject) {
         if (personServiceImpl.rejectPerson(reject)) {
+            //通知
+            Person person = personServiceImpl.selectOnePersonByid(reject.getId());
+            InformEntity informEntity = RabbitUtil.sendRabbic(person.getUName(), "提交的认证信息被驳回", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.AUDITOR_ERROR);
@@ -125,15 +129,16 @@ public class PersonController {
      */
     @RequestMapping("/selectOnePerson")
     public ReturnResult selectOnePerson(@NotBlank(message = "名字不能为空") String uName,
-                                        @NotNull(message = "状态不能为空") Integer statue){
-        return  ReturnResult.success(personServiceImpl.selectOnePerson(uName, statue));
+                                        @NotNull(message = "状态不能为空") Integer statue) {
+        return ReturnResult.success(personServiceImpl.selectOnePerson(uName, statue));
     }
-/**
- * 查看具体的
- */
-public  ReturnResult selectOne(@NotNull(message = "id不能为空") Integer id){
-    return ReturnResult.success(personServiceImpl.selectOnePersonByid(id));
-}
+
+    /**
+     * 查看具体的
+     */
+    public ReturnResult selectOne(@NotNull(message = "id不能为空") Integer id) {
+        return ReturnResult.success(personServiceImpl.selectOnePersonByid(id));
+    }
 
 
 }

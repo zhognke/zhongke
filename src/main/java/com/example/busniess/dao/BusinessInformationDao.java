@@ -48,5 +48,13 @@ public interface BusinessInformationDao {
     @Select("SELECT * from businessInformation")
     public List<BusinessInformation> selectAllBusinessInformation();
 
+    /**
+     *根据id号查看企业补充信息
+     * @param id
+     * @return
+     */
+    @Select("SELECT * from businessInformation WHERE id=#{id}")
+    public  BusinessInformation selectBusinessInformationById(Integer id);
+
 
 }

@@ -40,7 +40,7 @@ public class WebSocketServer {
         webSocketSet.put(userName, this);     //加入用户名和通讯的当前websocket对象
         addOnlineCount();           //在线数加1
         System.out.println("用户" + userName + "上线！ 当前用户为" + getOnlineCount());
-//            sendMessage("连接成功");
+        this.session.getBasicRemote().sendObject("连接成功");
         //1.告诉用户连接成功；
         //2.把保存的用用户信息发送给指定的用户
         //3.发送后把数据清空

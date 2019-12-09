@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class BusinessInformationServiceImpl implements BusinessInformationService {
-   @Autowired
+    @Autowired
     BusinessInformationDao businessInformationDao;
 
     /**
@@ -64,8 +64,18 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
     @Override
     public PageInfo selectBusinessInformation(Integer pageNum,Integer pagesize) {
         PageHelper.startPage(pageNum, pagesize);
-     List o=   businessInformationDao.selectAllBusinessInformation();
+        List o=   businessInformationDao.selectAllBusinessInformation();
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
+    }
+
+    /**
+     * 根据id号查看企业补充信息
+     * @param id
+     * @return
+     */
+    @Override
+    public BusinessInformation selectBusinessInformationById(Integer id) {
+        return  businessInformationDao.selectBusinessInformationById(id);
     }
 }

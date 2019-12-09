@@ -28,4 +28,9 @@ public interface BusinessInformationService {
      * 查看所有的
      */
     public PageInfo selectBusinessInformation(Integer pageNum,Integer pagesize);
+    /**
+     *根据id查询
+     */
+    public  BusinessInformation selectBusinessInformationById(Integer id);
+
 }

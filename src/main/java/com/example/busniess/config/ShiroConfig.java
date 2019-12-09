@@ -201,7 +201,7 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-
+//设置cook的名字
     @Bean(name = "sessionIdCookie")
     public SimpleCookie sessionIdCookie() {
         SimpleCookie cookie = new SimpleCookie();

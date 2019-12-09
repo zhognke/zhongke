@@ -123,6 +123,7 @@ public class PersonServiceImpl implements PersonService {
 
     /**
      * 查看详情1
+     * 有关联关系的
      * @param id
      * @return
      */
@@ -134,11 +135,13 @@ public class PersonServiceImpl implements PersonService {
 
     /**
      * 查看详情
+     * 没有关联关系的
      * @param id
      * @return
      */
     @Override
     public Person selectOnePersonByid(Integer id) {
+
         return  personDao.selectOnePerson(id);
     }
 }
