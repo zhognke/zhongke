@@ -160,8 +160,8 @@ public class WebSocketServer {
             //用户以前的消息队列中有消息就继续增加
             //没有消息对列就创建
             if (webUser.get(informEntity.getUserName()) != null) {
-           list=webUser.get(informEntity.getUserName());
-           list.add(informEntity);
+                list = webUser.get(informEntity.getUserName());
+                list.add(informEntity);
             } else {
                 list = new Vector();
                 list.add(informEntity);
@@ -180,7 +180,7 @@ public class WebSocketServer {
      * @throws IOException
      */
 
-    public  void sendtoAll(InformEntity informEntity) throws IOException {
+    public void sendtoAll(InformEntity informEntity) throws IOException {
         for (String key : webSocketSet.keySet()) {
             try {
                 webSocketSet.get(key).sendMessage(informEntity);

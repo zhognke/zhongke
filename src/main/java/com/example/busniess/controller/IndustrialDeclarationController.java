@@ -1,26 +1,25 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
-import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.IndustrialDeclarationEntity;
+import com.example.busniess.entity.InformEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessCenterInformationService;
 import com.example.busniess.service.IndustrialDeclarationService;
 import com.example.busniess.utiles.EchartsEntity;
+import com.example.busniess.utiles.RabbitUtil;
 import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -39,6 +38,9 @@ public class IndustrialDeclarationController {
 
     @Autowired
     BusinessCenterInformationService businessCenterInformationService;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     /**
      * 新增申报
@@ -60,7 +62,9 @@ public class IndustrialDeclarationController {
         }
         if(industrialDeclarationService.add(industrialDeclarationEntity)){
 
-            //通知
+            BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOneByCompanyName(industrialDeclarationEntity.getCompanyName());
+            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUname(), "提交了" + industrialDeclarationEntity.getProjectName() + "的工业申报", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
 
 
             return ReturnResult.success("操作成功");
@@ -167,6 +171,11 @@ public class IndustrialDeclarationController {
     public ReturnResult closeByIdForManager(Integer id,String closeReason){
         Integer status = 2;
         if(industrialDeclarationService.updateStatus(id,status,closeReason)){
+            //通知
+            IndustrialDeclarationEntity entity = industrialDeclarationService.selectById(id);
+            BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOneByCompanyName(entity.getCompanyName());
+            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUname(), "提交的" + entity.getProjectName() + "的工业申报已被管理员关闭", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -200,6 +209,11 @@ public class IndustrialDeclarationController {
     public ReturnResult updateApprovalStatusPass(Integer id) {
         Integer approvalStatus = 1;
         if (industrialDeclarationService.updateApprovalStatus(id,approvalStatus, "")) {
+            //通知
+            IndustrialDeclarationEntity entity = industrialDeclarationService.selectById(id);
+            BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOneByCompanyName(entity.getCompanyName());
+            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUname(), "提交的" + entity.getProjectName() + "的工业申报已经审核通过", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -218,6 +232,11 @@ public class IndustrialDeclarationController {
     public ReturnResult updateApprovalStatusRejected(Integer id, String approvalOpinion) {
         Integer approvalStatus = 2;
         if (industrialDeclarationService.updateApprovalStatus(id,approvalStatus, approvalOpinion)) {
+            //通知
+            IndustrialDeclarationEntity entity = industrialDeclarationService.selectById(id);
+            BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOneByCompanyName(entity.getCompanyName());
+            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUname(), "提交的" + entity.getProjectName() + "的工业申报被驳回了", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);

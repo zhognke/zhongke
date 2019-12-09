@@ -42,6 +42,11 @@ public class TalentDemandEntity implements Serializable {
     @NotNull(message = "详细描述不能为空", groups = {UserValidator.InSet.class})
     private String content;
     /**
+     * 任职要求
+     */
+    @NotNull(message = "任职要求不能为空", groups = {UserValidator.InSet.class})
+    private String requires;
+    /**
      * 从事行业
      */
     @NotNull(message = "从事行业不能为空", groups = {UserValidator.InSet.class})

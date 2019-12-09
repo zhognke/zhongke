@@ -1,20 +1,24 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
-import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.DemandsEntity;
+import com.example.busniess.entity.InformEntity;
 import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.TalentDemandService;
+import com.example.busniess.utiles.RabbitUtil;
 import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 
 /**
@@ -31,6 +35,8 @@ public class TalentDemandController {
     private TalentDemandService talentDemandService;
     @Autowired
     BusinessCenterService businessCenterService;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
     /**
      * 新增
      *
@@ -53,6 +59,10 @@ public class TalentDemandController {
             }
         }*/
         if (talentDemandService.add(talentDemandEntity)) {
+            //通知
+            InformEntity informEntity= RabbitUtil.sendRabbic(talentDemandEntity.getUserName(),"提交了" +
+                    talentDemandEntity.getTitle() + "的人才需求",new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success("操作成功");
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -147,6 +157,9 @@ public class TalentDemandController {
     @PostMapping("/closeDemandsForManager")
     public ReturnResult closeDemandsForManager(Integer id,String closeReason) {
         if (talentDemandService.closeDemandsForManager(id,closeReason)) {
+            TalentDemandEntity entity = talentDemandService.selectById(id);
+            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getTitle() + "的人才需求已被管理员关闭", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success("操作成功");
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -197,6 +210,9 @@ public class TalentDemandController {
     public ReturnResult updateApprovalStatusPass(Integer id) {
         Integer approvalStatus = 1;
         if (talentDemandService.updateApprovalStatus(id,approvalStatus, "")) {
+            TalentDemandEntity entity = talentDemandService.selectById(id);
+            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getTitle() + "的人才需求已经审核通过", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -215,6 +231,9 @@ public class TalentDemandController {
     public ReturnResult updateApprovalStatusRejected(Integer id, String approvalOpinion) {
         Integer approvalStatus = 2;
         if (talentDemandService.updateApprovalStatus(id,approvalStatus, approvalOpinion)) {
+            TalentDemandEntity entity = talentDemandService.selectById(id);
+            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getTitle() + "的人才需求被驳回了", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);

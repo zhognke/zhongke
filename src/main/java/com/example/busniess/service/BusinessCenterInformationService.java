@@ -10,4 +10,6 @@ public interface BusinessCenterInformationService {
      */
     public BusinessCenterInformationEntity selectOnByUname(String uname);
 
+    BusinessCenterInformationEntity selectOneByCompanyName(String companyName);
+
 }

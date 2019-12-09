@@ -74,7 +74,7 @@ public class ProfessionalsEntity implements Serializable {
     /**
      * 突出贡献
      */
-    @NotNull(message = "突出贡献不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+//    @NotNull(message = "突出贡献不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
     private String outstandingContribution;
     /**
      * 研究方向
@@ -104,7 +104,7 @@ public class ProfessionalsEntity implements Serializable {
     /**
      * 区县
      */
-    @NotNull(message = "所在区县不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+//    @NotNull(message = "所在区县不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
     private String district;//区县
     /**
      * 头像地址

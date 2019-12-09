@@ -37,15 +37,15 @@ public class BusinessInformationController {
     @RequestMapping("/addBusinessInformation")
     public ReturnResult addBusinessInformation(
             @Validated({UserValidator.InSet.class})
-            BusinessInformation businessInformation) {
+                    BusinessInformation businessInformation) {
 
         if (businessInformationServiceImpl.addBusinessInformation(businessInformation)) {
 
             //通知
-            String userName=businessInformation.getUName();
-            String content="提交的企业补充信息";
-            InformEntity informEntity= RabbitUtil.sendRabbic(userName,content,new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE,RabbitUtil.ADMINkEY,informEntity);
+            String userName = businessInformation.getUName();
+            String content = "提交的企业补充信息";
+            InformEntity informEntity = RabbitUtil.sendRabbic(userName, content, new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
@@ -61,13 +61,13 @@ public class BusinessInformationController {
     public ReturnResult delectBusinessInformation(
             @NotNull(message = "id不能为空") Integer id) {
         if (businessInformationServiceImpl.delectBusinessInformation(id)) {
-BusinessInformation businessInformation=businessInformationServiceImpl.selectBusinessInformationById(id);
+            BusinessInformation businessInformation = businessInformationServiceImpl.selectBusinessInformationById(id);
             //通知
 
-            String userName=businessInformation.getUName();
-            String content="提交的企业补充信息";
-            InformEntity informEntity= RabbitUtil.sendRabbic(userName,content,new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE,RabbitUtil.ADMINkEY,informEntity);
+            String userName = businessInformation.getUName();
+            String content = "提交的企业补充信息";
+            InformEntity informEntity = RabbitUtil.sendRabbic(userName, content, new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
 
             return ReturnResult.success();
         }
@@ -87,10 +87,10 @@ BusinessInformation businessInformation=businessInformationServiceImpl.selectBus
         if (businessInformationServiceImpl.upDateBusinessInformation(businessInformation)) {
 
             //通知
-            String userName=businessInformation.getUName();
-            String content="提交的企业补充信息";
-            InformEntity informEntity= RabbitUtil.sendRabbic(userName,content,new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE,RabbitUtil.ADMINkEY,informEntity);
+            String userName = businessInformation.getUName();
+            String content = "提交的企业补充信息";
+            InformEntity informEntity = RabbitUtil.sendRabbic(userName, content, new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
 
             return ReturnResult.success();
         }
@@ -115,10 +115,10 @@ BusinessInformation businessInformation=businessInformationServiceImpl.selectBus
      */
     @RequestMapping("/selectAllBusinessInfoemation")
     public ReturnResult selectAllBusinessInfoemation(
-            @RequestParam(required = false,defaultValue ="1")
+            @RequestParam(required = false, defaultValue = "1")
                     Integer pageNum,
-            @RequestParam(required = false,defaultValue ="5")
-            Integer pagesize) {
+            @RequestParam(required = false, defaultValue = "5")
+                    Integer pagesize) {
         return ReturnResult.success(businessInformationServiceImpl.selectBusinessInformation(pageNum, pagesize));
     }
 }

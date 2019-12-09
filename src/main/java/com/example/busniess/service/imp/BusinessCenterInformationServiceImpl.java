@@ -15,4 +15,9 @@ public class BusinessCenterInformationServiceImpl implements BusinessCenterInfor
     public BusinessCenterInformationEntity selectOnByUname(String uname) {
         return businessCenterInformationDao.selectOnByUname(uname);
     }
+
+    @Override
+    public BusinessCenterInformationEntity selectOneByCompanyName(String companyName) {
+        return businessCenterInformationDao.selectOneByCompanyName(companyName);
+    }
 }

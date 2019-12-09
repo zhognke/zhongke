@@ -2,28 +2,23 @@ package com.example.busniess.controller;
 
 import com.example.busniess.annotation.SysLog;
 import com.example.busniess.entity.DemandsEntity;
+import com.example.busniess.entity.InformEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
-import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.DemandsService;
 import com.example.busniess.utiles.EchartsEntity;
+import com.example.busniess.utiles.RabbitUtil;
 import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -40,8 +35,8 @@ public class DemandsController {
     @Autowired
     private DemandsService demandsService;
 
-    @Resource
-    BusinessCenterService businessCenterService;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     /**
      * 分页展示,可根据条件筛选(用户端)
@@ -67,16 +62,6 @@ public class DemandsController {
      * @param pageSize
      * @return
      */
-    @ApiOperation(value="企业中心-分页展示,可根据条件筛选(企业端)",notes="测试阶段需要传入用户名")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name="userName",value="当前登录的用户名",dataType="String"),
-            @ApiImplicitParam(name="keyWord",value="搜索关键字",dataType="String"),
-            @ApiImplicitParam(name="pageNum",value="当前页码",dataType="Integer"),
-            @ApiImplicitParam(name="pageSize",value="每页展示条数",dataType="Integer"),
-            @ApiImplicitParam(name="demandIndustry",value="(搜索条件)需求行业",dataType="Integer"),
-            @ApiImplicitParam(name="preInvestmentAmountBegin",value="(搜索条件)预投金额最小值",dataType="BigDecimal"),
-            @ApiImplicitParam(name="preInvestmentAmountEnd",value="(搜索条件)预投金额最大值",dataType="BigDecimal")
-    })
     @RequestMapping(value="/showByPageForCenter",method = RequestMethod.GET)
     public ReturnResult showByPageForCenter(DemandsEntity demandsEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         String userName = ShiroUtils.getUserName();
@@ -108,8 +93,6 @@ public class DemandsController {
      * @param id 需求id
      * @return
      */
-    @ApiOperation("根据id查询需求详情")
-    @ApiImplicitParam(name="id",value="需求id",dataType = "Integer")
     @RequestMapping(value = "/getDemandsByID", method = {RequestMethod.GET})
     public ReturnResult getDemandsByID(Integer id) {
         if (id == null) {
@@ -169,6 +152,10 @@ public class DemandsController {
             demandsEntity.setUserName(userName);
         }*/
         if (demandsService.insert(demandsEntity)) {
+            //通知
+            InformEntity informEntity= RabbitUtil.sendRabbic(demandsEntity.getUserName(),"提交了" +
+                    demandsEntity.getDemandOutline() + "的企业需求",new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -257,6 +244,7 @@ public class DemandsController {
             return ReturnResult.erro(CodeMsg.DATA_FAIL);
         }
         if (demandsService.updateDemandsStatus(id,status,closeReason)) {
+
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -289,6 +277,9 @@ public class DemandsController {
     public ReturnResult closeDemandsByIdForManager(Integer id,String reason) {
         Integer status = 2;
         if (demandsService.updateDemandsStatus(id,status,reason)) {
+            DemandsEntity entity = demandsService.getByID(id);
+            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getDemandOutline() + "的企业需求已被管理员关闭", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -306,6 +297,9 @@ public class DemandsController {
     public ReturnResult updateApprovalStatusPass(Integer id) {
         Integer approvalStatus = 1;
         if (demandsService.updateDemandsApprovalStatus(approvalStatus, "", id)) {
+            DemandsEntity entity = demandsService.getByID(id);
+            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getDemandOutline() + "的企业需求已经审核通过", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -324,6 +318,9 @@ public class DemandsController {
     public ReturnResult updateApprovalStatusRejected(Integer id, String approvalOpinion) {
         Integer approvalStatus = 2;
         if (demandsService.updateDemandsApprovalStatus(approvalStatus, approvalOpinion, id)) {
+            DemandsEntity entity = demandsService.getByID(id);
+            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getDemandOutline() + "的企业需求被驳回了", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);

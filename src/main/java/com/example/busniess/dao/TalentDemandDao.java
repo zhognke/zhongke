@@ -19,8 +19,8 @@ public interface TalentDemandDao {
      * @param talentDemandEntity
      * @return
      */
-    @Insert("insert into talent_demand (user_name,company_name,province,city,district,title,content,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,research_direction,demands_type,people_num,degree,salary,contact,phone_num,create_time)" +
-            " values (#{userName},#{companyName},#{province},#{city},#{district},#{title},#{content},#{engagedIndustry},#{engagedIndustryDetail},#{industryExperience},#{technologyScope},#{researchDirection},#{demandsType},#{peopleNum},#{degree},#{salary},#{contact},#{phoneNum},now())")
+    @Insert("insert into talent_demand (user_name,company_name,province,city,district,title,content,requires,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,research_direction,demands_type,people_num,degree,salary,contact,phone_num,create_time)" +
+            " values (#{userName},#{companyName},#{province},#{city},#{district},#{title},#{content},#{requires},#{engagedIndustry},#{engagedIndustryDetail},#{industryExperience},#{technologyScope},#{researchDirection},#{demandsType},#{peopleNum},#{degree},#{salary},#{contact},#{phoneNum},now())")
     public boolean add(TalentDemandEntity talentDemandEntity);
 
     /**
@@ -59,7 +59,7 @@ public interface TalentDemandDao {
      *
      * @return
      */
-    @Select("select d.id,d.user_name,d.title,d.content,d.engaged_industry,d.engaged_industry_detail,d.industry_experience,d.technology_scope,d.research_direction," +
+    @Select("select d.id,d.user_name,d.title,d.content,d.requires,d.engaged_industry,d.engaged_industry_detail,d.industry_experience,d.technology_scope,d.research_direction," +
             "d.demands_type,d.people_num,d.salary,d.contact,d.phone_num,d.status,d.approval_status,d.approval_opinion,d.create_time," +
             "d.update_time,d.company_name,d.province,d.city,d.district " +
             "from talent_demand d ,user u " +
@@ -71,7 +71,7 @@ public interface TalentDemandDao {
      *
      * @return
      */
-    @Select("select d.id,d.user_name,d.title,d.content,d.engaged_industry,d.engaged_industry_detail,d.industry_experience,d.technology_scope,d.research_direction," +
+    @Select("select d.id,d.user_name,d.title,d.content,d.requires,d.engaged_industry,d.engaged_industry_detail,d.industry_experience,d.technology_scope,d.research_direction," +
             "d.demands_type,d.people_num,d.degree,d.salary,d.contact,d.phone_num,d.status,d.approval_status,d.approval_opinion,d.create_time," +
             "d.update_time,d.company_name,d.province,d.city,d.district,d.view_count " +
             "from talent_demand d ,user u " +
