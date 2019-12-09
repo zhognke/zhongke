@@ -58,11 +58,8 @@ public class BusinessCenterController {
         }
         if (businessCenterServiceImpl.addBusinessCenter(businessCenter)) {
             //通知
-            InformEntity informEntity = new InformEntity();
-            informEntity.setUserName(businessCenter.getUName());
-            informEntity.setCount("提交了" + businessCenter.getFirmName() + "的企业认证");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-            informEntity.setTime(df.format(new Date()));
+            InformEntity informEntity=RabbitUtil.sendRabbic(businessCenter.getUName(),"提交了" +
+                    businessCenter.getFirmName() + "的企业认证",new Date());
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
 
             return ReturnResult.success();

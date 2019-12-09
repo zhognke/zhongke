@@ -43,11 +43,10 @@ RabbitTemplate rabbitTemplate;
                                                  FinancingEntity financing) {
         if (financingServiceImpl.insertFinacing(financing)) {
             //通知
-            InformEntity informEntity = new InformEntity();//创建消息
-            informEntity.setUserName(financing.getUName());
-            informEntity.setCount("发布了" + financing.getProjectName());
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-            informEntity.setTime(df.format(new Date()));
+
+           InformEntity informEntity= RabbitUtil.sendRabbic(financing.getUName(),"发布了" +
+                    financing.getProjectName(),new Date());
+
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
         }
@@ -60,6 +59,10 @@ RabbitTemplate rabbitTemplate;
     @RequestMapping("/delectFinancing")
     public ReturnResult delectFinancing(@NotNull(message = "id号不能为空") Integer id) {
         if (financingServiceImpl.delectFinacing(id)) {
+            //通知
+
+
+
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.DELETE_ERROR);
@@ -115,8 +118,10 @@ RabbitTemplate rabbitTemplate;
                                           @RequestParam(required = false) String reject) {
         if (statue == 1) {
             str = "审核通过了";
-        } else {
+        } else if(statue==2) {
             str = "审核被驳回";
+        }else if(statue==3){
+            str ="信息结束";
         }
 
 
@@ -125,11 +130,9 @@ RabbitTemplate rabbitTemplate;
             //通知 1通过 2驳回
             //通知
             FinancingEntity financing = financingServiceImpl.selectFinancingById(id);
-            InformEntity informEntity = new InformEntity();//创建消息
-            informEntity.setUserName(financing.getUName());
-            informEntity.setCount(financing.getProjectName() + str);
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
-            informEntity.setTime(df.format(new Date()));
+            InformEntity informEntity= RabbitUtil.sendRabbic(financing.getUName(),financing.getProjectName() + str,new Date());
+
+
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
 
             return ReturnResult.success();

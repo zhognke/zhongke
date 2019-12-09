@@ -180,7 +180,7 @@ public class WebSocketServer {
      * @throws IOException
      */
 
-    public void sendtoAll(InformEntity informEntity) throws IOException {
+    public  void sendtoAll(InformEntity informEntity) throws IOException {
         for (String key : webSocketSet.keySet()) {
             try {
                 webSocketSet.get(key).sendMessage(informEntity);

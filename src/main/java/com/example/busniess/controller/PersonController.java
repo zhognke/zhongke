@@ -1,11 +1,14 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.entity.InformEntity;
 import com.example.busniess.entity.Person;
 import com.example.busniess.entity.Reject;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.PersonService;
+import com.example.busniess.utiles.RabbitUtil;
 import com.example.busniess.validator.UserValidator;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/person")
@@ -22,6 +26,8 @@ import javax.validation.constraints.NotNull;
 public class PersonController {
     @Autowired
     PersonService personServiceImpl;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     /**
      * 添加
@@ -29,6 +35,9 @@ public class PersonController {
     @RequestMapping("/addPerson")
     public ReturnResult addPerson(@Validated(UserValidator.InSet.class) Person person) {
         if (personServiceImpl.addPerson(person)) {
+            //通知
+        InformEntity informEntity= RabbitUtil.sendRabbic(person.getUName(),"提交了个人认证",new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE,RabbitUtil.ADMINkEY,informEntity);
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
@@ -90,6 +99,11 @@ public class PersonController {
                                      @RequestParam(required = false,defaultValue = "0")
                                      Integer reId) {
         if (personServiceImpl.upStatue(id, rid, userName, statue, reId)) {
+            //通知
+        InformEntity informEntity=    RabbitUtil.sendRabbic(userName,"提交的认证信息审核通过了",new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE,RabbitUtil.USERKEY,informEntity);
+
+
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);

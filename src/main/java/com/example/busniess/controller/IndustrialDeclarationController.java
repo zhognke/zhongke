@@ -59,6 +59,10 @@ public class IndustrialDeclarationController {
             }
         }
         if(industrialDeclarationService.add(industrialDeclarationEntity)){
+
+            //通知
+
+
             return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
