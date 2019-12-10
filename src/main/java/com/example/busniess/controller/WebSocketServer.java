@@ -1,6 +1,8 @@
 package com.example.busniess.controller;
 
 import com.example.busniess.entity.InformEntity;
+import com.example.busniess.utiles.RabbitUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -38,14 +40,17 @@ public class WebSocketServer {
         this.session = session;
         this.userName = userName;//接收到发送消息的人员编号
         webSocketSet.put(userName, this);     //加入用户名和通讯的当前websocket对象
+
+
         addOnlineCount();           //在线数加1
         System.out.println("用户" + userName + "上线！ 当前用户为" + getOnlineCount());
-        this.session.getBasicRemote().sendObject("连接成功");
+//        this.session.getBasicRemote().sendObject("连接成功");
         //1.告诉用户连接成功；
         //2.把保存的用用户信息发送给指定的用户
         //3.发送后把数据清空
         for (String user : webUser.keySet()) {
             if (userName.equals(user)) {
+                System.out.println("开始发送");
                 sendListMessage(webUser.get(user));
                 webUser.remove(userName);
             }
@@ -92,7 +97,10 @@ public class WebSocketServer {
      * @throws EncodeException
      */
     public void sendMessage(InformEntity informEntity) throws IOException, EncodeException {
-        this.session.getBasicRemote().sendObject(informEntity);
+        ObjectMapper mapper = new ObjectMapper();
+        String obj = mapper.writeValueAsString(informEntity);
+        this.session.getBasicRemote().sendText(obj);
+//        this.session.getBasicRemote().sendObject(obj);
     }
 
     /**
@@ -103,7 +111,11 @@ public class WebSocketServer {
      * @throws EncodeException
      */
     public void sendListMessage(List<InformEntity> list) throws IOException, EncodeException {
-        this.session.getBasicRemote().sendObject(list);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String obj = mapper.writeValueAsString(list);
+        this.session.getBasicRemote().sendText(obj);
+//        this.session.getBasicRemote().sendObject(obj);
     }
 
     /**
@@ -112,7 +124,7 @@ public class WebSocketServer {
      * @param informEntity
      * @throws IOException
      */
-    @RabbitListener(queues = "user")
+  @RabbitListener(queues = RabbitUtil.USERKEY)
     public void sendtoUser(InformEntity informEntity) throws IOException, EncodeException {
 //用户在线就把信息推送给用户
         if (webSocketSet.get(informEntity.getUserName()) != null) {
@@ -146,10 +158,13 @@ public class WebSocketServer {
      * @throws IOException
      * @throws EncodeException
      */
-    @RabbitListener(queues = "Administrator")
+  @RabbitListener(queues = RabbitUtil.ADMINQUEUE)
+//  @RabbitListener(queues ="hello")
     public void sendtoAdmin(InformEntity informEntity) throws IOException, EncodeException {
-        if (webSocketSet.get(informEntity.getUserName()) != null) {
-            webSocketSet.get(informEntity.getUserName()).sendMessage(informEntity);
+//通知管理员的都放到admin
+
+        if (webSocketSet.get("admin") != null) {
+            webSocketSet.get("admin").sendMessage(informEntity);
 //            if(!id.equals(sendUserId)) {
 //                webSocketSet.get(sendUserId).sendMessage( message);
 //            } else {
@@ -159,17 +174,20 @@ public class WebSocketServer {
             //如果用户不在线把用户信息储存
             //用户以前的消息队列中有消息就继续增加
             //没有消息对列就创建
-            if (webUser.get(informEntity.getUserName()) != null) {
-                list = webUser.get(informEntity.getUserName());
+
+            if (webUser.get("admin") != null) {
+                list = webUser.get("admin");
                 list.add(informEntity);
+
             } else {
                 list = new Vector();
                 list.add(informEntity);
             }
             //放入map
-            webUser.put(informEntity.getUserName(), list);
+            webUser.put("admin", list);
 
         }
+
     }
 
 
