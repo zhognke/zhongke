@@ -109,7 +109,7 @@ public interface FinancingDao {
     //selectAllFinancing
     public List<FinancingEntity> selectAllFinacing0();
 
-    @Select("SELECT industry  FROM financing  ORDER BY industry DESC LIMIT 1")
+    @Select("SELECT industry FROM financing GROUP BY industry ORDER BY COUNT(industry) DESC LIMIT 1")
     public String selectIndustry();
 
 }
