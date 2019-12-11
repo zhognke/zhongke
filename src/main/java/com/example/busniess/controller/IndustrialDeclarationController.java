@@ -44,8 +44,8 @@ public class IndustrialDeclarationController {
 
     /**
      * 新增申报
-     * @param industrialDeclarationEntity
-     * @return
+     * @param industrialDeclarationEntity    实体类
+     * @return    ReturnResult
      */
     @SysLog(value="新增工业申报",type="工业申报")
     @PostMapping("/addDeclaration")
@@ -57,16 +57,13 @@ public class IndustrialDeclarationController {
             BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOnByUname(userName);
             if(businessCenter==null||businessCenter.getStatue()!=1){    //判断当前用户是否通过企业认证
                 return ReturnResult.erro(CodeMsg.ACCESS_DENIED);  //判断当前用户填写的企业名称是否与数据库一致
-            }else{
             }
         }
         if(industrialDeclarationService.add(industrialDeclarationEntity)){
-
+            //通知
             BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOneByCompanyName(industrialDeclarationEntity.getCompanyName());
             InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUname(), "提交了" + industrialDeclarationEntity.getProjectName() + "的工业申报", new Date());
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
-
-
             return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -75,12 +72,12 @@ public class IndustrialDeclarationController {
 
     /**
      * 逻辑删除
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return    ReturnResult
      */
     @SysLog(value="删除工业申报",type="工业申报")
     @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
-    public ReturnResult deleteById(Integer id){
+    public ReturnResult deleteById(@NotNull(message = "参数不能为空")Integer id){
         if(industrialDeclarationService.delectById(id)){
             return ReturnResult.success("操作成功");
         }else{
@@ -90,8 +87,8 @@ public class IndustrialDeclarationController {
 
     /**
      * 批量删除
-     * @param ids
-     * @return
+     * @param ids    主键ids(多个id用英文逗号分隔)
+     * @return    ReturnResult
      */
     @RequestMapping(value="/deleteByBatch",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteByBatch(@NotNull(message = "参数不能为空")String ids){
@@ -104,12 +101,12 @@ public class IndustrialDeclarationController {
 
     /**
      * 彻底删除
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return    ReturnResult
      */
     @SysLog(value="彻底删除工业申报",type="工业申报")
     @RequestMapping(value="/realDeleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
-    public ReturnResult realDeleteById(Integer id){
+    public ReturnResult realDeleteById(@NotNull(message = "参数不能为空")Integer id){
         if(industrialDeclarationService.realDeleteById(id)){
             return ReturnResult.success("操作成功");
         }else{
@@ -119,13 +116,16 @@ public class IndustrialDeclarationController {
 
     /**
      * 修改申报信息
-     * @param industrialDeclarationEntity
-     * @return
+     * @param industrialDeclarationEntity    实体类
+     * @return    ReturnResult
      */
     @SysLog(value="修改工业申报",type="工业申报")
     @PostMapping("/updateDeclaration")
     public ReturnResult updateDeclaration(@Validated({UserValidator.UpDate.class}) IndustrialDeclarationEntity industrialDeclarationEntity){
         if(industrialDeclarationService.update(industrialDeclarationEntity)){
+            BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOneByCompanyName(industrialDeclarationEntity.getCompanyName());
+            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUname(), "修改了" + industrialDeclarationEntity.getProjectName() + "的工业申报", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -134,9 +134,9 @@ public class IndustrialDeclarationController {
 
     /**
      * 根据id修改申报有效状态
-     * @param id
-     * @param status
-     * @return
+     * @param id    主键id
+     * @param status    状态
+     * @return    ReturnResult
      */
     @PostMapping("/updateStatus")
     public ReturnResult updateStatus(Integer id,Integer status,String closeReason){
@@ -147,28 +147,34 @@ public class IndustrialDeclarationController {
         }
     }
     /**
-     * 根据id关闭申报信息
-     * @param id
-     * @return
+     * 根据id关闭申报信息-用户端
+     * @param id    主键id
+     * @return    ReturnResult
      */
     @SysLog(value="关闭工业申报",type="工业申报")
     @PostMapping("/closeById")
-    public ReturnResult closeById(Integer id,String closeReason){
+    public ReturnResult closeById(@NotNull(message = "参数不能为空")Integer id,@NotNull(message = "关闭原因不能为空")String closeReason){
         Integer status =3;
         if(industrialDeclarationService.updateStatus(id,status,closeReason)){
+            //通知
+            IndustrialDeclarationEntity industrialDeclarationEntity = industrialDeclarationService.selectById(id);
+            BusinessCenterInformationEntity businessCenter = businessCenterInformationService.selectOneByCompanyName(industrialDeclarationEntity.getCompanyName());
+            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUname(), "提交了" + industrialDeclarationEntity.getProjectName() + "的工业申报", new Date());
+            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
     }
+
     /**
      * 根据id关闭申报信息-管理端
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return    ReturnResult
      */
     @SysLog(value="关闭工业申报-管理端",type="工业申报")
     @PostMapping("/closeByIdForManager")
-    public ReturnResult closeByIdForManager(Integer id,String closeReason){
+    public ReturnResult closeByIdForManager(@NotNull(message = "参数不能为空")Integer id,@NotNull(message = "关闭原因不能为空")String closeReason){
         Integer status = 2;
         if(industrialDeclarationService.updateStatus(id,status,closeReason)){
             //通知
@@ -184,10 +190,10 @@ public class IndustrialDeclarationController {
 
     /**
      * 修改申报审批状态
-     * @param id
-     * @param approvalStatus
-     * @param approvalOpinion
-     * @return
+     * @param id    主键id
+     * @param approvalStatus    审批状态
+     * @param approvalOpinion   审批意见
+     * @return    ReturnResult
      */
     @PostMapping("/updateApprovalStatus")
     public ReturnResult updateApprovalStatus(Integer id,Integer approvalStatus,String approvalOpinion){
@@ -201,12 +207,12 @@ public class IndustrialDeclarationController {
     /**
      * 修改申报审批状态-通过
      *
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return    ReturnResult
      */
-    @SysLog(value="审批工业申报-通过",type="工业申报")
+    @SysLog(value="审批通过",type="工业申报")
     @PostMapping("/updateApprovalStatusPass")
-    public ReturnResult updateApprovalStatusPass(Integer id) {
+    public ReturnResult updateApprovalStatusPass(@NotNull(message = "参数不能为空")Integer id) {
         Integer approvalStatus = 1;
         if (industrialDeclarationService.updateApprovalStatus(id,approvalStatus, "")) {
             //通知
@@ -224,12 +230,12 @@ public class IndustrialDeclarationController {
      * 修改申报审批状态-驳回
      *
      * @param approvalOpinion 审批意见
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return    ReturnResult
      */
-    @SysLog(value="审批工业申报-驳回",type="工业申报")
+    @SysLog(value="审批驳回",type="工业申报")
     @PostMapping("/updateApprovalStatusRejected")
-    public ReturnResult updateApprovalStatusRejected(Integer id, String approvalOpinion) {
+    public ReturnResult updateApprovalStatusRejected(@NotNull(message = "参数不能为空")Integer id, @NotNull(message = "驳回原因不能为空")String approvalOpinion) {
         Integer approvalStatus = 2;
         if (industrialDeclarationService.updateApprovalStatus(id,approvalStatus, approvalOpinion)) {
             //通知
@@ -244,10 +250,10 @@ public class IndustrialDeclarationController {
     }
     /**
      * 分页展示,可根据条件筛选
-     * @param industrialDeclarationEntity
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param industrialDeclarationEntity    实体类
+     * @param pageNum   页码
+     * @param pageSize  页面尺寸
+     * @return    ReturnResult
      */
     @RequestMapping(value="/showByPage",method = RequestMethod.GET)
     public ReturnResult showByPage(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "9")Integer pageSize){
@@ -259,10 +265,10 @@ public class IndustrialDeclarationController {
 
     /**
      * 个人中心分页展示,可根据条件筛选
-     * @param industrialDeclarationEntity
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param industrialDeclarationEntity    实体类
+     * @param pageNum   页码
+     * @param pageSize  页面尺寸
+     * @return    ReturnResult
      */
     @RequestMapping(value="/showByPageForCenter",method = RequestMethod.GET)
     public ReturnResult showByPageForCenter(IndustrialDeclarationEntity industrialDeclarationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10")Integer pageSize){
@@ -283,7 +289,7 @@ public class IndustrialDeclarationController {
 
     /**
      * 显示最近的工业申报(16条)
-     * @return
+     * @return    ReturnResult
      */
     @RequestMapping(value="/lastDeclarations",method = RequestMethod.GET)
     public ReturnResult lastDeclarations( @RequestParam(defaultValue = "16")Integer size){
@@ -293,8 +299,8 @@ public class IndustrialDeclarationController {
 
     /**
      * 根据id搜索
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return    ReturnResult
      */
     @RequestMapping(value="getById",method = RequestMethod.GET)
     public ReturnResult getById(Integer id){
@@ -313,22 +319,22 @@ public class IndustrialDeclarationController {
 
     /**
      * 工业申报行业占比统计(饼图)
-     * @return data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
+     * @return    ReturnResult data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
      */
     @RequestMapping(value="/declartionsIndustryProp",method = {RequestMethod.POST,RequestMethod.GET})
-    public ReturnResult declartionsIndustryProp(){
+    public ReturnResult declarationsIndustryProp(){
         List<IndustrialDeclarationEntity> list = industrialDeclarationService.declartionsIndustryProp();
         if(list.isEmpty()||"[]".equals(list.toString())){
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }else{
-            Map<String, Object> map=new HashMap<String, Object>();
+            Map<String, Object> map= new HashMap<>();
             List<EchartsEntity> sdata = new ArrayList<>();
             String[] ldata = new String[list.size()];
             for(int i =0;i<list.size();i++){
                 EchartsEntity echartsEntity = new EchartsEntity();
                 ldata[i]=list.get(i).getDeclarationType();
                 echartsEntity.setName(list.get(i).getDeclarationType());
-                echartsEntity.setValue(Double.valueOf(String.valueOf(list.get(i).getCounts())));
+                echartsEntity.setValue(Double.parseDouble(String.valueOf(list.get(i).getCounts())));
                 sdata.add(echartsEntity);
             }
             map.put("sdata",sdata);
@@ -339,15 +345,15 @@ public class IndustrialDeclarationController {
 
     /**
      * 工业申报增长趋势(折线图)
-     * @return  data.xdata x轴坐标数据,即xAxis.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
+     * @return    ReturnResult  data.xdata x轴坐标数据,即xAxis.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
      */
     @RequestMapping(value="/declartionsRiseTrend",method = {RequestMethod.POST,RequestMethod.GET})
-    public ReturnResult declartionsRiseTrend(){
+    public ReturnResult declarationsRiseTrend(){
         List<IndustrialDeclarationEntity> list = industrialDeclarationService.declartionsRiseTrend();
         if(list.isEmpty()||"[]".equals(list.toString())){
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }else{
-            Map<String, Object> map=new HashMap<String, Object>();
+            Map<String, Object> map= new HashMap<>();
             Integer[] sdata = new Integer[list.size()];
             String[] xdata = new String[list.size()];
             for(int i =0;i<list.size();i++){
@@ -362,7 +368,7 @@ public class IndustrialDeclarationController {
 
     /**
      * 获取公司名称列表
-     * @return
+     * @return    ReturnResult
      */
     @RequestMapping(value="/getCompanyList",method = {RequestMethod.GET})
     public ReturnResult getCompanyList(){

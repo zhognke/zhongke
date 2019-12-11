@@ -23,6 +23,12 @@ import org.springframework.web.bind.annotation.*;
 public class DemandsCommentController {
     @Autowired
     private DemandsCommentService demandsCommentService;
+
+    /**
+     * 新增评论
+     * @param demandsCommentEntity  实体类
+     * @return  ReturnResult
+     */
     @PostMapping("/addDemandsComment")
     public ReturnResult addDemandsComment(@Validated({UserValidator.InSet.class}) DemandsCommentEntity demandsCommentEntity){
         if(demandsCommentService.addComment(demandsCommentEntity)){
@@ -32,6 +38,13 @@ public class DemandsCommentController {
         }
     }
 
+    /**
+     * 查看当前需求的评论
+     * @param demandsID 需求id
+     * @param pageNum   页码
+     * @param pageSize  页面尺寸
+     * @return  ReturnResult
+     */
     @RequestMapping(value="/showCommentByPage",method = RequestMethod.GET)
     public ReturnResult showCommentByPage(int demandsID, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5")Integer pageSize){
         PageInfo info =  demandsCommentService.showByPage(demandsID,pageNum,pageSize);

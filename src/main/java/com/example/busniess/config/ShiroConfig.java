@@ -139,7 +139,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public CacheManager cacheManager() {
+    public CacheManager memoryConstrainedCacheManager() {
         return new MemoryConstrainedCacheManager();
     }
 

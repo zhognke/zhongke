@@ -3,53 +3,6 @@
 
 <mapper namespace="com.example.busniess.dao.DictDao">
 
-
-    <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.example.busniess.entity.DictEntity" id="baseMap">
-        <result property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="type" column="type"/>
-        <result property="code" column="code"/>
-        <result property="value" column="value"/>
-        <result property="orderNum" column="order_num"/>
-        <result property="remark" column="remark"/>
-        <result property="delFlag" column="del_flag"/>
-        <result property="parentId" column="parent_id"/>
-    </resultMap>
-
-    <sql id="addColumnNames">
-        name,type,code,value,order_num,remark,del_flag,parent_id
-    </sql>
-
-    <sql id="columnNames">
-        id,name,type,code,value,order_num,remark,del_flag,parent_id
-    </sql>
-
-    <sql id="attrnames">
-        #{name},#{type},#{code},#{value},#{orderNum},#{remark},#{delFlag},#{parentId}
-    </sql>
-
-    <insert id="add" parameterType="com.example.busniess.entity.DictEntity">
-        insert into dict (<include refid="addColumnNames"></include>)
-        values (<include refid="attrnames"></include>);
-    </insert>
-
-    <select id="getById" parameterType="Integer" resultMap="baseMap">
-        select <include refid="columnNames"></include> from dict where del_flag = 0 id = #{id}
-    </select>
-
-    <select id="getByType" parameterType="String" resultMap="baseMap">
-        select <include refid="columnNames"></include> from dict where del_flag = 0 and type = #{type} order by order_num
-    </select>
-
-    <select id="getByParentId" parameterType="Integer" resultMap="baseMap">
-        select <include refid="columnNames"></include> from dict where del_flag = 0 and parent_id =#{parentId} order by order_num
-    </select>
-
-    <select id="selectAll" resultMap="baseMap">
-        select <include refid="columnNames"></include> from dict where del_flag = 0
-    </select>
-
     <update id="update" parameterType="com.example.busniess.entity.DictEntity">
         update dict
         <set>
@@ -81,7 +34,4 @@
         where id = #{id}
     </update>
 
-    <delete id="realDeleteById" parameterType="Integer">
-        delete from dict where id = #{id};
-    </delete>
 </mapper>

@@ -89,6 +89,6 @@ public interface TalentDemandDao {
     @Update("update talent_demand set view_count = #{viewCount} where id = ${id}")
     void updateArticleViewCount(@Param("id")Integer id, @Param("viewCount")Integer viewCount);
 
-    @Delete("update talent_demand set del_flag = 1 where id in ('${ids}');")
+    @Update("update talent_demand set del_flag = 1 where id in ('${ids}');")
     boolean deleteBatch(@Param("ids")String ids);
 }

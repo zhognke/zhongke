@@ -26,13 +26,13 @@ public interface IntentionDao {
      * 逻辑删除
      * @return
      */
-    @Delete("update intention set del_flag = 1 where id= #{id};")
+    @Update("update intention set del_flag = 1 where id= #{id};")
     public boolean deleteByID(@Param("id") Integer id);
     /**
      * 批量逻辑删除
      * @return
      */
-    @Delete("update intention set del_flag = 1 where id in ('${ids}');")
+    @Update("update intention set del_flag = 1 where id in ('${ids}');")
     public boolean deleteBatch(@Param("ids")String ids);
     /**
      * 根据id删除

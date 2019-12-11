@@ -155,7 +155,7 @@ public class TalentDemandEntity implements Serializable {
     /**
      * 浏览量统计
      */
-    private Integer viewCount;
+    private int viewCount;
     /**
      * 关联查询
      */
