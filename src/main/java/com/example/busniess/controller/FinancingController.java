@@ -152,4 +152,14 @@ RabbitTemplate rabbitTemplate;
 
     }
 
+
+    /**
+     * 融资热门行业
+     */
+    @RequestMapping("/selectIndustry")
+    public  ReturnResult selectIndustry(){
+        return ReturnResult.success(financingServiceImpl.selectIndustry());
+    }
+
+
 }

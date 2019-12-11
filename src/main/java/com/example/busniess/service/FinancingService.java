@@ -36,4 +36,12 @@ public interface FinancingService {
      * @return
      */
     public  FinancingEntity selectFinancingById(Integer id);
+
+
+    /**
+     * 返回热门行业
+     */
+    public String selectIndustry();
+
+
 }

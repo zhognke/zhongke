@@ -63,46 +63,53 @@ public interface FinancingDao {
      */
     @Select("SELECT * FROM financing WHERE id=#{id}")
     @Results({
-            @Result(property = "uName",column = "uname"),
-            @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
-            @Result(property = "businessCenter", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter") )
+            @Result(property = "uName", column = "uname"),
+            @Result(property = "businessInformation", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+            @Result(property = "businessCenter", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter"))
     })
     public FinancingEntity seleOneFinancing(Integer id);
 
     /**
      * 查看自己的
+     *
      * @param uName
      * @return
      */
     @Select("SELECT id,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,lunit,insertTime FROM financing WHERE  uname=#{uName}  ORDER BY insertTime DESC")
     @Results({
-            @Result(property = "uName",column = "uname"),
-            @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+            @Result(property = "uName", column = "uname"),
+            @Result(property = "businessInformation", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
     })
     public List<FinancingEntity> selectMyFinancing(String uName);
 
     /**
      * 查看所有的
+     *
      * @return
      */
 //    @Select("SELECT id,industry,financing,income,projecrphase,period FROM financing")
     public List<FinancingEntity> selectAllFinancing(FinancingEntity financing);
 
     /**
-     *修改审核状态
+     * 修改审核状态
      */
     @Update("UPDATE `financing` SET `statue`=#{statue},`reject`=#{reject} WHERE (`id`=#{id})")
-    public Boolean upFinacingStatue(@Param("id") Integer id,@Param("statue") Integer statue,@Param("reject")String reject);
+    public Boolean upFinacingStatue(@Param("id") Integer id, @Param("statue") Integer statue, @Param("reject") String reject);
 
     /**
-     *查看所有 的
+     * 查看所有 的
+     *
      * @return
      */
     @Select("SELECT id,uname,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,lunit,insertTime FROM financing ORDER BY insertTime DESC")
     @Results({
-            @Result(property = "uName",column = "uname"),
-            @Result(property = "businessInformation", column = "uname", one =@One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
+            @Result(property = "uName", column = "uname"),
+            @Result(property = "businessInformation", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
     })
     //selectAllFinancing
     public List<FinancingEntity> selectAllFinacing0();
+
+    @Select("SELECT industry  FROM financing  ORDER BY industry DESC LIMIT 1")
+    public String selectIndustry();
+
 }

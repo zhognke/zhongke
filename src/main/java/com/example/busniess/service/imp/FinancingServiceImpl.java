@@ -60,6 +60,15 @@ public class FinancingServiceImpl implements FinancingService {
     }
 
     /**
+     * 热门行业
+     * @return
+     */
+    @Override
+    public String selectIndustry() {
+        return financingDao.selectIndustry();
+    }
+
+    /**
      * 查询自己的
      * @param uName
      * @return
