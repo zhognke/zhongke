@@ -18,7 +18,7 @@
             <if test="content!=null and content!=''">
                 content=#{content},
             </if>
-            <if test="require!=null and requires!=''">
+            <if test="requires!=null and requires!=''">
                 requires=#{requires},
             </if>
             <if test="companyName!=null and companyName!=''">
