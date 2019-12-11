@@ -171,4 +171,8 @@ public class ProfessionalsEntity implements Serializable {
      * 专家科技成果,非数据库字段
      */
     List<Occupancy> occupancyList;
+    /**
+     * 拼音
+     */
+    private String pinYin;
 }

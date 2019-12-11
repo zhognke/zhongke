@@ -4,6 +4,7 @@ import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.ProfessionalsDao;
 import com.example.busniess.entity.ProfessionalsEntity;
 import com.example.busniess.service.ProfessionalsService;
+import com.example.busniess.utiles.PinYinUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,9 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
      */
     @Override
     public ProfessionalsEntity selectById(Integer id) {
-        return professionalsDao.selectById(id);
+        ProfessionalsEntity entity = professionalsDao.selectById(id);
+        entity.setPinYin(PinYinUtil.getUpEname(entity.getRealName()));
+        return entity;
     }
 
     /**
