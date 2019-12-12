@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -34,7 +35,7 @@ public class BusinessCenter implements Serializable {
 //
     @NotBlank(message = "附件地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String address;//附件地址  附件
-    @NotBlank(message = "手机号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    @NotNull(message = "手机号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private BigInteger phoneNumber;//手机号码  （手机号码
     @NotBlank(message = "统一社会信用代码不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String societyCode;//统一社会信用代码    统一社会信用代码
@@ -55,9 +56,9 @@ public class BusinessCenter implements Serializable {
 
     private Integer scaleBegin; //范围搜索-从业人数最小值,非数据库字段
     private Integer scaleEnd;   //范围搜索-从业人数最大值,非数据库字段
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date recordDateBegin;   //范围搜索-注册时间最小值,非数据库字段
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date recordDateEnd; //范围搜索-注册时间最大值,非数据库字段
 
     private BigDecimal registeredCapitalBegin;  //范围搜索-注册资金最小值,非数据库字段
