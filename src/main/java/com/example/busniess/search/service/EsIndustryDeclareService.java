@@ -38,7 +38,7 @@ public interface EsIndustryDeclareService {
     /**
      * 根据关键字搜索名称或者副标题
      */
-    Page<EsIndustryDeclareModel> search(String keyword, Integer pageNum, Integer pageSize);
+    Page<EsIndustryDeclareModel> search(EsIndustryDeclareModel esIndustryDeclareModel, Integer pageNum, Integer pageSize);
 
     void deleteAll();
 }

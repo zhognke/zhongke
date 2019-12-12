@@ -1,7 +1,6 @@
 package com.example.busniess.search.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -11,17 +10,9 @@ import java.util.Date;
 
 @Document(indexName = "demands", type = "demands",shards = 3)
 @Data
-public class EsDemandsModel implements Serializable {
+public class EsDemandsModel extends EsModel implements Serializable {
 
-    @Id
-    private Integer id;
-
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private String title;
-    @Field(type = FieldType.Text, analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private String content;
-    private String industry;    //项目所属行业
-    private String industryDetail;  //项目所属行业细分类目
+    private String indexType="demands"; //数据类型
 
     // 中文分词器 -> https://github.com/medcl/elasticsearch-analysis-ik
     private String demandOutline;
@@ -31,10 +22,8 @@ public class EsDemandsModel implements Serializable {
     @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
     private String companyName;
 
-    @Field(type = FieldType.Keyword)
     private String demandIndustry;
 
-    @Field(type = FieldType.Keyword)
     private String demandIndustryDetail;
 
     @Field(type = FieldType.Keyword)
@@ -121,5 +110,4 @@ public class EsDemandsModel implements Serializable {
     private String keyword; //搜索关键字
     private String preInvestmentAmountBegin;    //预投金额范围查询
     private String preInvestmentAmountEnd;  //预投金额范围查询
-    private String indexType="demands"; //数据类型
 }

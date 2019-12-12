@@ -1,6 +1,6 @@
 package com.example.busniess.search.service.impl;
 
-import com.example.busniess.dao.EsDemandsDao;
+import com.example.busniess.search.dao.EsDemandsDao;
 import com.example.busniess.search.common.IndexKey;
 import com.example.busniess.search.model.EsDemandsModel;
 import com.example.busniess.search.repository.EsDemandsRepository;
@@ -98,11 +98,11 @@ public class EsDemandsServiceImpl implements EsDemandsService {
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
         //行业
         if(!StringUtils.isEmpty(esDemandsModel.getDemandIndustry())){
-            boolQueryBuilder.must(QueryBuilders.matchQuery(IndexKey.INDEX_DEMAND_INDUSTRY,esDemandsModel.getDemandIndustry()));
+            boolQueryBuilder.must(QueryBuilders.matchQuery(IndexKey.INDEX_INDUSTRY,esDemandsModel.getDemandIndustry()));
         }
         //行业明细
         if(!StringUtils.isEmpty(esDemandsModel.getDemandIndustryDetail())){
-            boolQueryBuilder.must(QueryBuilders.matchQuery(IndexKey.INDEX_DEMAND_INDUSTRY_DETAIL,esDemandsModel.getDemandIndustryDetail()));
+            boolQueryBuilder.must(QueryBuilders.matchQuery(IndexKey.INDEX_INDUSTRY_DETAIL,esDemandsModel.getDemandIndustryDetail()));
         }
         //需求类别
         if(!StringUtils.isEmpty(esDemandsModel.getDemandType())){
