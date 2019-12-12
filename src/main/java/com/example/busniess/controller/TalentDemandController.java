@@ -15,6 +15,7 @@ import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -322,6 +323,7 @@ public class TalentDemandController {
      * @param id 主键id
      * @return ReturnResult
      */
+    @Cacheable(key="'talent'+#id",value="talent")
     @RequestMapping(value = "showById", method = RequestMethod.GET)
     public ReturnResult showById(Integer id, @RequestParam(defaultValue = "5") Integer size) {
         if (id == null) {
@@ -330,9 +332,9 @@ public class TalentDemandController {
             TalentDemandEntity obj = talentDemandService.selectById(id, size);
             if (obj != null) {
                 //记录浏览量到redis,然后定时更新到数据库
-                String key = RedisKey.TALENT_VIEWCOUNT_CODE + obj.getId();
+                String key = RedisKey.TALENT_VIEW_COUNT_CODE + obj.getId();
                 //找到redis中该篇文章的点赞数，如果不存在则向redis中添加一条
-                Map<Object, Object> viewCountItem = redisUtil.hmget(RedisKey.TALENT_VIEWCOUNT_KEY);
+                Map<Object, Object> viewCountItem = redisUtil.hmget(RedisKey.TALENT_VIEW_COUNT_KEY);
                 Integer viewCount = obj.getViewCount();
                 if (!viewCountItem.isEmpty()) {
                     if (viewCountItem.containsKey(key)) {
@@ -340,7 +342,7 @@ public class TalentDemandController {
                         obj.setViewCount(viewCount);
                     }
                 }
-                redisUtil.hset(RedisKey.TALENT_VIEWCOUNT_KEY, key, ++viewCount);
+                redisUtil.hset(RedisKey.TALENT_VIEW_COUNT_KEY, key, ++viewCount);
                 return ReturnResult.success(obj);
             } else {
                 return ReturnResult.erro(CodeMsg.DATA_EMPTY);

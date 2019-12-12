@@ -3,8 +3,10 @@ package com.example.busniess.resultpackage;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class ReturnResult<T> {
+public class ReturnResult<T> implements Serializable {
     private Integer code;
     private String msg;
     private T data;
