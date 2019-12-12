@@ -51,7 +51,7 @@ public class BusinessCenterController {
      */
     @SysLog(value = "提交企业认证", type = "企业认证")
     @RequestMapping("/addAuthentication")
-    public ReturnResult addAuthentication(BusinessCenter businessCenter) {
+    public ReturnResult addAuthentication(@Validated({UserValidator.InSet.class})BusinessCenter businessCenter) {
         if (businessCenterServiceImpl.selectMyBusinessCenter(businessCenter.getUName()) != null) {
             return ReturnResult.erro(CodeMsg.DATA_DUPLICATION);
         }

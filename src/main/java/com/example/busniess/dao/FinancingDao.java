@@ -106,10 +106,10 @@ public interface FinancingDao {
             @Result(property = "uName", column = "uname"),
             @Result(property = "businessInformation", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
     })
-    //selectAllFinancing
+
     public List<FinancingEntity> selectAllFinacing0();
 
-    @Select("SELECT industry FROM financing GROUP BY industry ORDER BY COUNT(industry) DESC LIMIT 1")
-    public String selectIndustry();
+    @Select("SELECT industry FROM financing GROUP BY industry ORDER BY COUNT(industry) DESC LIMIT 5")
+    public List<String>  selectIndustry();
 
 }

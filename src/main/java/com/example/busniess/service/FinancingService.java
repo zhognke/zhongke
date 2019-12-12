@@ -3,6 +3,8 @@ package com.example.busniess.service;
 import com.example.busniess.entity.FinancingEntity;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 public interface FinancingService {
     /**
      * 新增融资
@@ -41,7 +43,7 @@ public interface FinancingService {
     /**
      * 返回热门行业
      */
-    public String selectIndustry();
+    public List<String> selectIndustry();
 
 
 }

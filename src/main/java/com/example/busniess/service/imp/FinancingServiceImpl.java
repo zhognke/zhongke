@@ -64,7 +64,7 @@ public class FinancingServiceImpl implements FinancingService {
      * @return
      */
     @Override
-    public String selectIndustry() {
+    public List<String>  selectIndustry() {
         return financingDao.selectIndustry();
     }
 

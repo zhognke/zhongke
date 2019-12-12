@@ -30,6 +30,9 @@ public class Md5Utiles {
 
     public static String getNum(int digit) {
         StringBuilder str = new StringBuilder();
+
+
+
         for (int i = 0; i < digit; i++) {
             if (i == 0 && digit > 1)
                 str.append(new Random().nextInt(9) + 1);
@@ -39,8 +42,6 @@ public class Md5Utiles {
         return str.toString();
     }
 
-    public static void main(String[] args) {
-        System.out.println(returnMd5("md5", "123456", "admin", 1024));
-    }
+
 
 }

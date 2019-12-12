@@ -1,7 +1,6 @@
 package com.example.busniess.config;
 
 
-import com.example.busniess.filter.MyFilter;
 import com.example.busniess.filter.ShiroSessionFilter;
 import com.example.busniess.service.MyShiroRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -33,12 +32,12 @@ public class ShiroConfig {
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        /*重要，设置自定义拦截器，当访问某些自定义url时，使用这个filter进行验证*/
-        Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+        /*设置自定义拦截器，当访问某些自定义url时，使用这个filter进行验证*/
+//        Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
 
         //map里面key值为myFilter,表示所有名为myFilter的过滤条件使用这个自定义的filter
-        filters.put("myFilter", new MyFilter());
-        shiroFilterFactoryBean.setFilters(filters);
+//        filters.put("myFilter", new MyFilter());
+//        shiroFilterFactoryBean.setFilters(filters);
 
 
         /**
@@ -50,7 +49,7 @@ public class ShiroConfig {
         //设置登录的页面
 
         Map<String, String> map = new LinkedHashMap<>();
-        map.put("/**", "myFilter");
+//     map.put("/**", "authc");
 //        map.put("/loginout", "logout");
 
 //登录接口设置
@@ -89,9 +88,12 @@ public class ShiroConfig {
 //        map.put("/innovationActivitiesRegistration/showByPage", "anon");
 //        map.put("/innovationActivitiesRegistration/getById", "anon");
         map.put("/innovationActivitiesRegistration/**", "authc");
-//项目融资/Financing   /findFinancingByCondition
+//项目融资/Financing  /Financing  /findFinancingByCondition
+
+
         map.put("/Financing/findFinancingByCondition", "anon");
         map.put("/Financing/selectOneById", "anon");
+        map.put("/Financing/selectIndustry", "anon");
         map.put("/Financing/**", "authc");
 
         //意向表intention
@@ -113,7 +115,8 @@ public class ShiroConfig {
         map.put("/talentDemand/showByPage", "anon");
         map.put("/talentDemand/showById", "anon");
         map.put("/talentDemand/**", "authc");
-        map.put("/*", "anon");
+
+
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
@@ -167,7 +170,7 @@ public class ShiroConfig {
         List a = new ArrayList();
         a.add(new ShiroSessionFilter());
         sessionManager.setSessionListeners(a);
-       sessionManager.setGlobalSessionTimeout(3600000);
+       sessionManager.setGlobalSessionTimeout(20000);
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie());
         return sessionManager;
