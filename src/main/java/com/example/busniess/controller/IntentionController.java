@@ -1,10 +1,10 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.annotation.SysLog;
 import com.example.busniess.entity.IntentionEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.IntentionService;
-import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,10 @@ public class IntentionController {
 
     /**
      * 新增
-     * @param intentionEntity
-     * @return
+     * @param intentionEntity    实体类
+     * @return ReturnResult
      */
+    @SysLog(value="新增信息",type="意向")
     @PostMapping("/addIntention")
     public ReturnResult addDeclaration(@Validated({UserValidator.InSet.class}) IntentionEntity intentionEntity){
         /*String userName = ShiroUtils.getUserName();
@@ -51,9 +52,10 @@ public class IntentionController {
 
     /**
      * 逻辑删除
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return ReturnResult
      */
+    @SysLog(value="逻辑删除",type="意向")
     @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteById(@NotNull(message = "参数不能为空")Integer id){
         if(intentionService.deleteByID(id)){
@@ -65,9 +67,10 @@ public class IntentionController {
 
     /**
      * 批量删除
-     * @param ids
-     * @return
+     * @param ids    主键ids(多个id用英文逗号分隔)
+     * @return ReturnResult
      */
+    @SysLog(value="批量删除",type="意向")
     @RequestMapping(value="/deleteByBatch",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteByBatch(@NotNull(message = "参数不能为空")String ids){
         if(intentionService.deleteBatch(ids)){
@@ -79,9 +82,10 @@ public class IntentionController {
 
     /**
      * 彻底删除
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return ReturnResult
      */
+    @SysLog(value="彻底删除",type="意向")
     @RequestMapping(value="/realDeleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult realDeleteById(@NotNull(message = "参数不能为空")Integer id){
         if(intentionService.realDeleteByID(id)){
@@ -93,9 +97,10 @@ public class IntentionController {
 
     /**
      * 修改
-     * @param intentionEntity
-     * @return
+     * @param intentionEntity    实体类
+     * @return ReturnResult
      */
+    @SysLog(value="修改信息",type="意向")
     @PostMapping("/updateById")
     public ReturnResult updateDeclaration(@Validated({UserValidator.UpDate.class}) IntentionEntity intentionEntity){
         if(intentionService.updateByID(intentionEntity)){
@@ -107,10 +112,10 @@ public class IntentionController {
 
     /**
      * 分页展示,可根据条件筛选
-     * @param intentionEntity
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param intentionEntity    实体类
+     * @param pageNum    当前页码
+     * @param pageSize    页面尺寸
+     * @return ReturnResult
      */
     @RequestMapping(value="/showByPage",method = RequestMethod.GET)
     public ReturnResult showByPage(IntentionEntity intentionEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10")Integer pageSize){
@@ -120,8 +125,8 @@ public class IntentionController {
 
     /**
      * 根据id搜索
-     * @param id
-     * @return
+     * @param id    主键id
+     * @return ReturnResult
      */
     @RequestMapping(value="/getById",method = RequestMethod.GET)
     public ReturnResult getById(@NotNull(message = "参数不能为空")Integer id){

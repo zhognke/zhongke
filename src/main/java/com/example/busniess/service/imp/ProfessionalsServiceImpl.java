@@ -65,7 +65,6 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     @Override
     public ProfessionalsEntity selectById(Integer id) {
         ProfessionalsEntity entity = professionalsDao.selectById(id);
-        entity.setPinYin(PinYinUtil.getUpEname(entity.getRealName()));
         return entity;
     }
 
@@ -92,6 +91,7 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     public boolean add(ProfessionalsEntity professionalsEntity) {
         professionalsEntity.setStatus(0);
         professionalsEntity.setApprovalStatus(0);
+        professionalsEntity.setPinYin(PinYinUtil.getUpEname(professionalsEntity.getRealName()));
         return professionalsDao.add(professionalsEntity);
     }
 

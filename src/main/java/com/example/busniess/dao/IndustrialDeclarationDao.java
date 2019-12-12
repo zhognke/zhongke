@@ -100,6 +100,6 @@ public interface IndustrialDeclarationDao {
     @Select("select project_name,approval_status,project_type,create_time from industrial_declaration where del_flag = 0 and status=0 and approval_status =1 order by create_time desc limit #{size}")
     List<IndustrialDeclarationEntity> lastDeclarations(@Param("size")Integer size);
 
-    @Delete("update industrial_declaration set del_flag = 1 where id in ('${ids}');")
+    @Update("update industrial_declaration set del_flag = 1 where id in ('${ids}');")
     boolean deleteBatch(@Param("ids")String ids);
 }

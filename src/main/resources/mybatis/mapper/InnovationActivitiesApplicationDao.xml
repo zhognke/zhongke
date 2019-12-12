@@ -3,10 +3,6 @@
 
 <mapper namespace="com.example.busniess.dao.InnovationActivitiesApplicationDao">
 
-    <sql id="columnNames">
-         id,username,activities_topic,activities_content,organizers,contractors,co_organizers,start_time,end_time,province,city,district,contact,tel,email,img_addr,create_time,update_time,del_flag
-    </sql>
-
     <sql id="searchColumns">
          id,activities_topic,activities_content,organizers,contractors,co_organizers,start_time,end_time,province,city,district,contact,tel,email,create_time,del_flag
     </sql>

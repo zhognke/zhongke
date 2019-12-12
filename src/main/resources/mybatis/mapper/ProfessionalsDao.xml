@@ -4,30 +4,8 @@
 <mapper namespace="com.example.busniess.dao.ProfessionalsDao">
 
     <sql id="columnNames">
-                id,
-                user_name,
-                real_name,
-                institutions,
-                positions,
-                engaged_industry,
-                engaged_industry_detail,
-                industry_experience,
-                technology_scope,
-                technology_scope_detail,
-                outstanding_contribution,
-                research_direction,
-                introduced,
-                phone_num,
-                icon_address,
-                certificate_address,
-                status,
-                approval_status,
-                approval_opinion,
-                approval_time,
-                create_time,
-                update_time,
-                del_flag
-            </sql>
+        id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail,outstanding_contribution,research_direction,introduced,phone_num,icon_address,certificate_address,status,approval_status,approval_opinion,approval_time,create_time,update_time,del_flag
+    </sql>
 
     <update id="updateById" parameterType="professionalsEntity">
         update professionals
@@ -40,6 +18,9 @@
             </if>
             <if test="realName!=null and realName!=''">
                 real_name=#{realName},
+            </if>
+            <if test="pinYin!=null and pinYin!=''">
+                pin_yin=#{pinYin},
             </if>
             <if test="institutions!=null and institutions!=''">
                 institutions=#{institutions},
@@ -115,12 +96,6 @@
         <if test="userName!=null and userName!=''">
             and user_name=#{userName}
         </if>
-        <if test="engagedIndustry!=null and engagedIndustry!=''">
-            and engaged_industry=#{engagedIndustry}
-        </if>
-        <if test="engagedIndustryDetail!=null and engagedIndustryDetail!=''">
-            and engaged_industry_detail=#{engagedIndustryDetail}
-        </if>
         <if test="industryExperience!=null and industryExperience!=''">
             and industry_experience=#{industryExperience}
         </if>
@@ -131,7 +106,8 @@
             and technology_scope_datail = #{technologyScopeDetail}
         </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (research_direction like CONCAT('%',#{keyWord},'%') or real_name like CONCAT('%',#{keyWord},'%') or institutions like CONCAT('%',#{keyWord},'%') or technology_scope like CONCAT('%',#{keyWord},'%'))
+            and (research_direction like CONCAT('%',#{keyWord},'%') or real_name like CONCAT('%',#{keyWord},'%') or
+            institutions like CONCAT('%',#{keyWord},'%') or technology_scope like CONCAT('%',#{keyWord},'%'))
         </if>
         <if test="status!=null">
             and status=#{status}

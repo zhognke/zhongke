@@ -13,18 +13,18 @@ import java.util.List;
 public interface DemandsCommentService {
     /**
      * 新增评论
-     * @param demandsCommentEntity
-     * @return
+     * @param demandsCommentEntity  实体类
+     * @return  boolean
      */
-    public boolean addComment(DemandsCommentEntity demandsCommentEntity);
+    boolean addComment(DemandsCommentEntity demandsCommentEntity);
 
     /**
      * 根据需求id获取评论内容
-     * @param demandsID
-     * @return
+     * @param demandsID 需求id
+     * @return  List
      */
-    public List<DemandsCommentEntity> getByDemandsID(int demandsID);
+    List<DemandsCommentEntity> getByDemandsID(int demandsID);
 
-    public PageInfo showByPage(int demandsID, int pageNum, int pagesize);
+    PageInfo showByPage(int demandsID, int pageNum, int pagesize);
 }
 

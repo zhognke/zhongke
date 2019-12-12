@@ -26,13 +26,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/dict")
 public class DictController {
+    
     @Autowired
     private DictService dictService;
 
     /**
      * 新增数据字典
-     * @param entity
-     * @return
+     * @param entity    实体类
+     * @return ReturnResult
      */
     @PostMapping("/addDict")
     public ReturnResult addDict(@Validated({UserValidator.InSet.class})DictEntity entity){
@@ -45,8 +46,8 @@ public class DictController {
 
     /**
      * 修改数据字典
-     * @param entity
-     * @return
+     * @param entity    实体类
+     * @return ReturnResult
      */
     @PostMapping("/updateDict")
     public ReturnResult updateDict(@Validated({UserValidator.UpDate.class})DictEntity entity){
@@ -59,7 +60,7 @@ public class DictController {
 
     /**
      * 获取所有字典元素
-     * @return
+     * @return ReturnResult
      */
     @GetMapping("/selectAll")
     public ReturnResult selectAll(){
@@ -73,7 +74,9 @@ public class DictController {
 
     /**
      * 根据父id获取字典元素
-     * @return
+     *
+     * @param parentId 父id
+     * @return ReturnResult
      */
     @GetMapping("/getDictByParentId")
     public ReturnResult getByParentId(Integer parentId){
@@ -87,7 +90,9 @@ public class DictController {
 
     /**
      * 根据type获取字典元素
-     * @return
+     *
+     * @param type 类型
+     * @return ReturnResult
      */
     @GetMapping("/getDictByType")
     public ReturnResult getByParentType(String type){
@@ -101,7 +106,9 @@ public class DictController {
 
     /**
      * 根据type获取字典树
-     * @return
+     *
+     * @param type 类型
+     * @return ReturnResult
      */
     @GetMapping("/getTreeByType")
     public ReturnResult getTreeByType(String type){
@@ -115,7 +122,8 @@ public class DictController {
 
     /**
      * 逻辑删除
-     * @return
+     * @param id 主键id
+     * @return ReturnResult
      */
     @GetMapping("/deleteById")
     public ReturnResult deleteById(Integer id){
@@ -127,8 +135,9 @@ public class DictController {
     }
 
     /**
-     * 删除
-     * @return
+     * 彻底删除
+     * @param id 主键id
+     * @return ReturnResult
      */
     @GetMapping("/realDeleteById")
     public ReturnResult realDeleteById(Integer id){
