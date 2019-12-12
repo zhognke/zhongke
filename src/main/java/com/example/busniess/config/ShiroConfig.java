@@ -170,7 +170,7 @@ public class ShiroConfig {
         List a = new ArrayList();
         a.add(new ShiroSessionFilter());
         sessionManager.setSessionListeners(a);
-       sessionManager.setGlobalSessionTimeout(20000);
+       sessionManager.setGlobalSessionTimeout(3600000);
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie());
         return sessionManager;
