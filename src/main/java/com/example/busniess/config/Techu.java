@@ -22,7 +22,7 @@ public class Techu {
         factory.addConnectorCustomizers(new TomcatConnectorCustomizer() {
             @Override
             public void customize(Connector connector) {
-                connector.setProperty("relaxedQueryChars", "|{}[]");
+                connector.setProperty("relaxedQueryChars", "|{}[]/\\");
             }
         });
         return factory;

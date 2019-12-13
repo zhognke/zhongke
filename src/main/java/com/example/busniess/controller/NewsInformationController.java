@@ -122,7 +122,7 @@ public class NewsInformationController {
     /**
      * 下载
      */
-    @RequestMapping("/downloadCente")
+    @RequestMapping("/downloadCenter")
     public ReturnResult downloadCenter(HttpServletRequest request, HttpServletResponse response, String path) throws UnsupportedEncodingException {
        if(newsInformationServiceImpl.download(request, response, path)) {
            return null;
