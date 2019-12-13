@@ -12,7 +12,7 @@ public interface PersonDao {
      * @return
      */
     @Insert("INSERT INTO `person` (`uname`, `name`,`imgaddress`,`unit`, `territory`,`province`,`city`,`district`,`experience`, `telephone`, `post`, `statue`, `inserttime`,`address`,`selfIntroduction`) VALUES " +
-            "(#{uName}, #{name}, #{imgAddress}, #{unit},#{territory},#{province}, #{city},#{district},#{experience},#{telephone},#{post}, 0, NOW(),#{address},#{selfIntroduction})")
+            "(#{uName}, #{name}, #{imgAddress}, #{unit},#{territory},#{province}, #{city},#{district},#{experience},#{telephone},#{post}, 1, NOW(),#{address},#{selfIntroduction})")
     public Boolean insertPerson(Person person);
     /**
      * 修改私人认证
