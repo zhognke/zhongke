@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.busniess.dao.EsIndustryDeclareDao">
+<mapper namespace="com.example.busniess.search.dao.EsIndustryDeclareDao">
 
     <resultMap type="com.example.busniess.search.model.EsIndustryDeclareModel" id="demandsMap">
         <result property="id" column="id"/>

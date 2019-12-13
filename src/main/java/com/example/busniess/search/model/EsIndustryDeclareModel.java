@@ -3,7 +3,6 @@ package com.example.busniess.search.model;
 import com.example.busniess.entity.IndustrialDeclarationDetailEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -14,19 +13,8 @@ import java.util.Date;
 
 @Document(indexName = "industrydeclare", type = "industrydeclare",shards = 3)
 @Data
-public class EsIndustryDeclareModel implements Serializable {
+public class EsIndustryDeclareModel extends EsModel implements Serializable {
 
-    /**
-     * 需求id
-     */
-    @Id
-    private Integer id;
-    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private String title;   //标题
-    @Field(type = FieldType.Text,analyzer = "ik_max_word", searchAnalyzer = "ik_smart")
-    private String content; //内容
-    private String industry;    //项目所属行业
-    private String industryDetail;  //项目所属行业细分类目
     /**
      * 申报项目类别
      */
@@ -139,6 +127,11 @@ public class EsIndustryDeclareModel implements Serializable {
     @Field(type = FieldType.Object)
     private IndustrialDeclarationDetailEntity detailEntity;
 
+    /**
+     * 根据申报年份筛选(非数据库储存字段)
+     */
+    private Integer declarationYearBegin;
+    private Integer declarationYearEnd;
     private String keyword;
     private String indexType="industrydeclare";
 }

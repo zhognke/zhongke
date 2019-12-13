@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.search.dao.EsFinancingDao">
+
+    <resultMap id="BaseMap" type="com.example.busniess.search.model.EsFinancingModel">
+        <result property="id" column="id"/>
+        <result property="uName" column="uname"/>
+        <result property="projectName" column="projectName"/>
+        <result property="projectOutline" column="projectoutline"/>
+        <result property="advantage" column="advantage"/>
+        <result property="industry" column="industry"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="discribe" column="discribe"/>
+        <result property="projecrPhase" column="projecrphase"/>
+        <result property="period" column="period"/>
+        <result property="linkMan" column="linkman"/>
+        <result property="phoneNumber" column="phonenumber"/>
+        <result property="extensive" column="extensive"/>
+        <result property="cost" column="cost"/>
+        <result property="hascost" column="hascost"/>
+        <result property="financing" column="financing"/>
+        <result property="interest" column="interest"/>
+        <result property="time" column="time"/>
+        <result property="unit" column="unit"/>
+        <result property="projectFinancing" column="projectfinancing"/>
+        <result property="income" column="income"/>
+        <result property="profit" column="profit"/>
+        <result property="proportion" column="proportion"/>
+        <result property="ageLimit" column="agelimit"/>
+        <result property="lunit" column="lunit"/>
+        <result property="approvalStatus" column="statue"/>
+        <result property="insertTime" column="insertTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="reject" column="reject"/>
+        <result property="title" column="projectname"/>
+        <result property="outline" column="advantage"/>
+        <result property="content" column="projectoutline"/>
+        <result property="industry" column="project_industry"/>
+        <result property="industryDetail" column="project_industry_detail"/>
+    </resultMap>
+
+    <select id="selectAllFinancing" parameterType="Integer" resultMap="BaseMap">
+        SELECT
+        *,substring_index(industry,',', 1) project_industry,substring_index(industry,',', -1) project_industry_detail
+        FROM financing
+        <where>
+            <if test="id!=null">
+                `id`=#{id}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

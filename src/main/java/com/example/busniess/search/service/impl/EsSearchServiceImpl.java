@@ -32,19 +32,20 @@ public class EsSearchServiceImpl implements EsSearchService {
         if(!StringUtils.isEmpty(keyword)) {
             MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(keyword,
                     IndexKey.INDEX_TITLE,
+                    IndexKey.INDEX_OUTLINE,
                     IndexKey.INDEX_CONTENT,
                     IndexKey.INDEX_COMPANY_NAME
             );
             boolQueryBuilder.must(multiMatchQueryBuilder);
         }
-//        if (!StringUtils.isEmpty(keyword))
-//            searchQueryBuilder.withQuery(multiMatchQueryBuilder);
-        boolQueryBuilder.must(QueryBuilders.termQuery("approvalStatus","1"));
-        boolQueryBuilder.must(QueryBuilders.termQuery("status","0"));
+
+        boolQueryBuilder.must(QueryBuilders.termQuery(IndexKey.INDEX_APPROVAL_STATUS,"1"));
+        boolQueryBuilder.must(QueryBuilders.termQuery(IndexKey.INDEX_STATUS,"0"));
+
 
         NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder().withPageable(pageable)
-                .withIndices("demands", "industrydeclare")
-                .withTypes("demands", "industrydeclare")
+                .withIndices("demands", "financial","occupancy","professional")
+                .withTypes("demands", "financial","occupancy","professional")
                 .withQuery(boolQueryBuilder);
 
         SearchQuery searchQuery = searchQueryBuilder.build();
