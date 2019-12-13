@@ -4,6 +4,7 @@ import com.example.busniess.validator.UserValidator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,7 @@ public class User implements Serializable {
     private String email;//邮箱
     private String statu;//用户状态备用
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastdate;
     private String ip;
     private Integer persion;//区分私人和企业

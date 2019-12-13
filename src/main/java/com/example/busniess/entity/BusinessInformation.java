@@ -32,8 +32,10 @@ public class BusinessInformation implements Serializable {
     @NotBlank(message = "log地址不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String logo;//log地址
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date insertTime;//插入时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;//更新时间
     private int statue;//状态
 

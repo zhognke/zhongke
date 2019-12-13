@@ -3,6 +3,7 @@ package com.example.busniess.entity;
 import com.example.busniess.validator.UserValidator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -80,8 +81,10 @@ public class FinancingEntity {
     private int ageLimit;//年限
     private int statue;//发布状态
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date insertTime;//插入时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTiem;//更新时间
     private String reject;//驳回原因
     private BusinessInformation businessInformation;//关联企业补充信息

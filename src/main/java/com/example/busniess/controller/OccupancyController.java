@@ -289,7 +289,7 @@ public class OccupancyController {
      * @return
      */
     @GetMapping("/getHotIndustry")
-    public ReturnResult getHotIndustry(@RequestParam(defaultValue = "8") Integer size) {
+    public ReturnResult getHotIndustry(@RequestParam(defaultValue = "6") Integer size) {
         return ReturnResult.success(occupancyServceImpl.getHotIndustry(size));
     }
 
