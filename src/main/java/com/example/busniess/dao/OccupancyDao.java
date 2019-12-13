@@ -185,8 +185,11 @@ public interface OccupancyDao {
     @Select("SELECT COUNT(industry) FROM occupancy WHERE statue=1")
     public Integer countIndustry();
 
-    @Select("SELECT id,resultTechnolo,price,industry,industryDetail,attribute,stage,transferType,negotiable FROM `occupancy` where statue=1 and kstatue =1 and hot='热门' ORDER BY `creattime` DESC LIMIT 0,#{size}")
+    @Select("SELECT * FROM `occupancy` where statue=1 and kstatue =1 and hot='热门' ORDER BY `creattime` DESC LIMIT 0,#{size}")
     @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "userName", column = "userName"),
+
             @Result(property = "imgAddress", column = "id", one = @One(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
             @Result(property = "businessInformation", column = "username", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),
             @Result(property = "businessCenter", column = "username", one = @One(select = "com.example.busniess.dao.BusinessCenterDao.selectOneBusinessCenter"))

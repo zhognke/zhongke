@@ -67,6 +67,7 @@ public class ShiroConfig {
 //科技成果需要某个角色才能用/occupancy
         map.put("/occupancy/showByPage", "anon");
         map.put("/occupancy/selectOneOccupancyById", "anon");
+        map.put("/occupancy/getHotIndustry", "anon");
         map.put("/occupancy/**", "authc");
 //工业申报需要有角色1.新增/addDeclaration删除状态2./deleteById批量删除3./deleteByBatch删除4./realDeleteById
 //      更新  /updateDeclaration修改/updateDeclaration /showByPage

@@ -3,6 +3,9 @@ package com.example.busniess.service;
 import com.example.busniess.entity.NewsInformation;
 import com.github.pagehelper.PageInfo;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface NewsInformationService {
@@ -46,5 +49,10 @@ public interface NewsInformationService {
      * @return
      */
     public NewsInformation selectOneNewsInformation(Integer id);
+
+    /**
+     * 下载
+     */
+    public Boolean download(HttpServletRequest request, HttpServletResponse response, String path) throws UnsupportedEncodingException;
 
 }

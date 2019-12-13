@@ -24,8 +24,10 @@ public class Notification {
     @NotBlank(message = "关联的用户名",groups ={UserValidator.UpDate.class,UserValidator.InSet.class} )
     private String uName;//关联的用户名
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date insertTime;//插入的时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date upTime;//更新的时间
     private int sort;//排序
 
