@@ -26,8 +26,8 @@ public class DictEntity implements Serializable {
     /**
      * 字典名称
      */
-	@NotNull(message = "名称不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String name;
+//	@NotNull(message = "名称不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    private String name;
     /**
      * 字典类型
      */

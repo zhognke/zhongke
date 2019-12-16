@@ -6,12 +6,16 @@ import com.example.busniess.dao.TalentDemandDao;
 import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.service.TalentDemandService;
+import com.example.busniess.utiles.RedisKey;
+import com.example.busniess.utiles.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("talentDemandService")
 public class TalentDemandServiceImpl implements TalentDemandService {
@@ -21,6 +25,9 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     TalentDemandDao talentDemandDao;
     @Autowired
     BusinessCenterInformationDao businessCenterInformationDao;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     /**
      * 查询所有
@@ -82,6 +89,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
      * @return
      */
     @Override
+    @Cacheable(value="talent",key="'talent'+#id")
     public TalentDemandEntity selectById(Integer id) {
         return talentDemandDao.selectById(id);
     }
@@ -98,6 +106,18 @@ public class TalentDemandServiceImpl implements TalentDemandService {
             BusinessCenterInformationEntity businessCenterInformationEntity = businessCenterInformationDao.selectOnByUname(entity.getUserName());
             entity.setBusinessCenter(businessCenterInformationEntity);
             entity.setOccupancyList(occupancyDao.getOccupanyForProfessional(entity.getUserName(),size));
+            //记录浏览量到redis,然后定时更新到数据库
+            String key = RedisKey.TALENT_VIEW_COUNT_CODE + entity.getId();
+            //找到redis中该篇文章的点赞数，如果不存在则向redis中添加一条
+            Map<Object, Object> viewCountItem = redisUtil.hmget(RedisKey.TALENT_VIEW_COUNT_KEY);
+            Integer viewCount = entity.getViewCount();
+            if (!viewCountItem.isEmpty()) {
+                if (viewCountItem.containsKey(key)) {
+                    viewCount = (Integer) viewCountItem.get(key);
+                    entity.setViewCount(viewCount);
+                }
+            }
+            redisUtil.hset(RedisKey.TALENT_VIEW_COUNT_KEY, key, ++viewCount);
         }
         return entity;
     }
@@ -119,10 +139,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
      */
     @Override
     public boolean delectById(Integer id) {
-        TalentDemandEntity talentDemandEntity = new TalentDemandEntity();
-        talentDemandEntity.setId(id);
-        talentDemandEntity.setStatus(4);
-        return talentDemandDao.updateById(talentDemandEntity);
+        return talentDemandDao.deleteById(id);
     }
 
     /**

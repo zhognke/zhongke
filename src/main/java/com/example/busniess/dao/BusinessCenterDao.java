@@ -77,7 +77,7 @@ public interface BusinessCenterDao {
      * @param statue
      * @return
      */
-    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} ORDER BY subtime DESC")
+    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} ORDER BY subtime desc")
     public List<BusinessCenter> selectBusinessCenterByStatue(Integer statue);
 
     /**
@@ -91,7 +91,7 @@ public interface BusinessCenterDao {
      */
     @Select("SELECT * FROM businesscenter WHERE id=#{id}")
     @Results({
-            @Result(property = "occupancyList", column = "uname", many = @Many(select = "com.example.busniess.dao.EsOccupancyDao.selectByname")),
+            @Result(property = "occupancyList", column = "uname", many = @Many(select = "com.example.busniess.dao.OccupancyDao.selectByname")),
             @Result(property = "businessInformation", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation"))
     })
     public BusinessCenter selectBussinessByid(Integer id);

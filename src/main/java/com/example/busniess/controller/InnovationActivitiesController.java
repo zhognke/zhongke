@@ -148,4 +148,19 @@ public class InnovationActivitiesController {
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
+
+    /**
+     * 根据id显示详情
+     * @param id    主键id
+     * @return ReturnResult
+     */
+    @RequestMapping(value="/showById",method = RequestMethod.GET)
+    public ReturnResult showById(@NotNull(message = "参数不能为空")Integer id){
+        InnovationActivitiesEntity obj = innovationActivitiesService.selectByID(id);
+        if(obj!=null){
+            return ReturnResult.success(obj);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }
+    }
 }

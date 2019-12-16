@@ -85,7 +85,7 @@
     <select id="search" resultType="talentDemandEntity" parameterType="talentDemandEntity">
         select <include refid="columnNames"></include> from talent_demand d,user u
         <where>
-            d.user_name = u.username and u.statu = 1 and d.del_flag = 0
+            d.user_name = u.username and u.statue = 1 and d.del_flag = 0
             <if test="userName!=null and userName!=''">
                 and d.user_name=#{userName}
             </if>
