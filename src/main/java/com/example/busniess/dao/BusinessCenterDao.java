@@ -77,7 +77,7 @@ public interface BusinessCenterDao {
      * @param statue
      * @return
      */
-    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} ORDER BY subtime DESC")
+    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} ORDER BY subtime desc")
     public List<BusinessCenter> selectBusinessCenterByStatue(Integer statue);
 
     /**
