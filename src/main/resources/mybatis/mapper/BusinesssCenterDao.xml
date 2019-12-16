@@ -46,6 +46,9 @@
         <if test="statue!=null and statue!=''">
             AND `statue`=#{statue}
         </if>
+        <if test="kStatue!=null and kStatue!=''">
+            AND `kstatue`=#{kStatue}
+        </if>
 
     </sql>
     <select id="selectAllBusinessCenter" parameterType="businessCenter" resultType="businessCenter">

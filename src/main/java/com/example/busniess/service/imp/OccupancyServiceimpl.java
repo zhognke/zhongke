@@ -94,7 +94,7 @@ public class OccupancyServiceimpl implements OccupancyService {
 
 
 
-//结束
+    //结束
     @Override
     public boolean closeById(Integer id, String closeReason) {
         Integer status = 3;
@@ -104,7 +104,7 @@ public class OccupancyServiceimpl implements OccupancyService {
 
 
 
-//驳回
+    //驳回
     @Override
     public boolean closeByIdForManager(Integer id, String closeReason) {
         Integer status = 2;

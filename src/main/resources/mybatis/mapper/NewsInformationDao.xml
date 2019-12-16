@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.NewsInformationDao">
+
+    <select id="selectNewsInformationByCategory" parameterType="NewsInformation" resultType="NewsInformation">
+        SELECT * FROM newsinformation
+        <where>
+            <if test="category!=null and category!=''">
+                and `category`=#{category}
+            </if>
+            <if test="title!=null and title!=''">
+                and `title`=#{title}
+            </if>
+        </where>
+        ORDER BY `publishDate` DESC
+    </select>
+
+
+</mapper>

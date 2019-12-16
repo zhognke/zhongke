@@ -21,14 +21,14 @@ public interface FinancingDao {
             "`hascost`, `financing`, `interest`, `time`," +
             "`unit`, `projectfinancing`, `income`, " +
             "`profit`, `proportion`, `agelimit`, " +
-            "`lunit`, `statue`, `insertTime`) VALUES " +
+            "`lunit`, `statue`, `insertTime`,`kstatue`) VALUES " +
             "(#{uName},#{projectType}, #{projectStatic}, #{goal}, #{type}, " +
             "#{projectName}, #{projectOutline}, #{advantage}, #{industry}," +
             " #{province}, #{city}, #{discribe}, #{projecrPhase}, " +
             "#{period}, #{linkMan}, #{phoneNumber}, #{extensive}, " +
             "#{cost}, #{hascost}, #{financing}, #{interest}, " +
             "#{time}, #{unit}, #{projectFinancing}, #{income}, " +
-            "#{profit}, #{proportion}, #{ageLimit},#{lunit},0, NOW())")
+            "#{profit}, #{proportion}, #{ageLimit},#{lunit},0, NOW(),1)")
     public Boolean insertFinancing(FinancingEntity financing);
 
     /**
@@ -97,6 +97,15 @@ public interface FinancingDao {
     public Boolean upFinacingStatue(@Param("id") Integer id, @Param("statue") Integer statue, @Param("reject") String reject);
 
     /**
+     *用户修改
+     * @param id
+     * @param statue
+     * @param reject
+     * @return
+     */
+    @Update("UPDATE `financing` SET `kstatue`=#{kStatue},`reject`=#{reject} WHERE (`id`=#{id})")
+    public Boolean upFinacingKstatue(@Param("id") Integer id, @Param("statue") Integer statue, @Param("reject") String reject);
+    /**
      * 查看所有 的
      *
      * @return
@@ -109,7 +118,7 @@ public interface FinancingDao {
 
     public List<FinancingEntity> selectAllFinacing0();
 
-    @Select("SELECT industry FROM financing GROUP BY industry ORDER BY COUNT(industry) DESC LIMIT 5")
+    @Select("SELECT industry FROM financing  where statue=1 AND kstatue=1 GROUP BY industry ORDER BY COUNT(industry) DESC LIMIT 5")
     public List<String>  selectIndustry();
 
 }

@@ -20,14 +20,14 @@ public interface BusinessCenterDao {
             "`societycode`, " +
             "`legalperson`, `address`," +
             " `phonenumber`,`persionCode`," +
-            " `statue`, `subtime`" +
+            " `statue`, `subtime`,`kstatue`" +
             ") VALUES (#{uName}, #{firmName}, #{industry}," +
             " #{typeEnterprise}," +
             " #{country}, #{city}, " +
             "#{district}," +
             "#{societyCode}, #{legalPerson}," +
             " #{address}, #{phoneNumber},#{persionCode}," +
-            " 0, NOW()" +
+            " 0, NOW(),1" +
             ")")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
 
@@ -50,6 +50,14 @@ public interface BusinessCenterDao {
     @Update("UPDATE `businesscenter` SET `statue`=#{statue}, `audittime`=NOW() WHERE (`id`=#{id}) ")
     public Boolean upStatue(@Param("statue") Integer statue, @Param("id") Integer id);
 
+    /**
+     * 用户修改状态
+     * @param statue
+     * @param id
+     * @return
+     */
+    @Update("UPDATE `businesscenter` SET `statue`=#{statue}, `audittime`=NOW() WHERE (`id`=#{id}) ")
+    public Boolean upKstatue(@Param("statue") Integer statue, @Param("id") Integer id);
 
     /**
      * 修改审核信息

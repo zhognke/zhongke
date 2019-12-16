@@ -15,6 +15,9 @@
         <if test="statue!=null and  statue!=''">
             AND `statue`=#{statue}
         </if>
+        <if test="kStatue!=null and  kStatue!=''">
+            AND `kstatue`=#{kStatue}
+        </if>
         <if test="industry!=null and industry!=''">
             AND instr('${industry}',`industry`)
         </if>

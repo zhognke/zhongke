@@ -77,4 +77,6 @@ public class BusinessCenter implements Serializable {
 
 //    @NotBlank(message = "所属区不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String district;//区 ··10
+
+    private int kstatue;//用户修改状态
 }

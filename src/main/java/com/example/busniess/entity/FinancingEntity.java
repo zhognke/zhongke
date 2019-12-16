@@ -89,4 +89,8 @@ public class FinancingEntity {
     private String reject;//驳回原因
     private BusinessInformation businessInformation;//关联企业补充信息
     private BusinessCenter businessCenter;//关联企业
+
+
+
+    private  Integer kStatue;//用户状态
 }
