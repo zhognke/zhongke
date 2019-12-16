@@ -38,7 +38,9 @@ public interface NewsInformationService {
 
     /**
      * 按照类别查看新闻资讯
-     * @param category
+     * @param newsInformation
+     * @param pageNum
+     * @param pagesize
      * @return
      */
     public PageInfo selectNewsInformationByCategory(NewsInformation newsInformation, Integer pageNum, Integer pagesize);

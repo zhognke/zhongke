@@ -86,7 +86,7 @@ public class NewsInformationController {
     /**
      * 根据行业查看新闻资讯
      *
-     * @param category
+     * @param
      * @return
      */
     @RequestMapping("/searchNewsByCategory")
