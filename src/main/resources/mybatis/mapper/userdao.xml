@@ -13,6 +13,9 @@
         <if test="phoneNumber!=null and phoneNumber!=''">
             `phonenumber`=#{phoneNumber}
         </if>
+        <if test="statue!=null and statue!=''">
+            `statue`=#{statue}
+        </if>
 
     </sql>
 <!--更新用户信息-->

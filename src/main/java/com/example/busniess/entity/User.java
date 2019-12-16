@@ -29,11 +29,16 @@ public class User implements Serializable {
     @NotNull(message = "邮箱不能为空")
     @Email(message = "请填写正确的邮箱格式",groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String email;//邮箱
-    private String statu;//用户状态备用
+    private String statue;//用户状态备用
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastdate;
     private String ip;
     private Integer persion;//区分私人和企业
+
+
+    private  Date insertTime;//插入时间
+
+    private  Date upTime;//跟新时间
 
 }

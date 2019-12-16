@@ -21,7 +21,7 @@ public class SyncArticleViews {
     @Autowired
     private TalentDemandService talentDemandService;
 
-    @Scheduled(cron = "0 0/1 * * * ? ")//每1分钟
+//    @Scheduled(cron = "0 0/1 * * * ? ")//每1分钟
     public void SyncNodesAndShips() {
         logger.info("开始保存点赞数 、浏览数");
         try {

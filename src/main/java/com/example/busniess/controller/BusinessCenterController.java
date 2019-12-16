@@ -148,7 +148,7 @@ public class BusinessCenterController {
      * @return
      */
     @RequestMapping("/findMyBusinessCenter")
-    public ReturnResult findMyBusinessCenter(String userName) {
+    public ReturnResult findMyBusinessCenter(@NotNull(message = "用户账号不能为空") String userName) {
         return ReturnResult.success(businessCenterServiceImpl.selectMyBusinessCenter(userName));
     }
 
@@ -157,7 +157,7 @@ public class BusinessCenterController {
      */
 
     @RequestMapping("/findBussinessCenter")
-    public ReturnResult findBussinessCenter(Integer id) {
+    public ReturnResult findBussinessCenter(@NotNull(message = "id号不能为空") Integer id) {
         return ReturnResult.success(businessCenterServiceImpl.selectBusinessCenterById(id));
     }
 

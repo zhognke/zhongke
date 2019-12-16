@@ -13,7 +13,7 @@ public interface UserDao {
      * @param user
      * @return
      */
-    @Insert("INSERT INTO `user` (`username`, `password`, `phonenumber`,`statu`,`email`,`lastdate`,`ip`,`persion`) VALUES (#{userName}, #{password}, #{phoneNumber},#{statu},#{email},#{lastdate},#{ip},#{persion})")
+    @Insert("INSERT INTO `user` (`username`, `password`, `phonenumber`,`statue`,`email`,`lastdate`,`ip`,`persion`,`insertTime`) VALUES (#{userName}, #{password}, #{phoneNumber},1,#{email},#{lastdate},#{ip},#{persion},NOW())")
     public Boolean insertUser(User user);
 
     /**
@@ -25,7 +25,7 @@ public interface UserDao {
     /**
      * 根据名字查询用户
      */
-    @Select("SELECT * FROM `user` WHERE username=#{userName}")
+    @Select("SELECT * FROM `user` WHERE username=#{userName} and statue=1")
     public User selectUserByName(String userName);
 
     /**

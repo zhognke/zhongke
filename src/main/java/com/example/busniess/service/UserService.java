@@ -8,9 +8,21 @@ import java.util.Map;
 import java.util.Set;
 
 public interface UserService {
+    /**
+     * 根据用户名搜索用户信息，用户状态1
+     * @param userName
+     * @return
+     */
     User findUserByName(String userName);
 
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+
     Boolean removeUser(Integer id);
+
 
     Map findAllUser(Integer startPage);
 
