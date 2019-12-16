@@ -56,7 +56,7 @@ public class InnovationActivitiesApplicationController {
     @RequestMapping(value="/deleteById",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteById(@NotNull(message = "参数不能为空")Integer id){
         if(innovationActivitiesApplicationService.deleteByID(id)){
-            return ReturnResult.success("删除成功");
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -71,7 +71,7 @@ public class InnovationActivitiesApplicationController {
     @RequestMapping(value="/deleteByBatch",method = {RequestMethod.DELETE,RequestMethod.POST})
     public ReturnResult deleteByBatch(@NotNull(message = "参数不能为空")String ids){
         if(innovationActivitiesApplicationService.deleteBatch(ids)){
-            return ReturnResult.success("删除成功");
+            return ReturnResult.success("操作成功");
         }else{
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
@@ -127,6 +127,20 @@ public class InnovationActivitiesApplicationController {
      */
     @RequestMapping(value="/getById",method = RequestMethod.GET)
     public ReturnResult getById(@NotNull(message = "参数不能为空")Integer id){
+        InnovationActivitiesApplicationEntity obj = innovationActivitiesApplicationService.selectByID(id);
+        if(obj!=null){
+            return ReturnResult.success(obj);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }
+    }
+    /**
+     * 根据id搜索-显示
+     * @param id    主键id
+     * @return ReturnResult
+     */
+    @RequestMapping(value="/showById",method = RequestMethod.GET)
+    public ReturnResult showById(@NotNull(message = "参数不能为空")Integer id){
         InnovationActivitiesApplicationEntity obj = innovationActivitiesApplicationService.selectByID(id);
         if(obj!=null){
             return ReturnResult.success(obj);

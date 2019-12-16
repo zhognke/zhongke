@@ -119,5 +119,8 @@ public class InnovationActivitiesApplicationEntity implements Serializable {
      * 0未删除;1删除
      */
     private Integer delFlag;
-
+    /**
+     * 搜索关键字(非数据库字段)
+     */
+    private String keyword;
 }

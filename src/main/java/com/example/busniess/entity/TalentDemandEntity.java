@@ -33,6 +33,7 @@ public class TalentDemandEntity implements Serializable {
     /**
      * 关联的用户名
      */
+    @NotNull(message = "标题不能为空", groups = {UserValidator.InSet.class,UserValidator.UpDate.class})
     private String userName;
     /**
      * 标题

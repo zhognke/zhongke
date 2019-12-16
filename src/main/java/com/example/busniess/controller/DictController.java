@@ -7,10 +7,7 @@ import com.example.busniess.service.DictService;
 import com.example.busniess.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,8 +46,8 @@ public class DictController {
      * @param entity    实体类
      * @return ReturnResult
      */
-    @PostMapping("/updateDict")
-    public ReturnResult updateDict(@Validated({UserValidator.UpDate.class})DictEntity entity){
+    @PostMapping("/updateById")
+    public ReturnResult updateById(@Validated({UserValidator.UpDate.class})DictEntity entity){
         if(dictService.update(entity)){
             return ReturnResult.success("操作成功");
         }else{
@@ -125,7 +122,7 @@ public class DictController {
      * @param id 主键id
      * @return ReturnResult
      */
-    @GetMapping("/deleteById")
+    @RequestMapping(value="/deleteById",method = {RequestMethod.POST,RequestMethod.DELETE})
     public ReturnResult deleteById(Integer id){
         if(dictService.delById(id)){
             return ReturnResult.success("操作成功");

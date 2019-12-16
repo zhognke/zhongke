@@ -13,6 +13,9 @@
         <if test="username!=null and username!=''">
             and username=#{username}
         </if>
+        <if test="innovationId!=null and innovationId!=''">
+            and innovation_id=#{innovationId}
+        </if>
         <if test="province!=null and province!=''">
             and province=#{province}
         </if>
@@ -23,8 +26,9 @@
             and district=#{district}
         </if>
         <if test="companyName!=null and companyName!=''">
-            and company_name=#{companyName}
+            and company_name like CONCAT('%',#{companyName},'%')
         </if>
+        order by create_time desc
     </select>
 
 </mapper>

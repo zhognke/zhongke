@@ -110,4 +110,6 @@ public class InnovationActivitiesEntity implements Serializable {
      */
     private Integer delFlag;
 
+    private String keyword;
+
 }
