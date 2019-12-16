@@ -90,8 +90,8 @@ public class NewsInformationController {
      * @return
      */
     @RequestMapping("/searchNewsByCategory")
-    public ReturnResult searchNewsByCategory(@NotBlank(message = "行业不能为空") String category, @NotNull(message = "第几页不能为空") Integer pageNum, @NotNull(message = "每页显示多少数据不能为空") Integer pagesize) {
-        return ReturnResult.success(newsInformationServiceImpl.selectNewsInformationByCategory(category, pageNum, pagesize));
+    public ReturnResult searchNewsByCategory(NewsInformation newsInformation, @NotNull(message = "第几页不能为空") Integer pageNum, @NotNull(message = "每页显示多少数据不能为空") Integer pagesize) {
+        return ReturnResult.success(newsInformationServiceImpl.selectNewsInformationByCategory(newsInformation, pageNum, pagesize));
     }
 
     /**
@@ -124,9 +124,9 @@ public class NewsInformationController {
      */
     @RequestMapping("/downloadCenter")
     public ReturnResult downloadCenter(HttpServletRequest request, HttpServletResponse response, String path) throws UnsupportedEncodingException {
-       if(newsInformationServiceImpl.download(request, response, path)) {
-           return null;
-       }
-       return null;
+        if(newsInformationServiceImpl.download(request, response, path)) {
+            return null;
+        }
+        return null;
     }
 }

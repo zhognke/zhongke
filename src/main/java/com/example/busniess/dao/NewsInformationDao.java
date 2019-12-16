@@ -1,10 +1,7 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.NewsInformation;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -45,9 +42,18 @@ public interface NewsInformationDao {
      * @param category
      * @return
      */
-    @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY `publishDate` DESC")
+//    @Select("SELECT * FROM newsinformation WHERE `category`=#{category} ORDER BY `publishDate` DESC")
 
-    public List<NewsInformation> selectNewsInformationByCategory(String category);
+    public List<NewsInformation> selectNewsInformationByCategory(NewsInformation newsInformation);
+
+    /**
+     * 根据标题和行业查询
+     * @param category
+     * @return
+     */
+    @Select("SELECT * FROM newsinformation WHERE `title`=#{title} and `category`=#{category} ORDER BY `publishDate` DESC")
+
+    public List<NewsInformation> selectNewsInformationByNamen(@Param("title") String title,@Param("category") String category);
 
     /**
      * 查看单个新闻资讯

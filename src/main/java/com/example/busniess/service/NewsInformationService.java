@@ -41,7 +41,7 @@ public interface NewsInformationService {
      * @param category
      * @return
      */
-    public PageInfo selectNewsInformationByCategory(String category, Integer pageNum, Integer pagesize);
+    public PageInfo selectNewsInformationByCategory(NewsInformation newsInformation, Integer pageNum, Integer pagesize);
 
     /**
      * 查看单个新闻资讯
@@ -54,5 +54,7 @@ public interface NewsInformationService {
      * 下载
      */
     public Boolean download(HttpServletRequest request, HttpServletResponse response, String path) throws UnsupportedEncodingException;
+
+
 
 }

@@ -46,10 +46,10 @@ public class NewsInformationServiceImpl implements NewsInformationService {
     }
 
     @Override
-    public PageInfo selectNewsInformationByCategory(String category,Integer pageNum,Integer pagesize) {
+    public PageInfo selectNewsInformationByCategory(NewsInformation newsInformation,Integer pageNum,Integer pagesize) {
 
         PageHelper.startPage(pageNum, pagesize);
-        List<NewsInformation> o = newsInformationDao.selectNewsInformationByCategory(category);
+        List<NewsInformation> o = newsInformationDao.selectNewsInformationByCategory(newsInformation);
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
 //        return newsInformationDao.selectNewsInformationByCategory(category);
