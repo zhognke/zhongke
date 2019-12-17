@@ -19,7 +19,7 @@
             AND `kstatue`=#{kStatue}
         </if>
         <if test="industry!=null and industry!=''">
-            AND instr('${industry}',`industry`)
+            AND instr(`industry`,'${industry}')
         </if>
         <if test="less!=null and less!='' and greater!=null and greater!=''">
             AND `income` between #{less} and #{greater}
