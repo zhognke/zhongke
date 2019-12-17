@@ -68,14 +68,14 @@ public class ShiroConfig {
         map.put("/occupancy/showByPage", "anon");
         map.put("/occupancy/selectOneOccupancyById", "anon");
         map.put("/occupancy/getHotIndustry", "anon");
-        map.put("/occupancy/**", "authc");
+//        map.put("/occupancy/**", "authc");
 //工业申报需要有角色1.新增/addDeclaration删除状态2./deleteById批量删除3./deleteByBatch删除4./realDeleteById
 //      更新  /updateDeclaration修改/updateDeclaration /showByPage   roles[vip]
         map.put("/industrialdeclaration/selectOneOccupancyById", "anon");//具体的
         map.put("/industrialdeclaration/showByPage", "anon");//显示检索
         map.put("/industrialdeclaration/getCompanyList", "anon");//获取公司名字
         map.put("/industrialdeclaration/showByPageForCenter", "authc");//个人展示
-        map.put("/industrialdeclaration/**", "authc");
+//        map.put("/industrialdeclaration/**", "authc");
 //创新活动申请表/innovationActivitiesApplication
 //        map.put("/innovationActivitiesApplication/showByPage", "anon");
 //        map.put("/innovationActivitiesApplication/getById", "anon");
