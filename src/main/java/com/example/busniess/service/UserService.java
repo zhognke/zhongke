@@ -1,7 +1,10 @@
 package com.example.busniess.service;
 
+import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.Person;
 import com.example.busniess.entity.User;
 import com.example.busniess.exception.MyException;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -37,4 +40,16 @@ public interface UserService {
     Boolean retSetPassword(String userName, String password, String newPassword) throws MyException;
 
     Integer checkStatus(String username, Integer isPerson);
+
+
+    /**
+     * 后台检索企业用户
+     */
+public PageInfo searchBusinessUser(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize);
+
+/**
+ * 后台检索个人用户
+ */
+public  PageInfo searchPerson(Person person,Integer pageNumber,Integer pageSize);
+
 }

@@ -4,6 +4,7 @@ import com.example.busniess.validator.UserValidator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.cglib.core.VisibilityPredicate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
@@ -40,5 +41,10 @@ public class User implements Serializable {
     private  Date insertTime;//插入时间
 
     private  Date upTime;//跟新时间
+
+    private Integer vip;//是否是vip1是0不是
+
+    private  BusinessCenter businessCenter;//企业中心
+    private Person person;//私人认证
 
 }

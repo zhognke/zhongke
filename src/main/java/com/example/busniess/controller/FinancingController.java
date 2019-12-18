@@ -29,7 +29,7 @@ public class FinancingController {
     //审核通过或者没通过的转义
     private String str;
     @Autowired
-RabbitTemplate rabbitTemplate;
+    RabbitTemplate rabbitTemplate;
 
     @Resource
     FinancingService financingServiceImpl;
@@ -42,12 +42,12 @@ RabbitTemplate rabbitTemplate;
      */
     @RequestMapping("/addFinancing")
     public ReturnResult addFinancing(@Validated(UserValidator.InSet.class)
-                                                 FinancingEntity financing) {
+                                             FinancingEntity financing) {
         if (financingServiceImpl.insertFinacing(financing)) {
             //通知
 
-           InformEntity informEntity= RabbitUtil.sendRabbic(financing.getUName(),"发布了" +
-                    financing.getProjectName(),new Date());
+            InformEntity informEntity = RabbitUtil.sendRabbic(financing.getUName(), "发布了" +
+                    financing.getProjectName(), new Date());
 
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.ADMINkEY, informEntity);
             return ReturnResult.success();
@@ -64,7 +64,6 @@ RabbitTemplate rabbitTemplate;
             //通知
 
 
-
             return ReturnResult.success();
         }
         return ReturnResult.erro(CodeMsg.DELETE_ERROR);
@@ -75,7 +74,7 @@ RabbitTemplate rabbitTemplate;
      */
     @RequestMapping("/updateFinancing")
     public ReturnResult updateFinancing(@Validated({UserValidator.UpDate.class})
-                                                    FinancingEntity financing) {
+                                                FinancingEntity financing) {
         if (financingServiceImpl.updateFinacing(financing)) {
             return ReturnResult.success();
         }
@@ -88,11 +87,11 @@ RabbitTemplate rabbitTemplate;
      */
     @RequestMapping("/findMyFinancing")
     public ReturnResult findMyFinancing(@NotNull(message = "用户名不能为空")
-                                                    String uName,
-                                        @RequestParam(required = false,defaultValue = "1")
-                                        Integer pagenum,
-                                        @RequestParam(required = false,defaultValue = "5")
-                                        Integer pageSize) {
+                                                String uName,
+                                        @RequestParam(required = false, defaultValue = "1")
+                                                Integer pagenum,
+                                        @RequestParam(required = false, defaultValue = "5")
+                                                Integer pageSize) {
         return ReturnResult.success(financingServiceImpl.selectMyFiancing(uName, pagenum, pageSize));
 
     }
@@ -102,10 +101,10 @@ RabbitTemplate rabbitTemplate;
      */
     @RequestMapping("/findFinancingByCondition")
     public ReturnResult findFinancingByCondition(FinancingEntity financing,
-                                                 @RequestParam(required = false,defaultValue = "1")
-                                                 Integer pagenum,
-                                                 @RequestParam(required = false,defaultValue = "5")
-                                                 Integer pageSize) {
+                                                 @RequestParam(required = false, defaultValue = "1")
+                                                         Integer pagenum,
+                                                 @RequestParam(required = false, defaultValue = "5")
+                                                         Integer pageSize) {
         return ReturnResult.success(financingServiceImpl.SelectAllFinacing(financing, pagenum, pageSize));
     }
 
@@ -114,16 +113,16 @@ RabbitTemplate rabbitTemplate;
      */
     @RequestMapping("/upFinancingStatue")
     public ReturnResult upFinancingStatue(@NotNull(message = "id号不能为空")
-                                                      Integer id,
+                                                  Integer id,
                                           @NotNull(message = "状态号不能为空")
-                                          Integer statue,
+                                                  Integer statue,
                                           @RequestParam(required = false) String reject) {
         if (statue == 1) {
             str = "审核通过了";
-        } else if(statue==2) {
+        } else if (statue == 2) {
             str = "审核被驳回";
-        }else if(statue==3){
-            str ="信息结束";
+        } else if (statue == 3) {
+            str = "信息结束";
         }
 
 
@@ -132,7 +131,7 @@ RabbitTemplate rabbitTemplate;
             //通知 1通过 2驳回
             //通知
             FinancingEntity financing = financingServiceImpl.selectFinancingById(id);
-            InformEntity informEntity= RabbitUtil.sendRabbic(financing.getUName(),financing.getProjectName() + str,new Date());
+            InformEntity informEntity = RabbitUtil.sendRabbic(financing.getUName(), financing.getProjectName() + str, new Date());
 
 
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
@@ -159,7 +158,7 @@ RabbitTemplate rabbitTemplate;
      * 融资热门行业
      */
     @RequestMapping("/selectIndustry")
-    public  ReturnResult selectIndustry(){
+    public ReturnResult selectIndustry() {
         return ReturnResult.success(financingServiceImpl.selectIndustry());
     }
 
@@ -178,4 +177,19 @@ RabbitTemplate rabbitTemplate;
         }
     }
 
+    /**
+     * 用户停止
+     * @param id
+     * @param kStatue
+     * @return
+     */
+    @RequestMapping("/stopFinancing")
+    public ReturnResult stopFinancing(@NotNull(message = "id不能为空") Integer id,
+                                      @NotNull(message = "状态不能为空") Integer kStatue) {
+        if (financingServiceImpl.stopFiancing(id, kStatue)) {
+            return ReturnResult.success();
+        }
+        return ReturnResult.erro(CodeMsg.UPDATE_ERROR);
+
+    }
 }

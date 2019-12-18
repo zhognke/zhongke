@@ -1,7 +1,9 @@
 package com.example.busniess.controller;
 
+import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.MsendMail;
+import com.example.busniess.entity.Person;
 import com.example.busniess.entity.User;
 import com.example.busniess.exception.MyException;
 import com.example.busniess.resultpackage.CodeMsg;
@@ -20,6 +22,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +49,10 @@ public class UserController {
     BusinessCenterService businessCenterService;
     @Resource
     MsendMailServiceImpl msendMailServiceImpl;
+
+
+
+
 
 
     /**
@@ -238,5 +245,37 @@ public class UserController {
         Integer status = UserServiceImpl.checkStatus(username, isPerson);
         return ReturnResult.success(status);
     }
+
+
+    ////////////////////////////////////////////////////////////////
+
+    /**
+     * 后台检索企业用户
+     * @param businessCenter
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/selectBusinessUser")
+    public ReturnResult selectBusinessUser(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize){
+  return  ReturnResult.success( UserServiceImpl.searchBusinessUser(businessCenter,pageNumber,pageSize)) ;
+
+    }
+
+    /**
+     * 检索个人用户
+     * @param person
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/selectPersonUser")
+    public ReturnResult selectPersonUser(Person person,Integer pageNumber,Integer pageSize){
+        return ReturnResult.success(UserServiceImpl.searchPerson(person,pageNumber,pageSize));
+    }
+
+
+
+
 
 }

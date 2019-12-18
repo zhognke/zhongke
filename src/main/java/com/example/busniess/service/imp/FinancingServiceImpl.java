@@ -169,4 +169,15 @@ public class FinancingServiceImpl implements FinancingService {
         PageInfo pageInfo=new PageInfo(a);
         return pageInfo;
     }
+
+    /**
+     * 用户停止融资
+     */
+
+    @Override
+    public boolean stopFiancing(Integer id,Integer statue) {
+
+
+        return financingDao.upFinacingKstatue(id,statue);
+    }
 }

@@ -88,6 +88,7 @@ public interface FinancingDao {
      * @return
      */
 //    @Select("SELECT id,industry,financing,income,projecrphase,period FROM financing")
+
     public List<FinancingEntity> selectAllFinancing(FinancingEntity financing);
 
     /**
@@ -100,11 +101,11 @@ public interface FinancingDao {
      *用户修改
      * @param id
      * @param statue
-     * @param reject
+
      * @return
      */
-    @Update("UPDATE `financing` SET `kstatue`=#{kStatue},`reject`=#{reject} WHERE (`id`=#{id})")
-    public Boolean upFinacingKstatue(@Param("id") Integer id, @Param("statue") Integer statue, @Param("reject") String reject);
+    @Update("UPDATE `financing` SET `kstatue`=#{kStatue} WHERE (`id`=#{id})")
+    public Boolean upFinacingKstatue(@Param("id") Integer id, @Param("kStatue") Integer statue);
     /**
      * 查看所有 的
      *
@@ -117,6 +118,11 @@ public interface FinancingDao {
     })
 
     public List<FinancingEntity> selectAllFinacing0();
+
+    /**
+     *
+     * @return
+     */
 
     @Select("SELECT industry FROM financing  where statue=1 AND kstatue=1 GROUP BY industry ORDER BY COUNT(industry) DESC LIMIT 5")
     public List<String>  selectIndustry();
