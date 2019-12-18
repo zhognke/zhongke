@@ -1,9 +1,7 @@
 package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.FinancingDao;
-import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.FinancingEntity;
-import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.service.FinancingService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;

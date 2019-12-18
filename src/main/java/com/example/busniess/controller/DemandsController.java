@@ -1,34 +1,33 @@
 package com.example.busniess.controller;
 
-import com.example.busniess.annotation.SysLog;
 import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.InformEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.DemandsService;
-import com.example.busniess.utiles.EchartsEntity;
 import com.example.busniess.utiles.RabbitUtil;
 import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.Api;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  * 企业需求表
- *
+ * 大厅\会员中心操作
  * @author lee
  * @email wawzj512541@gmail.com
  * @date 2019-09-24 10:05:26
  */
-@Api(tags="企业需求控制类")
 @RestController
 @RequestMapping("/demands")
 public class DemandsController {
@@ -70,20 +69,6 @@ public class DemandsController {
         }else{
             demandsEntity.setUserName(userName);
         }
-        PageInfo pageInfo = demandsService.showByPage(demandsEntity, pageNum, pageSize);
-        return ReturnResult.success(pageInfo);
-    }
-
-    /**
-     * 后台管理-分页展示,可根据条件筛选(管理端)
-     *
-     * @param demandsEntity    实体类
-     * @param pageNum    页码
-     * @param pageSize    页面尺寸
-     * @return ReturnResult
-     */
-    @RequestMapping(value="/showByPageForManager",method = RequestMethod.GET)
-    public ReturnResult showByPageForManager(DemandsEntity demandsEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
         PageInfo pageInfo = demandsService.showByPage(demandsEntity, pageNum, pageSize);
         return ReturnResult.success(pageInfo);
     }
@@ -154,15 +139,8 @@ public class DemandsController {
      * @param demandsEntity    实体类
      * @return ReturnResult
      */
-    @SysLog(value="新增企业需求",type="企业需求")
     @PostMapping("/addDemands")
     public ReturnResult addDemands(@Validated({UserValidator.InSet.class}) DemandsEntity demandsEntity) {
-        /*String userName = ShiroUtils.getUserName();
-        if (userName == null) {
-            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);  //判断当前用户是否登录
-        }else{
-            demandsEntity.setUserName(userName);
-        }*/
         if (demandsService.insert(demandsEntity)) {
             //通知
             InformEntity informEntity= RabbitUtil.sendRabbic(demandsEntity.getUserName(),"提交了" + demandsEntity.getDemandOutline() + "的企业需求",new Date());
@@ -179,7 +157,6 @@ public class DemandsController {
      * @param id    主键id
      * @return ReturnResult
      */
-    @SysLog(value="删除企业需求",type="企业需求")
     @RequestMapping(value = "/delDemands", method = {RequestMethod.DELETE, RequestMethod.GET})
     public ReturnResult delDemands(@NotNull(message = "参数不能为空") Integer id) {
         if (demandsService.deleteDemandsByID(id)) {
@@ -209,7 +186,6 @@ public class DemandsController {
      * @param id    主键id
      * @return ReturnResult
      */
-    @SysLog(value="彻底删除企业需求",type="企业需求")
     @RequestMapping(value = "/realDelDemands", method = {RequestMethod.DELETE, RequestMethod.GET})
     public ReturnResult realDelDemands(@NotNull(message = "参数不能为空") Integer id) {
         if (demandsService.realDeleteDemandsByID(id)) {
@@ -225,7 +201,6 @@ public class DemandsController {
      * @param demandsEntity    实体类
      * @return ReturnResult
      */
-    @SysLog(value="修改企业需求",type="企业需求")
     @RequestMapping(value = "/updateDemands", method = {RequestMethod.POST})
     public ReturnResult updateDemands(@Validated({UserValidator.UpDate.class}) DemandsEntity demandsEntity) {
         demandsEntity.setApprovalStatus(0);
@@ -240,28 +215,11 @@ public class DemandsController {
     }
 
     /**
-     * 修改需求有效状态
-     *
-     * @param id    主键id
-     * @param status    状态
-     * @return ReturnResult
-     */
-    @PostMapping("/updateDemandsStatus")
-    public ReturnResult updateDemandsStatus(@NotNull(message = "参数不能为空") Integer id,@NotNull(message = "参数不能为空") Integer status,String closeReason) {
-        if (demandsService.updateDemandsStatus(id,status,closeReason)) {
-            return ReturnResult.success();
-        } else {
-            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
-        }
-    }
-
-    /**
      * 关闭需求--用户
      *
      * @param id    主键id
      * @return ReturnResult
      */
-    @SysLog(value="关闭企业需求-用户端",type="企业需求")
     @PostMapping("/closeDemandsById")
     public ReturnResult closeDemandsById(@NotNull(message = "参数不能为空") Integer id,String closeReason) {
         Integer status = 3;
@@ -277,112 +235,17 @@ public class DemandsController {
     }
 
     /**
-     * 关闭需求--管理端
-     *
-     * @param id    主键id
-     * @return ReturnResult
-     */
-    @SysLog(value="关闭企业需求-管理端",type="企业需求")
-    @PostMapping("/closeDemandsByIdForManager")
-    public ReturnResult closeDemandsByIdForManager(@NotNull(message = "参数不能为空") Integer id,String reason) {
-        Integer status = 2;
-        if (demandsService.updateDemandsStatus(id,status,reason)) {
-            //通知
-            DemandsEntity entity = demandsService.getByID(id);
-            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getDemandOutline() + "的企业需求已被管理员关闭", new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
-            return ReturnResult.success();
-        } else {
-            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
-        }
-    }
-
-    /**
-     * 修改需求审批状态-通过
-     *
-     * @param id    主键id
-     * @return ReturnResult
-     */
-    @SysLog(value="审批通过",type="企业需求")
-    @PostMapping("/updateApprovalStatusPass")
-    public ReturnResult updateApprovalStatusPass(@NotNull(message = "参数不能为空") Integer id) {
-        int approvalStatus = 1;
-        if (demandsService.updateDemandsApprovalStatus(approvalStatus, "", id)) {
-            //通知
-            DemandsEntity entity = demandsService.getByID(id);
-            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getDemandOutline() + "的企业需求已经审核通过", new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
-            return ReturnResult.success();
-        } else {
-            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
-        }
-    }
-
-    /**
-     * 修改需求审批状态-驳回
-     *
-     * @param approvalOpinion 审批意见
-     * @param id    主键id
-     * @return ReturnResult
-     */
-    @SysLog(value="审批驳回",type="企业需求")
-    @PostMapping("/updateApprovalStatusRejected")
-    public ReturnResult updateApprovalStatusRejected(@NotNull(message = "参数不能为空") Integer id, String approvalOpinion) {
-        int approvalStatus = 2;
-        if (demandsService.updateDemandsApprovalStatus(approvalStatus, approvalOpinion, id)) {
-            //通知
-            DemandsEntity entity = demandsService.getByID(id);
-            InformEntity informEntity = RabbitUtil.sendRabbic(entity.getUserName(), "提交的" + entity.getDemandOutline() + "的企业需求被驳回了", new Date());
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
-            return ReturnResult.success();
-        } else {
-            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
-        }
-    }
-
-    /**
-     * 修改需求审批状态
-     *
-     * @param approvalStatus    审批状态
-     * @param id    主键id
-     * @return ReturnResult
-     */
-    @PostMapping("/updateApprovalStatus")
-    public ReturnResult updateApprovalStatus(@NotNull(message = "参数不能为空") Integer approvalStatus, String approvalOpinion, @NotNull(message = "参数不能为空") Integer id) {
-        if (approvalStatus == 1) {  //审批通过后清空审批意见
-            approvalOpinion = "";
-        }
-        if (demandsService.updateDemandsApprovalStatus(approvalStatus, approvalOpinion, id)) {
-            return ReturnResult.success();
-        } else {
-            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
-        }
-    }
-
-    /**
      * 企业需求行业占比统计(饼图)
      *
      * @return ReturnResult data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
      */
     @RequestMapping(value = "/demandsIndustryProp", method = {RequestMethod.POST, RequestMethod.GET})
-    public ReturnResult demandsIndustryProp() {
-        List<DemandsEntity> list = demandsService.demandsIndustryProp();
-        if (list.isEmpty() || "[]".equals(list.toString())) {
-            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
-        } else {
-            Map<String, Object> map = new HashMap<>();
-            List<EchartsEntity> sdata = new ArrayList<>();
-            String[] ldata = new String[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                EchartsEntity echartsEntity = new EchartsEntity();
-                ldata[i] = list.get(i).getDemandIndustry();
-                echartsEntity.setName(list.get(i).getDemandIndustry());
-                echartsEntity.setValue(Double.parseDouble(String.valueOf(list.get(i).getCounts())));
-                sdata.add(echartsEntity);
-            }
-            map.put("sdata", sdata);
-            map.put("ldata", ldata);
+    public ReturnResult demandsIndustryProp(@RequestParam(defaultValue = "16")Integer size) {
+        Map<String, Object> map = demandsService.demandsIndustryProp(size);
+        if(map!=null){
             return ReturnResult.success(map);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
 
