@@ -1,5 +1,6 @@
 package com.example.busniess.dao;
 
+import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.FinancingEntity;
 import org.apache.ibatis.annotations.*;
 
@@ -129,4 +130,10 @@ public interface FinancingDao {
 
     @Select("SELECT count(0) period, SUBSTRING_INDEX(industry,',',1) industry from `financing` where kstatue =1 and statue=1 group by SUBSTRING_INDEX(industry,',',1)  order by period desc limit #{size}")
     List<FinancingEntity> getIndustryProp(@Param("size") Integer size);
+
+    @Select("select count(0) from financing where kstatue =1 and statue =1")
+    int getCounts();
+
+    @Select("SELECT count(0) as ageLimit,DATE_FORMAT(insertTime,#{format}) projectName FROM `financing` where kstatue =1 and statue =1 group by DATE_FORMAT(insertTime,#{format}) desc limit #{size}")
+    List<FinancingEntity> financingRiseTrend(@Param("format")String format, @Param("size")Integer size);
 }

@@ -4,10 +4,12 @@ import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.dao.ImageAddressDao;
 import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.UserDao;
+import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.Echarts;
 import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.service.OccupancyService;
+import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -226,6 +229,33 @@ public class OccupancyServiceimpl implements OccupancyService {
         List<Occupancy> o = occupancyDao.showByPageForCenter(occupancy);
         PageInfo pageInfo = new PageInfo(o);
         return pageInfo;
+    }
+
+    @Override
+    public Map<String, Object> getIndustryProp(Integer size) {
+        List<Occupancy> list = occupancyDao.demandsIndustryProp(size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            List<EchartsEntity> sdata = new ArrayList<>();
+            String[] ldata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                EchartsEntity echartsEntity = new EchartsEntity();
+                ldata[i] = list.get(i).getIndustry();
+                echartsEntity.setName(list.get(i).getIndustry());
+                echartsEntity.setValue(Double.parseDouble(String.valueOf(list.get(i).getStatue())));
+                sdata.add(echartsEntity);
+            }
+            map.put("sdata", sdata);
+            map.put("ldata", ldata);
+            return map;
+        }
+    }
+
+    @Override
+    public int getCounts() {
+        return occupancyDao.getCounts();
     }
 
     /**

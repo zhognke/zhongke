@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Delete;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 企业需求表
@@ -90,13 +91,13 @@ public interface IndustrialDeclarationService {
      * 工业申报行业占比统计(饼图)
      * @return
      */
-    public List<IndustrialDeclarationEntity> declartionsIndustryProp();
+    Map<String, Object> declartionsIndustryProp();
 
     /**
      * 工业申报增长趋势(折线图)
      * @return
      */
-    public List<IndustrialDeclarationEntity> declartionsRiseTrend();
+    Map<String, Object> declartionsRiseTrend(String type,Integer size);
 
     /**
      * 获取公司名称列表
@@ -107,5 +108,7 @@ public interface IndustrialDeclarationService {
     List<IndustrialDeclarationEntity> lastDeclarations(Integer size);
 
     boolean deleteBatch(String ids);
+
+    Map<String, Object> getIndustrialDeclarationTypeByYear(Integer year);
 }
 

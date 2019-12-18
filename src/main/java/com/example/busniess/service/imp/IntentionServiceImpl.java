@@ -87,4 +87,9 @@ public class IntentionServiceImpl implements IntentionService {
         return intentionDao.deleteBatch(ids);
     }
 
+    @Override
+    public int getCounts() {
+        return intentionDao.getCounts();
+    }
+
 }

@@ -135,4 +135,8 @@ public interface OccupancyService {
      * @return
      */
     PageInfo showByPageForCenter(Occupancy occupancy, Integer pageNum, Integer pagesize);
+
+    Map<String, Object> getIndustryProp(Integer size);
+
+    int getCounts();
 }

@@ -20,4 +20,9 @@ public class BusinessCenterInformationServiceImpl implements BusinessCenterInfor
     public BusinessCenterInformationEntity selectOneByCompanyName(String companyName) {
         return businessCenterInformationDao.selectOneByCompanyName(companyName);
     }
+
+    @Override
+    public Integer getCounts() {
+        return businessCenterInformationDao.getCounts();
+    }
 }

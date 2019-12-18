@@ -102,5 +102,7 @@ public interface TalentDemandService {
     boolean deleteBatch(String ids);
 
     Map<String, Object> demandsIndustryProp(Integer size);
+
+    int getCounts();
 }
 

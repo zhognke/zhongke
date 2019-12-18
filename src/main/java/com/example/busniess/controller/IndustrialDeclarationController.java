@@ -323,23 +323,11 @@ public class IndustrialDeclarationController {
      */
     @RequestMapping(value="/declartionsIndustryProp",method = {RequestMethod.POST,RequestMethod.GET})
     public ReturnResult declarationsIndustryProp(){
-        List<IndustrialDeclarationEntity> list = industrialDeclarationService.declartionsIndustryProp();
-        if(list.isEmpty()||"[]".equals(list.toString())){
-            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
-        }else{
-            Map<String, Object> map= new HashMap<>();
-            List<EchartsEntity> sdata = new ArrayList<>();
-            String[] ldata = new String[list.size()];
-            for(int i =0;i<list.size();i++){
-                EchartsEntity echartsEntity = new EchartsEntity();
-                ldata[i]=list.get(i).getDeclarationType();
-                echartsEntity.setName(list.get(i).getDeclarationType());
-                echartsEntity.setValue(Double.parseDouble(String.valueOf(list.get(i).getCounts())));
-                sdata.add(echartsEntity);
-            }
-            map.put("sdata",sdata);
-            map.put("ldata",ldata);
+        Map<String, Object> map = industrialDeclarationService.declartionsIndustryProp();
+        if(map!=null){
             return ReturnResult.success(map);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
 
@@ -348,22 +336,14 @@ public class IndustrialDeclarationController {
      * @return    ReturnResult  data.xdata x轴坐标数据,即xAxis.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
      */
     @RequestMapping(value="/declartionsRiseTrend",method = {RequestMethod.POST,RequestMethod.GET})
-    public ReturnResult declarationsRiseTrend(){
-        List<IndustrialDeclarationEntity> list = industrialDeclarationService.declartionsRiseTrend();
-        if(list.isEmpty()||"[]".equals(list.toString())){
-            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
-        }else{
-            Map<String, Object> map= new HashMap<>();
-            Integer[] sdata = new Integer[list.size()];
-            String[] xdata = new String[list.size()];
-            for(int i =0;i<list.size();i++){
-                xdata[i]=list.get(i).getCompanyName();
-                sdata[i]=list.get(i).getCounts();
-            }
-            map.put("sdata",sdata);
-            map.put("xdata",xdata);
+    public ReturnResult declarationsRiseTrend(String type,Integer size){
+        Map<String, Object> map = industrialDeclarationService.declartionsRiseTrend(type,size);
+        if(map!=null){
             return ReturnResult.success(map);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
+
     }
 
     /**

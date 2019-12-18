@@ -59,4 +59,8 @@ public interface FinancingService {
     public boolean stopFiancing(Integer id,Integer statue);
 
     Map<String,Object> getIndustryProp(Integer size);
+
+    int getCounts();
+
+    Map<String, Object> financingRiseTrend(String dateType, Integer size);
 }
