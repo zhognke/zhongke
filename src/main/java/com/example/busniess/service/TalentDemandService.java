@@ -104,5 +104,7 @@ public interface TalentDemandService {
     Map<String, Object> demandsIndustryProp(Integer size);
 
     int getCounts();
+
+    Map<String, Object> demandsRiseTrend(String type, Integer size);
 }
 

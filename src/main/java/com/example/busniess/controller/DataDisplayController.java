@@ -4,7 +4,10 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -130,7 +133,6 @@ public class DataDisplayController {
     /*工业申报统计-end*/
 
     /*数据增长统计-start*/
-
     /**
      * 平台数据增长趋势
      * @param type
@@ -144,6 +146,10 @@ public class DataDisplayController {
         if("demands".equalsIgnoreCase(type)){
             map = demandsService.demandsRiseTrend(dateType,size);
         }else if("financing".equalsIgnoreCase(type)){
+            map = financingService.financingRiseTrend(dateType,size);
+        }else if("talent".equalsIgnoreCase(type)){
+            map = talentDemandService.demandsRiseTrend(dateType,size);
+        }else{
             map = financingService.financingRiseTrend(dateType,size);
         }
         if(map!=null){

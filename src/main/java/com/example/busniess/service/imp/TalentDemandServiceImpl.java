@@ -5,8 +5,6 @@ import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.TalentDemandDao;
 import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.TalentDemandEntity;
-import com.example.busniess.resultpackage.CodeMsg;
-import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.TalentDemandService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.example.busniess.utiles.RedisKey;
@@ -14,7 +12,6 @@ import com.example.busniess.utiles.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -257,6 +254,36 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     @Override
     public int getCounts() {
         return talentDemandDao.getCounts();
+    }
+
+    @Override
+    public Map<String, Object> demandsRiseTrend(String type, Integer size) {
+        String format;
+        if ("month".equalsIgnoreCase(type)) {
+            format = "%Y/%m";
+            size = size == null ? 12 : size;
+        } else if ("day".equalsIgnoreCase(type)) {
+            format = "%Y/%m/%d";
+            size = size == null ? 31 : size;
+        } else {
+            format = "%Y";
+            size = size == null ? 10 : size;
+        }
+        List<TalentDemandEntity> list = talentDemandDao.demandsRiseTrendByDate(format, size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                xdata[i] = list.get(i).getCompanyName();
+                sdata[i] = list.get(i).getCounts();
+            }
+            map.put("sdata", sdata);
+            map.put("xdata", xdata);
+            return map;
+        }
     }
 
 }
