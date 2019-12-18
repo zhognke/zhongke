@@ -1,6 +1,7 @@
 package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.FinancingDao;
+import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.FinancingEntity;
 import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.service.FinancingService;
@@ -94,6 +95,41 @@ public class FinancingServiceImpl implements FinancingService {
             map.put("ldata", ldata);
         }
         return map;
+    }
+
+    @Override
+    public int getCounts() {
+        return financingDao.getCounts();
+    }
+
+    @Override
+    public Map<String, Object> financingRiseTrend(String dateType, Integer size) {
+        String format;
+        if ("month".equalsIgnoreCase(dateType)) {
+            format = "%Y/%m";
+            size = size == null ? 12 : size;
+        } else if ("day".equalsIgnoreCase(dateType)) {
+            format = "%Y/%m/%d";
+            size = size == null ? 31 : size;
+        } else {
+            format = "%Y";
+            size = size == null ? 10 : size;
+        }
+        List<FinancingEntity> list = financingDao.financingRiseTrend(format, size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                xdata[i] = list.get(i).getProjectName();
+                sdata[i] = list.get(i).getAgeLimit();
+            }
+            map.put("sdata", sdata);
+            map.put("xdata", xdata);
+            return map;
+        }
     }
 
     /**

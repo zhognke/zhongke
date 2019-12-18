@@ -165,7 +165,9 @@ public interface DemandsService {
      * 企业需求增长趋势
      * @return
      */
-    public List<DemandsEntity> demandsRiseTrend();
+    List<DemandsEntity> demandsRiseTrend();
+
+    Map<String, Object> demandsRiseTrend(String type, Integer size);
 
     boolean deleteBatch(String ids);
 }

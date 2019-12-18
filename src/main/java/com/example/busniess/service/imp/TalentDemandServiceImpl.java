@@ -254,4 +254,9 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         return map;
     }
 
+    @Override
+    public int getCounts() {
+        return talentDemandDao.getCounts();
+    }
+
 }

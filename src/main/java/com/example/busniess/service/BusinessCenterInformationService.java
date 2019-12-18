@@ -8,8 +8,9 @@ public interface BusinessCenterInformationService {
      * @param uname 用户名
      * @return
      */
-    public BusinessCenterInformationEntity selectOnByUname(String uname);
+    BusinessCenterInformationEntity selectOnByUname(String uname);
 
     BusinessCenterInformationEntity selectOneByCompanyName(String companyName);
 
+    Integer getCounts();
 }

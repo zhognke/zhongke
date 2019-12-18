@@ -66,4 +66,10 @@ public interface IntentionDao {
      */
     public List<IntentionEntity> search(IntentionEntity intentionEntity);
 
+    /**
+     * 平台意向数量统计
+     * @return
+     */
+    @Select("select count(0) from intention where del_flag = 0 and statue !=0")
+    int getCounts();
 }

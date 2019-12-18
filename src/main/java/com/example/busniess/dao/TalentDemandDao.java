@@ -108,4 +108,7 @@ public interface TalentDemandDao {
      */
     @Select("SELECT count(0) counts,engaged_industry FROM `talent_demand` where status =0 and approval_status = 1 and del_flag=0 group by engaged_industry order by counts desc limit #{size}")
     List<TalentDemandEntity> demandsIndustryProp(@Param("size")Integer size);
+
+    @Select("select count(0) from talent_demand where `status` = 0 and approval_status =1 and del_flag =0")
+    int getCounts();
 }

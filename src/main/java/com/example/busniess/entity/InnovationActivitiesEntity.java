@@ -39,7 +39,7 @@ public class InnovationActivitiesEntity implements Serializable {
     /**
      * 活动类型
      */
-    @NotNull(message = "活动类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    //@NotNull(message = "活动类型不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String activitiesType;
     /**
      * 主办单位

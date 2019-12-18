@@ -5,14 +5,14 @@ import com.example.busniess.dao.IndustrialDeclarationDetailDao;
 import com.example.busniess.entity.IndustrialDeclarationDetailEntity;
 import com.example.busniess.entity.IndustrialDeclarationEntity;
 import com.example.busniess.service.IndustrialDeclarationService;
+import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service("industrialDeclarationService")
@@ -45,11 +45,11 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     @Override
     public IndustrialDeclarationEntity selectById(Integer id) {
         IndustrialDeclarationEntity industrialDeclaration = industrialDeclarationDao.selectById(id);
-        if(industrialDeclaration!=null){
+        if (industrialDeclaration != null) {
             IndustrialDeclarationDetailEntity detailEntity = industrialDeclarationDetailDao.getByDeclarationId(id);
             industrialDeclaration.setDetailEntity(detailEntity);
             return industrialDeclaration;
-        }else{
+        } else {
             return null;
         }
     }
@@ -75,10 +75,10 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     @Transactional
     public boolean realDeleteById(Integer id) {
         IndustrialDeclarationEntity industrialDeclaration = industrialDeclarationDao.selectById(id);
-        if(industrialDeclaration!=null){
+        if (industrialDeclaration != null) {
             industrialDeclarationDao.realDelectById(id);
             return industrialDeclarationDetailDao.realDeleteByDeclarationId(id);
-        }else{
+        } else {
             return false;
         }
     }
@@ -96,12 +96,12 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     }
 
     @Override
-    public boolean updateStatus(Integer id,Integer status,String closeReason) {
-        return industrialDeclarationDao.updateStatus(id,status,closeReason);
+    public boolean updateStatus(Integer id, Integer status, String closeReason) {
+        return industrialDeclarationDao.updateStatus(id, status, closeReason);
     }
 
     @Override
-    public boolean updateApprovalStatus(Integer id,Integer approvalStatus,String approvalOpinion) {
+    public boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion) {
         IndustrialDeclarationEntity industrialDeclarationEntity = new IndustrialDeclarationEntity();
         industrialDeclarationEntity.setId(id);
         industrialDeclarationEntity.setApprovalStatus(approvalStatus);
@@ -111,20 +111,64 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
 
     /**
      * 工业申报行业占比统计(饼图)
+     *
      * @return
      */
     @Override
-    public List<IndustrialDeclarationEntity> declartionsIndustryProp() {
-        return industrialDeclarationDao.declartionsIndustryProp();
+    public Map<String, Object> declartionsIndustryProp() {
+        List<IndustrialDeclarationEntity> list = industrialDeclarationDao.declartionsIndustryProp();
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            List<EchartsEntity> sdata = new ArrayList<>();
+            String[] ldata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                EchartsEntity echartsEntity = new EchartsEntity();
+                ldata[i] = list.get(i).getDeclarationType();
+                echartsEntity.setName(list.get(i).getDeclarationType());
+                echartsEntity.setValue(Double.parseDouble(String.valueOf(list.get(i).getCounts())));
+                sdata.add(echartsEntity);
+            }
+            map.put("sdata", sdata);
+            map.put("ldata", ldata);
+            return map;
+        }
     }
 
     /**
      * 工业申报增长趋势(折线图)
+     *
      * @return
      */
     @Override
-    public List<IndustrialDeclarationEntity> declartionsRiseTrend() {
-        return industrialDeclarationDao.declartionsRiseTrend();
+    public Map<String, Object> declartionsRiseTrend(String type, Integer size) {
+        String format;
+        if ("month".equalsIgnoreCase(type)) {
+            format = "%Y/%m";
+            size = size == null ? 12 : size;
+        } else if ("day".equalsIgnoreCase(type)) {
+            format = "%Y/%m/%d";
+            size = size == null ? 30 : size;
+        } else {
+            format = "%Y";
+            size = size == null ? 5 : size;
+        }
+        List<IndustrialDeclarationEntity> list = industrialDeclarationDao.declartionsRiseTrend(format, size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                xdata[i] = list.get(i).getCompanyName();
+                sdata[i] = list.get(i).getCounts();
+            }
+            map.put("sdata", sdata);
+            map.put("xdata", xdata);
+            return map;
+        }
     }
 
     @Override
@@ -139,8 +183,32 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
 
     @Override
     public boolean deleteBatch(String ids) {
-        ids = ids.replaceAll(",","','");
+        ids = ids.replaceAll(",", "','");
         return industrialDeclarationDao.deleteBatch(ids);
+    }
+
+    @Override
+    public Map<String, Object> getIndustrialDeclarationTypeByYear(Integer year) {
+        if(year==null){
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date());
+            year = c.get(Calendar.YEAR);
+        }
+        List<IndustrialDeclarationEntity> list = industrialDeclarationDao.getIndustrialDeclarationTypeByYear(year);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                xdata[i] = list.get(i).getDeclarationType();
+                sdata[i] = list.get(i).getCounts();
+            }
+            map.put("sdata", sdata);
+            map.put("xdata", xdata);
+            return map;
+        }
     }
 
 

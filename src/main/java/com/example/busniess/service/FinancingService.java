@@ -48,4 +48,8 @@ public interface FinancingService {
 
 
     Map<String,Object> getIndustryProp(Integer size);
+
+    int getCounts();
+
+    Map<String, Object> financingRiseTrend(String dateType, Integer size);
 }

@@ -8,8 +8,6 @@ import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.Person;
 import com.example.busniess.entity.User;
-import com.example.busniess.resultpackage.CodeMsg;
-import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.DemandsService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
@@ -199,6 +197,36 @@ public class DemandsServiceImpl implements DemandsService {
             }
             map.put("sdata", sdata);
             map.put("ldata", ldata);
+            return map;
+        }
+    }
+
+    @Override
+    public Map<String, Object> demandsRiseTrend(String type, Integer size) {
+        String format;
+        if ("month".equalsIgnoreCase(type)) {
+            format = "%Y/%m";
+            size = size == null ? 12 : size;
+        } else if ("day".equalsIgnoreCase(type)) {
+            format = "%Y/%m/%d";
+            size = size == null ? 31 : size;
+        } else {
+            format = "%Y";
+            size = size == null ? 10 : size;
+        }
+        List<DemandsEntity> list = demandsDao.demandsRiseTrendByDate(format, size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                xdata[i] = list.get(i).getCompanyName();
+                sdata[i] = list.get(i).getCounts();
+            }
+            map.put("sdata", sdata);
+            map.put("xdata", xdata);
             return map;
         }
     }

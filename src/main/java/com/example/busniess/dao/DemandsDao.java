@@ -166,6 +166,10 @@ public interface DemandsDao {
     @Select("SELECT count(create_time) counts,DATE_FORMAT(create_time,'%Y/%m') as companyName FROM `demands` where status =0 and approval_status = 1 and del_flag=0 group by DATE_FORMAT(create_time,'%y/%m')")
     public List<DemandsEntity> demandsRiseTrend();
 
+    @Select("SELECT count(0) as counts,DATE_FORMAT(create_time,#{format}) companyName FROM `demands` where del_flag = 0 and status = 0 and approval_status = 1 group by companyName desc limit #{size}")
+    List<DemandsEntity> demandsRiseTrendByDate(@Param("format")String format, @Param("size")Integer size);
+
     @Update("update demands set del_flag = 1 where id in ('${ids}');")
     boolean deleteBatch(@Param("ids")String ids);
+
 }

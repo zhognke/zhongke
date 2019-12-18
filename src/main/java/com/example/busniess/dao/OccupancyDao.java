@@ -207,6 +207,17 @@ public interface OccupancyDao {
     List<Occupancy> getOccupanyForProfessional(@Param("username") String username, @Param("size") Integer size);
 
     /**
+     * 行业占比饼图
+     * @param size
+     * @return
+     */
+    @Select("SELECT COUNT(0) statue, industry FROM occupancy WHERE  statue=1 GROUP BY industry order by statue desc limit #{size}")
+    List<Occupancy> demandsIndustryProp(@Param("size") Integer size);
+
+    @Select("SELECT count(0) FROM occupancy WHERE  statue=1")
+    int getCounts();
+
+    /**
      *
      * @param id
      * @return

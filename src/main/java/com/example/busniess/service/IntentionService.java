@@ -60,5 +60,7 @@ public interface IntentionService {
      * @return
      */
     public boolean deleteBatch(String ids);
+
+    int getCounts();
 }
 
