@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/Financing")
@@ -161,5 +163,19 @@ RabbitTemplate rabbitTemplate;
         return ReturnResult.success(financingServiceImpl.selectIndustry());
     }
 
+    /**
+     * 融资行业占比统计(饼图)
+     *
+     * @return ReturnResult data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
+     */
+    @RequestMapping(value = "/getIndustryProp", method = {RequestMethod.POST, RequestMethod.GET})
+    public ReturnResult demandsIndustryProp(@RequestParam(defaultValue = "16") Integer size) {
+        Map<String,Object> map = financingServiceImpl.getIndustryProp(size);
+        if(map!=null){
+            return ReturnResult.success(map);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }
+    }
 
 }

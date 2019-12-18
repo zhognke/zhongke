@@ -86,9 +86,26 @@ public interface TalentDemandDao {
      */
     public List<TalentDemandEntity> search(TalentDemandEntity talentDemandEntity);
 
+    /**
+     * 更新查看次数
+     * @param id
+     * @param viewCount
+     */
     @Update("update talent_demand set view_count = #{viewCount} where id = ${id}")
     void updateArticleViewCount(@Param("id")Integer id, @Param("viewCount")Integer viewCount);
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     @Update("update talent_demand set del_flag = 1 where id in ('${ids}');")
     boolean deleteBatch(@Param("ids")String ids);
+
+    /**
+     * 人才需求行业占比
+     * @return
+     */
+    @Select("SELECT count(0) counts,engaged_industry FROM `talent_demand` where status =0 and approval_status = 1 and del_flag=0 group by engaged_industry order by counts desc limit #{size}")
+    List<TalentDemandEntity> demandsIndustryProp(@Param("size")Integer size);
 }

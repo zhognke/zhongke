@@ -121,4 +121,6 @@ public interface FinancingDao {
     @Select("SELECT industry FROM financing  where statue=1 AND kstatue=1 GROUP BY industry ORDER BY COUNT(industry) DESC LIMIT 5")
     public List<String>  selectIndustry();
 
+    @Select("SELECT count(0) period, SUBSTRING_INDEX(industry,',',1) industry from `financing` where kstatue =1 and statue=1 group by SUBSTRING_INDEX(industry,',',1)  order by period desc limit #{size}")
+    List<FinancingEntity> getIndustryProp(@Param("size") Integer size);
 }

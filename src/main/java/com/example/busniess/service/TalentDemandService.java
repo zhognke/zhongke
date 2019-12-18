@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.example.busniess.entity.TalentDemandEntity;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -99,5 +100,7 @@ public interface TalentDemandService {
     void updateArticleViewCount(Integer articleId, Integer viewCount);
 
     boolean deleteBatch(String ids);
+
+    Map<String, Object> demandsIndustryProp(Integer size);
 }
 

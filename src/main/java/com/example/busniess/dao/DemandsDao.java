@@ -156,8 +156,8 @@ public interface DemandsDao {
      * 企业需求行业占比统计
      * @return
      */
-    @Select("SELECT count(demand_industry) counts,demand_industry FROM `demands` where status =0 and approval_status = 1 and del_flag=0 group by demand_industry")
-    public List<DemandsEntity> demandsIndustryProp();
+    @Select("SELECT count(demand_industry) counts,demand_industry FROM `demands` where status =0 and approval_status = 1 and del_flag=0 group by demand_industry order by counts desc limit #{size}")
+    public List<DemandsEntity> demandsIndustryProp(@Param("size") Integer size);
 
     /**
      * 企业需求增长趋势

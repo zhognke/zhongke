@@ -177,4 +177,5 @@ public class TalentDemandEntity implements Serializable {
 
     String industryExperienceBegin;
     String industryExperienceEnd;
+    private int counts;
 }

@@ -92,7 +92,8 @@ public class InnovationActivitiesEntity implements Serializable {
      * 状态:0报名中;1进行中;2已结束;3活动取消
      */
     @NotNull(message = "活动状态不能为空", groups = {UserValidator.UpDate.class})
-    private Integer status;
+    private String status;
+    private String[] statusArr;
     /**
      * 创建时间
      */
