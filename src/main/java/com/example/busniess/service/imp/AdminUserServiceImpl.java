@@ -51,8 +51,13 @@ public class AdminUserServiceImpl implements AdminUserService {
         return false;
     }
 
+    @Override
+    public boolean adminDelletUser(User user) {
 
+       // userDao.updateUser()
 
+        return false;
+    }
 
 
 }
