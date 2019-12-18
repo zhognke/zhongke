@@ -2,13 +2,19 @@ package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.FinancingDao;
 import com.example.busniess.entity.FinancingEntity;
+import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.service.FinancingService;
+import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class FinancingServiceImpl implements FinancingService {
     @Autowired
@@ -66,6 +72,28 @@ public class FinancingServiceImpl implements FinancingService {
     @Override
     public List<String>  selectIndustry() {
         return financingDao.selectIndustry();
+    }
+
+    @Override
+    public Map<String, Object> getIndustryProp(Integer size) {
+        List<FinancingEntity> list = financingDao.getIndustryProp(size);
+        Map<String, Object> map = new HashMap<>();
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            List<EchartsEntity> sdata = new ArrayList<>();
+            String[] ldata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                EchartsEntity echartsEntity = new EchartsEntity();
+                ldata[i] = list.get(i).getIndustry();
+                echartsEntity.setName(list.get(i).getIndustry());
+                echartsEntity.setValue(list.get(i).getPeriod().doubleValue());
+                sdata.add(echartsEntity);
+            }
+            map.put("sdata", sdata);
+            map.put("ldata", ldata);
+        }
+        return map;
     }
 
     /**

@@ -4,6 +4,7 @@ import com.example.busniess.entity.FinancingEntity;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FinancingService {
     /**
@@ -46,4 +47,5 @@ public interface FinancingService {
     public List<String> selectIndustry();
 
 
+    Map<String,Object> getIndustryProp(Integer size);
 }

@@ -8,13 +8,19 @@ import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.DemandsEntity;
 import com.example.busniess.entity.Person;
 import com.example.busniess.entity.User;
+import com.example.busniess.resultpackage.CodeMsg;
+import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.DemandsService;
+import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service("demandsService")
@@ -176,8 +182,25 @@ public class DemandsServiceImpl implements DemandsService {
     }
 
     @Override
-    public List<DemandsEntity> demandsIndustryProp(){
-        return demandsDao.demandsIndustryProp();
+    public Map<String, Object> demandsIndustryProp(Integer size){
+        List<DemandsEntity> list = demandsDao.demandsIndustryProp(size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            List<EchartsEntity> sdata = new ArrayList<>();
+            String[] ldata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                EchartsEntity echartsEntity = new EchartsEntity();
+                ldata[i] = list.get(i).getDemandIndustry();
+                echartsEntity.setName(list.get(i).getDemandIndustry());
+                echartsEntity.setValue(Double.parseDouble(String.valueOf(list.get(i).getCounts())));
+                sdata.add(echartsEntity);
+            }
+            map.put("sdata", sdata);
+            map.put("ldata", ldata);
+            return map;
+        }
     }
 
     @Override

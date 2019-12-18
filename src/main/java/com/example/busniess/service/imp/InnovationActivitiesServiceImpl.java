@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service("innovationActivitiesService" )
@@ -26,6 +27,15 @@ public class InnovationActivitiesServiceImpl implements InnovationActivitiesServ
     @Override
     public PageInfo showByPage(InnovationActivitiesEntity innovationActivitiesEntity, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        if(innovationActivitiesEntity.getStartTime()!=null&&innovationActivitiesEntity.getStartTime()==innovationActivitiesEntity.getEndTime()){
+            Calendar c = Calendar.getInstance();
+            c.setTime(innovationActivitiesEntity.getEndTime());
+            c.add(Calendar.DAY_OF_MONTH, 1);
+            innovationActivitiesEntity.setEndTime(c.getTime());
+        }
+        if(innovationActivitiesEntity.getStatus()!=null){
+            innovationActivitiesEntity.setStatusArr(innovationActivitiesEntity.getStatus().split(","));
+        }
         List<InnovationActivitiesEntity> list = innovationActivitiesDao.search(innovationActivitiesEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;

@@ -5,6 +5,7 @@ import com.example.busniess.entity.DemandsEntity;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 企业需求表
@@ -159,7 +160,7 @@ public interface DemandsService {
      * 企业需求行业占比统计
      * @return
      */
-    public List<DemandsEntity> demandsIndustryProp();
+    Map<String, Object> demandsIndustryProp(Integer size);
     /**
      * 企业需求增长趋势
      * @return

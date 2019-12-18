@@ -13,10 +13,10 @@
         <if test="activitiesType!=null and activitiesType!=''">
             and activities_type=#{activitiesType}
         </if>
-        <if test="startTime!=null and startTime!=''">
+        <if test="startTime!=null">
             and start_time &gt;= #{startTime}
         </if>
-        <if test="endTime!=null and endTime!=''">
+        <if test="endTime!=null">
             and end_time &lt;= #{endTime}
         </if>
         <if test="province!=null and province!=''">
@@ -29,7 +29,10 @@
             and district=#{district}
         </if>
         <if test="status!=null and status!=''">
-            and status=#{status}
+            and `status` in
+            <foreach collection="statusArr" item="statusItem" index="index" open="(" close=")" separator=",">
+                #{statusItem}
+            </foreach>
         </if>
         <if test="keyword!=null and keyword!=''">
             and (`activities_topic` like CONCAT('%',#{keyword},'%') or `activities_content` like CONCAT('%',#{keyword},'%') or `organizers` like CONCAT('%',#{keyword},'%') or `contractors` like CONCAT('%',#{keyword},'%'))

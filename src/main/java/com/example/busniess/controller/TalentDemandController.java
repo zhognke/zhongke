@@ -7,23 +7,18 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.TalentDemandService;
+import com.example.busniess.utiles.EchartsEntity;
 import com.example.busniess.utiles.RabbitUtil;
-import com.example.busniess.utiles.RedisKey;
-import com.example.busniess.utiles.RedisUtil;
 import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -334,6 +329,21 @@ public class TalentDemandController {
             } else {
                 return ReturnResult.erro(CodeMsg.DATA_EMPTY);
             }
+        }
+    }
+
+    /**
+     * 人才需求行业占比统计(饼图)
+     *
+     * @return ReturnResult data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
+     */
+    @RequestMapping(value = "/demandsIndustryProp", method = {RequestMethod.POST, RequestMethod.GET})
+    public ReturnResult demandsIndustryProp(@RequestParam(defaultValue = "16")Integer size) {
+        Map<String,Object> map = talentDemandService.demandsIndustryProp(size);
+        if(map!=null){
+            return ReturnResult.success(map);
+        }else{
+            return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
 }

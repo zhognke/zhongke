@@ -5,7 +5,10 @@ import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.TalentDemandDao;
 import com.example.busniess.entity.BusinessCenterInformationEntity;
 import com.example.busniess.entity.TalentDemandEntity;
+import com.example.busniess.resultpackage.CodeMsg;
+import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.TalentDemandService;
+import com.example.busniess.utiles.EchartsEntity;
 import com.example.busniess.utiles.RedisKey;
 import com.example.busniess.utiles.RedisUtil;
 import com.github.pagehelper.PageHelper;
@@ -14,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +94,6 @@ public class TalentDemandServiceImpl implements TalentDemandService {
      * @return
      */
     @Override
-    @Cacheable(value="talent",key="'talent'+#id")
     public TalentDemandEntity selectById(Integer id) {
         return talentDemandDao.selectById(id);
     }
@@ -226,6 +230,28 @@ public class TalentDemandServiceImpl implements TalentDemandService {
     public boolean deleteBatch(String ids) {
         ids = ids.replaceAll(",","','");
         return talentDemandDao.deleteBatch(ids);
+    }
+
+    @Override
+    public Map<String, Object> demandsIndustryProp(Integer size) {
+        List<TalentDemandEntity> list = talentDemandDao.demandsIndustryProp(size);
+        Map<String, Object> map = new HashMap<>();
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            List<EchartsEntity> sdata = new ArrayList<>();
+            String[] ldata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                EchartsEntity echartsEntity = new EchartsEntity();
+                ldata[i] = list.get(i).getEngagedIndustry();
+                echartsEntity.setName(list.get(i).getEngagedIndustry());
+                echartsEntity.setValue(Double.parseDouble(String.valueOf(list.get(i).getCounts())));
+                sdata.add(echartsEntity);
+            }
+            map.put("sdata", sdata);
+            map.put("ldata", ldata);
+        }
+        return map;
     }
 
 }
