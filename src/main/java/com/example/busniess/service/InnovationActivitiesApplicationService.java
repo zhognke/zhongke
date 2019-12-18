@@ -15,12 +15,14 @@ public interface InnovationActivitiesApplicationService {
 
     /**
      * 分页查询显示
+     *
      * @return
      */
     public PageInfo showByPage(InnovationActivitiesApplicationEntity innovationActivitiesApplicationEntity, Integer pageNum, Integer pageSize);
 
     /**
      * 根据id查找
+     *
      * @param id
      * @return
      */
@@ -28,6 +30,7 @@ public interface InnovationActivitiesApplicationService {
 
     /**
      * 新增
+     *
      * @param innovationActivitiesApplicationEntity
      * @return
      */
@@ -35,18 +38,23 @@ public interface InnovationActivitiesApplicationService {
 
     /**
      * 根据id逻辑删除
+     *
      * @param id
      * @return
      */
     public boolean deleteByID(Integer id);
+
     /**
      * 批量删除
+     *
      * @param ids
      * @return
      */
     public boolean deleteBatch(String ids);
+
     /**
      * 根据id彻底删除
+     *
      * @param id
      * @return
      */
@@ -54,11 +62,24 @@ public interface InnovationActivitiesApplicationService {
 
     /**
      * 更新
+     *
      * @param innovationActivitiesApplicationEntity
      * @return
      */
     public boolean updateByID(InnovationActivitiesApplicationEntity innovationActivitiesApplicationEntity);
 
+    /**
+     * 审批通过
+     * @param id
+     * @return
+     */
+    boolean updateApprovalStatusPass(Integer id);
 
+    /**
+     * 审批通过
+     * @param id
+     * @return
+     */
+    boolean updateApprovalStatusRejected(Integer id,String approvalOpinion);
 }
 

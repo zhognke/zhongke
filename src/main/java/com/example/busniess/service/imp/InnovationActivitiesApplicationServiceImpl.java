@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("innovationActivitiesApplicationService" )
+@Service("innovationActivitiesApplicationService")
 public class InnovationActivitiesApplicationServiceImpl implements InnovationActivitiesApplicationService {
 
     @Autowired
@@ -18,6 +18,7 @@ public class InnovationActivitiesApplicationServiceImpl implements InnovationAct
 
     /**
      * 分页展示
+     *
      * @param innovationActivitiesApplicationEntity
      * @param pageNum
      * @param pageSize
@@ -32,10 +33,11 @@ public class InnovationActivitiesApplicationServiceImpl implements InnovationAct
     }
 
     /**
-    * 根据id查找
-    * @param id
-    * @return
-    */
+     * 根据id查找
+     *
+     * @param id
+     * @return
+     */
     @Override
     public InnovationActivitiesApplicationEntity selectByID(Integer id) {
         return innovationActivitiesApplicationDao.selectByID(id);
@@ -43,6 +45,7 @@ public class InnovationActivitiesApplicationServiceImpl implements InnovationAct
 
     /**
      * 新增
+     *
      * @param innovationActivitiesApplicationEntity
      * @return
      */
@@ -52,31 +55,34 @@ public class InnovationActivitiesApplicationServiceImpl implements InnovationAct
     }
 
     /**
-    * 逻辑删除
-    * @param id
-    * @return
-    */
+     * 逻辑删除
+     *
+     * @param id
+     * @return
+     */
     @Override
     public boolean deleteByID(Integer id) {
         return innovationActivitiesApplicationDao.deleteByID(id);
     }
 
     /**
-    * 批量删除
-    * @param ids
-    * @return boolean
-    */
+     * 批量删除
+     *
+     * @param ids
+     * @return boolean
+     */
     @Override
     public boolean deleteBatch(String ids) {
-        ids = ids.replaceAll(",", "','" );
+        ids = ids.replaceAll(",", "','");
         return innovationActivitiesApplicationDao.deleteBatch(ids);
     }
 
     /**
-    * 从数据库中删除
-    * @param id
-    * @return
-    */
+     * 从数据库中删除
+     *
+     * @param id
+     * @return
+     */
     @Override
     public boolean realDeleteByID(Integer id) {
         return innovationActivitiesApplicationDao.realDeleteByID(id);
@@ -84,12 +90,32 @@ public class InnovationActivitiesApplicationServiceImpl implements InnovationAct
 
     /**
      * 修改
+     *
      * @param innovationActivitiesApplicationEntity
      * @return
      */
     @Override
     public boolean updateByID(InnovationActivitiesApplicationEntity innovationActivitiesApplicationEntity) {
         return innovationActivitiesApplicationDao.updateByID(innovationActivitiesApplicationEntity);
+    }
+
+    /**
+     * 修改审批状态
+     *
+     * @param id              主键id
+     * @return
+     */
+    @Override
+    public boolean updateApprovalStatusPass(Integer id) {
+        Integer approvalStatus = 1;
+        String approvalOpinion ="";
+        return innovationActivitiesApplicationDao.updateApprovalStatus(approvalStatus, approvalOpinion, id);
+    }
+
+    @Override
+    public boolean updateApprovalStatusRejected(Integer id, String approvalOpinion) {
+        Integer approvalStatus = 2;
+        return innovationActivitiesApplicationDao.updateApprovalStatus(approvalStatus, approvalOpinion, id);
     }
 
 }

@@ -5,6 +5,7 @@ import com.example.busniess.entity.InnovationActivitiesApplicationEntity;
 import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.resultpackage.ReturnResult;
 import com.example.busniess.service.InnovationActivitiesApplicationService;
+import com.example.busniess.utiles.ShiroUtils;
 import com.example.busniess.validator.UserValidator;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,25 @@ public class InnovationActivitiesApplicationController {
     }
 
     /**
+     * 会员中心-我的活动
+     * @param innovationActivitiesApplicationEntity
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value="/showByPageForCenter",method = RequestMethod.GET)
+    public ReturnResult showByPageForCenter(InnovationActivitiesApplicationEntity innovationActivitiesApplicationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10")Integer pageSize){
+        PageInfo pageInfo = innovationActivitiesApplicationService.showByPage(innovationActivitiesApplicationEntity,pageNum,pageSize);
+        String userName = ShiroUtils.getUserName();
+        if (ShiroUtils.isLogin()) {
+            innovationActivitiesApplicationEntity.setUsername(userName);   //只能查看自己的信息
+        } else {
+            return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
+        }
+        return ReturnResult.success(pageInfo);
+    }
+
+    /**
      * 根据id搜索
      * @param id    主键id
      * @return ReturnResult
@@ -146,6 +166,24 @@ public class InnovationActivitiesApplicationController {
             return ReturnResult.success(obj);
         }else{
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
+        }
+    }
+
+    @RequestMapping(value="/updateApprovalStatusPass",method = RequestMethod.GET)
+    public ReturnResult updateApprovalStatusPass(@NotNull(message = "参数不能为空")Integer id){
+        if(innovationActivitiesApplicationService.updateApprovalStatusPass(id)){
+            return ReturnResult.success();
+        }else{
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value="/updateApprovalStatusRejected",method = RequestMethod.GET)
+    public ReturnResult updateApprovalStatusRejected(@NotNull(message = "参数不能为空")Integer id,@NotNull(message = "参数不能为空")String approvalOpinion){
+        if(innovationActivitiesApplicationService.updateApprovalStatusRejected(id,approvalOpinion)){
+            return ReturnResult.success();
+        }else{
+            return ReturnResult.erro(CodeMsg.SERVER_ERROR);
         }
     }
 }

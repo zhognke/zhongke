@@ -119,7 +119,7 @@ public class DataDisplayController {
     /**
      * 工业申报统计
      * @param year 年份
-     * @return
+     * @return ReturnResult
      */
     @GetMapping("/getIndustrialDeclarationTypeByYear")
     public ReturnResult getIndustrialDeclarationTypeByYear(Integer year) {

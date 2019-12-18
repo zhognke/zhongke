@@ -105,6 +105,20 @@ public class InnovationActivitiesApplicationEntity implements Serializable {
     @NotNull(message = "附件不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String imgAddr;
     /**
+     * 审核状态:0待审核,1审核通过,2审核驳回
+     */
+    private Integer approvalStatus;
+    /**
+     * 审批意见
+     */
+    private String approvalOpinion;
+    /**
+     * 审批时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date approvalTime;
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8" )

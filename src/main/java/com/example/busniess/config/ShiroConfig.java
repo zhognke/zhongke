@@ -68,6 +68,7 @@ public class ShiroConfig {
         map.put("/occupancy/showByPage", "anon");
         map.put("/occupancy/selectOneOccupancyById", "anon");
         map.put("/occupancy/getHotIndustry", "anon");
+        map.put("/occupancy/selectPieImg", "anon");
 //        map.put("/occupancy/**", "authc");
 //工业申报需要有角色1.新增/addDeclaration删除状态2./deleteById批量删除3./deleteByBatch删除4./realDeleteById
 //      更新  /updateDeclaration修改/updateDeclaration /showByPage   roles[vip]
@@ -95,6 +96,7 @@ public class ShiroConfig {
         map.put("/Financing/findFinancingByCondition", "anon");
         map.put("/Financing/selectOneById", "anon");
         map.put("/Financing/selectIndustry", "anon");
+        map.put("/Financing/getIndustryProp", "anon");
         map.put("/Financing/**", "authc");
 
         //意向表intention
@@ -115,6 +117,7 @@ public class ShiroConfig {
 //人才需求/talentDemand
         map.put("/talentDemand/showByPage", "anon");
         map.put("/talentDemand/showById", "anon");
+        map.put("/talentDemand/demandsIndustryProp", "anon");
         map.put("/talentDemand/**", "authc");
 
 
