@@ -53,7 +53,17 @@ public class Person {
     private Date updatetime;//12
 
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date beforeInsertTime;//s搜索注册时间前置条件
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date afterInsertTime;//s搜索注册时间后置条件
+
+    private  int vip;//是否是vip
+    private int ustatue;//搜索传参用户状态
+    private  String keyWord;//搜索关键字
 //    @NotBlank(message = "身份证不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
 //    private String personCode;//身份证号4
 }

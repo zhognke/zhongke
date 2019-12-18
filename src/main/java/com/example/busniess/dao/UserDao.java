@@ -1,5 +1,7 @@
 package com.example.busniess.dao;
 
+import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.Person;
 import com.example.busniess.entity.User;
 import org.apache.ibatis.annotations.*;
 
@@ -89,5 +91,20 @@ public interface UserDao {
      */
     @Insert("INSERT INTO `user_role` (`rid`, `username`) VALUES (#{rid}, #{userName})")
     public Boolean   authorization(@Param("rid") Integer rid ,@Param("userName")String userName);
+
+    /**
+     * 按条件搜索按包含企业信息
+     * @param businessCenter
+     * @return
+     */
+    public  List<User> selectUserByConditionB(BusinessCenter businessCenter);
+
+    /**
+     * 按条件搜索包含个人信息p
+     * @param person
+     * @return
+     */
+
+    public  List<User> selectUserByConditionP(Person person);
 
 }

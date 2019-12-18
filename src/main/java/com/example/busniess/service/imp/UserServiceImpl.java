@@ -162,4 +162,33 @@ public class UserServiceImpl implements UserService {
         return userDao.findAllRole();
     }
 
+    /**
+     * 检索企业用户
+     * @param businessCenter
+     * @return
+     */
+    @Override
+    public PageInfo searchBusinessUser(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize) {
+
+       PageHelper.startPage(pageNumber,pageSize);
+   List a=    userDao.selectUserByConditionB(businessCenter);
+       PageInfo pageInfo =new PageInfo(a);
+
+        return pageInfo;
+    }
+
+    /**
+     * 检索私人用户
+     * @param person
+     * @return
+     */
+    @Override
+    public PageInfo searchPerson(Person person,Integer pageNumber,Integer pageSize) {
+
+
+        PageHelper.startPage(pageNumber,pageSize);
+        List a=    userDao.selectUserByConditionP(person);
+        PageInfo pageInfo =new PageInfo(a);
+        return pageInfo;
+    }
 }

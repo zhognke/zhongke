@@ -72,6 +72,13 @@ public class BusinessCenter implements Serializable {
     private List<Occupancy> occupancyList;  //科技成果列表,非数据库字段
     private BusinessInformation businessInformation;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private  Date beforeInsertTime;//插入时间最大值
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date afterInsertTime;//插入时间最小值
+
 
 
 
@@ -79,4 +86,7 @@ public class BusinessCenter implements Serializable {
     private String district;//区 ··10
 
     private int kstatue;//用户修改状态
+
+
+    private  int vip;//是否是vip
 }
