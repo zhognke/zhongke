@@ -10,7 +10,7 @@
                 and `category`=#{category}
             </if>
             <if test="title!=null and title!=''">
-                and `title`=#{title}
+                and `title`like "%${title}%"
             </if>
         </where>
         ORDER BY `publishDate` DESC
