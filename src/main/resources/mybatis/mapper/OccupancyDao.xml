@@ -151,8 +151,8 @@
 
         SELECT o.*,b.* FROM occupancy o INNER JOIN businessInformation b ON o.username=b.uname INNER JOIN `user` u ON u.statue!=3 AND o.username=u.username
         <where>
+            o.username = #{userName}
 
-            username = #{userName}
             <if test="keyWord!=null and keyWord!=''">
                 and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like
                 "%${keyWord}%")
