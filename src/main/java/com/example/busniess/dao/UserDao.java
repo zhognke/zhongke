@@ -30,6 +30,9 @@ public interface UserDao {
     @Select("SELECT * FROM `user` WHERE username=#{userName} and statue=1")
     public User selectUserByName(String userName);
 
+    @Select("SELECT * FROM `user` WHERE username=#{userName} and statue!=3")
+    public User selectAllUser(String userName);
+
     /**
      * 根据邮箱查询用户
      */
@@ -48,7 +51,7 @@ public interface UserDao {
      * 查看所有用户
      */
     @Select("SELECT * FROM `user`")
-    public List<User> selectAllUser();
+    public List<User> selectAllUsers();
 
     /**
      * 修改用户信息

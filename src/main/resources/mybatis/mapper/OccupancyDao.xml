@@ -63,54 +63,54 @@
     <sql id="OccupancyByIndustry_sql">
 
         <if test="resultTechnolo!=null and resultTechnolo!=''">
-            and `resultTechnolo` = #{resultTechnolo}
+            and o.`resultTechnolo` = #{resultTechnolo}
         </if>
 
         <if test="statue!=null and statue!=''">
-            and `statue` = #{statue}
+            and o.`statue` = #{statue}
         </if>
 
         <if test="kstatue!=null and kstatue!=''">
-            and `kstatue` = #{kstatue}
+            and o.`kstatue` = #{kstatue}
         </if>
         <if test="appliedRange!=null and appliedRange!=''">
-            and `appliedRange` = #{appliedRange}
+            and o.`appliedRange` = #{appliedRange}
         </if>
         <if test="advantages!=null and advantages!=''">
-            and instr('${advantages}',`advantages`)
+            and instr('${advantages}',o.`advantages`)
         </if>
         <if test="stage!=null and stage!=''">
-            and instr('${stage}',`stage`)
+            and instr('${stage}',o.`stage`)
         </if>
         <if test="transferType!=null and transferType!=''">
-            and instr('${transferType}',`transferType`)
+            and instr('${transferType}',o.`transferType`)
         </if>
         <if test="attribute!=null and attribute!=''">
-            and instr('${attribute}',`attribute`)
+            and instr('${attribute}',o.`attribute`)
         </if>
 
         <if test="priceBegin!=null and priceEnd!=null">
-            and `price` between #{priceBegin} and #{priceEnd}
+            and o.`price` between #{priceBegin} and #{priceEnd}
         </if>
         <if test="priceBegin!=null and priceEnd==null">
-            and `price` &gt;= #{priceBegin}
+            and o.`price` &gt;= #{priceBegin}
         </if>
         <if test="priceBegin==null and priceEnd!=null">
-            and `price` &lt;= #{priceEnd}
+            and o.`price` &lt;= #{priceEnd}
         </if>
 
         <if test="statue!=null and statue!=''">
-            and `statue` = #{statue}
+            and o.`statue` = #{statue}
         </if>
         <if test="industry!=null and industry!=''">
-            and `industry` = #{industry}
+            and o.`industry` = #{industry}
         </if>
         <if test="industryDetail!=null and industryDetail!=''">
-            and `industryDetail` = #{industryDetail}
+            and o.`industryDetail` = #{industryDetail}
         </if>
         <if test="keyWord!=null and keyWord!=''">
-            and (`negotiable`=#{keyWord} or `industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or
-            `industryDetail` like
+            and (o.`negotiable`=#{keyWord} or o.`industry` like "%${keyWord}%" or o.`industryDetail` like "%${keyWord}%" or o.`resultTechnolo` like "%${keyWord}%" or
+            o.`industryDetail` like
             "%${keyWord}%")
         </if>
 
@@ -123,21 +123,35 @@
 <!--按条件搜索搜索可以展示的-->
     <select id="selectOccupancyByIndustry" parameterType="occupancy" resultMap="occupancyResultMap">
         -- SELECT * FROM occupancy
-        SELECT * FROM occupancy o left JOIN businessInformation b
-        on o.username=b.uname
+        SELECT o.*,b.* FROM occupancy o left JOIN businessInformation b
+        on o.username=b.uname INNER JOIN `user` u ON u.statue!=3 AND o.username=u.username
         <where>
             o.statue=1 AND o.kstatue=1
             <include refid="OccupancyByIndustry_sql"></include>
         </where>
         ORDER BY creattime DESC
     </select>
+<!--    根据条件搜索后台-->
+
+
+    <select id="selectOccupancyAdminByIndustry" parameterType="occupancy" resultMap="occupancyResultMap">
+
+        SELECT o.*,b.* FROM occupancy o left JOIN businessInformation b
+        on o.username=b.uname INNER JOIN `user` u ON u.statue!=3 AND o.username=u.username
+        <where>
+            <include refid="OccupancyByIndustry_sql"></include>
+        </where>
+        ORDER BY creattime DESC
+    </select>
+
+
     <!-- 根据条件搜索-->
 
     <select id="showByPageForCenter" parameterType="occupancy" resultMap="occupancyResultMap">
 
-        SELECT * FROM occupancy o INNER JOIN businessInformation b
+        SELECT o.*,b.* FROM occupancy o INNER JOIN businessInformation b ON o.username=b.uname INNER JOIN `user` u ON u.statue!=3 AND o.username=u.username
         <where>
-            o.username=b.uname and
+
             username = #{userName}
             <if test="keyWord!=null and keyWord!=''">
                 and (`industry` like "%${keyWord}%" or `resultTechnolo` like "%${keyWord}%" or `industryDetail` like

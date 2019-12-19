@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.UserRroleDao">
+
+
+    <sql id="UserRole_sql">
+        <if test="rid!=null and rid!=''">
+            `rid`=#{rid}
+
+        </if>
+        <if test="userName!=null and userName!=''">
+            AND `userName`=#{userName}
+        </if>
+        <if test="role!=null and role!=''">
+            AND `role`=#{role}
+        </if>
+
+    </sql>
+<!--    查看所有-->
+    <select id="selectAllUserRole" resultType="userRole" parameterType="userRole">
+        SELECT * FROM user_role
+        <where>
+            <include refid="UserRole_sql"></include>
+        </where>
+    </select>
+
+</mapper>

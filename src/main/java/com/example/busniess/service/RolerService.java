@@ -2,6 +2,7 @@ package com.example.busniess.service;
 
 import com.example.busniess.entity.Roler;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 public interface RolerService {
@@ -33,5 +34,5 @@ public interface RolerService {
      * @param userName
      * @return
      */
-    public  Boolean insertRoler(Integer rid,String userName);
+    public  Boolean insertRoler(Integer rid, String userName);
 }

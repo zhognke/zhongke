@@ -52,4 +52,11 @@ public PageInfo searchBusinessUser(BusinessCenter businessCenter,Integer pageNum
  */
 public  PageInfo searchPerson(Person person,Integer pageNumber,Integer pageSize);
 
+    /**
+     * 查找状态不等于3的用户
+     * @param userName
+     * @return
+     */
+    public User findAllUserByName(String userName);
+
 }

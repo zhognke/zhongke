@@ -30,7 +30,7 @@ public class User implements Serializable {
     @NotNull(message = "邮箱不能为空")
     @Email(message = "请填写正确的邮箱格式",groups = {UserValidator.UpDate.class,UserValidator.InSet.class})
     private String email;//邮箱
-    private String statue;//用户状态备用
+    private int statue;//用户状态备用
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastdate;
@@ -46,5 +46,8 @@ public class User implements Serializable {
 
     private  BusinessCenter businessCenter;//企业中心
     private Person person;//私人认证
+
+
+
 
 }

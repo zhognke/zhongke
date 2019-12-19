@@ -70,10 +70,14 @@ public class UserController {
                                   @RequestParam(value = "remb", defaultValue = "false",
                                           required = false) Boolean remb) throws ShiroException {
 
-        User user = UserServiceImpl.findUserByName(userName);//use对象
-
+        User user = UserServiceImpl.findAllUserByName(userName);//use对象
         if(user==null){
             return ReturnResult.erro(CodeMsg.USER_NOT_EXISTS);
+        }
+
+
+        if(user.getStatue()==0){
+            return ReturnResult.erro(CodeMsg.FREEZE_ERROR);
         }
         Integer isPerson = user.getPersion();//身份个人或者企业
         String email = user.getEmail();//邮箱

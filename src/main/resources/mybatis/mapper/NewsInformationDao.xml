@@ -7,7 +7,7 @@
         SELECT * FROM newsinformation
         <where>
             <if test="category!=null and category!=''">
-                and `category`=#{category}
+                and instr(#{category},`category`)
             </if>
             <if test="title!=null and title!=''">
                 and `title`like "%${title}%"

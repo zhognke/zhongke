@@ -40,6 +40,18 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 查找状态不等于3的用户
+     * @param userName
+     * @return
+     */
+
+    public User findAllUserByName(String userName) {
+        User user = userDao.selectAllUser(userName);
+
+        return user;
+    }
+
+    /**
      * 查询所有用户
      *
      * @return
@@ -47,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public Map findAllUser(Integer startPage) {
         Map map = new HashMap();
         PageHelper.startPage(startPage, 10);
-        List<User> users = userDao.selectAllUser();
+        List<User> users = userDao.selectAllUsers();
         PageInfo pageInfo = new PageInfo(users);
         map.put("data", pageInfo);
         map.put("total", pageInfo.getTotal());
@@ -170,9 +182,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageInfo searchBusinessUser(BusinessCenter businessCenter,Integer pageNumber,Integer pageSize) {
 
-       PageHelper.startPage(pageNumber,pageSize);
-   List a=    userDao.selectUserByConditionB(businessCenter);
-       PageInfo pageInfo =new PageInfo(a);
+        PageHelper.startPage(pageNumber,pageSize);
+        List a=    userDao.selectUserByConditionB(businessCenter);
+        PageInfo pageInfo =new PageInfo(a);
 
         return pageInfo;
     }

@@ -64,6 +64,5 @@ public class Person {
     private  int vip;//是否是vip
     private int ustatue;//搜索传参用户状态
     private  String keyWord;//搜索关键字
-//    @NotBlank(message = "身份证不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-//    private String personCode;//身份证号4
+    private  String sort;//排序字段
 }

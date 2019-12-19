@@ -4,46 +4,46 @@
 <mapper namespace="com.example.busniess.dao.FinancingDao">
     <sql id="business_sql">
         <if test="uName!=null and  uName!=''">
-            `uName`=#{uName}
+            f.`uName`=#{uName}
         </if>
         <if test="lunit!=null and  lunit!=''">
-            AND `lunit`=#{lunit}
+            AND f.`lunit`=#{lunit}
         </if>
         <if test="unit!=null and  unit!=''">
-            AND `unit`=#{unit}
+            AND f.`unit`=#{unit}
         </if>
         <if test="statue!=null and  statue!=''">
-            AND `statue`=#{statue}
+            AND f.`statue`=#{statue}
         </if>
         <if test="kStatue!=null and  kStatue!=''">
-            AND `kstatue`=#{kStatue}
+            AND f.`kstatue`=#{kStatue}
         </if>
         <if test="industry!=null and industry!=''">
-            AND instr(`industry`,'${industry}')
+            AND instr(f.`industry`,'${industry}')
         </if>
         <if test="less!=null and less!='' and greater!=null and greater!=''">
-            AND `income` between #{less} and #{greater}
+            AND f.`income` between #{less} and #{greater}
         </if>
         <if test="pless!=null and pless!='' and pgreat!=null and pgreat!=''">
-            AND `period` between #{pless} and #{pgreat}
+            AND f.`period` between #{pless} and #{pgreat}
         </if>
         <if test="province!=null and province!=''">
-            AND `province`=#{province}
+            AND f.`province`=#{province}
         </if>
         <if test="city!=null and city!=''">
-            AND `city`=#{city}
+            AND f.`city`=#{city}
         </if>
         <if test="discribe!=null and discribe!=''">
-            AND `discribe`=#{discribe}
+            AND f.`discribe`=#{discribe}
         </if>
         <if test="projecrPhase!=null and projecrPhase!=''">
-            AND instr('${projecrPhase}',`projecrPhase`)
+            AND instr('${projecrPhase}',f.`projecrPhase`)
         </if>
         <if test="financing!=null and financing!=''">
-            AND instr('${financing}',`financing`)
+            AND instr('${financing}',f.`financing`)
         </if>
         <if test="projectName!=null and projectName!=''">
-            AND `projectName` like "%${projectName}%"
+            AND f.`projectName` like "%${projectName}%"
         </if>
 
     </sql>
@@ -84,12 +84,12 @@
 
     <select id="selectAllFinancing" parameterType="financingEntity" resultMap="businessCenterInformation">
         SELECT
-        id,uname,projectName,industry,financing,income,projecrphase,period,projectFinancing,statue,insertTime,province,city,discribe,lunit
-        FROM financing
+        f.id,f.uname,f.projectName,f.industry,f.financing,f.income,f.projecrphase,f.period,f.projectFinancing,f.statue,f.insertTime,f.province,f.city,f.discribe,f.lunit
+        FROM financing f INNER JOIN `user` u ON u.statue!=3 AND f.uname=u.username
         <where>
             <include refid="business_sql"></include>
         </where>
-        ORDER BY `insertTime` DESC
+        ORDER BY f.`insertTime` DESC
     </select>
 
 
