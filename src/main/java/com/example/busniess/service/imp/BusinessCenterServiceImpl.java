@@ -152,4 +152,16 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }
+
+    /**
+     * 查询没有填写补充信息的企业中心
+     * @param statue
+     * @return
+     */
+    @Override
+    public List<BusinessCenter> selectBusinessCenterNoinformation(Integer statue) {
+
+
+        return  businessCenterDao.selectBusinessCenterByStatue(statue);
+    }
 }

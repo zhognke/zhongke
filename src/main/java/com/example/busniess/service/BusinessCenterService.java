@@ -5,6 +5,8 @@ import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.Reject;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 public interface BusinessCenterService {
     /**
      * 提交认证
@@ -53,5 +55,17 @@ public interface BusinessCenterService {
      */
     Boolean updateBusinessCenter(BusinessCenter businessCenter);
 
+    /**
+     * 条件检索
+     * @param businessCenter
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     PageInfo showByPage(BusinessCenter businessCenter, Integer pageNum, Integer pageSize);
+
+    /**
+     * 根据状态查询企业中心并且没有填写企业认证补充信息的
+     */
+public List<BusinessCenter> selectBusinessCenterNoinformation(Integer sattue);
 }

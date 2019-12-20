@@ -27,10 +27,15 @@ public interface BusinessInformationService {
     /**
      * 查看所有的
      */
-    public PageInfo selectBusinessInformation(Integer pageNum,Integer pagesize);
-    /**
-     *根据id查询
-     */
-    public  BusinessInformation selectBusinessInformationById(Integer id);
+    public PageInfo selectBusinessInformation(Integer pageNum, Integer pagesize);
 
+    /**
+     * 根据id查询
+     */
+    public BusinessInformation selectBusinessInformationById(Integer id);
+
+    /**
+     * 根据状态删除
+     */
+    public boolean delectInformationByStatue(Integer id, Integer statue);
 }

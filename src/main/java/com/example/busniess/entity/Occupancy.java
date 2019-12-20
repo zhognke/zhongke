@@ -30,8 +30,8 @@ public class Occupancy implements Serializable {
     private String industry;//所属行业
     @NotNull(message = "所属行业二级类目不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String industryDetail;//所属行业二级类目
-    @NotBlank(message = "成果属性不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private String attribute;//成果属性
+    @NotBlank(message = "成果完成属性不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private String attribute;//成果完成属性
     @NotBlank(message = "专利名称不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String patenNname;//专利名称
     @NotBlank(message = "专利号不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})

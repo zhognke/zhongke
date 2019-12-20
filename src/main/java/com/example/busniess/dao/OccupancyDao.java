@@ -2,6 +2,7 @@ package com.example.busniess.dao;
 
 import com.example.busniess.entity.Occupancy;
 import org.apache.ibatis.annotations.*;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,12 @@ public interface OccupancyDao {
      * @return
      */
     @Select("SELECT * FROM occupancy WHERE username=#{userName} AND `statue`=1 AND `kstatue`=1   ORDER BY creattime DESC")
-    public List<Occupancy> selectByname(String userName);
+    @Results({
+            @Result(property = "id", column = "id" ),
+            @Result(property = "imgAddress", column = "id", one = @One(select = "com.example.busniess.dao.ImageAddressDao.selectimgAddress")),
+    })
+            public List<Occupancy>selectByname(String userName);
+
 
     /**
      * 根据id 查询单个

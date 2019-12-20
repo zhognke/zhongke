@@ -85,13 +85,13 @@ public interface BusinessCenterDao {
      * @param statue
      * @return
      */
-    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} ORDER BY subtime desc")
+    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} AND uname NOT in (SELECT uname FROM businessInformation  WHERE statue!=3) ORDER BY subtime desc")
     public List<BusinessCenter> selectBusinessCenterByStatue(Integer statue);
 
     /**
      * 查看自己的
      */
-    @Select("SELECT * FROM businesscenter WHERE uname=#{uName}")
+    @Select("SELECT * FROM businesscenter WHERE uname=#{uName} ")
     public BusinessCenter selectOneBusinessCenter(String uName);
 
     /**

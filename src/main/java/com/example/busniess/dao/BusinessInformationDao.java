@@ -1,10 +1,7 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.BusinessInformation;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -38,7 +35,7 @@ public interface BusinessInformationDao {
      * @param uName
      * @return
      */
-    @Select("SELECT * from businessInformation WHERE uname=#{uName}")
+    @Select("SELECT * from businessInformation WHERE uname=#{uName} AND statue!=3")
     public BusinessInformation selectBusinessInformation(String uName);
 
     /**
@@ -55,6 +52,9 @@ public interface BusinessInformationDao {
      */
     @Select("SELECT * from businessInformation WHERE id=#{id}")
     public  BusinessInformation selectBusinessInformationById(Integer id);
+
+    @Update("UPDATE businessInformation SET statue=#{statue} WHERE id=#{id}")
+    public boolean delectInformationByStatue(@Param("id") Integer id, @Param("statue") Integer statue);
 
 
 }

@@ -15,6 +15,11 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
     @Autowired
     BusinessInformationDao businessInformationDao;
 
+    @Override
+    public boolean delectInformationByStatue(Integer id, Integer statue) {
+        return businessInformationDao.delectInformationByStatue(id,statue);
+    }
+
     /**
      * 添加信息
      * @param businessInformation

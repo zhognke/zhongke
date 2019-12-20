@@ -13,9 +13,16 @@ public class OccupancyAdminController {
 
     @Autowired
     OccupancyService occupancyServiceImpl;
-    public ReturnResult selectAdminOccupancy(Occupancy occupancy,Integer pageNumber,Integer pageSize){
-        occupancyServiceImpl.showByPage(occupancy, pageNumber, pageSize);
 
+    /**
+     * 按条件搜索 科技成果
+     * @param occupancy
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/selectAdminOccupancy")
+    public ReturnResult selectAdminOccupancy(Occupancy occupancy,Integer pageNumber,Integer pageSize){
 
         return ReturnResult.success(occupancyServiceImpl.showByPage(occupancy, pageNumber, pageSize));
     }

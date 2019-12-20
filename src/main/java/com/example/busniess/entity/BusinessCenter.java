@@ -91,4 +91,10 @@ public class BusinessCenter implements Serializable {
     private  int vip;//是否是vip
 
     private  String sort;//排序字段
+
+
+
+
+
+
 }

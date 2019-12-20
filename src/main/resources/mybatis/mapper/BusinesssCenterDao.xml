@@ -52,7 +52,7 @@
 
     </sql>
     <select id="selectAllBusinessCenter" parameterType="businessCenter" resultType="businessCenter">
-        SELECT b.*,i.* FROM businesscenter b   INNER JOIN  businessInformation i ON b.uname=i.uname INNER JOIN `user` u ON u.statue=1
+        SELECT b.*,i.* FROM businesscenter b   INNER JOIN  businessInformation i ON b.uname=i.uname AND  i.statue!=3 INNER JOIN `user` u ON u.statue=1
         INNER JOIN `user` u ON u.statue!=3 AND b.uname=u.username
         <where>
             <include refid="business_sql"></include>
@@ -62,7 +62,7 @@
 
     <select id="search" parameterType="businessCenter" resultMap="business">
         SELECT b.*,i.id id1,i.uname uname1,i.registrationDate registrationDate1,i.registeredCapital registeredCapital1,i.scale scale1,i.enterprise enterprise1,i.logo logo1,i.statue statue1,i.insertTime insertTime1,i.updateTime updateTime1 FROM businesscenter b INNER JOIN  businessInformation i ON b.uname=i.uname
-        INNER JOIN `user` u ON u.statue!=3 AND b.uname=u.username
+       AND i.statue!=3 INNER JOIN `user` u ON u.statue!=3 AND b.uname=u.username
         <where>
 
             <if test="statue!=null and statue!=''">
@@ -128,7 +128,7 @@
             </if>
 
             <if test="keyWord!=null and keyWord!=''">
-                AND (b.`firmname` like CONCAT('%',#{keyWord},'%') or b.`industry` like CONCAT('%',#{keyWord},'%'))
+                AND (b.`firmname` like CONCAT('%',#{keyWord},'%') or b.uname like CONCAT('%',#{keyWord},'%') or  b.`industry` like CONCAT('%',#{keyWord},'%'))
             </if>
 
         </where>
