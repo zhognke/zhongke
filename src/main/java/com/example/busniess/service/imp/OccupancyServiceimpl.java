@@ -4,10 +4,7 @@ import com.example.busniess.dao.BusinessCenterDao;
 import com.example.busniess.dao.ImageAddressDao;
 import com.example.busniess.dao.OccupancyDao;
 import com.example.busniess.dao.UserDao;
-import com.example.busniess.entity.DemandsEntity;
-import com.example.busniess.entity.Echarts;
-import com.example.busniess.entity.ImageAddress;
-import com.example.busniess.entity.Occupancy;
+import com.example.busniess.entity.*;
 import com.example.busniess.service.OccupancyService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
@@ -256,6 +253,36 @@ public class OccupancyServiceimpl implements OccupancyService {
     @Override
     public int getCounts() {
         return occupancyDao.getCounts();
+    }
+
+    @Override
+    public Map<String, Object> occupancyRiseTrend(String dateType, Integer size) {
+        String format;
+        if ("month".equalsIgnoreCase(dateType)) {
+            format = "%Y/%m";
+            size = size == null ? 12 : size;
+        } else if ("day".equalsIgnoreCase(dateType)) {
+            format = "%Y/%m/%d";
+            size = size == null ? 31 : size;
+        } else {
+            format = "%Y";
+            size = size == null ? 10 : size;
+        }
+        List<Occupancy> list = occupancyDao.occupancyRiseTrend(format, size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                xdata[i] = list.get(i).getCompanyName();
+                sdata[i] = list.get(i).getId();
+            }
+            map.put("sdata", sdata);
+            map.put("xdata", xdata);
+            return map;
+        }
     }
 
     /**

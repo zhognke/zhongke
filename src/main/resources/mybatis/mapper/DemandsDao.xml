@@ -136,7 +136,7 @@
         SELECT d.`id`,d.user_name,d.company_name,`demand_type`,`cooperation_type`,cooperation_intention,`demand_industry`,`demand_industry_detail`,`demand_outline`,`demand_content`,`expected_result`,d.province,d.`city`,d.`district`,`contact`,`phone_num`,`pre_investment_amount`,`end_date`,`create_time`,`update_time`,`remark`,`status`,`approval_status`,`approval_opinion`
         FROM `demands` d,user u
         <where>
-            d.user_name = u.username and d.del_flag=0 and u.statue = 1
+            d.user_name = u.username and d.del_flag=0 and u.statue != 3
             <if test="demandIndustry!=null and demandIndustry!=''">
                 and d.`demand_industry`=#{demandIndustry}
             </if>

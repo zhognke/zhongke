@@ -80,4 +80,7 @@ public interface InnovationActivitiesDao {
      */
     @Select("select count(id) from innovation_activities where del_flag=0 and status =0 and id = #{id}")
     int enbaleRegistration(@Param("id")Integer id);
+
+    @Select("SELECT count(0) as counts,DATE_FORMAT(create_time,#{format}) activitiesTopic FROM `innovation_activities` where del_flag = 0 and status!=3 group by activitiesTopic limit #{size}")
+    List<InnovationActivitiesEntity> activitiesRiseTrend(String format, Integer size);
 }

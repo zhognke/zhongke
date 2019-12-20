@@ -4,7 +4,7 @@
 <mapper namespace="com.example.busniess.dao.IntentionDao">
 
     <sql id="columnNames">
-         id,user_name,project_id,project_name,project_type,contact,phone_num,email,company_name,address,context,create_time
+         id,user_name,project_id,project_name,project_type,contact,phone_num,email,company_name,address,context,create_time,statue,is_valid,del_flag
     </sql>
 
     <select id="search" resultType="intentionEntity" parameterType="intentionEntity">
@@ -14,14 +14,29 @@
             <if test="userName!=null and userName!=''">
                 and user_name=#{userName}
             </if>
-            <if test="projectName!=null and projectName!=''">
-                and project_name=#{projectName}
-            </if>
             <if test="projectType!=null and projectType!=''">
                 and project_type=#{projectType}
             </if>
+            <if test="contact!=null and contact!=''">
+                and contact like CONCAT('%',#{contact},'%')
+            </if>
             <if test="companyName!=null and companyName!=''">
-                and company_name=#{companyName}
+                and company_name like CONCAT('%',#{companyName},'%')
+            </if>
+            <if test="projectName!=null and projectName!=''">
+                and project_name like CONCAT('%',#{projectName},'%')
+            </if>
+            <if test="startDate!=null">
+                and create_time &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and create_time &lt;= #{endDate}
+            </if>
+            <if test="statue!=null">
+                and statue = #{statue}
+            </if>
+            <if test="isValid!=null">
+                and is_valid = #{isValid}
             </if>
             order by create_time desc
         </where>

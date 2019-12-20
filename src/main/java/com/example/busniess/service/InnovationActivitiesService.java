@@ -3,6 +3,8 @@ package com.example.busniess.service;
 import com.example.busniess.entity.InnovationActivitiesEntity;
 import com.github.pagehelper.PageInfo;
 
+import java.util.Map;
+
 
 /**
  * 创新活动表
@@ -82,5 +84,7 @@ public interface InnovationActivitiesService {
      * @return
      */
     public boolean enbaleRegistration(Integer id);
+
+    Map<String, Object> activitiesRiseTrend(String dateType, Integer size);
 }
 

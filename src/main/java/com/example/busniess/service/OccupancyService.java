@@ -139,4 +139,6 @@ public interface OccupancyService {
     Map<String, Object> getIndustryProp(Integer size);
 
     int getCounts();
+
+    Map<String, Object> occupancyRiseTrend(String dateType, Integer size);
 }

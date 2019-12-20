@@ -31,10 +31,14 @@ public class DataDisplayController {
     private TalentDemandService talentDemandService;    //人才
     @Autowired
     private IntentionService intentionService;  //意向对接
+    @Autowired
+    private InnovationActivitiesService innovationActivitiesService;    //创新活动
 
     /*平台数据统计-start*/
+
     /**
      * 平台数据统计
+     *
      * @return
      */
     @GetMapping("dataCounts")
@@ -46,45 +50,48 @@ public class DataDisplayController {
         int demandsNum = demandsService.getCount(null);
         int occupancyNum = occupancyServce.getCounts();
         int intentionNum = intentionService.getCounts();
-        map.put("companyNum",companyNum);
-        map.put("talentDemandsNum",talentDemandsNum);
-        map.put("financingNum",financingNum);
-        map.put("demandsNum",demandsNum);
-        map.put("occupancyNum",occupancyNum);
-        map.put("intentionNum",intentionNum);
+        map.put("companyNum", companyNum);
+        map.put("talentDemandsNum", talentDemandsNum);
+        map.put("financingNum", financingNum);
+        map.put("demandsNum", demandsNum);
+        map.put("occupancyNum", occupancyNum);
+        map.put("intentionNum", intentionNum);
         return ReturnResult.success(map);
     }
     /*平台数据统计-end*/
 
     /*各类行业占比-pie-start*/
+
     /**
      * 企业需求行业占比统计(饼图)
      *
      * @return ReturnResult data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
      */
     @GetMapping("/demandsIndustryProp")
-    public ReturnResult demandsIndustryProp(@RequestParam(defaultValue = "16")Integer size) {
+    public ReturnResult demandsIndustryProp(@RequestParam(defaultValue = "16") Integer size) {
         Map<String, Object> map = demandsService.demandsIndustryProp(size);
-        if(map!=null){
+        if (map != null) {
             return ReturnResult.success(map);
-        }else{
+        } else {
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
+
     /**
      * 人才需求行业占比统计(饼图)
      *
      * @return ReturnResult data.ldata legend数据,即legend.data需要的数据;data.sdata 对应x轴的数据,即series[0].data需要的数据
      */
     @GetMapping("/talentIndustryProp")
-    public ReturnResult talentIndustryProp(@RequestParam(defaultValue = "16")Integer size) {
-        Map<String,Object> map = talentDemandService.demandsIndustryProp(size);
-        if(map!=null){
+    public ReturnResult talentIndustryProp(@RequestParam(defaultValue = "16") Integer size) {
+        Map<String, Object> map = talentDemandService.demandsIndustryProp(size);
+        if (map != null) {
             return ReturnResult.success(map);
-        }else{
+        } else {
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
+
     /**
      * 科技成果行业占比统计(饼图)
      *
@@ -92,13 +99,14 @@ public class DataDisplayController {
      */
     @GetMapping("/occupancyIndustryProp")
     public ReturnResult occupancyIndustryProp(@RequestParam(defaultValue = "16") Integer size) {
-        Map<String,Object> map = occupancyServce.getIndustryProp(size);
-        if(map!=null){
+        Map<String, Object> map = occupancyServce.getIndustryProp(size);
+        if (map != null) {
             return ReturnResult.success(map);
-        }else{
+        } else {
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
+
     /**
      * 融资行业占比统计(饼图)
      *
@@ -106,55 +114,61 @@ public class DataDisplayController {
      */
     @GetMapping("/financingIndustryProp")
     public ReturnResult getFinancingIndustryProp(@RequestParam(defaultValue = "16") Integer size) {
-        Map<String,Object> map = financingService.getIndustryProp(size);
-        if(map!=null){
+        Map<String, Object> map = financingService.getIndustryProp(size);
+        if (map != null) {
             return ReturnResult.success(map);
-        }else{
+        } else {
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
     /*各类行业占比-end*/
 
     /*工业申报统计-start*/
+
     /**
      * 工业申报统计
+     *
      * @param year 年份
      * @return ReturnResult
      */
     @GetMapping("/getIndustrialDeclarationTypeByYear")
     public ReturnResult getIndustrialDeclarationTypeByYear(Integer year) {
-        Map<String,Object> map = industrialDeclarationService.getIndustrialDeclarationTypeByYear(year);
-        if(map!=null){
+        Map<String, Object> map = industrialDeclarationService.getIndustrialDeclarationTypeByYear(year);
+        if (map != null) {
             return ReturnResult.success(map);
-        }else{
+        } else {
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
     /*工业申报统计-end*/
 
     /*数据增长统计-start*/
+
     /**
      * 平台数据增长趋势
+     *
      * @param type
      * @param dateType
      * @param size
      * @return
      */
     @GetMapping("/dataRiseTrend")
-    public ReturnResult dataRiseTrend(String type,String dateType,Integer size) {
-        Map<String,Object> map = null;
-        if("demands".equalsIgnoreCase(type)){
-            map = demandsService.demandsRiseTrend(dateType,size);
-        }else if("financing".equalsIgnoreCase(type)){
-            map = financingService.financingRiseTrend(dateType,size);
-        }else if("talent".equalsIgnoreCase(type)){
-            map = talentDemandService.demandsRiseTrend(dateType,size);
-        }else{
-            map = financingService.financingRiseTrend(dateType,size);
+    public ReturnResult dataRiseTrend(String type, String dateType, Integer size) {
+        Map<String, Object> map = null;
+        if ("demands".equalsIgnoreCase(type)) {
+            map = demandsService.demandsRiseTrend(dateType, size);
+        } else if ("financing".equalsIgnoreCase(type)) {
+            map = financingService.financingRiseTrend(dateType, size);
+        } else if ("talent".equalsIgnoreCase(type)) {
+            map = talentDemandService.demandsRiseTrend(dateType, size);
+        } else if ("activities".equalsIgnoreCase(type)) {
+            map = innovationActivitiesService.activitiesRiseTrend(dateType, size);
+        } else {
+            map = occupancyServce.occupancyRiseTrend(dateType, size);
         }
-        if(map!=null){
+        if (map != null) {
             return ReturnResult.success(map);
-        }else{
+        } else {
             return ReturnResult.erro(CodeMsg.DATA_EMPTY);
         }
     }
