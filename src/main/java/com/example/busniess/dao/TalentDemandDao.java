@@ -112,6 +112,6 @@ public interface TalentDemandDao {
     @Select("select count(0) from talent_demand where `status` = 0 and approval_status =1 and del_flag =0")
     int getCounts();
 
-    @Select("SELECT count(0) as counts,DATE_FORMAT(create_time,#{format}) companyName FROM `talent_demand` where del_flag = 0 and status = 0 and approval_status = 1 group by companyName desc limit #{size}")
+    @Select("SELECT count(0) as counts,DATE_FORMAT(create_time,#{format}) companyName FROM `talent_demand` where del_flag = 0 and status = 0 and approval_status = 1 group by companyName limit #{size}")
     List<TalentDemandEntity> demandsRiseTrendByDate(@Param("format")String format, @Param("size")Integer size);
 }

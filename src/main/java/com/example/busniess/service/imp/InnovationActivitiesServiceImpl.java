@@ -2,6 +2,7 @@ package com.example.busniess.service.imp;
 
 import com.example.busniess.dao.InnovationActivitiesDao;
 import com.example.busniess.entity.InnovationActivitiesEntity;
+import com.example.busniess.entity.TalentDemandEntity;
 import com.example.busniess.service.InnovationActivitiesService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("innovationActivitiesService" )
 public class InnovationActivitiesServiceImpl implements InnovationActivitiesService {
@@ -31,6 +34,7 @@ public class InnovationActivitiesServiceImpl implements InnovationActivitiesServ
             Calendar c = Calendar.getInstance();
             c.setTime(innovationActivitiesEntity.getEndTime());
             c.add(Calendar.DAY_OF_MONTH, 1);
+            c.add(Calendar.SECOND,-1);
             innovationActivitiesEntity.setEndTime(c.getTime());
         }
         if(innovationActivitiesEntity.getStatus()!=null){
@@ -110,6 +114,36 @@ public class InnovationActivitiesServiceImpl implements InnovationActivitiesServ
     @Override
     public boolean enbaleRegistration(Integer id) {
         return innovationActivitiesDao.enbaleRegistration(id)>0;
+    }
+
+    @Override
+    public Map<String, Object> activitiesRiseTrend(String dateType, Integer size) {
+        String format;
+        if ("month".equalsIgnoreCase(dateType)) {
+            format = "%Y/%m";
+            size = size == null ? 12 : size;
+        } else if ("day".equalsIgnoreCase(dateType)) {
+            format = "%Y/%m/%d";
+            size = size == null ? 31 : size;
+        } else {
+            format = "%Y";
+            size = size == null ? 10 : size;
+        }
+        List<InnovationActivitiesEntity> list = innovationActivitiesDao.activitiesRiseTrend(format, size);
+        if (list.isEmpty() || "[]".equals(list.toString())) {
+            return null;
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            Integer[] sdata = new Integer[list.size()];
+            String[] xdata = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                xdata[i] = list.get(i).getActivitiesTopic();
+                sdata[i] = list.get(i).getCounts();
+            }
+            map.put("sdata", sdata);
+            map.put("xdata", xdata);
+            return map;
+        }
     }
 
 

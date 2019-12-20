@@ -113,4 +113,5 @@ public class InnovationActivitiesEntity implements Serializable {
 
     private String keyword;
 
+    private Integer counts; //统计-非数据库字段
 }

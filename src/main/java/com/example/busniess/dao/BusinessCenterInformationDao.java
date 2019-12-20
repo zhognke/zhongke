@@ -25,6 +25,6 @@ public interface BusinessCenterInformationDao {
      * 数据统计
      * @return  Integer 总数
      */
-    @Select("select count(0) from `business_center_information` b,user u where b.statue=1 and u.statue=1 and b.uname = u.username;")
+    @Select("select count(0) from `business_center_information` b,user u where b.statue=1 and u.statue!=3 and b.uname = u.username;")
     Integer getCounts();
 }

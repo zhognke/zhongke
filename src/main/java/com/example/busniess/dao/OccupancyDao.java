@@ -217,6 +217,9 @@ public interface OccupancyDao {
     @Select("SELECT count(0) FROM occupancy WHERE  statue=1")
     int getCounts();
 
+    @Select("SELECT count(0) as id,DATE_FORMAT(creattime,#{format}) companyName FROM `occupancy` where kstatue =1 and statue =1 group by DATE_FORMAT(creattime,#{format}) limit #{size}")
+    List<Occupancy> occupancyRiseTrend(String format, Integer size);
+
     /**
      *
      * @param id

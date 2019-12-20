@@ -133,6 +133,6 @@ public interface FinancingDao {
     @Select("select count(0) from financing where kstatue =1 and statue =1")
     int getCounts();
 
-    @Select("SELECT count(0) as ageLimit,DATE_FORMAT(insertTime,#{format}) projectName FROM `financing` where kstatue =1 and statue =1 group by DATE_FORMAT(insertTime,#{format}) desc limit #{size}")
+    @Select("SELECT count(0) as ageLimit,DATE_FORMAT(insertTime,#{format}) projectName FROM `financing` where kstatue =1 and statue =1 group by DATE_FORMAT(insertTime,#{format}) limit #{size}")
     List<FinancingEntity> financingRiseTrend(@Param("format")String format, @Param("size")Integer size);
 }
