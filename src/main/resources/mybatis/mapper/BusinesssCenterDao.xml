@@ -34,20 +34,20 @@
 
     <sql id="business_sql">
         <if test="industry!=null and industry!=''">
-            instr(`industry`,'${industry}')
+            instr(b.`industry`,'${industry}')
 
         </if>
         <if test="firmName!=null and firmName!=''">
-            AND `firmname`=#{firmName}
+            AND b.`firmname`=#{firmName}
         </if>
         <if test="scale!=null and scale!=''">
-            AND `scale`=#{scale}
+            AND i.`scale`=#{scale}
         </if>
         <if test="statue!=null and statue!=''">
-            AND `statue`=#{statue}
+            AND b.`statue`=#{statue}
         </if>
         <if test="kStatue!=null and kStatue!=''">
-            AND `kstatue`=#{kStatue}
+            AND b.`kstatue`=#{kStatue}
         </if>
 
     </sql>
@@ -68,12 +68,15 @@
             <if test="statue!=null and statue!=''">
                 b.`statue`=#{statue}
             </if>
-
+            <if test="firmName!=null and firmName!=''">
+                AND b.`firmname` like   "${firmName}"
+            </if>
             <if test="industry!=null and industry!=''">
-               AND b.`industry`=#{industry}
+                AND  instr(b.`industry`,#{industry})
             </if>
             <if test="typeEnterprise!=null and typeEnterprise!=''">
-                AND b.`typeEnterprise`=#{typeEnterprise}
+                AND instr(#{typeEnterprise},b.`typeEnterprise`)
+
             </if>
             <if test="country!=null and country!=''">
                 AND b.`country`=#{country}
@@ -84,6 +87,12 @@
             <if test="district!=null and district!=''">
                 AND b.`district`=#{district}
             </if>
+
+
+
+
+
+
 
             <if test="scaleBegin!=null and scaleEnd!=null">
                 and i.`scale` between #{scaleBegin} and #{scaleEnd}
