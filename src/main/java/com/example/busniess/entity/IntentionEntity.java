@@ -75,6 +75,14 @@ public class IntentionEntity implements Serializable {
      */
     private String context;
     /**
+     * 处理状态:0待处理;1跟进中;2已结束
+     */
+    private Integer statue;
+    /**
+     * 意向结果:0待确认;1有效;2;无效
+     */
+    private Integer isValid;
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -84,5 +92,16 @@ public class IntentionEntity implements Serializable {
      * 是否删除;0正常,1删除
      */
     private Integer delFlag;
+
+    /**
+     * 提交时间-开始-搜索使用字段
+     */
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private Date startDate;
+    /**
+     * 提交时间-截止-搜索使用字段
+     */
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private Date endDate;
 
 }

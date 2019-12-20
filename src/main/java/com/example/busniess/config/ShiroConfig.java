@@ -84,7 +84,7 @@ public class ShiroConfig {
 
 //创新活动表/innovationActivities
         map.put("/innovationActivities/showByPage", "anon");
-        map.put("/innovationActivities/getById", "anon");
+        map.put("/innovationActivities/showById", "anon");
         map.put("/innovationActivities/**", "authc");
 //创新活动报名表
 //        map.put("/innovationActivitiesRegistration/showByPage", "anon");

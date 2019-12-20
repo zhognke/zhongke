@@ -62,5 +62,9 @@ public interface IntentionService {
     public boolean deleteBatch(String ids);
 
     int getCounts();
+
+    boolean updateStatue(Integer id, Integer statue);
+
+    boolean updateValid(Integer id, Integer isValid);
 }
 
