@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 public class EsDemandsModel extends EsModel implements Serializable {
 
-    private String indexType="demands"; //数据类型
+    private String indexType="企业需求"; //数据类型
 
     // 中文分词器 -> https://github.com/medcl/elasticsearch-analysis-ik
     private String demandOutline;

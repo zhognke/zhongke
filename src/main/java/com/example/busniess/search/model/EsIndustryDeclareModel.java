@@ -15,6 +15,7 @@ import java.util.Date;
 @Data
 public class EsIndustryDeclareModel extends EsModel implements Serializable {
 
+    private String indexType="工业申报";
     /**
      * 申报项目类别
      */
@@ -126,5 +127,4 @@ public class EsIndustryDeclareModel extends EsModel implements Serializable {
     private Integer declarationYearBegin;
     private Integer declarationYearEnd;
     private String keyword;
-    private String indexType="industrydeclare";
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 @Document(indexName = "financial", type = "financial",shards = 3)
 public class EsFinancingModel  extends EsModel implements Serializable {
 
-    private String indexType="financial"; //数据类型
+    private String indexType="项目融资"; //数据类型
 
     @Field(type = FieldType.Keyword)
     private String uName;//关联用户的名字24

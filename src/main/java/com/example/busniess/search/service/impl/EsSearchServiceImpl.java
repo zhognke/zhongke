@@ -29,7 +29,7 @@ public class EsSearchServiceImpl implements EsSearchService {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
         if(StringUtils.isEmpty(indices)){
-            indices="demands,financial,occupancy,professional";//,talent,activities,news
+            indices="demands,financial,occupancy,professional,talent,activities,news";//
         }
         //多个字段匹配，只要满足一个即可返回结果
         if(!StringUtils.isEmpty(keyword)) {
