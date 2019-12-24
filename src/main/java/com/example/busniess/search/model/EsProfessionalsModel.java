@@ -22,7 +22,7 @@ import java.util.List;
 @Document(indexName = "professional", type = "professional",shards = 3)
 public class EsProfessionalsModel extends EsModel implements Serializable {
 
-    private String indexType="professional"; //数据类型
+    private String indexType="推荐专家"; //数据类型
     /**
      * 关联用户名
      */

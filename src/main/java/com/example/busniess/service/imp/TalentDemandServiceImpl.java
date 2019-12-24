@@ -12,8 +12,6 @@ import com.example.busniess.utiles.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -93,7 +91,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
      * @return
      */
     @Override
-    @Cacheable(value = "talent",key="'talent'+#id")
+//    @Cacheable(value = "talent",key="'talent'+#id")
     public TalentDemandEntity selectById(Integer id) {
         return talentDemandDao.selectById(id);
     }
@@ -161,7 +159,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
      * @param talentDemandEntity
      * @return
      */
-    @CacheEvict(value="talent",key="'talent'+#talentDemandEntity.id")
+//    @CacheEvict(value="talent",key="'talent'+#talentDemandEntity.id")
     @Override
     public boolean update(TalentDemandEntity talentDemandEntity) {
         talentDemandEntity.setApprovalStatus(0);

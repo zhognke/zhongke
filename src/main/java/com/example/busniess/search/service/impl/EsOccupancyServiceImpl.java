@@ -29,7 +29,6 @@ import java.util.List;
 
 @Service("esOccupancyService")
 public class EsOccupancyServiceImpl implements EsOccupancyService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EsOccupancyServiceImpl.class);
 
     @Autowired
     private EsOccupancyDao esOccupancyDao;
@@ -38,7 +37,7 @@ public class EsOccupancyServiceImpl implements EsOccupancyService {
 
     @Override
     public int importAll() {
-        List<EsOccupancyModel> EsDemandsList = esOccupancyDao.selectAll(null);
+        List<EsOccupancyModel> EsDemandsList = esOccupancyDao.selectAll();
         Iterable<EsOccupancyModel> EsDemandsIterable = esOccupancyRepository.saveAll(EsDemandsList);
         Iterator<EsOccupancyModel> iterator = EsDemandsIterable.iterator();
         int result = 0;
@@ -61,13 +60,8 @@ public class EsOccupancyServiceImpl implements EsOccupancyService {
 
     @Override
     public EsOccupancyModel create(Integer id) {
-        EsOccupancyModel result = null;
-        List<EsOccupancyModel> EsDemandsList = esOccupancyDao.selectAll(id);
-        if (EsDemandsList.size() > 0) {
-            EsOccupancyModel EsDemands = EsDemandsList.get(0);
-            result = esOccupancyRepository.save(EsDemands);
-        }
-        return result;
+        EsOccupancyModel esOccupancyModel = esOccupancyDao.selectById(id);
+        return esOccupancyRepository.save(esOccupancyModel);
     }
 
     @Override

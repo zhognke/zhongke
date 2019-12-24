@@ -21,7 +21,7 @@ import java.util.List;
 @Document(indexName = "occupancy", type = "occupancy",shards = 3)
 public class EsOccupancyModel extends EsModel implements Serializable {
 
-    private String indexType="occupancy"; //数据类型
+    private String indexType="科技成果"; //数据类型
 
     @Field(type = FieldType.Keyword)
     private String userName;//关联的用户

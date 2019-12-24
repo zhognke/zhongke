@@ -8,8 +8,8 @@ public class IndexKey {
     public static final String INDEX_OUTLINE = "outline";   //摘要
     public static final String INDEX_CONTENT = "content";   //内容
     public static final String INDEX_COMPANY_NAME = "companyName";  //公司名称
-    public static final String INDEX_STATUS="status";   //状态
-    public static final String INDEX_APPROVAL_STATUS="approvalStatus";  //审批状态
+    public static final String INDEX_STATUS = "status";   //状态
+    public static final String INDEX_APPROVAL_STATUS = "approvalStatus";  //审批状态
     public static final String INDEX_DEL_FLAG = "delFlag";  //删除标记
     public static final String INDEX_INDUSTRY = "industry"; //行业
     public static final String INDEX_INDUSTRY_DETAIL = "industryDetail";    //二级行业
@@ -35,5 +35,14 @@ public class IndexKey {
     public static final String INDEX_OCCUPANCY_ATTRIBUTE = "attribute";  //完成方式
     public static final String INDEX_OCCUPANCY_PRICE = "price";  //转让金额
 
-    public static final String INDEX_DECLARATION_TYPE = "declaration_type";  //申报类型
+    public static final String INDEX_DECLARATION_TYPE = "declarationType";  //申报类型
+
+    public static final String INDEX_ACTIVITIES_START_TIME = "startTime";   //活动开始时间
+    public static final String INDEX_ACTIVITIES_END_TIME = "endTime";       //活动结束时间
+
+    public static final String INDEX_NEWS_CATEGORY = "category";        //新闻类型
+
+    public static final String INDEX_TALENT_DEGREE = "degree";  //人才学历
+    public static final String INDEX_TALENT_SALARY = "salary";  //人才薪资
+    public static final String INDEX_TALENT_DEMAND_TYPE = "demandsType";  //人才需求类型
 }
