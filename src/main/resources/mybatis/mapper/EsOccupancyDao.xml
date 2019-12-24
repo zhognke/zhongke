@@ -24,9 +24,9 @@
         <result property="city" column="city"/>
         <result property="district" column="district"/>
         <result property="stopTime" column="stopTime"/>
-        <result property="creatTime" column="creatTime"/>
-        <result property="upTiem" column="upTiem"/>
-        <result property="auditTime" column="auditTime"/>
+        <result property="createTime" column="creattime"/>
+        <result property="updateTime" column="uptime"/>
+        <result property="approvalTime" column="audittime"/>
         <result property="status" column="kstatue"/>
         <result property="approvalStatus" column="statue"/>
         <result property="priceBegin" column="priceBegin"/>

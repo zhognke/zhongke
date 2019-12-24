@@ -1,5 +1,6 @@
 package com.example.busniess.search.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -38,10 +39,9 @@ public class EsDemandsModel extends EsModel implements Serializable {
     private String preInvestmentAmount;
 
     @Field(type = FieldType.Date)
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date endDate;
 
-    @Field(type = FieldType.Date)
-    private Date createTime;
     /**
      * 期望实现结果
      */
@@ -71,11 +71,6 @@ public class EsDemandsModel extends EsModel implements Serializable {
      */
     private String email;
     /**
-     * 需求更新时间
-     */
-    @Field(type=FieldType.Date)
-    private Date updateTime;
-    /**
      * 备注
      */
     private String remark;
@@ -96,7 +91,7 @@ public class EsDemandsModel extends EsModel implements Serializable {
     /**
      * 审批时间
      */
-    @Field(type=FieldType.Date)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date approvalTime;
     /**
      * 审批意见(原因)

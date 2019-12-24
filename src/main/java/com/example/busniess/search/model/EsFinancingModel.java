@@ -2,6 +2,7 @@ package com.example.busniess.search.model;
 
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.BusinessInformation;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -89,10 +90,6 @@ public class EsFinancingModel  extends EsModel implements Serializable {
     private Integer approvalStatus;//发布状态
     @Field(type = FieldType.Short)
     private Short status=0;//发布状态
-    @Field(type = FieldType.Date)
-    private Date insertTime;//插入时间
-    @Field(type = FieldType.Date)
-    private Date updateTiem;//更新时间
     private String reject;//驳回原因
     private BusinessInformation businessInformation;//关联企业补充信息
     private BusinessCenter businessCenter;//关联企业

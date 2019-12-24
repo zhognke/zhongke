@@ -4,6 +4,7 @@ import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.BusinessInformation;
 import com.example.busniess.entity.ImageAddress;
 import com.example.busniess.entity.Person;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -54,19 +55,11 @@ public class EsOccupancyModel extends EsModel implements Serializable {
     private String city;//市  9
     private String district;//区 ··10
 
-    @Field(type = FieldType.Date)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date stopTime;//停止发布时间（过期）
 
-    @Field(type = FieldType.Date)
-    private Date creatTime;//创建时间
-
-    @Field(type = FieldType.Date)
-    private Date upTiem;//修改时间
-
-    @Field(type = FieldType.Date)
-    private Date auditTime;//审核时间
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date approvalTime;//审核时间
 
     @Field(type = FieldType.Short)
     private Integer status;//用户的修改状态

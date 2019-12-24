@@ -90,27 +90,20 @@ public class EsIndustryDeclareModel extends EsModel implements Serializable {
     /**
      * 审批时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date approvalTime;
-    /**
-     * 创建时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date createTime;
-    /**
-     * 更新时间
-     */
+    @Field(type = FieldType.Date)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date updateTime;
+    private Date approvalTime;
     /**
      * 项目开始时间
      */
     @Field(type = FieldType.Date)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Integer startDate;
     /**
      * 项目结束时间
      */
     @Field(type = FieldType.Date)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Integer endDate;
     /**
      * 总投资

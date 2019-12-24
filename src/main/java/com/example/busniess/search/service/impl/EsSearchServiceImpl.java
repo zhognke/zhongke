@@ -25,9 +25,12 @@ public class EsSearchServiceImpl implements EsSearchService {
     private ElasticsearchTemplate elasticsearchTemplate;
 
     @Override
-    public Page<EsSearchModel> search(String keyword, Integer pageNum, Integer pageSize) {
+    public Page<EsSearchModel> search(String keyword, Integer pageNum, Integer pageSize,String indices) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+        if(StringUtils.isEmpty(indices)){
+            indices="demands,financial,occupancy,professional";//,talent,activities,news
+        }
         //多个字段匹配，只要满足一个即可返回结果
         if(!StringUtils.isEmpty(keyword)) {
             MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(keyword,
@@ -44,8 +47,8 @@ public class EsSearchServiceImpl implements EsSearchService {
 
 
         NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder().withPageable(pageable)
-                .withIndices("demands", "financial","occupancy","professional")
-                .withTypes("demands", "financial","occupancy","professional")
+                .withIndices(indices.split(","))
+                .withTypes(indices.split(","))
                 .withQuery(boolQueryBuilder);
 
         SearchQuery searchQuery = searchQueryBuilder.build();

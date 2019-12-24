@@ -180,7 +180,7 @@
                 and d.`company_name`=#{companyName}
             </if>
             <if test="keyWord!=null and keyWord!=''">
-                and (d.`demand_type` like CONCAT('%',#{keyWord},'%') or d.`demand_outline` like CONCAT('%',#{keyWord},'%') or d.`demand_content` like CONCAT('%',#{keyWord},'%'))
+                and (d.`demand_outline` like CONCAT('%',#{keyWord},'%'))
             </if>
         </where>
         order by create_time desc

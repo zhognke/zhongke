@@ -31,7 +31,7 @@
         <result property="ageLimit" column="agelimit"/>
         <result property="lunit" column="lunit"/>
         <result property="approvalStatus" column="statue"/>
-        <result property="insertTime" column="insertTime"/>
+        <result property="createTime" column="insertTime"/>
         <result property="updateTime" column="updateTime"/>
         <result property="reject" column="reject"/>
         <result property="title" column="projectname"/>

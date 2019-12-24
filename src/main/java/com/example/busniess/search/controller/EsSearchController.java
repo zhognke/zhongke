@@ -22,15 +22,15 @@ public class EsSearchController {
     @ApiOperation(value = "根据关键字搜索")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnResult search(String keyword, @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize){
-        return ReturnResult.success(esSearchService.search(keyword,pageNum,pageSize));
+    public ReturnResult search(String keyword, @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,String indices){
+        return ReturnResult.success(esSearchService.search(keyword,pageNum,pageSize,indices));
     }
 
     @ApiOperation(value = "根据关键字搜索")
     @RequestMapping(value = "/searchForCenter", method = RequestMethod.GET)
     @ResponseBody
-    public ReturnResult searchForCenter(String keyword, @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize){
-        return ReturnResult.success(esSearchService.search(keyword,pageNum,pageSize));
+    public ReturnResult searchForCenter(String keyword, @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize,String indices){
+        return ReturnResult.success(esSearchService.search(keyword,pageNum,pageSize,indices));
     }
 
 
