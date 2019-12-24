@@ -247,7 +247,10 @@ public class UserController {
     @RequestMapping("/checkStatus")
     public ReturnResult checkStatus(String username, Integer isPerson) {
         Integer status = UserServiceImpl.checkStatus(username, isPerson);
-        return ReturnResult.success(status);
+        if(status!=null){
+            return ReturnResult.success(status);
+        }
+        return ReturnResult.erro(CodeMsg.USER_NOT_EXISTS);
     }
 
 
