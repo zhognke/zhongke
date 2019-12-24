@@ -80,4 +80,15 @@ public class BusinessInformationAdminController {
 
         return ReturnResult.success(businessCenterServiceImpl.selectBusinessCenterNoinformation(1));
     }
+
+
+    /**
+     * 查看具体的企业认证补充信息
+     */
+
+   @RequestMapping("/selectBusinessInformationById")
+    public  ReturnResult selectBusinessInformationById(Integer id){
+        return  ReturnResult.success(businessInformationServiceImpl.selectBusinessInformationById(id));
+    }
+
 }

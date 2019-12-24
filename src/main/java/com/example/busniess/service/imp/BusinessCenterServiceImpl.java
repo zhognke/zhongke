@@ -7,6 +7,7 @@ import com.example.busniess.dao.UserDao;
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.Occupancy;
 import com.example.busniess.entity.Reject;
+import com.example.busniess.entity.User;
 import com.example.busniess.service.BusinessCenterService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -159,9 +160,20 @@ public class BusinessCenterServiceImpl implements BusinessCenterService {
      * @return
      */
     @Override
-    public List<BusinessCenter> selectBusinessCenterNoinformation(Integer statue) {
+    public List<User> selectBusinessCenterNoinformation(Integer statue) {
 
 
         return  businessCenterDao.selectBusinessCenterByStatue(statue);
+    }
+
+    /**
+     * 根据状态查询企业认证信息的关联账号
+     * @param statue
+     * @return
+     */
+    @Override
+    public List<User> selectBusinessCenter(Integer statue) {
+
+        return  businessCenterDao.selectBusinessCenterByStatueUser(statue);
     }
 }

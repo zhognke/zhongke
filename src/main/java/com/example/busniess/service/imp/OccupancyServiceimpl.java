@@ -215,6 +215,21 @@ public class OccupancyServiceimpl implements OccupancyService {
         return pageInfo;
     }
 
+    /**
+     * 后台检索
+     * @param occupancy
+     * @param pageNum
+     * @param pagesize
+     * @return
+     */
+    @Override
+    public PageInfo showByPageAdmin(Occupancy occupancy, Integer pageNum, Integer pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<Occupancy> o = occupancyDao.selectOccupancyAdminByIndustry(occupancy);
+        PageInfo pageInfo = new PageInfo(o);
+        return pageInfo;
+    }
+
     @Override
     public List<Occupancy> getHotIndustry(Integer size) {
         return occupancyDao.getHotIndustry(size);
@@ -331,5 +346,14 @@ public class OccupancyServiceimpl implements OccupancyService {
         return echart;
     }
 
-
+    /**
+     * 设置和取消热门行业
+     * @param hot
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean setAndresetHotOccupancy(String hot, Integer id) {
+        return occupancyDao.setOccupancyHot(hot,id);
+    }
 }

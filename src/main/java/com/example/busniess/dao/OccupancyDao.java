@@ -1,5 +1,7 @@
 package com.example.busniess.dao;
 
+import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.BusinessInformation;
 import com.example.busniess.entity.Occupancy;
 import org.apache.ibatis.annotations.*;
 import org.springframework.data.annotation.Id;
@@ -165,6 +167,14 @@ public interface OccupancyDao {
     public List<Occupancy> selectOccupancyByIndustry(Occupancy occupancy);
 
     /**
+     * 后台查询
+     * @param occupancy
+     * @return
+     */
+
+   public List<Occupancy> selectOccupancyAdminByIndustry(Occupancy occupancy);
+
+    /**
      * 查询饼状图
      *
      * @returnAND kstatue=1
@@ -226,10 +236,11 @@ public interface OccupancyDao {
     @Select("SELECT count(0) as id,DATE_FORMAT(creattime,#{format}) companyName FROM `occupancy` where kstatue =1 and statue =1 group by DATE_FORMAT(creattime,#{format}) limit #{size}")
     List<Occupancy> occupancyRiseTrend(String format, Integer size);
 
+
     /**
-     *
-     * @param id
-     * @return
+     * 设置为热门行业
      */
-//    public List<ImageAddress> selectimgAddress(Integer id);
+    @Update("UPDATE occupancy SET hot=#{hot} WHERE id=#{id}")
+    public  boolean setOccupancyHot(@Param("hot") String hot,@Param("id") Integer id);
+
 }

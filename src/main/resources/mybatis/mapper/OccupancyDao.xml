@@ -141,7 +141,7 @@
         <where>
             <include refid="OccupancyByIndustry_sql"></include>
         </where>
-        ORDER BY creattime DESC
+        ORDER BY creattime ${soft}
     </select>
 
 

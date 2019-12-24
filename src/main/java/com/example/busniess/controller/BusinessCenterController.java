@@ -66,50 +66,7 @@ public class BusinessCenterController {
         return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
     }
 
-    /**
-     * 驳回认证
-     */
-    @SysLog(value = "驳回企业认证", type = "企业认证")
-    @RequestMapping("/dismissTheCertification")
-    public ReturnResult dismissTheCertification(@Validated({UserValidator.InSet.class}) Reject reject) {
-        if (businessCenterServiceImpl.rejectAudit(reject)) {
-            //通知
 
-            BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(reject.getBId());
-            InformEntity informEntity = RabbitUtil.sendRabbic(businessCenter.getUName(), "提交的" + businessCenter.getFirmName() + "的企业认证被驳回了请重新认证", new Date());
-
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
-
-            return ReturnResult.success();
-        }
-        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
-    }
-
-    /**
-     * 审核通过
-     *
-     * @param id       企业信息id
-     * @param rid      角色
-     * @param userName 用户名
-     * @param statue   审核状态
-     * @param reId     驳回原因id
-     * @return
-     */
-    @SysLog(value = "审核企业认证-通过", type = "企业认证")
-    @RequestMapping("/passTheAudit")
-    public ReturnResult passTheAudit(@NotNull(message = "企业id不能为空") Integer id, @NotNull(message = "角色名不能为空") Integer rid, @NotNull(message = "用户名不能为空") String userName, @NotNull(message = "状态不能为空") Integer statue, @NotNull(message = "驳回原因id不能为空") Integer reId) {
-        if (businessCenterServiceImpl.updateAuditStatue(id, rid, userName, statue, reId)) {
-            //通知
-            BusinessCenter businessCenter = businessCenterDao.selectBussinessByid(id);
-            InformEntity informEntity = RabbitUtil.sendRabbic(userName, "提交的" + businessCenter.getFirmName() + "的企业认证已经通过", new Date());
-
-            rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
-
-
-            return ReturnResult.success();
-        }
-        return ReturnResult.erro(CodeMsg.SUBMIT_ERROR);
-    }
 
     /**
      * 查询所有企业认证信息

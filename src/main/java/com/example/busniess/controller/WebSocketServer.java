@@ -124,7 +124,7 @@ public class WebSocketServer {
      * @param informEntity
      * @throws IOException
      */
-  @RabbitListener(queues = RabbitUtil.USERKEY)
+
     public void sendtoUser(InformEntity informEntity) throws IOException, EncodeException {
 //用户在线就把信息推送给用户
         if (webSocketSet.get(informEntity.getUserName()) != null) {

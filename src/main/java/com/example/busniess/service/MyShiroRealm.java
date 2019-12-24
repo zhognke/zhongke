@@ -31,10 +31,10 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
 
         Set<String> set=UserServiceImpl.findMyRole(user.getUserName());//查询当前用户的角色
-        if(user.getUserName().contains("admin")){
-            set=UserServiceImpl.findAllRole();//vip赋予全部角色
-
-        }
+//        if(user.getUserName().contains("admin")){
+//            set=UserServiceImpl.findAllRole();//vip赋予全部角色
+//
+//        }
 
         AuthorizationInfo authorizationInfo=new SimpleAuthorizationInfo(set);//验证权限
 
@@ -51,6 +51,8 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws ShiroException {
+
+
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String userName = upToken.getUsername();//获取用户名
         User user = UserServiceImpl.findUserByName(userName);//根据名字获取用户对象

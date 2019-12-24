@@ -2,7 +2,9 @@ package com.example.busniess.config;
 
 
 import com.example.busniess.filter.ShiroSessionFilter;
+import com.example.busniess.service.AdministratorRealm;
 import com.example.busniess.service.MyShiroRealm;
+import com.example.busniess.shiroutil.CustomizedModularRealmAuthenticator;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
@@ -17,10 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Configuration
@@ -121,7 +120,6 @@ public class ShiroConfig {
         map.put("/talentDemand/**", "authc");
 
 
-
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
         shiroFilterFactoryBean.setLoginUrl("/needLogin");
@@ -137,9 +135,17 @@ public class ShiroConfig {
      * @return
      */
     @Bean("securityManager")
-    public SecurityManager securityManager(@Qualifier("myShiroRealm") MyShiroRealm myShiroRealm) {
+    public SecurityManager securityManager(@Qualifier("myShiroRealm") MyShiroRealm myShiroRealm,
+                                           @Qualifier("administratorRealm") AdministratorRealm administratorRealm,
+                                           @Qualifier("authenticator") CustomizedModularRealmAuthenticator authenticator) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm);
+        securityManager.setAuthenticator(authenticator);
+
+        List a = new ArrayList();
+        a.add(myShiroRealm);
+        a.add(administratorRealm);
+        securityManager.setRealms(a);
+//        securityManager.setRealm(myShiroRealm);
         securityManager.setSessionManager(sessionManager());
 //        securityManager.setCacheManager(cacheManager());
         return securityManager;
@@ -174,7 +180,7 @@ public class ShiroConfig {
         List a = new ArrayList();
         a.add(new ShiroSessionFilter());
         sessionManager.setSessionListeners(a);
-       sessionManager.setGlobalSessionTimeout(3600000);
+        sessionManager.setGlobalSessionTimeout(3600000);
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(sessionIdCookie());
         return sessionManager;
@@ -192,6 +198,33 @@ public class ShiroConfig {
         return myShiroRealm;
     }
 
+    @Bean("administratorRealm")
+    public AdministratorRealm creatAdminRealm(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher hashedCredentialsMatche) {
+        AdministratorRealm administratorRealm = new AdministratorRealm();
+        administratorRealm.setCredentialsMatcher(hashedCredentialsMatche);
+
+
+        return administratorRealm;
+    }
+
+    /**
+     * 自己的认证器
+     */
+    @Bean("authenticator")
+    public CustomizedModularRealmAuthenticator creatAuthenticator(@Qualifier("myShiroRealm") MyShiroRealm myShiroRealm,
+                                                                  @Qualifier("administratorRealm") AdministratorRealm administratorRealm) {
+
+        CustomizedModularRealmAuthenticator authenticator = new CustomizedModularRealmAuthenticator();
+        Map map = new HashMap();
+        map.put("user", myShiroRealm);
+        map.put("admin", administratorRealm);
+
+
+        authenticator.setDefinedRealms(map);
+        return authenticator;
+    }
+
+
     /**
      * 开启注解
      *
@@ -205,7 +238,7 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-//设置cook的名字
+    //设置cook的名字
     @Bean(name = "sessionIdCookie")
     public SimpleCookie sessionIdCookie() {
         SimpleCookie cookie = new SimpleCookie();

@@ -119,6 +119,7 @@ public interface OccupancyService {
      */
 
     PageInfo showByPage(Occupancy occupancy, Integer pageNum, Integer pagesize);
+    PageInfo showByPageAdmin(Occupancy occupancy, Integer pageNum, Integer pagesize);
 
     /**
      * 热门行业搜索
@@ -141,4 +142,8 @@ public interface OccupancyService {
     int getCounts();
 
     Map<String, Object> occupancyRiseTrend(String dateType, Integer size);
+/**
+ * 设置和取消热门行业
+ */
+public boolean setAndresetHotOccupancy(String hot,Integer id);
 }

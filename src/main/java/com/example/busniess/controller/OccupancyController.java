@@ -33,9 +33,9 @@ public class OccupancyController {
     //转义审核状态
     private String str;
     @Autowired
-    BusinessInformationService usinessInformationServiceImpl;
+    BusinessInformationService businessInformationServiceImpl;
     @Resource
-    OccupancyService occupancyServceImpl;
+    OccupancyService occupancyServiceImpl;
     @Autowired
     RabbitTemplate rabbitTemplate;
 
@@ -53,7 +53,7 @@ public class OccupancyController {
                     Occupancy occupancy) {
 
 
-        if (occupancyServceImpl.addOccupancy(occupancy)) {
+        if (occupancyServiceImpl.addOccupancy(occupancy)) {
             //通知
 
             InformEntity informEntity = RabbitUtil.sendRabbic(occupancy.getUserName(), "发布了" + occupancy.getResultTechnolo() + "待审核", new Date());
@@ -75,7 +75,7 @@ public class OccupancyController {
     @SysLog(value = "删除科技成果", type = "科技成果")
     @RequestMapping("/delectOccupancy")
     public ReturnResult delectOccupancy(@NotNull(message = "id号不能为空") Integer id) {
-        if (occupancyServceImpl.delectOccupancy(id)) {
+        if (occupancyServiceImpl.delectOccupancy(id)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.SERVER_ERROR);
@@ -98,7 +98,7 @@ public class OccupancyController {
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.NOT_HAVE_LIMITS);
         }
-        PageInfo o = occupancyServceImpl.selectMyOccupancy(occupancy, pageNumber, pageSize);
+        PageInfo o = occupancyServiceImpl.selectMyOccupancy(occupancy, pageNumber, pageSize);
         return ReturnResult.success(o);
     }
 
@@ -109,7 +109,7 @@ public class OccupancyController {
     public ReturnResult selectOneOccupancyById(
             @NotNull(message = "id号不能为空")
                     Integer id) {
-        Occupancy occupancy = occupancyServceImpl.seleOccupancyById(id);
+        Occupancy occupancy = occupancyServiceImpl.seleOccupancyById(id);
         return ReturnResult.success(occupancy);
     }
 
@@ -124,7 +124,7 @@ public class OccupancyController {
     public ReturnResult selectOnShowOccupancy(
             @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pageNum,
             @NotNull(message = "参数不能为空") @Min(value = 1, message = "传入值必须是数字且不能小于1") Integer pagesize) {
-        PageInfo pageInfo = occupancyServceImpl.selectOnShowOccupancy(pageNum, pagesize);
+        PageInfo pageInfo = occupancyServiceImpl.selectOnShowOccupancy(pageNum, pagesize);
         return ReturnResult.success(pageInfo);
     }
 
@@ -142,7 +142,7 @@ public class OccupancyController {
                                           Integer kStatue,
                                   @NotNull(message = "发布成果的id不能为空")
                                           Integer id) {
-        if (occupancyServceImpl.upDateKstatue(kStatue, id)) {
+        if (occupancyServiceImpl.upDateKstatue(kStatue, id)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
@@ -159,7 +159,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectBystatue")
     public ReturnResult selectBystatue(@NotNull(message = "状态值不能为空") Integer statue) {
-        return ReturnResult.success(occupancyServceImpl.seleOccupancyByStatue(statue));
+        return ReturnResult.success(occupancyServiceImpl.seleOccupancyByStatue(statue));
     }
 
     /**
@@ -180,10 +180,10 @@ public class OccupancyController {
         str = "审核驳回";}
 
 
-        if (occupancyServceImpl.updateStatue(statue, id, reject)) {
+        if (occupancyServiceImpl.updateStatue(statue, id, reject)) {
 //通知
 
-            Occupancy occupancy = occupancyServceImpl.seleOccupancyById(id);
+            Occupancy occupancy = occupancyServiceImpl.seleOccupancyById(id);
 
             InformEntity informEntity = RabbitUtil.sendRabbic(occupancy.getUserName(), occupancy.getResultTechnolo() + str, new Date());
             rabbitTemplate.convertAndSend(RabbitUtil.EXCHANGE, RabbitUtil.USERKEY, informEntity);
@@ -204,7 +204,7 @@ public class OccupancyController {
     @RequestMapping("/updateOccupancy")
     public ReturnResult updateOccupancy(@Validated({UserValidator.InSet.class})
                                                 Occupancy occupancy) {
-        if (occupancyServceImpl.updateOccupancy(occupancy)) {
+        if (occupancyServiceImpl.updateOccupancy(occupancy)) {
             return ReturnResult.success();
         }
 
@@ -220,7 +220,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectBrokenImg")
     public ReturnResult selectBrokenImg() {
-        Echarts echarts = occupancyServceImpl.returnBrokenImg();
+        Echarts echarts = occupancyServiceImpl.returnBrokenImg();
 
         return ReturnResult.success(echarts);
     }
@@ -232,7 +232,7 @@ public class OccupancyController {
      */
     @RequestMapping("/selectPieImg")
     public ReturnResult selectPieImg() {
-        Echarts echarts = occupancyServceImpl.returnPieImg();
+        Echarts echarts = occupancyServiceImpl.returnPieImg();
 
         return ReturnResult.success(echarts);
     }
@@ -260,7 +260,7 @@ public class OccupancyController {
         if (occupancy.getAttribute() != null) {
             occupancy.setAttribute(occupancy.getAttribute().replaceAll(",", "','"));
         }
-        return ReturnResult.success(occupancyServceImpl.showByPage(occupancy, pageNum, pageSize));
+        return ReturnResult.success(occupancyServiceImpl.showByPage(occupancy, pageNum, pageSize));
     }
 
     /**
@@ -279,7 +279,7 @@ public class OccupancyController {
         } else {
             occupancy.setUserName(userName);
         }
-        return ReturnResult.success(occupancyServceImpl.showByPageForCenter(occupancy, pageNum, pagesize));
+        return ReturnResult.success(occupancyServiceImpl.showByPageForCenter(occupancy, pageNum, pagesize));
     }
 
     /**
@@ -290,7 +290,7 @@ public class OccupancyController {
      */
     @GetMapping("/getHotIndustry")
     public ReturnResult getHotIndustry(@RequestParam(defaultValue = "6") Integer size) {
-        return ReturnResult.success(occupancyServceImpl.getHotIndustry(size));
+        return ReturnResult.success(occupancyServiceImpl.getHotIndustry(size));
     }
 
     /**
@@ -303,7 +303,7 @@ public class OccupancyController {
     @SysLog(value = "关闭科技成果-企业中心", type = "科技成果")
     @RequestMapping("/closeById")
     public ReturnResult closeById(@NotNull(message = "发布成果的id不能为空") Integer id, @NotNull(message = "关闭原因不能为空") String closeReason) {
-        if (occupancyServceImpl.closeById(id, closeReason)) {
+        if (occupancyServiceImpl.closeById(id, closeReason)) {
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
@@ -319,12 +319,14 @@ public class OccupancyController {
     @SysLog(value = "关闭科技成果-管理员", type = "科技成果")
     @RequestMapping("/closeByIdForManager")
     public ReturnResult closeByIdForManager(@NotNull(message = "发布成果的id不能为空") Integer id, @NotNull(message = "关闭原因不能为空") String closeReason) {
-        if (occupancyServceImpl.closeByIdForManager(id, closeReason)) {
+        if (occupancyServiceImpl.closeByIdForManager(id, closeReason)) {
+
             return ReturnResult.success();
         } else {
             return ReturnResult.erro(CodeMsg.ISSUE_ERROR);
         }
     }
+
 
 
 

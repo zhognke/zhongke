@@ -90,9 +90,8 @@ public class Occupancy implements Serializable {
     private String hot;//热门数据
 
 
+    private Person person;//用户类别1.私人2.个人
 
-    private  Person person;//用户类别1.私人2.个人
-
-
+    private String soft;//排序标识符
 
 }

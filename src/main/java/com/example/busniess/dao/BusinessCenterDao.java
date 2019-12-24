@@ -1,6 +1,7 @@
 package com.example.busniess.dao;
 
 import com.example.busniess.entity.BusinessCenter;
+import com.example.busniess.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -80,13 +81,21 @@ public interface BusinessCenterDao {
     public List<BusinessCenter> selectAllBusinessCenter(BusinessCenter businessCenter);
 
     /**
-     * 根据状态查询
+     * 根据状态查询没有填写企业认证信息的账号企业认证信息并通过的
      *
      * @param statue
      * @return
      */
-    @Select("SELECT * FROM businesscenter WHERE statue=#{statue} AND uname NOT in (SELECT uname FROM businessInformation  WHERE statue!=3) ORDER BY subtime desc")
-    public List<BusinessCenter> selectBusinessCenterByStatue(Integer statue);
+    @Select("SELECT u.* FROM businesscenter b INNER JOIN `user` u ON u.username=b.uname AND u.statue!=3 WHERE b.statue=#{statue} AND b.uname NOT in (SELECT uname FROM businessInformation  WHERE statue!=3) ORDER BY b.subtime desc")
+    public List<User> selectBusinessCenterByStatue(Integer statue);
+
+    /**
+     * 根据状态查询用户信息用户填写了企业认证信息并通过的
+     * @param statue
+     * @return
+     */
+    @Select("SELECT u.* FROM businesscenter b INNER JOIN `user` u ON u.username=b.uname AND u.statue!=3 WHERE b.statue=#{statue} and u. ORDER BY b.subtime desc")
+    public List<User> selectBusinessCenterByStatueUser(Integer statue);
 
     /**
      * 查看自己的
@@ -117,6 +126,7 @@ public interface BusinessCenterDao {
     BusinessCenter selectBussinessByUname(@Param("uname")String uname);
 
     List<BusinessCenter> search(BusinessCenter businessCenter);
+
 
 }
 

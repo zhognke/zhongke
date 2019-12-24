@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.busniess.dao.ManagerDao">
+
+
+    <sql id="manager_sql">
+        <if test="manage!=null and manage!=''">
+            `manage`=#{manage},
+        </if>
+        <if test="statue!=null and statue!=''">
+            `statue`=#{statue},
+        </if>
+
+    </sql>
+<!-- 按条件搜索管理员账号-->
+    <select id="selectManager" parameterType="manager" resultType="manager">
+        SELECT * from manager
+        <where>
+            <include refid="manager_sql"></include>
+        </where>
+    </select>
+
+</mapper>

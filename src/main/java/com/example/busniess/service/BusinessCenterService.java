@@ -3,6 +3,7 @@ package com.example.busniess.service;
 
 import com.example.busniess.entity.BusinessCenter;
 import com.example.busniess.entity.Reject;
+import com.example.busniess.entity.User;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -67,5 +68,11 @@ public interface BusinessCenterService {
     /**
      * 根据状态查询企业中心并且没有填写企业认证补充信息的
      */
-public List<BusinessCenter> selectBusinessCenterNoinformation(Integer sattue);
+public List<User> selectBusinessCenterNoinformation(Integer statue);
+
+
+/**
+ * 根据状态查询企业认证信息
+ */
+public  List<User>  selectBusinessCenter(Integer statue);
 }

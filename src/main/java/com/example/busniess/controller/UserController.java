@@ -12,6 +12,7 @@ import com.example.busniess.service.BusinessCenterService;
 import com.example.busniess.service.ForgetPassword;
 import com.example.busniess.service.UserService;
 import com.example.busniess.service.imp.MsendMailServiceImpl;
+import com.example.busniess.shiroutil.UsernamePasswordByUserTypeToken;
 import com.example.busniess.utiles.EmailUtiles;
 import com.example.busniess.utiles.Md5Utiles;
 import com.example.busniess.validator.UserValidator;
@@ -100,7 +101,7 @@ public class UserController {
             return ReturnResult.success(map);
         }
 
-        UsernamePasswordToken up = new UsernamePasswordToken(userName, password);
+        UsernamePasswordByUserTypeToken up = new UsernamePasswordByUserTypeToken(userName, password,"user");
 
 
 
