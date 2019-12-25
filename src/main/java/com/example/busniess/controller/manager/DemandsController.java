@@ -43,6 +43,7 @@ public class DemandsController {
     @SysLog(value="新增企业需求",type="企业需求")
     @PostMapping("/addDemands")
     public ReturnResult addDemands(@Validated({UserValidator.InSet.class}) DemandsEntity demandsEntity) {
+        demandsEntity.setApprovalStatus(1);
         if (demandsService.insert(demandsEntity)) {
             return ReturnResult.success();
         } else {

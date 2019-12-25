@@ -26,20 +26,20 @@ public interface TalentDemandService {
      * @param talentDemandEntity
      * @return
      */
-    public List<TalentDemandEntity> search(TalentDemandEntity talentDemandEntity);
+    List<TalentDemandEntity> search(TalentDemandEntity talentDemandEntity);
 
     /**
      * 分页查询显示
      * @return
      */
-    public PageInfo showByPage(TalentDemandEntity talentDemandEntity, Integer pageNum, Integer pageSize);
+    PageInfo showByPage(TalentDemandEntity talentDemandEntity, Integer pageNum, Integer pageSize);
 
     /**
      * 根据id查找
      * @param id
      * @return
      */
-    public TalentDemandEntity selectById(Integer id);
+    TalentDemandEntity selectById(Integer id);
     /**
      * 根据id查找_新
      * @param id
@@ -52,28 +52,28 @@ public interface TalentDemandService {
      * @param talentDemandEntity
      * @return
      */
-    public boolean add(TalentDemandEntity talentDemandEntity);
+    boolean add(TalentDemandEntity talentDemandEntity);
 
     /**
      * 根据id逻辑删除
      * @param id
      * @return
      */
-    public boolean delectById(Integer id);
+    boolean delectById(Integer id);
 
     /**
      * 根据id彻底删除
      * @param id
      * @return
      */
-    public boolean realDeleteById(Integer id);
+    boolean realDeleteById(Integer id);
 
     /**
      * 更新
      * @param talentDemandEntity
      * @return
      */
-    public boolean update(TalentDemandEntity talentDemandEntity);
+    boolean update(TalentDemandEntity talentDemandEntity);
 
 
     /**
@@ -82,7 +82,7 @@ public interface TalentDemandService {
      * @param status
      * @return
      */
-    public boolean updateStatus(Integer id, Integer status,String userName);
+    boolean updateStatus(Integer id, Integer status,String userName);
 
 
     /**
@@ -91,7 +91,7 @@ public interface TalentDemandService {
      * @param approvalStatus
      * @return
      */
-    public boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion);
+    boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion);
 
     boolean closeDemands(Integer id,String closeReason);
 
@@ -106,5 +106,7 @@ public interface TalentDemandService {
     int getCounts();
 
     Map<String, Object> demandsRiseTrend(String type, Integer size);
+
+    boolean updateHot(Integer id, Integer isHot);
 }
 

@@ -19,9 +19,9 @@ public interface InnovationActivitiesDao {
     * @return
     */
     @Insert("insert into innovation_activities " +
-            "(activities_topic,activities_content,activities_type,organizers,contractors,co_organizers,start_time,end_time,province,city,district,img_addrs,status,create_time)" +
+            "(activities_topic,activities_content,activities_type,organizers,contractors,co_organizers,start_time,end_time,province,city,district,address,img_addrs,status,create_time)" +
             " values (#{activitiesTopic},#{activitiesContent},#{activitiesType},#{organizers},#{contractors},#{coOrganizers},#{startTime},#{endTime}," +
-            "#{province},#{city},#{district},#{imgAddrs},#{status},now())")
+            "#{province},#{city},#{district},#{address},#{imgAddrs},#{status},now())")
     public boolean insert(InnovationActivitiesEntity innovationActivitiesEntity);
     /**
     * 逻辑删除
@@ -48,7 +48,7 @@ public interface InnovationActivitiesDao {
     */
     @Update("update innovation_activities set activities_topic=#{activitiesTopic},activities_content=#{activitiesContent},activities_type=#{activitiesType},organizers=#{organizers}," +
             "contractors=#{contractors},co_organizers=#{coOrganizers},start_time=#{startTime},end_time=#{endTime},province=#{province},city=#{city},district=#{district}," +
-            "img_addrs=#{imgAddrs},status=#{status} where id = #{id}")
+            "address=#{address},img_addrs=#{imgAddrs},status=#{status} where id = #{id}")
     public boolean updateByID(InnovationActivitiesEntity innovationActivitiesEntity);
 
     /**
@@ -63,7 +63,7 @@ public interface InnovationActivitiesDao {
     * 根据id查找
     * @return
     */
-    @Select("select id,activities_topic,activities_content,activities_type,organizers,contractors,co_organizers,start_time,end_time,province,city,district,img_addrs,status,create_time,update_time,del_flag " +
+    @Select("select id,activities_topic,activities_content,activities_type,organizers,contractors,co_organizers,start_time,end_time,province,city,district,address,img_addrs,status,create_time,update_time,del_flag " +
             "from innovation_activities where id = #{id}")
     public InnovationActivitiesEntity selectByID(@Param("id")Integer id);
     /**

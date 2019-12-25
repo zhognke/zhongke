@@ -4,7 +4,9 @@
 <mapper namespace="com.example.busniess.dao.ProfessionalsDao">
 
     <sql id="columnNames">
-        id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail,outstanding_contribution,research_direction,introduced,phone_num,icon_address,certificate_address,status,approval_status,approval_opinion,approval_time,create_time,update_time,del_flag
+        id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail,
+        outstanding_contribution,research_direction,introduced,phone_num,icon_address,certificate_address,status,approval_status,approval_opinion,approval_time,
+        create_time,update_time,is_hot,is_top,sort,del_flag
     </sql>
 
     <update id="updateById" parameterType="professionalsEntity">
@@ -114,6 +116,12 @@
         </if>
         <if test="approvalStatus!=null">
             and approval_status=#{approvalStatus}
+        </if>
+        <if test="orderField!=null and orderField!=''">
+            order by ${orderField}
+        </if>
+        <if test="orderType!=null and orderType!=''">
+            ${orderType}
         </if>
     </select>
 

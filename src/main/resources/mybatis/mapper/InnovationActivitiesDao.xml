@@ -4,7 +4,7 @@
 <mapper namespace="com.example.busniess.dao.InnovationActivitiesDao">
 
     <sql id="columnNames">
-         id,activities_topic,activities_content,activities_type,organizers,contractors,co_organizers,start_time,end_time,province,city,district,img_addrs,status,create_time,update_time,del_flag
+         id,activities_topic,activities_content,activities_type,organizers,contractors,co_organizers,start_time,end_time,province,city,district,address,img_addrs,status,create_time,update_time,del_flag
     </sql>
 
     <select id="search" resultType="innovationActivitiesEntity" parameterType="innovationActivitiesEntity">

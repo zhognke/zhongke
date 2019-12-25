@@ -3,6 +3,8 @@ package com.example.busniess.search.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -65,6 +67,11 @@ public class EsInnovationActivitiesModel extends EsModel implements Serializable
      * 区县
      */
     private String district;
+    /**
+     * 详细地址
+     */
+    @Field(type= FieldType.Text)
+    private String address;
     /**
      * 活动图片地址(多个图片用","隔开)
      */

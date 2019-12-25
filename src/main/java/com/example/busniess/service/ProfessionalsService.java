@@ -1,8 +1,7 @@
 package com.example.busniess.service;
 
-import com.example.busniess.resultpackage.ReturnResult;
-import com.github.pagehelper.PageInfo;
 import com.example.busniess.entity.ProfessionalsEntity;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -19,67 +18,67 @@ public interface ProfessionalsService {
     * 查询所有
     * @return
     */
-    public List<ProfessionalsEntity> selectAll();
+    List<ProfessionalsEntity> selectAll();
 
     /**
      * 根据条件查询
      * @param professionalsEntity
      * @return
      */
-    public List<ProfessionalsEntity> search(ProfessionalsEntity professionalsEntity);
+    List<ProfessionalsEntity> search(ProfessionalsEntity professionalsEntity);
 
     /**
      * 分页查询显示
      * @return
      */
-    public PageInfo showByPage(ProfessionalsEntity professionalsEntity, Integer pageNum, Integer pageSize);
+    PageInfo showByPage(ProfessionalsEntity professionalsEntity, Integer pageNum, Integer pageSize);
 
     /**
      * 根据id查找
      * @param id
      * @return
      */
-    public ProfessionalsEntity selectById(Integer id);
+    ProfessionalsEntity selectById(Integer id);
 
     /**
      * 根据id查找_新
      * @param id
      * @return
      */
-    public ProfessionalsEntity selectById(Integer id,Integer size);
+    ProfessionalsEntity selectById(Integer id,Integer size);
 
     /**
      * 新增
      * @param professionalsEntity
      * @return
      */
-    public boolean add(ProfessionalsEntity professionalsEntity);
+    boolean add(ProfessionalsEntity professionalsEntity);
 
     /**
      * 根据id逻辑删除
      * @param id
      * @return
      */
-    public boolean deleteById(Integer id);
+    boolean deleteById(Integer id);
     /**
      * 批量删除
      * @param ids
      * @return
      */
-    public boolean deleteBatch(String ids);
+    boolean deleteBatch(String ids);
     /**
      * 根据id彻底删除
      * @param id
      * @return
      */
-    public boolean realDeleteById(Integer id);
+    boolean realDeleteById(Integer id);
 
     /**
      * 更新
      * @param professionalsEntity
      * @return
      */
-    public boolean update(ProfessionalsEntity professionalsEntity);
+    boolean update(ProfessionalsEntity professionalsEntity);
 
 
     /**
@@ -88,7 +87,7 @@ public interface ProfessionalsService {
      * @param status
      * @return
      */
-    public boolean updateStatus(Integer id, Integer status);
+    boolean updateStatus(Integer id, Integer status);
 
 
     /**
@@ -97,12 +96,16 @@ public interface ProfessionalsService {
      * @param approvalStatus
      * @return
      */
-    public boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion);
+    boolean updateApprovalStatus(Integer id, Integer approvalStatus, String approvalOpinion);
 
     boolean closeById(Integer id, String closeReason);
 
     boolean closeByIdForManager(Integer id, String closeReason);
 
     PageInfo showHot(Integer pageNum, Integer pageSize);
+
+    boolean updateHot(Integer id, Integer isHot);
+
+    boolean updateTop(Integer id, Integer isTop);
 }
 

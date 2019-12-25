@@ -141,6 +141,7 @@ public class DemandsController {
      */
     @PostMapping("/addDemands")
     public ReturnResult addDemands(@Validated({UserValidator.InSet.class}) DemandsEntity demandsEntity) {
+        demandsEntity.setApprovalStatus(0);
         if (demandsService.insert(demandsEntity)) {
             //通知
             InformEntity informEntity= RabbitUtil.sendRabbic(demandsEntity.getUserName(),"提交了" + demandsEntity.getDemandOutline() + "的企业需求",new Date());
