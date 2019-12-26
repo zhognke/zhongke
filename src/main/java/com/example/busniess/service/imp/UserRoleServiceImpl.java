@@ -1,26 +1,60 @@
 package com.example.busniess.service.imp;
 
+import com.example.busniess.dao.UserDao;
 import com.example.busniess.dao.UserRroleDao;
+import com.example.busniess.entity.User;
 import com.example.busniess.entity.UserRole;
 import com.example.busniess.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Service
 public class UserRoleServiceImpl implements UserRoleService {
 
 
     @Autowired
     UserRroleDao userRroleDao;
+    @Autowired
+    UserDao userDao;
     /**
      * 新建角色关联关系
-     * @param userRole
+     * @param userRoles
      * @return
      */
     @Override
-    public boolean insertUserRoler(UserRole userRole) {
+    @Transactional
+    public boolean insertUserRoler(List<UserRole> userRoles) {
 
-        return userRroleDao.insertRolerUser(userRole);
+        //1.获取用户名
+        String userName = userRoles.get(0).getUserName();
+  List<UserRole>  list= userRroleDao.selectUserRoleByUserName(userName);
+
+        //2.根据用户名删除对应关系
+        if (list!=null||list.size()!=0){
+            userRroleDao.delectUserRolerByUserName(userName);
+        }
+        //3.如果角色名或者
+
+        String roleName=userRoles.get(0).getRole();
+        if(roleName==null||roleName==""){
+            return true;
+        }
+        roleName="";
+        for(UserRole userRoler : userRoles ){
+            roleName+=userRoler.getRole()+"|";
+        }
+        //获取角色名 rolename
+        User user=new User();
+        user.setUserRole(roleName);
+        user.setUserName(userName);
+
+       if(userDao.updateUserRole(user)) {
+           return userRroleDao.insertRolerUser(userRoles);
+       }
+
+        return false;
     }
 
     /**
@@ -29,21 +63,23 @@ public class UserRoleServiceImpl implements UserRoleService {
      * @return
      */
     @Override
-    public boolean upUserRoler(UserRole userRole) {
+    public boolean upUserRoler(List<UserRole> userRole) {
 
 
         return userRroleDao.upRoler(userRole);
     }
 
+
+
     /**
      * 删除角色
-     * @param id
+     * @param ids
      * @return
      */
     @Override
-    public boolean delectUserroler(Integer id) {
-
-        return userRroleDao.delectRoler(id);
+    public boolean delectUserroler(List<Integer> ids) {
+//        userRroleDao.delectUserRoler(ids);
+       return  false;
     }
 
     /**

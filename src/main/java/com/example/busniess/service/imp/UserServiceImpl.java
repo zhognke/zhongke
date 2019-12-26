@@ -52,6 +52,17 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 查看所有用户后台检索
+     * @param user
+     * @return
+     */
+    @Override
+    public List<User> selectAdminUser(User user) {
+
+        return userDao.selectUserByAdmin(user);
+    }
+
+    /**
      * 查询所有用户
      *
      * @return

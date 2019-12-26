@@ -17,13 +17,13 @@ public interface RolerDao {
      * @return
      */
 
-    @Insert("INSERT INTO `roler` (`rolename`, `state`) VALUES (#{rolename}, 1)")
+    @Insert("INSERT INTO `roler` (`rolename`, `state`,`dscription`) VALUES (#{rolename}, 1,#{dscription})")
     public boolean insertRoler(Roler roler);
 
     /**
      * 修改角色
      */
-    @Update("UPDATE `roler` SET `rolename`=#{rolename} WHERE (`id`=#{id})")
+    @Update("UPDATE `roler` SET `rolename`=#{rolename} ,`dscription`=#{dscription} WHERE (`id`=#{id})")
     public Boolean upInsertRoler(Roler roler);
 
     /**

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.ManagerRoler">
+
+
+    <sql id="ManagerRoler_sql">
+        <if test="rid!=null and rid!=''">
+            `rid`=#{rid}
+
+        </if>
+        <if test="manager!=null and manager!=''">
+            AND `manager`=#{manager}
+        </if>
+        <if test="roler!=null and roler!=''">
+            AND `role`=#{role}
+        </if>
+
+    </sql>
+
+    <!--批量插入数据-->
+    <insert id="insertManagerRoler" parameterType="ManagerRoler">
+        INSERT INTO `manager_roler` (`rid`, `manager`, `roler`) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.rid}, #{item.manager}, #{item.roler}
+            )
+        </foreach>
+
+
+    </insert>
+<!--修改关系-->
+    <update id="updateManagerRoler" parameterType="ManagerRoler">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";"> 
+                    UPDATE `manager_roler`
+                      <set> 
+                     `rid`=#{item.rid}, `manager`=#{item.manager}, `roler`=#{item.roler}
+                      </set> 
+                      where (`id`=#{item.id})             
+        </foreach>
+         
+    </update>
+
+<!--批量删除-->
+    <delete id="delectManagerRoler" parameterType="int">
+
+        DELETE FROM `manager_roler` WHERE `id` in
+        <foreach item="ids" collection="list" index="no" open="(" separator="," close=")">
+            #{ids.id}
+        </foreach>
+    </delete>
+
+
+
+    <!--    查看所有-->
+    <select id="selectManagerRoler" resultType="ManagerRoler" parameterType="ManagerRoler">
+        SELECT * FROM `manager_roler`
+        <where>
+            <include refid="ManagerRoler_sql"></include>
+        </where>
+    </select>
+
+</mapper>

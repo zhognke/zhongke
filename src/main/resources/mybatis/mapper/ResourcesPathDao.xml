@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.ResourcesPath">
+
+
+    <sql id="resourcesPath_sql">
+        <if test="rid!=null and rid!=''">
+            `id`=#{id}
+
+        </if>
+        <if test="userName!=null and userName!=''">
+            AND `path`=#{path}
+        </if>
+        <if test="role!=null and role!=''">
+            AND `alias`=#{alias}
+        </if>
+
+    </sql>
+
+    <!--批量插入数据-->
+    <insert id="insertRolerUser" parameterType="resourcesPath">
+
+        INSERT INTO `resourcesPath` (`path`, `explain`, `alias`) VALUES
+
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.path}, #{item.explain}, #{item.alias}
+            )
+        </foreach>
+
+
+    </insert>
+<!--修改关系-->
+    <update id="upRoler" parameterType="resourcesPath">
+         
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";"> 
+                   UPDATE `resourcesPath`
+                      <set> 
+                        `path`=#{item.path},`explain`=#{item.explain}, `alias`=#{item.alias}
+                      </set> 
+                      where (`id`=#{item.id})             
+        </foreach>
+         
+    </update>
+
+<!--批量删除-->
+    <delete id="delectRoler" parameterType="int">
+
+        DELETE FROM `resourcesPath` WHERE `id` in
+        <foreach item="ids" collection="list" index="no" open="(" separator="," close=")">
+            #{ids.id}
+        </foreach>
+    </delete>
+
+
+
+
+
+    <!--    查看所有-->
+    <select id="selectAllUserRole" resultType="userRole" parameterType="userRole">
+        SELECT * FROM `resourcesPath`
+        <where>
+            <include refid="resourcesPath_sql"></include>
+        </where>
+    </select>
+
+</mapper>

@@ -16,7 +16,7 @@ public interface ManagerDao {
      */
 
 
-    @Insert("INSERT INTO `manager` (`manage`, `creattime`, `statue`, `role`, `identifier`) VALUES (#{manage}, NOW(), 1, '1', 1)")
+    @Insert("INSERT INTO `manager` (`manage`, `creattime`, `statue`, `role`, `identifier`,`password`) VALUES (#{manage}, NOW(), 1, '1', 1,#{password})")
     public Boolean insertManager(Manager manager);
 
     /**
@@ -29,7 +29,7 @@ public interface ManagerDao {
     /**
      * 修改
      */
-    @Update("UPDATE `manager` SET `manage`=#{manage}, `uptime`=NOW(), `statue`=#{atatue}, `role`=#{role}, `identifier`=#{identifier} WHERE (`id`=#{id})")
+    @Update("UPDATE `manager` SET `manage`=#{manage}, `password`=#{password}, `uptime`=NOW(), `statue`=#{statue}, `role`=#{role}, `identifier`=#{identifier} WHERE (`id`=#{id})")
     public Boolean upDateManager(Manager manager);
 
 

@@ -13,7 +13,7 @@
         <result property="email" column="email"/>
 
 
-        <association property="businessCenter" column="businessCenter" javaType="businessCenter" >
+        <association property="businessCenter" column="businessCenter" javaType="businessCenter">
             <id property="id" column="id"/>
             <result property="uName" column="uName"/>
             <result property="firmName" column="firmName"/>
@@ -31,7 +31,6 @@
     </resultMap>
 
 
-
     <sql id="user_sql">
         <if test="userName!=null and userName!=''">
             `username`=#{userName},
@@ -47,7 +46,7 @@
         </if>
 
     </sql>
-<!--更新用户信息-->
+    <!--更新用户信息-->
     <update id="updateUser" parameterType="user">
         UPDATE `user`
         <set>
@@ -57,9 +56,9 @@
     </update>
 
     <!--    后台搜索-->
-    <sql id="adminSearch" >
+    <sql id="adminSearch">
         <if test="statue!=null and statue!=''">
-           ANDb.`statue`=#{statue}
+            ANDb.`statue`=#{statue}
         </if>
         <if test="firmName!=null and firmName!=''">
             AND b.`firmName`=#{firmName}
@@ -93,12 +92,12 @@
         </if>
 
         <if test="keyWord!=null and keyWord!=''">
-            AND (u.`username` like CONCAT('%',#{keyWord},'%') or b.`societyCode` like CONCAT('%',#{keyWord},'%') or b.`persionCode` like CONCAT('%',#{keyWord},'%'))
+            AND (u.`username` like CONCAT('%',#{keyWord},'%') or b.`societyCode` like CONCAT('%',#{keyWord},'%') or
+            b.`persionCode` like CONCAT('%',#{keyWord},'%'))
         </if>
     </sql>
 
     <!--    按账号、统一社会信用代码、税务登记号、账号模糊查询检索，点击查询则可筛选该字段类型展示-->
-
 
 
     <!--    企业名 firmName//-->
@@ -115,7 +114,7 @@
     -->
 
 
-<!--搜索企业-->
+    <!--搜索企业-->
     <select id="selectUserByConditionB" parameterType="businesscenter" resultMap="userb">
         SELECT u.id i, u.vip,u.statue s ,b.* FROM `user` u INNER JOIN businesscenter b ON u.username=b.uname
         AND u.statue!=3
@@ -127,23 +126,22 @@
         ORDER BY u.inserttime #{sort}
     </select>
 
-<!--搜索个人-->
+    <!--搜索个人-->
 
-<!--
-姓名：name
-工作单位;unit
-工作地点：province省city市
-从事行业：territory
-是否是vip：vip
-用户状态：statue
-注册时间：inserttime
-关键词：keyword
+    <!--
+    姓名：name
+    工作单位;unit
+    工作地点：province省city市
+    从事行业：territory
+    是否是vip：vip
+    用户状态：statue
+    注册时间：inserttime
+    关键词：keyword
 
-  -->
+      -->
 
 
-
-    <sql id="personSearch" >
+    <sql id="personSearch">
         <if test="name!=null and name!=''">
             p.`name`=#{name}
         </if>
@@ -181,42 +179,64 @@
         </if>
 
         <if test="keyWord!=null and keyWord!=''">
-            AND (u.`username` like CONCAT('%',#{keyWord},'%') or p.`post` like CONCAT('%',#{keyWord},'%') or p.`telephone` like CONCAT('%',#{keyWord},'%'))
+            AND (u.`username` like CONCAT('%',#{keyWord},'%') or p.`post` like CONCAT('%',#{keyWord},'%') or
+            p.`telephone` like CONCAT('%',#{keyWord},'%'))
         </if>
     </sql>
-<!--    账号、职位、联系电话模糊查询-->
+    <!--    账号、职位、联系电话模糊查询-->
 
 
-<resultMap id="userp" type="user">
-    <id property="id" column="i"/>
-   <result property="vip" column="vip"></result>
-    <result property="email" column="email"></result>
-    <result property="statue" column="s"></result>
-    <association property="person" javaType="person">
-                    <id property="id" column="id"/>
-                    <result property="uName" column="uName"/>
-                    <result property="name" column="name"/>
-                    <result property="unit" column="unit"/>
-                    <result property="province" column="province"/>
-                    <result property="city" column="city"/>
-                    <result property="territory" column="territory"/>
-                    <result property="post" column="post"/>
-                    <result property="telephone" column="telephone"/>
-                    <result property="statue" column="statue"/>
-                    <result property="inserttime" column="inserttime"/>
-                    <result property="updatetime" column="updatetime"/>
-    </association>
+    <resultMap id="userp" type="user">
+        <id property="id" column="i"/>
+        <result property="vip" column="vip"></result>
+        <result property="email" column="email"></result>
+        <result property="statue" column="s"></result>
+        <association property="person" javaType="person">
+            <id property="id" column="id"/>
+            <result property="uName" column="uName"/>
+            <result property="name" column="name"/>
+            <result property="unit" column="unit"/>
+            <result property="province" column="province"/>
+            <result property="city" column="city"/>
+            <result property="territory" column="territory"/>
+            <result property="post" column="post"/>
+            <result property="telephone" column="telephone"/>
+            <result property="statue" column="statue"/>
+            <result property="inserttime" column="inserttime"/>
+            <result property="updatetime" column="updatetime"/>
+        </association>
 
-</resultMap>
+    </resultMap>
 
-<!--搜索个人信息-->
-    <select id="selectUserByConditionP" parameterType="person" resultMap="userp" >
-        SELECT u.id i , u.vip,u.statue s,u.email,p.* FROM `user` u INNER JOIN `person` p ON u.username=p.uname  AND u.statue!=3
+    <!--搜索个人信息-->
+    <select id="selectUserByConditionP" parameterType="person" resultMap="userp">
+        SELECT u.id i , u.vip,u.statue s,u.email,p.* FROM `user` u INNER JOIN `person` p ON u.username=p.uname AND
+        u.statue!=3
         <where>
             <include refid="personSearch"></include>
         </where>
         ORDER BY u.inserttime #{sort}
 
+    </select>
+
+    <sql id="admin_sql">
+        <if test="userName!=null and userName!=''">
+            and `userName`=#{userName}
+        </if>
+        <if test="persion!=null and persion!=''">
+            and `persion`=#{persion}
+        </if>
+        <if test="statue!=null and statue!=''">
+            and `statue`=#{statue}
+        </if>
+    </sql>
+    <!--根据条件查询用户-->
+    <select id="selectUserByAdmin" parameterType="user" resultType="user">
+        SELECT * FROM `user`
+        <where>
+            `statue`!=3
+            <include refid="admin_sql"></include>
+        </where>
     </select>
 
 

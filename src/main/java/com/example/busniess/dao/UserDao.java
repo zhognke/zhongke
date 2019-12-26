@@ -66,6 +66,15 @@ public interface UserDao {
     @Update("UPDATE `user` SET  `password`=#{password} WHERE `username`=#{userName} OR `email`=#{userName}")
     public Boolean updatPassword(User user);
 
+    /**
+     * 根据名字更改用角色
+     */
+    @Update("UPDATE `user` SET  `userRole`=#{userRole} WHERE `username`=#{userName}" )
+    public  boolean updateUserRole(User user);
+
+
+
+
 
     /**
      * 查询当前用户所有的角色
@@ -83,6 +92,9 @@ public interface UserDao {
      */
     @Select("SELECT `rolename` FROM `roler` WHERE state=1")
     public Set<String> findAllRole();
+
+
+
 
 
 
@@ -109,5 +121,17 @@ public interface UserDao {
      */
 
     public  List<User> selectUserByConditionP(Person person);
+
+    /**
+     * 根据条件显示用户
+     * 后台用 的方法
+     * @param user
+     * @return
+     */
+
+    public  List<User> selectUserByAdmin(User user);
+
+
+
 
 }

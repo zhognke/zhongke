@@ -31,5 +31,5 @@ public interface ManagerService {
 /**
  * 按条件查看
  */
-public List<Manager> selectManager(Manager manager);
+public List<Manager> selectManagerBycondition(Manager manager);
 }

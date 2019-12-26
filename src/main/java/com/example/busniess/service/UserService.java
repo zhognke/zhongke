@@ -59,4 +59,9 @@ public  PageInfo searchPerson(Person person,Integer pageNumber,Integer pageSize)
      */
     public User findAllUserByName(String userName);
 
+
+    /**
+     * 查看后台检索用户
+     */
+public List<User> selectAdminUser(User user);
 }

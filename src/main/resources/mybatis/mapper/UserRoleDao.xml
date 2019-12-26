@@ -17,7 +17,44 @@
         </if>
 
     </sql>
-<!--    查看所有-->
+
+    <!--批量插入数据-->
+    <insert id="insertRolerUser" parameterType="userRole">
+        INSERT INTO `user_role` (`rid`, `username`, `role`) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.rid}, #{item.userName}, #{item.role}
+            )
+        </foreach>
+
+    </insert>
+<!--修改关系-->
+<!--    <update id="upRoler" parameterType="userRole">-->
+<!--         -->
+<!--        <foreach collection="list" item="item" index="index" open="" close="" separator=";"> -->
+<!--                   UPDATE `user_role`-->
+<!--                      <set> -->
+<!--                        `rid`=#{item.rid},`username`=#{item.userName}, `role`=#{item.role}-->
+<!--                      </set> -->
+<!--                      where (`id`=#{item.id})             -->
+<!--        </foreach>-->
+<!--         -->
+<!--    </update>-->
+
+<!--批量删除-->
+    <delete id="delectUserRoler" parameterType="int">
+
+        DELETE FROM `user_role` WHERE `id` in
+        <foreach item="ids" collection="list" index="no" open="(" separator="," close=")">
+            #{ids.id}
+        </foreach>
+    </delete>
+
+
+
+
+
+    <!--    查看所有-->
     <select id="selectAllUserRole" resultType="userRole" parameterType="userRole">
         SELECT * FROM user_role
         <where>

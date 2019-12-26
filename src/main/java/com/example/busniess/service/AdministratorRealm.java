@@ -51,10 +51,10 @@ public class AdministratorRealm extends AuthorizingRealm {
         String manage = upToken.getUsername();//获取用户名
 
 
-     Manager manager=   managerDao.selectManagerByManage(manage);
+        Manager manager=   managerDao.selectManagerByManage(manage);
 
         if(manager==null) {
-         throw new UnknownAccountException("用户不存在");
+            throw new UnknownAccountException("用户不存在");
         }
 
 

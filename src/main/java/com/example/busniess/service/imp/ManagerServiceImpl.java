@@ -8,9 +8,10 @@ import com.example.busniess.resultpackage.CodeMsg;
 import com.example.busniess.service.ManagerService;
 import com.example.busniess.utiles.Md5Utiles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ManagerServiceImpl implements ManagerService {
     @Autowired
             ManagerDao managerDao;
@@ -76,7 +77,7 @@ public class ManagerServiceImpl implements ManagerService {
      * @return
      */
     @Override
-    public List<Manager> selectManager(Manager manager) {
+    public List<Manager> selectManagerBycondition(Manager manager) {
         return managerDao.selectManager(manager);
     }
 }
