@@ -179,4 +179,8 @@ public class ProfessionalsEntity implements Serializable {
      * 拼音
      */
     private String pinYin;
+
+    private String orderField;  //排序字段
+
+    private String orderType;   //排序方式
 }

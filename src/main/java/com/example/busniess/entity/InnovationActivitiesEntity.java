@@ -85,6 +85,10 @@ public class InnovationActivitiesEntity implements Serializable {
     @NotNull(message = "区县不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String district;
     /**
+     * 详细地址
+     */
+    private String address;
+    /**
      * 活动图片地址(多个图片用","隔开)
      */
     private String imgAddrs;

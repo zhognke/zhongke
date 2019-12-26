@@ -19,9 +19,9 @@ public interface ProfessionalsDao {
     * @return
     */
     @Insert("insert into professionals (user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail," +
-            "outstanding_contribution,research_direction,introduced,phone_num,province,city,district,icon_address,certificate_address,create_time) " +
+            "outstanding_contribution,research_direction,introduced,phone_num,province,city,district,icon_address,certificate_address,approval_status,create_time) " +
             "values (#{userName},#{realName},#{pinYin},#{institutions},#{positions},#{engagedIndustry},#{engagedIndustryDetail},#{industryExperience},#{technologyScope},#{technologyScopeDetail}," +
-            "#{outstandingContribution},#{researchDirection},#{introduced},#{phoneNum},#{province},#{city},#{district},#{iconAddress},#{certificateAddress},now());")
+            "#{outstandingContribution},#{researchDirection},#{introduced},#{phoneNum},#{province},#{city},#{district},#{iconAddress},#{certificateAddress},#{approvalStatus},now());")
     boolean add(ProfessionalsEntity professionalsEntity);
     /**
      * 逻辑删除
@@ -83,4 +83,10 @@ public interface ProfessionalsDao {
 
     @Select("select id,real_name,pin_yin,institutions,positions,technology_scope,technology_scope_detail,research_direction,introduced,icon_address from professionals where status=0 and approval_status=1 and del_flag = 0 and is_hot =1 order by sort")
     List<ProfessionalsEntity> showHot();
+
+    @Update("update professionals set is_hot = #{isHot} where id = #{id}")
+    boolean updateHot(Integer id, Integer isHot);
+
+    @Update("update professionals set is_top = #{isTop} where id = #{id}")
+    boolean updateTop(Integer id, Integer isTop);
 }

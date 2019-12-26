@@ -49,7 +49,6 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
     @Override
     public PageInfo showByPage(ProfessionalsEntity professionalsEntity, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        professionalsEntity.setApprovalStatus(1);
         if(professionalsEntity.getTechnologyScope()!=null){
             professionalsEntity.setTechnologyScope(professionalsEntity.getTechnologyScope().replaceAll(",","','"));
         }
@@ -180,6 +179,16 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
         List<ProfessionalsEntity> list = professionalsDao.showHot();
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
+    }
+
+    @Override
+    public boolean updateHot(Integer id, Integer isHot) {
+        return professionalsDao.updateHot(id,isHot);
+    }
+
+    @Override
+    public boolean updateTop(Integer id, Integer isTop) {
+        return professionalsDao.updateTop(id,isTop);
     }
 
 }

@@ -33,6 +33,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 查询所有
+     *
      * @return
      */
     @Override
@@ -42,6 +43,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 根据条件搜索
+     *
      * @param talentDemandEntity
      * @return
      */
@@ -52,6 +54,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 分页展示
+     *
      * @param talentDemandEntity
      * @param pageNum
      * @param pageSize
@@ -73,10 +76,10 @@ public class TalentDemandServiceImpl implements TalentDemandService {
             talentDemandEntity.setDegree(talentDemandEntity.getDegree().replaceAll(",", "','"));
         }
         String industryExperience = talentDemandEntity.getIndustryExperience();
-        if(industryExperience!=null&&industryExperience!=""){
+        if (industryExperience != null && industryExperience != "") {
             String srr[] = industryExperience.split("-");
             talentDemandEntity.setIndustryExperienceBegin(srr[0]);
-            if(srr.length>1){
+            if (srr.length > 1) {
                 talentDemandEntity.setIndustryExperienceEnd(srr[1]);
             }
         }
@@ -87,6 +90,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 根据id查找
+     *
      * @param id
      * @return
      */
@@ -98,16 +102,17 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 根据id查找
+     *
      * @param id
      * @return
      */
     @Override
-    public TalentDemandEntity selectById(Integer id,Integer size) {
+    public TalentDemandEntity selectById(Integer id, Integer size) {
         TalentDemandEntity entity = talentDemandDao.selectById(id);
         if (entity != null && entity.getUserName() != null) {
             BusinessCenterInformationEntity businessCenterInformationEntity = businessCenterInformationDao.selectOnByUname(entity.getUserName());
             entity.setBusinessCenter(businessCenterInformationEntity);
-            entity.setOccupancyList(occupancyDao.getOccupanyForProfessional(entity.getUserName(),size));
+            entity.setOccupancyList(occupancyDao.getOccupanyForProfessional(entity.getUserName(), size));
             //记录浏览量到redis,然后定时更新到数据库
             String key = RedisKey.TALENT_VIEW_COUNT_CODE + entity.getId();
             //找到redis中该篇文章的点赞数，如果不存在则向redis中添加一条
@@ -126,6 +131,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 新增
+     *
      * @param talentDemandEntity
      * @return
      */
@@ -136,6 +142,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 逻辑删除
+     *
      * @param id
      * @return
      */
@@ -146,6 +153,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 从数据库中删除
+     *
      * @param id
      * @return
      */
@@ -156,6 +164,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 修改
+     *
      * @param talentDemandEntity
      * @return
      */
@@ -168,6 +177,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 修改状态
+     *
      * @param id
      * @param status
      * @return
@@ -182,6 +192,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 修改审批状态
+     *
      * @param id
      * @param approvalStatus
      * @param approvalOpinion
@@ -198,6 +209,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 关闭需求
+     *
      * @param id
      * @param closeReason
      * @return
@@ -210,6 +222,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     /**
      * 关闭需求-管理员
+     *
      * @param id
      * @param closeReason
      * @return
@@ -227,7 +240,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
 
     @Override
     public boolean deleteBatch(String ids) {
-        ids = ids.replaceAll(",","','");
+        ids = ids.replaceAll(",", "','");
         return talentDemandDao.deleteBatch(ids);
     }
 
@@ -286,6 +299,11 @@ public class TalentDemandServiceImpl implements TalentDemandService {
             map.put("xdata", xdata);
             return map;
         }
+    }
+
+    @Override
+    public boolean updateHot(Integer id, Integer isHot) {
+        return talentDemandDao.updateHot(id, isHot);
     }
 
 }
