@@ -178,4 +178,8 @@ public class TalentDemandEntity implements Serializable {
     String industryExperienceBegin;
     String industryExperienceEnd;
     private int counts;
+
+    private String orderField;  //排序字段
+
+    private String orderType;   //排序方式
 }

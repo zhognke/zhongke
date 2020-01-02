@@ -135,6 +135,11 @@
                 and (d.`company_name` like CONCAT('%',#{keyWord},'%') or d.`title` like CONCAT('%',#{keyWord},'%'))
             </if>
         </where>
-        order by create_time desc
+        <if test="orderField!=null and orderField!=''">
+            order by ${orderField}
+        </if>
+        <if test="orderType!=null and orderType!=''">
+            ${orderType}
+        </if>
     </select>
 </mapper>

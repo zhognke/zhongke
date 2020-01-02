@@ -52,6 +52,10 @@ public class ProfessionalsServiceImpl implements ProfessionalsService {
         if(professionalsEntity.getTechnologyScope()!=null){
             professionalsEntity.setTechnologyScope(professionalsEntity.getTechnologyScope().replaceAll(",","','"));
         }
+        if(professionalsEntity.getOrderField()==null){
+            professionalsEntity.setOrderField("create_time");
+            professionalsEntity.setOrderType("desc");
+        }
         List<ProfessionalsEntity> list = professionalsDao.search(professionalsEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;

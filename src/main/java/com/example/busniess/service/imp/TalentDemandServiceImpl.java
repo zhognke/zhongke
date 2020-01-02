@@ -75,6 +75,10 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         if (talentDemandEntity.getDegree() != null) {
             talentDemandEntity.setDegree(talentDemandEntity.getDegree().replaceAll(",", "','"));
         }
+        if (talentDemandEntity.getOrderField() == null) {
+            talentDemandEntity.setOrderField("create_time");
+            talentDemandEntity.setOrderType("desc");
+        }
         String industryExperience = talentDemandEntity.getIndustryExperience();
         if (industryExperience != null && industryExperience != "") {
             String srr[] = industryExperience.split("-");
