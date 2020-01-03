@@ -12,7 +12,7 @@ public interface FinancingDao {
      * @param financing
      * @return
      */
-    @Insert("INSERT INTO `financing` (`uname`,`projecttype`, `projectstatic`," +
+    @Insert("INSERT INTO `financing` (`uname`,`companyName`,`projecttype`, `projectstatic`," +
             " `goal`, `type`, `projectname`, " +
             "`projectoutline`,`advantage`, `industry`, " +
             "`province`, `city`, `discribe`, " +
@@ -22,7 +22,7 @@ public interface FinancingDao {
             "`unit`, `projectfinancing`, `income`, " +
             "`profit`, `proportion`, `agelimit`, " +
             "`lunit`, `statue`, `insertTime`,`kstatue`) VALUES " +
-            "(#{uName},#{projectType}, #{projectStatic}, #{goal}, #{type}, " +
+            "(#{uName},#{companyName},#{projectType}, #{projectStatic}, #{goal}, #{type}, " +
             "#{projectName}, #{projectOutline}, #{advantage}, #{industry}," +
             " #{province}, #{city}, #{discribe}, #{projecrPhase}, " +
             "#{period}, #{linkMan}, #{phoneNumber}, #{extensive}, " +
@@ -41,7 +41,7 @@ public interface FinancingDao {
      * 修改
      */
     @Update("UPDATE `financing` SET " +
-            "`projectName`=#{projectName}, `projectOutline`=#{projectOutline}, " +
+            "`projectName`=#{projectName},`companyName`=#{companyName}, `projectOutline`=#{projectOutline}, " +
             "`advantage`= #{advantage}, `industry`=#{industry}, " +
             "`province`=#{province}, `city`=#{city}, `discribe`=#{discribe}," +
             " `projecrphase`=#{projecrPhase}, " +
@@ -111,7 +111,7 @@ public interface FinancingDao {
      *
      * @return
      */
-    @Select("SELECT id,uname,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,lunit,insertTime FROM financing ORDER BY insertTime DESC")
+    @Select("SELECT id,uname,companyName,projectname,industry,financing,income,projecrphase,period,projectFinancing,statue,lunit,insertTime FROM financing ORDER BY insertTime DESC")
     @Results({
             @Result(property = "uName", column = "uname"),
             @Result(property = "businessInformation", column = "uname", one = @One(select = "com.example.busniess.dao.BusinessInformationDao.selectBusinessInformation")),

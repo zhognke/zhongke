@@ -64,6 +64,7 @@ public class FinancingEntity {
     //    @NotBlank(message = "所占比例不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String proportion;//所占比例 23///////
 
+    private String companyName;//公司名称
 
     private String projectType;//项目类型名
 

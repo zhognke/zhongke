@@ -50,6 +50,7 @@
     <resultMap id="businessCenterInformation" type="financingEntity">
         <id property="id" column="id"/>
         <result property="uName" column="uName"/>
+        <result property="companyName" column="companyName"/>
         <result property="projectName" column="projectName"/>
         <result property="industry" column="industry"/>
         <result property="financing" column="financing"/>
@@ -84,7 +85,7 @@
 
     <select id="selectAllFinancing" parameterType="financingEntity" resultMap="businessCenterInformation">
         SELECT
-        f.id,f.uname,f.projectName,f.industry,f.financing,f.income,f.projecrphase,f.period,f.projectFinancing,f.statue,f.insertTime,f.province,f.city,f.discribe,f.lunit
+        f.id,f.uname,f.companyName,f.projectName,f.industry,f.financing,f.income,f.projecrphase,f.period,f.projectFinancing,f.statue,f.insertTime,f.province,f.city,f.discribe,f.lunit
         FROM financing f INNER JOIN `user` u ON u.statue!=3 AND f.uname=u.username
         <where>
             <include refid="business_sql"></include>
