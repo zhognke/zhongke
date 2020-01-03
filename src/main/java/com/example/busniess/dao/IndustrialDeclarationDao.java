@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 /**
- * 企业需求表
+ * 工业申报
  * 
  * @author lee
  * @email wawzj512541@gmail.com
@@ -108,6 +108,7 @@ public interface IndustrialDeclarationDao {
      * @param year  年份
      * @return
      */
-    @Select("SELECT declaration_type,count(0) counts FROM `industrial_declaration` where year(create_time) = #{year} group by declaration_type order by counts desc;")
-    List<IndustrialDeclarationEntity> getIndustrialDeclarationTypeByYear(Integer year);
+//    @Select("SELECT declaration_type,count(0) counts FROM `industrial_declaration` where year(create_time) = #{year} group by declaration_type order by counts desc;")
+    @SelectProvider(type=IndustrialDeclarationProvider.class,method = "getIndustrialDeclarationTypeByYear")
+    List<IndustrialDeclarationEntity> getIndustrialDeclarationTypeByYear(Integer year,String district,String projectType);
 }

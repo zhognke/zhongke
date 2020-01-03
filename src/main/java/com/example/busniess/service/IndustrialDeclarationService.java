@@ -109,6 +109,6 @@ public interface IndustrialDeclarationService {
 
     boolean deleteBatch(String ids);
 
-    Map<String, Object> getIndustrialDeclarationTypeByYear(Integer year);
+    Map<String, Object> getIndustrialDeclarationTypeByYear(Integer year,String district,String projectType);
 }
 

@@ -15,6 +15,7 @@ import java.util.Map;
 @RestController("dataDisplay")
 @RequestMapping("dataDisplay")
 public class DataDisplayController {
+
     @Autowired
     private DemandsService demandsService;  //企业需求
     @Autowired
@@ -24,7 +25,7 @@ public class DataDisplayController {
     @Autowired
     FinancingService financingService;  //工业融资
     @Autowired
-    OccupancyService occupancyServce;   //科技成果
+    OccupancyService occupancyService;   //科技成果
     @Autowired
     ProfessionalsService professionalsService;  //专家
     @Autowired
@@ -35,7 +36,6 @@ public class DataDisplayController {
     private InnovationActivitiesService innovationActivitiesService;    //创新活动
 
     /*平台数据统计-start*/
-
     /**
      * 平台数据统计
      *
@@ -48,7 +48,7 @@ public class DataDisplayController {
         int talentDemandsNum = talentDemandService.getCounts();
         int financingNum = financingService.getCounts();
         int demandsNum = demandsService.getCount(null);
-        int occupancyNum = occupancyServce.getCounts();
+        int occupancyNum = occupancyService.getCounts();
         int intentionNum = intentionService.getCounts();
         map.put("companyNum", companyNum);
         map.put("talentDemandsNum", talentDemandsNum);
@@ -61,7 +61,6 @@ public class DataDisplayController {
     /*平台数据统计-end*/
 
     /*各类行业占比-pie-start*/
-
     /**
      * 企业需求行业占比统计(饼图)
      *
@@ -99,7 +98,7 @@ public class DataDisplayController {
      */
     @GetMapping("/occupancyIndustryProp")
     public ReturnResult occupancyIndustryProp(@RequestParam(defaultValue = "16") Integer size) {
-        Map<String, Object> map = occupancyServce.getIndustryProp(size);
+        Map<String, Object> map = occupancyService.getIndustryProp(size);
         if (map != null) {
             return ReturnResult.success(map);
         } else {
@@ -124,7 +123,6 @@ public class DataDisplayController {
     /*各类行业占比-end*/
 
     /*工业申报统计-start*/
-
     /**
      * 工业申报统计
      *
@@ -132,8 +130,8 @@ public class DataDisplayController {
      * @return ReturnResult
      */
     @GetMapping("/getIndustrialDeclarationTypeByYear")
-    public ReturnResult getIndustrialDeclarationTypeByYear(Integer year) {
-        Map<String, Object> map = industrialDeclarationService.getIndustrialDeclarationTypeByYear(year);
+    public ReturnResult getIndustrialDeclarationTypeByYear(Integer year,String district,String projectType) {
+        Map<String, Object> map = industrialDeclarationService.getIndustrialDeclarationTypeByYear(year,district,projectType);
         if (map != null) {
             return ReturnResult.success(map);
         } else {
@@ -143,7 +141,6 @@ public class DataDisplayController {
     /*工业申报统计-end*/
 
     /*数据增长统计-start*/
-
     /**
      * 平台数据增长趋势
      *
@@ -164,7 +161,7 @@ public class DataDisplayController {
         } else if ("activities".equalsIgnoreCase(type)) {
             map = innovationActivitiesService.activitiesRiseTrend(dateType, size);
         } else {
-            map = occupancyServce.occupancyRiseTrend(dateType, size);
+            map = occupancyService.occupancyRiseTrend(dateType, size);
         }
         if (map != null) {
             return ReturnResult.success(map);

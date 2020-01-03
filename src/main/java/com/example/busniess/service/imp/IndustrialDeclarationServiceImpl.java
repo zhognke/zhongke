@@ -188,13 +188,13 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     }
 
     @Override
-    public Map<String, Object> getIndustrialDeclarationTypeByYear(Integer year) {
+    public Map<String, Object> getIndustrialDeclarationTypeByYear(Integer year,String district,String projectType) {
         if(year==null){
             Calendar c = Calendar.getInstance();
             c.setTime(new Date());
             year = c.get(Calendar.YEAR);
         }
-        List<IndustrialDeclarationEntity> list = industrialDeclarationDao.getIndustrialDeclarationTypeByYear(year);
+        List<IndustrialDeclarationEntity> list = industrialDeclarationDao.getIndustrialDeclarationTypeByYear(year,district,projectType);
         if (list.isEmpty() || "[]".equals(list.toString())) {
             return null;
         } else {
