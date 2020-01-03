@@ -21,14 +21,14 @@ public interface BusinessCenterDao {
             "`societycode`, " +
             "`legalperson`, `address`," +
             " `phonenumber`,`persionCode`," +
-            " `statue`, `subtime`,`kstatue`" +
+            " `statue`, `subtime`" +
             ") VALUES (#{uName}, #{firmName}, #{industry}," +
             " #{typeEnterprise}," +
             " #{country}, #{city}, " +
             "#{district}," +
             "#{societyCode}, #{legalPerson}," +
             " #{address}, #{phoneNumber},#{persionCode}," +
-            " 0, NOW(),1" +
+            " 0, NOW()" +
             ")")
     public Boolean insertBusinessCenter(BusinessCenter businessCenter);
 
