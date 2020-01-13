@@ -4,7 +4,7 @@
 <mapper namespace="com.example.busniess.dao.AdviceBoxDao">
 
     <sql id="columnNames">
-        ab.id,d.value type,real_name,phone,title,assignment_username,is_show,statue,create_time,reply_time
+        ab.id,seq,d.value type,real_name,phone,title,assignment_username,is_show,statue,create_time,reply_time
     </sql>
 
     <select id="search" resultType="adviceBoxEntity" parameterType="adviceBoxEntity">
@@ -12,6 +12,9 @@
         where ab.del_flag = 0 and ab.type = d.code
         <if test="type!=null and type!=''">
             and ab.type=#{type}
+        </if>
+        <if test="username!=null and username!=''">
+            and ab.username=#{username}
         </if>
         <if test="title!=null and title!=''">
             and title like CONCAT('%',#{title},'%')
@@ -31,6 +34,7 @@
         <if test="statue!=null">
             and statue=#{statue}
         </if>
+        order by create_time desc
     </select>
 
 </mapper>

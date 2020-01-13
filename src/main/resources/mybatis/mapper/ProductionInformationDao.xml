@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.busniess.dao.ProductionInformationDao">
+
+    <sql id="columnNames">
+                id,username,company_name,province,city,district,industry,industry_detail,sub_year,sub_month,purchase_input,material_input,staff_input,total_input,
+                turnover,profit,production_value,defective_rate,sales_num,electricity_consumption,create_time,update_time,del_flag
+            </sql>
+
+    <select id="search" resultType="productionInformationEntity" parameterType="productionInformationEntity">
+        select <include refid="columnNames"></include> from production_information
+        where del_flag = '0'
+        <if test="username!=null and username!=''">
+            and username=#{username}
+        </if>
+        <if test="companyName!=null and companyName!=''">
+            and company_name=#{companyName}
+        </if>
+        <if test="province!=null and province!=''">
+            and province=#{province}
+        </if>
+        <if test="city!=null and city!=''">
+            and city=#{city}
+        </if>
+        <if test="district!=null and district!=''">
+            and district=#{district}
+        </if>
+        <if test="industry!=null and industry!=''">
+            and industry=#{industry}
+        </if>
+        <if test="industryDetail!=null and industryDetail!=''">
+            and industry_detail=#{industryDetail}
+        </if>
+        <if test="subYear!=null and subYear!=''">
+            and sub_year=#{subYear}
+        </if>
+        <if test="subMonth!=null and subMonth!=''">
+            and sub_month=#{subMonth}
+        </if>
+    </select>
+</mapper>

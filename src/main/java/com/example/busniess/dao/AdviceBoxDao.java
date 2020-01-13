@@ -75,7 +75,7 @@ public interface AdviceBoxDao {
      *
      * @return
      */
-    @Select("select ab.id,username,d.value type,real_name,phone,title,content,assignment_username,reply,province,city,district,address,is_show,statue,create_time,update_time,reply_time,ab.del_flag from advice_box ab,dict d where ab.type = d.code and ab.id = #{id}")
+    @Select("select ab.id,seq,username,d.value type,real_name,phone,title,content,assignment_username,reply,province,city,district,address,is_show,statue,create_time,update_time,reply_time,ab.del_flag from advice_box ab,dict d where ab.type = d.code and ab.id = #{id}")
     AdviceBoxEntity selectByID(Integer id);
 
     /**

@@ -27,6 +27,10 @@ public class AdviceBoxEntity implements Serializable {
     @NotNull(message = "主键id不能为空", groups = {UserValidator.UpDate.class})
     private Integer id;
     /**
+     * 编号
+     */
+    private Long seq;
+    /**
      * 关联用户名
      */
     @NotNull(message = "关联用户名不能为空", groups = {UserValidator.InSet.class})

@@ -43,6 +43,8 @@ public class CodeMsg {
     public static CodeMsg ADD_LERROR = new CodeMsg(500305, "添加失败!");
     public static CodeMsg FREEZE_ERROR = new CodeMsg(500306, "该账号已冻结!");
 
+    public static CodeMsg REPEAT_SUBMIT = new CodeMsg(500401, "请勿重复提交!");
+
     private Integer code;
     private String msg;
 
