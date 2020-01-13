@@ -54,7 +54,7 @@ public class ProductionInformationController {
      * @return
      */
     @RequestMapping(value = "/showByPageForCenter", method = RequestMethod.GET)
-    public ReturnResult showByPageForCenter(ProductionInformationEntity productionInformationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public ReturnResult showByPageForCenter(ProductionInformationEntity productionInformationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         String userName = ShiroUtils.getUserName();
         if (userName == null) {
             return ReturnResult.erro(CodeMsg.LOGIN_TIME_OUT);

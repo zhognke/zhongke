@@ -138,7 +138,7 @@
         <where>
             d.user_name = u.username and d.del_flag=0 and u.statue != 3
             <if test="demandIndustry!=null and demandIndustry!=''">
-                and d.`demand_industry`=#{demandIndustry}
+                and d.`demand_industry`  in ('${demandIndustry}')
             </if>
             <if test="demandIndustryDetail!=null and demandIndustryDetail!=''">
                 and d.`demand_industry_detail`=#{demandIndustryDetail}

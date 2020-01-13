@@ -22,9 +22,9 @@ public interface ProductionInformationDao {
      * @param productionInformationEntity
      * @return
      */
-    @Insert("insert into production_information(username,company_name,province,city,district,industry,industry_detail,sub_year,sub_month,purchase_input,material_input,staff_input,total_input," +
+    @Insert("insert into production_information(username,company_name,province,city,district,industry,industry_detail,sub_date,purchase_input,material_input,staff_input,total_input," +
             "turnover,profit,production_value,defective_rate,sales_num,electricity_consumption) " +
-            "values (#{username},#{companyName},#{province},#{city},#{district},#{industry},#{industryDetail},#{subYear}, #{subMonth},#{purchaseInput},#{materialInput},#{staffInput},#{totalInput}," +
+            "values (#{username},#{companyName},#{province},#{city},#{district},#{industry},#{industryDetail},#{subDate},#{purchaseInput},#{materialInput},#{staffInput},#{totalInput}," +
             "#{turnover},#{profit},#{productionValue},#{defectiveRate},#{salesNum},#{electricityConsumption})")
     boolean add(ProductionInformationEntity productionInformationEntity);
 
@@ -51,7 +51,7 @@ public interface ProductionInformationDao {
      * @return
      */
     @Update("update production_information set username=#{username},company_name =#{companyName},province =#{province},city =#{city},district =#{district},industry =#{industry},industry_detail =#{industryDetail}," +
-            "sub_year =#{subYear},sub_month =#{subMonth},purchase_input =#{purchaseInput},material_input =#{materialInput},staff_input =#{staffInput},total_input =#{totalInput},turnover =#{turnover},profit =#{profit}," +
+            "sub_date =#{subDate},purchase_input =#{purchaseInput},material_input =#{materialInput},staff_input =#{staffInput},total_input =#{totalInput},turnover =#{turnover},profit =#{profit}," +
             "production_value =#{productionValue},defective_rate =#{defectiveRate},sales_num =#{salesNum},electricity_consumption =#{electricityConsumption} where id = #{id}")
     boolean updateById(ProductionInformationEntity productionInformationEntity);
 
@@ -76,6 +76,6 @@ public interface ProductionInformationDao {
      * @param productionInformationEntity
      * @return
      */
-    @Select("select * from production_information where username = #{username} and sub_year = #{subYear} and sub_month = #{subMonth} and del_flag = 0 limit 1")
+    @Select("select * from production_information where username = #{username} and sub_date = #{subDate} and del_flag = 0 limit 1")
     ProductionInformationEntity selectByDate(ProductionInformationEntity productionInformationEntity);
 }

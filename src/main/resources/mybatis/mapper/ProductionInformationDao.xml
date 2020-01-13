@@ -4,39 +4,36 @@
 <mapper namespace="com.example.busniess.dao.ProductionInformationDao">
 
     <sql id="columnNames">
-                id,username,company_name,province,city,district,industry,industry_detail,sub_year,sub_month,purchase_input,material_input,staff_input,total_input,
+                pi.id,pi.username,bc.typeEnterprise,pi.company_name,pi.province,pi.city,pi.district,pi.industry,pi.industry_detail,sub_date,purchase_input,material_input,staff_input,total_input,
                 turnover,profit,production_value,defective_rate,sales_num,electricity_consumption,create_time,update_time,del_flag
             </sql>
 
     <select id="search" resultType="productionInformationEntity" parameterType="productionInformationEntity">
-        select <include refid="columnNames"></include> from production_information
-        where del_flag = '0'
+        select <include refid="columnNames"></include> from production_information pi,businesscenter bc
+        where pi.del_flag = '0' and pi.company_name = bc.firmname
         <if test="username!=null and username!=''">
-            and username=#{username}
+            and pi.username=#{username}
         </if>
         <if test="companyName!=null and companyName!=''">
-            and company_name=#{companyName}
+            and pi.company_name=#{companyName}
         </if>
         <if test="province!=null and province!=''">
-            and province=#{province}
+            and pi.province=#{province}
         </if>
         <if test="city!=null and city!=''">
-            and city=#{city}
+            and pi.city=#{city}
         </if>
         <if test="district!=null and district!=''">
-            and district=#{district}
+            and pi.district=#{district}
         </if>
-        <if test="industry!=null and industry!=''">
-            and industry=#{industry}
+        <if test="startDate!=null and startDate!=''">
+            and pi.sub_date &gt;= #{startDate}
         </if>
-        <if test="industryDetail!=null and industryDetail!=''">
-            and industry_detail=#{industryDetail}
+        <if test="endDate!=null and endDate!=''">
+            and pi.sub_date &lt;= #{endDate}
         </if>
-        <if test="subYear!=null and subYear!=''">
-            and sub_year=#{subYear}
-        </if>
-        <if test="subMonth!=null and subMonth!=''">
-            and sub_month=#{subMonth}
+        <if test="typeEnterprise!=null and typeEnterprise!=''">
+            and bc.typeEnterprise = #{typeEnterprise}
         </if>
     </select>
 </mapper>

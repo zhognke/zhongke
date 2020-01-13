@@ -12,6 +12,7 @@ import com.example.busniess.service.DemandsService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,9 @@ public class DemandsServiceImpl implements DemandsService {
      */
     @Override
     public PageInfo showByPage(DemandsEntity demandsEntity, int pageNum, int pagesize) {
+        if(StringUtils.isNotEmpty(demandsEntity.getDemandIndustry())){
+            demandsEntity.setDemandIndustry(demandsEntity.getDemandIndustry().replaceAll(",","','"));
+        }
         if(demandsEntity.getDemandType()!=null){
             demandsEntity.setDemandType(demandsEntity.getDemandType().replaceAll(",","','"));
         }

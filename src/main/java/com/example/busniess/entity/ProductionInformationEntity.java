@@ -63,15 +63,20 @@ public class ProductionInformationEntity implements Serializable {
     @NotNull(message = "行业领域二级目录不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
     private String industryDetail;
     /**
-     * 统计年份
+     * 统计时间
      */
-    @NotNull(message = "统计年份不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private Integer subYear;
-    /**
-     * 统计月份
-     */
-    @NotNull(message = "统计月份不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
-    private Integer subMonth;
+    @NotNull(message = "统计时间不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+    private String subDate;
+//    /**
+//     * 统计年份
+//     */
+//    @NotNull(message = "统计年份不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    private Integer subYear;
+//    /**
+//     * 统计月份
+//     */
+//    @NotNull(message = "统计月份不能为空", groups = {UserValidator.UpDate.class, UserValidator.InSet.class})
+//    private Integer subMonth;
 
     /**
      * 月采购投入
@@ -136,4 +141,11 @@ public class ProductionInformationEntity implements Serializable {
      */
     private Integer delFlag;
 
+    @JsonFormat(pattern = "yyyyMM", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyyMM")
+    private String startDate;   //开始时间
+    @JsonFormat(pattern = "yyyyMM", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyyMM")
+    private String endDate;     //结束日期
+    private String typeEnterprise;
 }

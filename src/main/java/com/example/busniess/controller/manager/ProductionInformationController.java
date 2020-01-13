@@ -65,7 +65,7 @@ public class ProductionInformationController {
      * @return
      */
     @RequestMapping(value = "/showByPage", method = RequestMethod.GET)
-    public ReturnResult showByPage(ProductionInformationEntity productionInformationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public ReturnResult showByPage(ProductionInformationEntity productionInformationEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         PageInfo pageInfo = productionInformationService.showByPage(productionInformationEntity, pageNum, pageSize);
         return ReturnResult.success(pageInfo);
     }
