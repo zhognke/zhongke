@@ -103,7 +103,7 @@
             and o.`statue` = #{statue}
         </if>
         <if test="industry!=null and industry!=''">
-            and o.`industry` = #{industry}
+            and instr('${industry}',o.`industry`)
         </if>
         <if test="industryDetail!=null and industryDetail!=''">
             and o.`industryDetail` = #{industryDetail}
