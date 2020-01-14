@@ -6,6 +6,7 @@ import com.example.busniess.service.FinancingService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -165,6 +166,9 @@ public class FinancingServiceImpl implements FinancingService {
     @Override
     public PageInfo SelectAllFinacing(FinancingEntity financing, Integer pageNum, Integer pagesize) {
         PageHelper.startPage(pageNum, pagesize);
+        if(StringUtils.isNotEmpty(financing.getIndustry())){
+            financing.setIndustry(financing.getIndustry().replaceAll(",","','"));
+        }
         List a=financingDao.selectAllFinancing(financing);
         PageInfo pageInfo=new PageInfo(a);
         return pageInfo;
