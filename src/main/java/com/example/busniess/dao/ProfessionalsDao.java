@@ -19,9 +19,9 @@ public interface ProfessionalsDao {
     * @return
     */
     @Insert("insert into professionals (user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail," +
-            "outstanding_contribution,research_direction,introduced,phone_num,province,city,district,icon_address,certificate_address,approval_status,create_time) " +
+            "outstanding_contribution,research_direction,introduced,research_results,awards,phone_num,province,city,district,icon_address,certificate_address,approval_status,create_time) " +
             "values (#{userName},#{realName},#{pinYin},#{institutions},#{positions},#{engagedIndustry},#{engagedIndustryDetail},#{industryExperience},#{technologyScope},#{technologyScopeDetail}," +
-            "#{outstandingContribution},#{researchDirection},#{introduced},#{phoneNum},#{province},#{city},#{district},#{iconAddress},#{certificateAddress},#{approvalStatus},now());")
+            "#{outstandingContribution},#{researchDirection},#{introduced},#{researchResults},#{awards},#{phoneNum},#{province},#{city},#{district},#{iconAddress},#{certificateAddress},#{approvalStatus},now());")
     boolean add(ProfessionalsEntity professionalsEntity);
     /**
      * 逻辑删除
@@ -45,13 +45,17 @@ public interface ProfessionalsDao {
      * 根据id查找
      * @return
      */
-    @Select("select id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail,outstanding_contribution,research_direction,introduced,phone_num,province,city,district,icon_address,certificate_address,status,approval_status,approval_opinion,create_time,update_time from professionals where id = #{id}")
+    @Select("select id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail," +
+            "outstanding_contribution,research_direction,introduced,research_results,awards,phone_num,province,city,district,icon_address,certificate_address,status,approval_status,approval_opinion," +
+            "create_time,update_time from professionals where id = #{id}")
     ProfessionalsEntity selectById(Integer id);
     /**
     * 查询所有
     * @return
     */
-    @Select("select id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail,outstanding_contribution,research_direction,introduced,phone_num,province,city,district,icon_address,certificate_address,status,approval_status,approval_opinion,create_time,update_time from professionals")
+    @Select("select id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail," +
+            "outstanding_contribution,research_direction,introduced,research_results,awards,phone_num,province,city,district,icon_address,certificate_address,status,approval_status,approval_opinion," +
+            "create_time,update_time from professionals")
     List<ProfessionalsEntity> selectAll();
     /**
     * 根据条件查找
@@ -81,7 +85,7 @@ public interface ProfessionalsDao {
     @Update("update professionals set del_flag = 1 where id in ('${ids}');")
     boolean deleteBatch(@Param("ids")String ids);
 
-    @Select("select id,real_name,pin_yin,institutions,positions,technology_scope,technology_scope_detail,research_direction,introduced,icon_address from professionals where status=0 and approval_status=1 and del_flag = 0 and is_hot =1 order by sort")
+    @Select("select id,real_name,pin_yin,institutions,positions,technology_scope,technology_scope_detail,research_direction,introduced,research_results,awards,icon_address from professionals where status=0 and approval_status=1 and del_flag = 0 and is_hot =1 order by sort")
     List<ProfessionalsEntity> showHot();
 
     @Update("update professionals set is_hot = #{isHot} where id = #{id}")

@@ -11,10 +11,16 @@
             and `status` = #{status}
         </if>
         <if test="declarationType!=null and declarationType!=''">
-            and `declaration_type` = #{declarationType}
+            and `declaration_type` in
+            <foreach collection="declarationTypes" item="declarationType" index="index" open="(" close=")" separator=",">
+                #{declarationType}
+            </foreach>
         </if>
         <if test="projectType!=null and projectType!=''">
-            and `project_type` = #{projectType}
+            and `project_type` in
+            <foreach collection="projectTypes" item="projectType" index="index" open="(" close=")" separator=",">
+                #{projectType}
+            </foreach>
         </if>
         <if test="projectTypeDetail!=null and projectTypeDetail!=''">
             and `project_type_detail` = #{projectTypeDetail}

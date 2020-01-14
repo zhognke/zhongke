@@ -8,6 +8,7 @@ import com.example.busniess.service.IndustrialDeclarationService;
 import com.example.busniess.utiles.EchartsEntity;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,12 @@ public class IndustrialDeclarationServiceImpl implements IndustrialDeclarationSe
     @Override
     public PageInfo showByPage(IndustrialDeclarationEntity industrialDeclarationEntity, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        if(StringUtils.isNotEmpty(industrialDeclarationEntity.getDeclarationType())){
+            industrialDeclarationEntity.setDeclarationTypes(industrialDeclarationEntity.getDeclarationType().split(","));
+        }
+        if(StringUtils.isNotEmpty(industrialDeclarationEntity.getProjectType())){
+            industrialDeclarationEntity.setProjectTypes(industrialDeclarationEntity.getProjectType().split(","));
+        }
         List<IndustrialDeclarationEntity> list = industrialDeclarationDao.search(industrialDeclarationEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;

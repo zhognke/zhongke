@@ -88,6 +88,16 @@ public class ProfessionalsEntity implements Serializable {
     @NotNull(message = "专家介绍不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
     private String introduced;
     /**
+     * 研究成果
+     */
+    @NotNull(message = "研究成果不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+    private String researchResults;
+    /**
+     * 获奖荣誉
+     */
+    @NotNull(message = "获奖荣誉不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})
+    private String awards;
+    /**
      * 联系电话
      */
     @NotNull(message = "联系电话不能为空", groups = { UserValidator.InSet.class,UserValidator.UpDate.class})

@@ -5,7 +5,7 @@
 
     <sql id="columnNames">
         id,user_name,real_name,pin_yin,institutions,positions,engaged_industry,engaged_industry_detail,industry_experience,technology_scope,technology_scope_detail,
-        outstanding_contribution,research_direction,introduced,phone_num,icon_address,certificate_address,status,approval_status,approval_opinion,approval_time,
+        outstanding_contribution,research_direction,introduced,research_results,awards,phone_num,icon_address,certificate_address,status,approval_status,approval_opinion,approval_time,
         create_time,update_time,is_hot,is_top,sort,del_flag
     </sql>
 
@@ -53,6 +53,12 @@
             </if>
             <if test="introduced!=null and introduced!=''">
                 introduced=#{introduced},
+            </if>
+            <if test="researchResults!=null and researchResults!=''">
+                research_results=#{researchResults},
+            </if>
+            <if test="awards!=null and awards!=''">
+                awards=#{awards},
             </if>
             <if test="phoneNum!=null and phoneNum!=''">
                 phone_num=#{phoneNum},

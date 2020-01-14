@@ -27,6 +27,7 @@ public class IndustrialDeclarationEntity implements Serializable {
      * 申报项目类别
      */
     private String declarationType;
+    private String[] declarationTypes;
     /**
      * 一级类目:'新开项目','续建项目'
      */
@@ -43,6 +44,7 @@ public class IndustrialDeclarationEntity implements Serializable {
      * 项目所属行业
      */
     private String projectType;
+    private String[] projectTypes;
     /**
      * 项目所属行业细分类目
      */
