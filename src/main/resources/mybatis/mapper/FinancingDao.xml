@@ -19,13 +19,19 @@
             AND f.`kstatue`=#{kStatue}
         </if>
         <if test="industry!=null and industry!=''">
-            AND instr(f.`industry`,'${industry}')
+            AND SUBSTRING_INDEX(`industry`,",",1) in ('${industry}')
         </if>
-        <if test="less!=null and less!='' and greater!=null and greater!=''">
-            AND f.`income` between #{less} and #{greater}
+        <if test="less!=null">
+            AND f.`income` &gt;= #{less}
         </if>
-        <if test="pless!=null and pless!='' and pgreat!=null and pgreat!=''">
-            AND f.`period` between #{pless} and #{pgreat}
+        <if test="greater!=null">
+            AND f.`income` &lt;= #{greater}
+        </if>
+        <if test="pless!=null">
+            AND f.`period` &gt;= #{pless}
+        </if>
+        <if test="pgreat!=null">
+            AND f.`period` &lt;= #{pgreat}
         </if>
         <if test="province!=null and province!=''">
             AND f.`province`=#{province}
