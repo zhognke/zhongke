@@ -5,7 +5,7 @@
 
 
     <select id="search" resultType="industrialDeclarationEntity" parameterType="industrialDeclarationEntity">
-        select id,declaration_type,project_type,project_type_detail,company_name,project_name,status,approval_status,create_time from industrial_declaration
+        select id,declaration_type,project_type,project_type_detail,company_name,project_name,province,city,district,status,approval_status,create_time from industrial_declaration
         where del_flag = 0
         <if test="status!=null">
             and `status` = #{status}

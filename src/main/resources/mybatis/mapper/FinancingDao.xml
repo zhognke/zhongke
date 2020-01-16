@@ -22,10 +22,10 @@
             AND SUBSTRING_INDEX(`industry`,",",1) in ('${industry}')
         </if>
         <if test="less!=null">
-            AND f.`income` &gt;= #{less}
+            AND f.`projectfinancing` &gt;= #{less}
         </if>
         <if test="greater!=null">
-            AND f.`income` &lt;= #{greater}
+            AND f.`projectfinancing` &lt;= #{greater}
         </if>
         <if test="pless!=null">
             AND f.`period` &gt;= #{pless}
