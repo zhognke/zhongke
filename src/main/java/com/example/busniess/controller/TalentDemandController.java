@@ -135,7 +135,7 @@ public class TalentDemandController {
      * @return  ReturnResult
      */
     @RequestMapping(value = "/showByPage", method = RequestMethod.GET)
-    public ReturnResult showByPage(TalentDemandEntity talentDemandEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public ReturnResult showByPage(TalentDemandEntity talentDemandEntity, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         talentDemandEntity.setStatus(0);    //只能查看正常状态的
         talentDemandEntity.setApprovalStatus(1);    //只能查看审批通过的
         PageInfo pageInfo = talentDemandService.showByPage(talentDemandEntity, pageNum, pageSize);

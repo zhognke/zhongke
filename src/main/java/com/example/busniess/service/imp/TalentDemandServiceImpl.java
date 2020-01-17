@@ -62,7 +62,9 @@ public class TalentDemandServiceImpl implements TalentDemandService {
      */
     @Override
     public PageInfo showByPage(TalentDemandEntity talentDemandEntity, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        if (talentDemandEntity.getEngagedIndustry() != null) {
+            talentDemandEntity.setEngagedIndustry(talentDemandEntity.getEngagedIndustry().replaceAll(",", "','"));
+        }
         if (talentDemandEntity.getTechnologyScope() != null) {
             talentDemandEntity.setTechnologyScope(talentDemandEntity.getTechnologyScope().replaceAll(",", "','"));
         }
@@ -75,10 +77,10 @@ public class TalentDemandServiceImpl implements TalentDemandService {
         if (talentDemandEntity.getDegree() != null) {
             talentDemandEntity.setDegree(talentDemandEntity.getDegree().replaceAll(",", "','"));
         }
-        if (talentDemandEntity.getOrderField() == null) {
+        /*if (talentDemandEntity.getOrderField() == null) {
             talentDemandEntity.setOrderField("create_time");
             talentDemandEntity.setOrderType("desc");
-        }
+        }*/
         String industryExperience = talentDemandEntity.getIndustryExperience();
         if (industryExperience != null && industryExperience != "") {
             String srr[] = industryExperience.split("-");
@@ -87,6 +89,7 @@ public class TalentDemandServiceImpl implements TalentDemandService {
                 talentDemandEntity.setIndustryExperienceEnd(srr[1]);
             }
         }
+        PageHelper.startPage(pageNum, pageSize);
         List<TalentDemandEntity> list = talentDemandDao.search(talentDemandEntity);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;

@@ -61,7 +61,8 @@
     </select>
 
     <select id="search" parameterType="businessCenter" resultMap="business">
-        SELECT b.*,i.id id1,i.uname uname1,i.registrationDate registrationDate1,i.registeredCapital registeredCapital1,i.scale scale1,i.enterprise enterprise1,i.logo logo1,i.statue statue1,i.insertTime insertTime1,i.updateTime updateTime1 FROM businesscenter b INNER JOIN  businessInformation i ON b.uname=i.uname
+        SELECT b.*,i.id id1,i.uname uname1,i.registrationDate registrationDate1,i.registeredCapital registeredCapital1,i.scale scale1,i.enterprise enterprise1,i.logo logo1,i.statue statue1,i.insertTime insertTime1,i.updateTime updateTime1
+        FROM businesscenter b INNER JOIN  businessInformation i ON b.uname=i.uname
        AND i.statue!=3 INNER JOIN `user` u ON u.statue!=3 AND b.uname=u.username
         <where>
 
@@ -72,11 +73,10 @@
                 AND b.`firmname` like   "${firmName}"
             </if>
             <if test="industry!=null and industry!=''">
-                AND  instr(b.`industry`,#{industry})
+                AND instr(#{industry},SUBSTRING_INDEX(b.`industry`,';',1))
             </if>
             <if test="typeEnterprise!=null and typeEnterprise!=''">
                 AND instr(#{typeEnterprise},b.`typeEnterprise`)
-
             </if>
             <if test="country!=null and country!=''">
                 AND b.`country`=#{country}
@@ -87,43 +87,28 @@
             <if test="district!=null and district!=''">
                 AND b.`district`=#{district}
             </if>
-            <if test="beforeInsertTime!=null and afterInsertTime!=null">
-                and b.`subTime` between #{beforeInsertTime} and #{afterInsertTime}
-            </if>
-            <if test="beforeInsertTime!=null and afterInsertTime==null">
+            <if test="beforeInsertTime!=null">
                 and b.`subTime` &gt;= #{beforeInsertTime}
             </if>
-            <if test="beforeInsertTime==null and afterInsertTime!=null">
+            <if test="afterInsertTime!=null">
                 and b.`subTime` &lt;= #{afterInsertTime}
             </if>
-            <if test="scaleBegin!=null and scaleEnd!=null">
-                and i.`scale` between #{scaleBegin} and #{scaleEnd}
-            </if>
-
-            <if test="scaleBegin!=null and scaleEnd==null">
+            <if test="scaleBegin!=null">
                 and i.`scale` &gt;= #{scaleBegin}
             </if>
-            <if test="scaleBegin==null and scaleEnd!=null">
+            <if test="scaleEnd!=null">
                 and i.`scale` &lt;= #{scaleEnd}
             </if>
-
-            <if test="recordDateBegin!=null and recordDateEnd!=null">
-                and i.`registrationDate` between #{recordDateBegin} and #{recordDateEnd}
+            <if test="recordDateBegin!=null">
+                and (year(now())-year(i.`registrationDate`)) &gt;= #{recordDateBegin}
             </if>
-            <if test="recordDateBegin!=null and recordDateEnd==null">
-                and i.`registrationDate` &gt;= #{recordDateBegin}
+            <if test="recordDateEnd!=null">
+                and (year(now())-year(i.`registrationDate`)) &lt;= #{recordDateEnd}
             </if>
-            <if test="recordDateBegin==null and recordDateEnd!=null">
-                and i.`registrationDate` &lt;= #{recordDateEnd}
-            </if>
-
-            <if test="registeredCapitalBegin!=null and registeredCapitalEnd!=null">
-                and i.`registeredCapital` between #{registeredCapitalBegin} and #{registeredCapitalEnd}
-            </if>
-            <if test="registeredCapitalBegin!=null and registeredCapitalEnd==null">
+            <if test="registeredCapitalBegin!=null">
                 and i.`registeredCapital` &gt;= #{registeredCapitalBegin}
             </if>
-            <if test="registeredCapitalBegin==null and registeredCapitalEnd!=null">
+            <if test="registeredCapitalEnd!=null">
                 and i.`registeredCapital` &lt;= #{registeredCapitalEnd}
             </if>
 

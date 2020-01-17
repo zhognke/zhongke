@@ -59,12 +59,8 @@ public class BusinessCenter implements Serializable {
 
     private Integer scaleBegin; //范围搜索-从业人数最小值,非数据库字段
     private Integer scaleEnd;   //范围搜索-从业人数最大值,非数据库字段
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date recordDateBegin;   //范围搜索-注册时间最小值,非数据库字段
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date recordDateEnd; //范围搜索-注册时间最大值,非数据库字段
+    private Integer recordDateBegin;   //范围搜索-注册时间最小值,非数据库字段
+    private Integer recordDateEnd; //范围搜索-注册时间最大值,非数据库字段
 
     private BigDecimal registeredCapitalBegin;  //范围搜索-注册资金最小值,非数据库字段
     private BigDecimal registeredCapitalEnd;    //范围搜索-注册资金最大值,非数据库字段
